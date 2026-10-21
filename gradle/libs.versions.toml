@@ -1,10 +1,13 @@
 [versions]
 kotlin = "2.3.21"
 kotlinx-coroutines = "1.11.0"
+binaryCompatibilityValidator = "0.18.2"
+# Downloaded by the ZigDownloadTask in build-support and used to build the JNI library.
+zig = "0.15.1"
 
 [libraries]
-kotlin-plugin-core = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-kotlin-plugin-compose = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+binaryCompatibilityValidator-gradlePlugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binaryCompatibilityValidator" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -13,22 +16,12 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 
 kotlinx-io-core = "org.jetbrains.kotlinx:kotlinx-io-core:0.9.1"
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.8.0"
 
 androidx-annotation = "androidx.annotation:annotation:1.11.0"
 androidx-collection = "androidx.collection:collection:1.7.0"
 androidx-compose-runtime = "androidx.compose.runtime:runtime:1.12.1"
 androidx-lifecycle-compose = "androidx.lifecycle:lifecycle-runtime-compose:2.11.0"
-
-mavenPublishGradlePlugin = "com.vanniktech:gradle-maven-publish-plugin:0.37.0"
-dokkaGradlePlugin = "org.jetbrains.dokka:dokka-gradle-plugin:2.2.0"
-citeGradlePlugin = "com.jakewharton.cite:cite-gradle-plugin:0.8.0"
-pokoGradlePlugin = "dev.drewhamilton.poko:poko-gradle-plugin:0.22.1"
-binaryCompatibilityValidatorGradlePlugin = "org.jetbrains.kotlinx:binary-compatibility-validator:0.18.2"
-cklibGradlePlugin = "co.touchlab:cklib-gradle-plugin:0.3.5"
-jextractGradlePlugin = "de.infolektuell:gradle-plugin-jextract:1.0.0"
-testDistributionGradlePlugin = "com.jakewharton.gradle:test-distribution-gradle-plugin:0.4.1"
-spotlessGradlePlugin = "com.diffplug.spotless:spotless-plugin-gradle:8.10.4"
-burstGradlePlugin = "app.cash.burst:burst-gradle-plugin:2.12.2"
 
 ktlint-core = "com.pinterest.ktlint:ktlint-cli:1.8.0"
 ktlint-composeRules = "io.nlopez.compose.rules:ktlint:0.6.8"
@@ -38,5 +31,24 @@ codepoints = "de.cketti.unicode:kotlin-codepoints:0.11.0"
 finalizationHook = "com.jakewharton.finalization:finalization-hook:0.1.0"
 apache-compress = "org.apache.commons:commons-compress:1.28.0"
 
+# Shrinkers which run over the mosaic-tty tests.
+proguard = "com.guardsquare:proguard-base:7.10.0"
+r8 = "com.android.tools:r8:9.5.26"
+
 junit4 = "junit:junit:4.13.2"
 assertk = "com.willowtreeapps.assertk:assertk:0.28.1"
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+mavenPublish = "com.vanniktech.maven.publish:0.37.0"
+dokka = "org.jetbrains.dokka:2.2.0"
+cite = "com.jakewharton.cite:0.8.0"
+poko = "dev.drewhamilton.poko:0.22.1"
+binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatibilityValidator" }
+cklib = "co.touchlab.cklib:0.3.5"
+jextract = "de.infolektuell.jextract:1.0.0"
+testDistribution = "com.jakewharton.test-distribution:0.4.1"
+spotless = "com.diffplug.spotless:8.10.4"
+burst = "app.cash.burst:2.12.2"

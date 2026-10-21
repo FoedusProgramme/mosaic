@@ -1,8 +1,10 @@
-apply plugin: 'java'
-apply plugin: 'application'
+plugins {
+	java
+	application
+}
 
 application {
-	mainClass = 'example.JavaTty'
+	mainClass = "example.JavaTty"
 }
 
 java {

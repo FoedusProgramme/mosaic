@@ -1,15 +1,17 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
-apply plugin: 'org.jetbrains.kotlin.multiplatform'
-apply plugin: 'org.jetbrains.kotlin.plugin.compose'
-apply from: "$rootDir/addAllTargets.gradle"
+plugins {
+	alias(libs.plugins.kotlin.multiplatform)
+	alias(libs.plugins.kotlin.compose)
+	id("com.jakewharton.mosaic.targets")
+}
 
 kotlin {
 	sourceSets {
 		commonMain {
 			dependencies {
-				implementation projects.mosaicRuntime
+				implementation(projects.mosaicRuntime)
 			}
 		}
 	}
@@ -17,14 +19,14 @@ kotlin {
 	jvm {
 		binaries {
 			executable {
-				mainClass = 'example.JestKt'
+				mainClass = "example.JestKt"
 			}
 		}
 	}
 
-	targets.withType(KotlinNativeTarget).configureEach { target ->
-		target.binaries.executable {
-			entryPoint = 'example.main'
+	targets.withType<KotlinNativeTarget>().configureEach {
+		binaries.executable {
+			entryPoint = "example.main"
 			if (buildType == NativeBuildType.DEBUG) {
 				linkTaskProvider.configure {
 					enabled = false
