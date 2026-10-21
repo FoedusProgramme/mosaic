@@ -116,6 +116,14 @@ public interface DrawScope {
 	)
 
 	/**
+	 * Places the terminal's cursor at [row] and [column] once this frame is rendered, and shows it.
+	 * Use this for the caret of text input, since input methods show their composition at the
+	 * cursor. When nothing places the cursor during a frame, it stays hidden below the output. The
+	 * last placement in a frame wins.
+	 */
+	public fun drawCursor(row: Int, column: Int)
+
+	/**
 	 * Helper method to offset the provided size with the offset in box width and height
 	 */
 	private fun IntSize.offsetSize(offset: IntOffset): IntSize = IntSize(this.width - offset.x, this.height - offset.y)
@@ -300,6 +308,10 @@ internal open class TextCanvasDrawScope(
 			previous = pixel
 			characterColumn += columns
 		}
+	}
+
+	override fun drawCursor(row: Int, column: Int) {
+		canvas.setCursor(row, column)
 	}
 
 	private fun TextPixel.updateStyle(

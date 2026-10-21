@@ -95,7 +95,11 @@ internal suspend fun runMosaicComposition(
 		}
 	}
 
-	mosaicComposition.awaitComplete()
+	try {
+		mosaicComposition.awaitComplete()
+	} finally {
+		print(rendering.finish().toString())
+	}
 }
 
 public interface Mosaic {

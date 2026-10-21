@@ -13,6 +13,8 @@ internal const val synchronizedOutputDisable = "$CSI?${synchronizedOutputMode}l"
 internal const val ansiReset = "${CSI}0"
 internal const val clearLine = "${CSI}K"
 internal const val clearDisplay = "${CSI}J"
+internal const val cursorShow = "$CSI?25h"
+internal const val cursorHide = "$CSI?25l"
 
 internal const val ansiSeparator = ";"
 internal const val ansiClosingCharacter = "m"

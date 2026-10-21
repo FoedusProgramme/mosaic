@@ -12,6 +12,9 @@ internal interface Rendering {
 	 * as implementations are free to reuse buffers across invocations.
 	 */
 	fun render(mosaic: Mosaic): CharSequence
+
+	/** Output which restores the terminal after the last [render], such as moving the cursor below. */
+	fun finish(): CharSequence = ""
 }
 
 internal class DebugRendering(
@@ -75,6 +78,15 @@ internal class AnsiRendering(
 	private val stringBuilder = StringBuilder(100)
 	private var lastHeight = 0
 
+	/**
+	 * The row of the last output the cursor was left on, or [lastHeight] when it rests on the line
+	 * below the output.
+	 */
+	private var cursorRow = 0
+
+	/** Whether the cursor was shown at a position placed with [DrawScope.drawCursor]. */
+	private var cursorShown = false
+
 	override fun render(mosaic: Mosaic): CharSequence {
 		return stringBuilder.apply {
 			clear()
@@ -82,13 +94,19 @@ internal class AnsiRendering(
 			if (capabilities.synchronizedOutput) {
 				append(synchronizedOutputEnable)
 			}
+			if (cursorShown) {
+				// Avoid the cursor flickering across the screen while the frame is written.
+				append(cursorHide)
+			}
 
 			var staleLines = lastHeight
-			if (staleLines > 0) {
+			if (cursorRow > 0) {
 				// Move to start of previous output.
 				append(CSI)
-				append(staleLines)
+				append(cursorRow)
 				append('F')
+			} else if (lastHeight > 0) {
+				append('\r')
 			}
 
 			fun appendSurface(canvas: TextCanvas) {
@@ -124,11 +142,44 @@ internal class AnsiRendering(
 				append(clearDisplay)
 			}
 
+			val cursor = (surface as? TextSurface)?.cursor
+			if (cursor != null) {
+				append(CSI)
+				append(surface.height - cursor.y)
+				append('F')
+				if (cursor.x > 0) {
+					append(CSI)
+					append(cursor.x + 1)
+					append('G')
+				}
+				cursorRow = cursor.y
+				// When the terminal cannot hide its cursor, it is visible anyway.
+				cursorShown = capabilities.cursorVisibility
+				if (cursorShown) {
+					append(cursorShow)
+				}
+			} else {
+				cursorRow = surface.height
+				cursorShown = false
+			}
+
 			if (capabilities.synchronizedOutput) {
 				append(synchronizedOutputDisable)
 			}
 
 			lastHeight = surface.height
+		}
+	}
+
+	override fun finish(): CharSequence = buildString {
+		if (cursorRow < lastHeight) {
+			// Move below the output so whatever is printed next does not overwrite it.
+			append(CSI)
+			append(lastHeight - cursorRow)
+			append('E')
+		}
+		if (cursorShown) {
+			append(cursorHide)
 		}
 	}
 }

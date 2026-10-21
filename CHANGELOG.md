@@ -8,6 +8,7 @@ New:
 - Keys with modifiers which used to be indistinguishable, such as Shift+Enter and Enter, are now reported separately in terminals which support the Kitty keyboard protocol.
 - `Modifier.onPasteEvent` receives pasted text as a single `PasteEvent` in terminals which support bracketed paste, rather than one key event per character with `Enter` for each line break. Unhandled pastes are still delivered as key events.
 - `TestMosaic.sendEvent` sends any terminal event, such as the `BracketedPasteEvent`s around pasted text.
+- `DrawScope.drawCursor` places and shows the terminal's cursor once the frame is rendered, so that input methods show their composition at the caret of text input.
 
 Changed:
 - Use the AndroidX versions of the Compose runtime and lifecycle dependencies which are now fully multiplatform. Dependency constraints to the corresponding JetBrains artifacts (which are now empty) are present to prevent symbol duplication.

@@ -85,6 +85,7 @@ public final class org/unitedsoftware/mosaic/layout/DrawModifierKt {
 }
 
 public abstract interface class org/unitedsoftware/mosaic/layout/DrawScope {
+	public abstract fun drawCursor (II)V
 	public abstract fun drawRect-4e5QVYw (CIIIJJLorg/unitedsoftware/mosaic/layout/DrawStyle;)V
 	public abstract fun drawRect-4e5QVYw (IIIIJJLorg/unitedsoftware/mosaic/layout/DrawStyle;)V
 	public static synthetic fun drawRect-4e5QVYw$default (Lorg/unitedsoftware/mosaic/layout/DrawScope;CIIIJJLorg/unitedsoftware/mosaic/layout/DrawStyle;ILjava/lang/Object;)V

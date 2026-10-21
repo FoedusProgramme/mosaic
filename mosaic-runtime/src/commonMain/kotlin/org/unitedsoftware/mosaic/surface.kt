@@ -16,6 +16,7 @@ import org.unitedsoftware.mosaic.ui.isSpecifiedColor
 import org.unitedsoftware.mosaic.ui.isSpecifiedUnderlineStyle
 import org.unitedsoftware.mosaic.ui.isUnspecifiedColor
 import org.unitedsoftware.mosaic.ui.isUnspecifiedUnderlineStyle
+import org.unitedsoftware.mosaic.ui.unit.IntOffset
 
 private val blankPixel = TextPixel(SpaceCharCodePoint)
 
@@ -36,6 +37,18 @@ internal class TextSurface(
 	var translationY = 0
 
 	private val cells = Array(width * height) { TextPixel(SpaceCharCodePoint) }
+
+	/** Where the terminal's cursor should be placed after rendering, if anywhere. */
+	var cursor: IntOffset? = null
+		private set
+
+	fun setCursor(row: Int, column: Int) {
+		val x = translationX + column
+		val y = row + translationY
+		if (x in 0 until width && y in 0 until height) {
+			cursor = IntOffset(x, y)
+		}
+	}
 
 	/** The pixel at [row] and [column], or null when it is outside the surface. */
 	fun getOrNull(row: Int, column: Int): TextPixel? {
