@@ -263,16 +263,21 @@ fun ScrollingListPage() {
 fun LimitationsPage() {
 	val palette = LocalPalette.current
 	Column {
-		Text("Wide characters (#1141)", textStyle = TextStyle.Bold)
-		Text("Width is counted in code points, so every CJK", color = palette.muted)
-		Text("character overflows its box by one more cell:", color = palette.muted)
+		Text("Fixed in this fork", textStyle = TextStyle.Bold)
+		Text("Wide characters take two columns, so boxes line up:", color = palette.muted)
 		Row {
-			Panel(color = palette.bad) { Text("中文宽字符") }
+			Panel(color = palette.good) { Text("中文宽字符") }
 			Spacer(Modifier.width(2))
 			Panel(color = palette.good) { Text("ascii") }
 		}
+		for (fix in fixes) {
+			Row {
+				Text("• ", color = palette.good)
+				Text(fix)
+			}
+		}
 		Spacer(Modifier.height(1))
-		Text("Other gaps found while building this catalog", textStyle = TextStyle.Bold)
+		Text("Still missing", textStyle = TextStyle.Bold)
 		for (gap in gaps) {
 			Row {
 				Text("• ", color = palette.warn)
@@ -282,11 +287,15 @@ fun LimitationsPage() {
 	}
 }
 
+private val fixes = listOf(
+	"Typing CJK through an input method works (#972)",
+	"Shift+Enter, pastes, and the IME caret work",
+	"Resizing the terminal no longer crashes (#1167)",
+)
+
 private val gaps = listOf(
-	"Non-ASCII key input throws and exits (#972)",
-	"Mouse and paste never reach composables (#495)",
 	"Text ignores incoming size constraints",
-	"No clipping; off-screen drawing crashes (#1167)",
-	"Root is unbounded; size it yourself (#719)",
-	"No focus, text field, scrolling, or alt screen",
+	"Drawing is only clipped to the terminal, not nodes",
+	"Mouse events never reach composables (#495)",
+	"No focus system, scrolling, or alt screen",
 )

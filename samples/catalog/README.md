@@ -1,7 +1,7 @@
 # Example: catalog
 
 An interactive tour of everything Mosaic can render, plus recipes for common components Mosaic
-does not ship yet (borders, progress bars, spinners, tabs, tables, scrolling lists, text fields).
+does not ship yet (borders, progress bars, spinners, tabs, tables, and scrolling lists).
 
 ```
 ./gradlew :samples:catalog:installJvmDist
@@ -31,5 +31,5 @@ Keep in mind while reading the code:
    the 52×18 content area of a minimum-size terminal.
  * `Text` ignores the constraints it is measured with, so `Modifier.width` or `fillMaxWidth` on a
    `Text` has no effect. Wrap the `Text` in a `Box` and size the `Box` instead.
- * Typing a non-ASCII character (for example through an IME) currently crashes Mosaic, see
-   [#972](https://github.com/JakeWharton/mosaic/issues/972).
+ * Mosaic has no focus system, so pages with several inputs track which one is focused themselves,
+   as the Text input page does with two `TextField`s.

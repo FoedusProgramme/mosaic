@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.background
 import org.unitedsoftware.mosaic.layout.height
 import org.unitedsoftware.mosaic.layout.onKeyEvent
 import org.unitedsoftware.mosaic.layout.onPreviewKeyEvent
@@ -18,6 +19,8 @@ import org.unitedsoftware.mosaic.ui.Column
 import org.unitedsoftware.mosaic.ui.Row
 import org.unitedsoftware.mosaic.ui.Spacer
 import org.unitedsoftware.mosaic.ui.Text
+import org.unitedsoftware.mosaic.ui.TextField
+import org.unitedsoftware.mosaic.ui.TextFieldState
 import org.unitedsoftware.mosaic.ui.TextStyle
 
 private fun KeyEvent.describe(): String = buildString {
@@ -65,8 +68,8 @@ fun KeyboardPage() {
 			Text(history.getOrNull(index) ?: "", color = palette.muted)
 		}
 		Spacer(Modifier.height(1))
-		Text("Caution: non-ASCII keys (e.g. CJK via an IME)", color = palette.warn)
-		Text("currently crash Mosaic, see issue #972.", color = palette.warn)
+		Text("Terminals with the Kitty keyboard protocol report", color = palette.muted)
+		Text("keys like Shift+Enter separately from Enter.", color = palette.muted)
 	}
 }
 
@@ -85,57 +88,55 @@ private fun Flag(name: String, on: Boolean) {
 fun TextInputPage() {
 	val palette = LocalPalette.current
 	val name = remember { TextFieldState() }
-	val email = remember { TextFieldState() }
-	// 0 = name, 1 = email, 2 = submit button.
+	val message = remember { TextFieldState() }
+	// 0 = name, 1 = message. Mosaic has no focus system, so the page tracks it.
 	var focus by remember { mutableIntStateOf(0) }
-	var submitted by remember { mutableStateOf<String?>(null) }
+	var sent by remember { mutableStateOf(emptyList<String>()) }
 	Column(
 		Modifier.onKeyEvent { event ->
-			when {
-				event.key == "Tab" -> focus = (focus + if (event.shift) 2 else 1) % 3
-
-				event.key == "Enter" && focus < 2 -> focus++
-
-				event.key == "Enter" -> {
-					submitted = "${name.text.ifEmpty { "?" }} <${email.text.ifEmpty { "?" }}>"
-					name.clear()
-					email.clear()
-					focus = 0
-				}
-
-				focus == 0 -> return@onKeyEvent name.onKeyEvent(event)
-
-				focus == 1 -> return@onKeyEvent email.onKeyEvent(event)
+			when (event.key) {
+				// The single line name field does not handle Enter, so it moves on to the message.
+				"Tab", "Enter" -> focus = 1 - focus
 
 				else -> return@onKeyEvent false
 			}
 			true
 		},
 	) {
-		Text("Mosaic has no focus system or text field, so this", color = palette.muted)
-		Text("page keeps focus in state and routes keys itself.", color = palette.muted)
+		Text("TextField wraps, scrolls, takes pastes and CJK input,", color = palette.muted)
+		Text("and places the terminal cursor for input methods.", color = palette.muted)
 		Spacer(Modifier.height(1))
-		Labeled("Name", labelWidth = 8) {
-			TextField(name, focused = focus == 0, width = 32, placeholder = "Ada Lovelace")
+		Labeled("Name", labelWidth = 9) {
+			TextField(
+				name,
+				modifier = Modifier.width(30).background(palette.surface),
+				focused = focus == 0,
+				singleLine = true,
+				placeholder = "Ada Lovelace",
+			)
 		}
 		Spacer(Modifier.height(1))
-		Labeled("Email", labelWidth = 8) {
-			TextField(email, focused = focus == 1, width = 32, placeholder = "ada@example.com")
+		Labeled("Message", labelWidth = 9) {
+			TextField(
+				message,
+				modifier = Modifier.width(40).background(palette.surface),
+				focused = focus == 1,
+				maxLines = 3,
+				placeholder = "Say something",
+				onSubmit = {
+					if (it.isBlank()) return@TextField
+					val from = name.text.ifEmpty { "?" }
+					sent = (sent + "$from: ${it.replace('\n', ' ')}").takeLast(4)
+					message.clear()
+				},
+			)
 		}
 		Spacer(Modifier.height(1))
-		Row {
-			Spacer(Modifier.width(8))
-			if (focus == 2) {
-				Text(" Submit ", color = palette.surface, background = palette.accent, textStyle = TextStyle.Bold)
-			} else {
-				Text(" Submit ", background = palette.surface)
-			}
+		Text("tab focus · enter send · shift/alt+enter new line", color = palette.muted)
+		Spacer(Modifier.height(1))
+		Text("Sent", textStyle = TextStyle.Bold)
+		for (index in 0 until 4) {
+			Text(sent.getOrNull(index)?.take(48) ?: "", color = palette.good)
 		}
-		Spacer(Modifier.height(1))
-		Text(submitted?.let { "Submitted: $it".take(50) } ?: "", color = palette.good)
-		Spacer(Modifier.height(1))
-		Text("Edit with ←→, Home/End, Backspace, Delete, ctrl+u.", color = palette.muted)
-		Text("Typed q/j/k go into the field: the focused field", color = palette.muted)
-		Text("consumes keys before the app-level handler.", color = palette.muted)
 	}
 }

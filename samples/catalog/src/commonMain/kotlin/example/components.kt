@@ -4,13 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import kotlin.math.roundToInt
 import kotlinx.coroutines.delay
-import org.unitedsoftware.mosaic.layout.KeyEvent
 import org.unitedsoftware.mosaic.layout.background
 import org.unitedsoftware.mosaic.layout.drawBehind
 import org.unitedsoftware.mosaic.layout.padding
@@ -302,91 +300,4 @@ fun Scrollbar(
 			}
 		}
 	}
-}
-
-/** State for [TextField]: the text and a cursor index into it. */
-class TextFieldState(initial: String = "") {
-	var text by mutableStateOf(initial)
-		private set
-	var cursor by mutableIntStateOf(initial.length)
-		private set
-
-	/** Applies an editing key. Returns false for keys a text field does not handle. */
-	fun onKeyEvent(event: KeyEvent): Boolean {
-		when {
-			event.key == "Backspace" -> if (cursor > 0) {
-				text = text.removeRange(cursor - 1, cursor)
-				cursor--
-			}
-
-			event.key == "Delete" -> if (cursor < text.length) {
-				text = text.removeRange(cursor, cursor + 1)
-			}
-
-			event.key == "ArrowLeft" -> cursor = (cursor - 1).coerceAtLeast(0)
-
-			event.key == "ArrowRight" -> cursor = (cursor + 1).coerceAtMost(text.length)
-
-			event.key == "Home" || (event.ctrl && event.key == "a") -> cursor = 0
-
-			event.key == "End" || (event.ctrl && event.key == "e") -> cursor = text.length
-
-			event.ctrl && event.key == "u" -> {
-				text = text.substring(cursor)
-				cursor = 0
-			}
-
-			event.key.length == 1 && !event.ctrl && !event.alt -> {
-				text = text.substring(0, cursor) + event.key + text.substring(cursor)
-				cursor++
-			}
-
-			else -> return false
-		}
-		return true
-	}
-
-	fun clear() {
-		text = ""
-		cursor = 0
-	}
-}
-
-/**
- * A single-line text field which scrolls horizontally to keep the cursor visible. The cursor is
- * drawn as an inverted cell rather than with the real terminal cursor.
- */
-@Composable
-fun TextField(
-	state: TextFieldState,
-	focused: Boolean,
-	width: Int,
-	modifier: Modifier = Modifier,
-	placeholder: String = "",
-) {
-	val palette = LocalPalette.current
-	val text = state.text
-	val cursor = state.cursor
-	val start = (cursor - width + 1).coerceAtLeast(0)
-	val annotated = buildAnnotatedString {
-		if (text.isEmpty() && !focused) {
-			withStyle(SpanStyle(color = palette.muted, textStyle = TextStyle.Italic)) {
-				append(placeholder.take(width).padEnd(width))
-			}
-			return@buildAnnotatedString
-		}
-		for (column in 0 until width) {
-			val char = text.getOrNull(start + column) ?: ' '
-			if (focused && start + column == cursor) {
-				withStyle(SpanStyle(textStyle = TextStyle.Invert)) { append(char) }
-			} else {
-				append(char)
-			}
-		}
-	}
-	Text(
-		annotated,
-		modifier = modifier.background(if (focused) palette.accentContainer else palette.surface),
-		color = palette.text,
-	)
 }
