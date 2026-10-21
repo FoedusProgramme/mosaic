@@ -1,6 +1,5 @@
 package org.unitedsoftware.mosaic.animation
 
-@Suppress("ACTUAL_WITHOUT_EXPECT") // https://youtrack.jetbrains.com/issue/KT-37316
 internal actual typealias AtomicReference<T> = kotlin.concurrent.AtomicReference<T>
 
 @Suppress("NOTHING_TO_INLINE")

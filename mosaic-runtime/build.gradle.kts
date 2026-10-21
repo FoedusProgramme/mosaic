@@ -16,7 +16,10 @@ kotlin {
 
 	sourceSets {
 		configureEach {
-			languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+			// The cinterop opt-in marker only exists for native source sets.
+			if (!name.startsWith("common") && !name.startsWith("jvm")) {
+				languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+			}
 		}
 
 		commonMain {

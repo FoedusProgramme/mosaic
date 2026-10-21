@@ -258,7 +258,7 @@ internal suspend fun <T, V : AnimationVector> AnimationState<T, V>.animate(
 		while (lateInitScope!!.isRunning) {
 			val durationScale = coroutineContext.durationScale
 			animation.callWithFrameNanos {
-				lateInitScope!!.doAnimationFrameWithScale(it, durationScale, animation, this, block)
+				lateInitScope.doAnimationFrameWithScale(it, durationScale, animation, this, block)
 			}
 		}
 		// End of animation

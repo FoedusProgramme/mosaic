@@ -14,9 +14,10 @@ kotlin {
 
 	sourceSets {
 		configureEach {
-			languageSettings {
-				optIn("kotlin.contracts.ExperimentalContracts")
-				optIn("kotlinx.cinterop.ExperimentalForeignApi")
+			languageSettings.optIn("kotlin.contracts.ExperimentalContracts")
+			// The cinterop opt-in marker only exists for native source sets.
+			if (!name.startsWith("common") && !name.startsWith("jvm")) {
+				languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
 			}
 			if (name.endsWith("Test")) {
 				languageSettings {

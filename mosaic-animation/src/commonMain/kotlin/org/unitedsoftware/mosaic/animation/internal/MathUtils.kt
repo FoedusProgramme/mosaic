@@ -105,6 +105,7 @@ internal fun findFirstCubicRoot(p0: Float, p1: Float, p2: Float, p3: Float): Flo
  * imprecision in computations, values in the [-FloatEpsilon..1+FloatEpsilon] range are considered
  * to be in the [0..1] range and clamped appropriately.
  */
+@Suppress("NOTHING_TO_INLINE")
 private inline fun clampValidRootInUnitRange(r: Float): Float {
 	// The code below is a branchless version of:
 	// if (r < 0.0f) {
@@ -138,6 +139,7 @@ internal fun evaluateCubic(p1: Float, p2: Float, t: Float): Float {
 	return 3.0f * ((a * t + b) * t + c) * t
 }
 
+@Suppress("NOTHING_TO_INLINE")
 internal inline fun Double.closeTo(b: Double) = abs(this - b) < Epsilon
 
 internal fun computeCubicVerticalBounds(
@@ -230,6 +232,7 @@ private fun findQuadraticRoots(
  * points. The root, if any, is written in the [roots] array at [index]. Returns 1 if a root was
  * found, 0 otherwise.
  */
+@Suppress("NOTHING_TO_INLINE")
 private inline fun findLineRoot(p0: Float, p1: Float, roots: FloatArray, index: Int = 0) = writeValidRootInUnitRange(-p0 / (p1 - p0), roots, index)
 
 /**
