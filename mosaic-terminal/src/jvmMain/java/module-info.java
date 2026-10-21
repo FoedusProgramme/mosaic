@@ -1,6 +1,6 @@
-module mosaic.terminal {
+module org.unitedsoftware.mosaic.terminal {
 	requires transitive kotlin.stdlib;
 	requires transitive kotlinx.coroutines.core;
 
-	exports com.jakewharton.mosaic.terminal;
+	exports org.unitedsoftware.mosaic.terminal;
 }

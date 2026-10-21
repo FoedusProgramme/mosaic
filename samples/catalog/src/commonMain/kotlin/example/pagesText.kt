@@ -1,27 +1,27 @@
 package example
 
 import androidx.compose.runtime.Composable
-import com.jakewharton.mosaic.LocalTerminalState
-import com.jakewharton.mosaic.layout.drawBehind
-import com.jakewharton.mosaic.layout.height
-import com.jakewharton.mosaic.layout.size
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.text.AnnotatedString
-import com.jakewharton.mosaic.text.SpanStyle
-import com.jakewharton.mosaic.text.buildAnnotatedString
-import com.jakewharton.mosaic.text.withStyle
-import com.jakewharton.mosaic.ui.Box
-import com.jakewharton.mosaic.ui.Color
-import com.jakewharton.mosaic.ui.Column
-import com.jakewharton.mosaic.ui.Row
-import com.jakewharton.mosaic.ui.Spacer
-import com.jakewharton.mosaic.ui.Text
-import com.jakewharton.mosaic.ui.TextStyle
-import com.jakewharton.mosaic.ui.UnderlineStyle
-import com.jakewharton.mosaic.ui.unit.IntOffset
-import com.jakewharton.mosaic.ui.unit.IntSize
 import kotlin.math.abs
 import kotlin.math.floor
+import org.unitedsoftware.mosaic.LocalTerminalState
+import org.unitedsoftware.mosaic.layout.drawBehind
+import org.unitedsoftware.mosaic.layout.height
+import org.unitedsoftware.mosaic.layout.size
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.text.AnnotatedString
+import org.unitedsoftware.mosaic.text.SpanStyle
+import org.unitedsoftware.mosaic.text.buildAnnotatedString
+import org.unitedsoftware.mosaic.text.withStyle
+import org.unitedsoftware.mosaic.ui.Box
+import org.unitedsoftware.mosaic.ui.Color
+import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.Row
+import org.unitedsoftware.mosaic.ui.Spacer
+import org.unitedsoftware.mosaic.ui.Text
+import org.unitedsoftware.mosaic.ui.TextStyle
+import org.unitedsoftware.mosaic.ui.UnderlineStyle
+import org.unitedsoftware.mosaic.ui.unit.IntOffset
+import org.unitedsoftware.mosaic.ui.unit.IntSize
 
 private const val Sample = "The quick brown fox"
 

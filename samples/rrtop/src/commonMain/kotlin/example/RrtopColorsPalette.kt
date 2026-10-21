@@ -3,7 +3,7 @@ package example
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.jakewharton.mosaic.ui.Color
+import org.unitedsoftware.mosaic.ui.Color
 
 val LocalRrtopColorsPalette: ProvidableCompositionLocal<RrtopColorsPalette> =
 	staticCompositionLocalOf { throw IllegalStateException("No colors palette") }

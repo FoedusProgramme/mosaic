@@ -1,0 +1,38 @@
+package org.unitedsoftware.mosaic.tty.terminal
+
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import kotlin.test.Test
+import org.unitedsoftware.mosaic.terminal.KittyKeyboardQueryEvent
+import org.unitedsoftware.mosaic.terminal.UnknownEvent
+
+class EventParserCsiKittyKeyboardQueryEventTest : BaseEventParserTest() {
+	@Test fun flagsNone() {
+		testTerminal.write("$CSI?0u")
+		assertThat(parser.next()).isEqualTo(KittyKeyboardQueryEvent(0))
+	}
+
+	@Test fun flagsAll() {
+		testTerminal.write("$CSI?31u")
+		assertThat(parser.next()).isEqualTo(KittyKeyboardQueryEvent(31))
+	}
+
+	@Test fun flagsUnknown() {
+		testTerminal.write("$CSI?128u")
+		assertThat(parser.next()).isEqualTo(KittyKeyboardQueryEvent(128))
+	}
+
+	@Test fun flagsMissing() {
+		testTerminal.write("$CSI?u")
+		assertThat(parser.next()).isEqualTo(
+			UnknownEvent("1b5b3f75".hexToByteArray()),
+		)
+	}
+
+	@Test fun flagsNonDigit() {
+		testTerminal.write("$CSI?1+ u")
+		assertThat(parser.next()).isEqualTo(
+			UnknownEvent("1b5b3f312b2075".hexToByteArray()),
+		)
+	}
+}

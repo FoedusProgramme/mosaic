@@ -1,5 +1,5 @@
 import co.touchlab.cklib.gradle.CompileToBitcode.Language.C
-import com.jakewharton.mosaic.buildsupport.ZigDownloadTask
+import org.unitedsoftware.mosaic.buildsupport.ZigDownloadTask
 import java.nio.file.FileSystems
 import java.nio.file.Files
 import org.gradle.language.base.plugins.LifecycleBasePlugin.BUILD_GROUP
@@ -11,17 +11,17 @@ import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 
 plugins {
 	alias(libs.plugins.kotlin.multiplatform)
-	id("com.jakewharton.mosaic.targets")
-	id("com.jakewharton.mosaic.publish")
+	id("org.unitedsoftware.mosaic.targets")
+	id("org.unitedsoftware.mosaic.publish")
 	alias(libs.plugins.cklib)
-	id("com.jakewharton.mosaic.build")
+	id("org.unitedsoftware.mosaic.build")
 	alias(libs.plugins.testDistribution)
 	alias(libs.plugins.jextract)
 	alias(libs.plugins.burst)
 }
 
 mosaicBuild {
-	patchJavaModuleWithKotlinClasses("mosaic.tty")
+	patchJavaModuleWithKotlinClasses("org.unitedsoftware.mosaic.tty")
 }
 
 val proGuardClasspath = configurations.create("proGuard")
@@ -47,7 +47,7 @@ jextract.libraries.register("mosaic") {
 	header = file("src/commonMain/c/mosaic.h")
 	includes.add(layout.projectDirectory.dir("src/commonMain/c"))
 	headerClassName = "Libmosaic"
-	targetPackage = "com.jakewharton.mosaic.tty"
+	targetPackage = "org.unitedsoftware.mosaic.tty"
 }
 
 kotlin {
@@ -225,8 +225,8 @@ kotlin {
 				"-libraryjars",
 				"<java.home>/jmods/java.base.jmod(!**.jar;!module-info.class)",
 				// TODO These should be pulled from the jars, but for now this unblocks us.
-				"@src/jvmMain/resources/META-INF/proguard/com.jakewharton.mosaic-tty.pro",
-				"@src/jvmTest/resources/META-INF/proguard/com.jakewharton.mosaic-tty-tests.pro",
+				"@src/jvmMain/resources/META-INF/proguard/org.unitedsoftware.mosaic-tty.pro",
+				"@src/jvmTest/resources/META-INF/proguard/org.unitedsoftware.mosaic-tty-tests.pro",
 			)
 			argumentProviders.add(
 				CommandLineArgumentProvider {
@@ -265,7 +265,7 @@ kotlin {
 	targets.withType<KotlinNativeTarget>().configureEach {
 		compilations.getByName(MAIN_COMPILATION_NAME).cinterops.create("mosaic") {
 			header(file("src/commonMain/c/mosaic.h"))
-			packageName("com.jakewharton.mosaic.tty")
+			packageName("org.unitedsoftware.mosaic.tty")
 			compilerOpts(
 				"-std=gnu11",
 				"-Wall",

@@ -1,114 +1,114 @@
-public abstract interface class com/jakewharton/mosaic/Mosaic {
+public abstract interface class org/unitedsoftware/mosaic/Mosaic {
 	public abstract fun awaitComplete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun cancel ()V
-	public abstract fun draw ()Lcom/jakewharton/mosaic/TextCanvas;
+	public abstract fun draw ()Lorg/unitedsoftware/mosaic/TextCanvas;
 	public abstract fun dumpNodes ()Ljava/lang/String;
 	public abstract fun setContent (Lkotlin/jvm/functions/Function2;)V
 	public abstract fun static ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/MosaicKt {
-	public static final fun Mosaic (Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function1;Lcom/jakewharton/mosaic/terminal/Terminal;)Lcom/jakewharton/mosaic/Mosaic;
-	public static final fun runMosaic (Lcom/jakewharton/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun runMosaic$default (Lcom/jakewharton/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static final fun runMosaicBlocking (Lcom/jakewharton/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;)Z
-	public static synthetic fun runMosaicBlocking$default (Lcom/jakewharton/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Z
+public final class org/unitedsoftware/mosaic/MosaicKt {
+	public static final fun Mosaic (Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function1;Lorg/unitedsoftware/mosaic/terminal/Terminal;)Lorg/unitedsoftware/mosaic/Mosaic;
+	public static final fun runMosaic (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun runMosaic$default (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun runMosaicBlocking (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;)Z
+	public static synthetic fun runMosaicBlocking$default (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Z
 	public static final fun runMosaicMain (Lkotlin/jvm/functions/Function2;)V
 }
 
-public final class com/jakewharton/mosaic/NonInteractivePolicy : java/lang/Enum {
-	public static final field AssumeAndIgnore Lcom/jakewharton/mosaic/NonInteractivePolicy;
-	public static final field Exit Lcom/jakewharton/mosaic/NonInteractivePolicy;
-	public static final field Ignore Lcom/jakewharton/mosaic/NonInteractivePolicy;
-	public static final field Return Lcom/jakewharton/mosaic/NonInteractivePolicy;
-	public static final field Throw Lcom/jakewharton/mosaic/NonInteractivePolicy;
+public final class org/unitedsoftware/mosaic/NonInteractivePolicy : java/lang/Enum {
+	public static final field AssumeAndIgnore Lorg/unitedsoftware/mosaic/NonInteractivePolicy;
+	public static final field Exit Lorg/unitedsoftware/mosaic/NonInteractivePolicy;
+	public static final field Ignore Lorg/unitedsoftware/mosaic/NonInteractivePolicy;
+	public static final field Return Lorg/unitedsoftware/mosaic/NonInteractivePolicy;
+	public static final field Throw Lorg/unitedsoftware/mosaic/NonInteractivePolicy;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/jakewharton/mosaic/NonInteractivePolicy;
-	public static fun values ()[Lcom/jakewharton/mosaic/NonInteractivePolicy;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/NonInteractivePolicy;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/NonInteractivePolicy;
 }
 
-public final class com/jakewharton/mosaic/Static {
+public final class org/unitedsoftware/mosaic/Static {
 	public static final fun StaticEffect (Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
 	public static final fun getLocalStaticLogger ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
-public final class com/jakewharton/mosaic/StaticLogger {
+public final class org/unitedsoftware/mosaic/StaticLogger {
 	public static final field $stable I
-	public final fun log (Lcom/jakewharton/mosaic/TextCanvas;)V
 	public final fun log (Ljava/lang/String;)V
-	public final fun plusAssign (Lcom/jakewharton/mosaic/TextCanvas;)V
+	public final fun log (Lorg/unitedsoftware/mosaic/TextCanvas;)V
 	public final fun plusAssign (Ljava/lang/String;)V
+	public final fun plusAssign (Lorg/unitedsoftware/mosaic/TextCanvas;)V
 }
 
-public final class com/jakewharton/mosaic/TerminalState {
+public final class org/unitedsoftware/mosaic/TerminalState {
 	public static final field $stable I
-	public fun <init> (ZLcom/jakewharton/mosaic/terminal/Terminal$Theme;Lcom/jakewharton/mosaic/terminal/Terminal$Size;)V
+	public fun <init> (ZLorg/unitedsoftware/mosaic/terminal/Terminal$Theme;Lorg/unitedsoftware/mosaic/terminal/Terminal$Size;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getFocused ()Z
-	public final fun getSize ()Lcom/jakewharton/mosaic/terminal/Terminal$Size;
-	public final fun getTheme ()Lcom/jakewharton/mosaic/terminal/Terminal$Theme;
+	public final fun getSize ()Lorg/unitedsoftware/mosaic/terminal/Terminal$Size;
+	public final fun getTheme ()Lorg/unitedsoftware/mosaic/terminal/Terminal$Theme;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/TerminalStateKt {
+public final class org/unitedsoftware/mosaic/TerminalStateKt {
 	public static final fun getLocalTerminalState ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
-public abstract interface class com/jakewharton/mosaic/TextCanvas {
-	public abstract fun appendRowTo (Ljava/lang/Appendable;ILcom/jakewharton/mosaic/terminal/AnsiLevel;Z)V
+public abstract interface class org/unitedsoftware/mosaic/TextCanvas {
+	public abstract fun appendRowTo (Ljava/lang/Appendable;ILorg/unitedsoftware/mosaic/terminal/AnsiLevel;Z)V
 	public abstract fun getHeight ()I
 	public abstract fun getWidth ()I
-	public abstract fun render (Lcom/jakewharton/mosaic/terminal/AnsiLevel;Z)Ljava/lang/String;
+	public abstract fun render (Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;Z)Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/layout/AspectRatioKt {
-	public static final fun aspectRatio (Lcom/jakewharton/mosaic/modifier/Modifier;FZ)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun aspectRatio$default (Lcom/jakewharton/mosaic/modifier/Modifier;FZILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/layout/AspectRatioKt {
+	public static final fun aspectRatio (Lorg/unitedsoftware/mosaic/modifier/Modifier;FZ)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun aspectRatio$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;FZILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public final class com/jakewharton/mosaic/layout/BackgroundKt {
-	public static final fun background-fCupJr8 (Lcom/jakewharton/mosaic/modifier/Modifier;I)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/layout/BackgroundKt {
+	public static final fun background-hx1xPZo (Lorg/unitedsoftware/mosaic/modifier/Modifier;I)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/ContentDrawScope : com/jakewharton/mosaic/layout/DrawScope {
+public abstract interface class org/unitedsoftware/mosaic/layout/ContentDrawScope : org/unitedsoftware/mosaic/layout/DrawScope {
 	public abstract fun drawContent ()V
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/DrawModifier : com/jakewharton/mosaic/modifier/Modifier$Element {
-	public abstract fun draw (Lcom/jakewharton/mosaic/layout/ContentDrawScope;)V
+public abstract interface class org/unitedsoftware/mosaic/layout/DrawModifier : org/unitedsoftware/mosaic/modifier/Modifier$Element {
+	public abstract fun draw (Lorg/unitedsoftware/mosaic/layout/ContentDrawScope;)V
 	public abstract fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/layout/DrawModifierKt {
-	public static final fun drawBehind (Lcom/jakewharton/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/layout/DrawModifierKt {
+	public static final fun drawBehind (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/DrawScope {
-	public abstract fun drawRect-K-Y9Gx4 (CIIIJJLcom/jakewharton/mosaic/layout/DrawStyle;)V
-	public abstract fun drawRect-K-Y9Gx4 (IIIIJJLcom/jakewharton/mosaic/layout/DrawStyle;)V
-	public static synthetic fun drawRect-K-Y9Gx4$default (Lcom/jakewharton/mosaic/layout/DrawScope;CIIIJJLcom/jakewharton/mosaic/layout/DrawStyle;ILjava/lang/Object;)V
-	public static synthetic fun drawRect-K-Y9Gx4$default (Lcom/jakewharton/mosaic/layout/DrawScope;IIIIJJLcom/jakewharton/mosaic/layout/DrawStyle;ILjava/lang/Object;)V
-	public abstract fun drawText-DIarRE8 (IILcom/jakewharton/mosaic/text/AnnotatedString;IIIII)V
-	public abstract fun drawText-DIarRE8 (IILjava/lang/String;IIIII)V
-	public static synthetic fun drawText-DIarRE8$default (Lcom/jakewharton/mosaic/layout/DrawScope;IILcom/jakewharton/mosaic/text/AnnotatedString;IIIIIILjava/lang/Object;)V
-	public static synthetic fun drawText-DIarRE8$default (Lcom/jakewharton/mosaic/layout/DrawScope;IILjava/lang/String;IIIIIILjava/lang/Object;)V
+public abstract interface class org/unitedsoftware/mosaic/layout/DrawScope {
+	public abstract fun drawRect-4e5QVYw (CIIIJJLorg/unitedsoftware/mosaic/layout/DrawStyle;)V
+	public abstract fun drawRect-4e5QVYw (IIIIJJLorg/unitedsoftware/mosaic/layout/DrawStyle;)V
+	public static synthetic fun drawRect-4e5QVYw$default (Lorg/unitedsoftware/mosaic/layout/DrawScope;CIIIJJLorg/unitedsoftware/mosaic/layout/DrawStyle;ILjava/lang/Object;)V
+	public static synthetic fun drawRect-4e5QVYw$default (Lorg/unitedsoftware/mosaic/layout/DrawScope;IIIIJJLorg/unitedsoftware/mosaic/layout/DrawStyle;ILjava/lang/Object;)V
+	public abstract fun drawText-dpin5fw (IILjava/lang/String;IIIII)V
+	public abstract fun drawText-dpin5fw (IILorg/unitedsoftware/mosaic/text/AnnotatedString;IIIII)V
+	public static synthetic fun drawText-dpin5fw$default (Lorg/unitedsoftware/mosaic/layout/DrawScope;IILjava/lang/String;IIIIIILjava/lang/Object;)V
+	public static synthetic fun drawText-dpin5fw$default (Lorg/unitedsoftware/mosaic/layout/DrawScope;IILorg/unitedsoftware/mosaic/text/AnnotatedString;IIIIIILjava/lang/Object;)V
 	public abstract fun getHeight ()I
 	public abstract fun getWidth ()I
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/DrawStyle {
+public abstract interface class org/unitedsoftware/mosaic/layout/DrawStyle {
 }
 
-public final class com/jakewharton/mosaic/layout/DrawStyle$Fill : com/jakewharton/mosaic/layout/DrawStyle {
+public final class org/unitedsoftware/mosaic/layout/DrawStyle$Fill : org/unitedsoftware/mosaic/layout/DrawStyle {
 	public static final field $stable I
-	public static final field INSTANCE Lcom/jakewharton/mosaic/layout/DrawStyle$Fill;
+	public static final field INSTANCE Lorg/unitedsoftware/mosaic/layout/DrawStyle$Fill;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/layout/DrawStyle$Stroke : com/jakewharton/mosaic/layout/DrawStyle {
+public final class org/unitedsoftware/mosaic/layout/DrawStyle$Stroke : org/unitedsoftware/mosaic/layout/DrawStyle {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (I)V
@@ -118,14 +118,14 @@ public final class com/jakewharton/mosaic/layout/DrawStyle$Stroke : com/jakewhar
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/layout/IntrinsicKt {
-	public static final fun height (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/layout/IntrinsicSize;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun requiredHeight (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/layout/IntrinsicSize;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun requiredWidth (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/layout/IntrinsicSize;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun width (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/layout/IntrinsicSize;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/layout/IntrinsicKt {
+	public static final fun height (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/IntrinsicSize;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun requiredHeight (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/IntrinsicSize;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun requiredWidth (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/IntrinsicSize;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun width (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/IntrinsicSize;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/IntrinsicMeasurable {
+public abstract interface class org/unitedsoftware/mosaic/layout/IntrinsicMeasurable {
 	public abstract fun getParentData ()Ljava/lang/Object;
 	public abstract fun maxIntrinsicHeight (I)I
 	public abstract fun maxIntrinsicWidth (I)I
@@ -133,15 +133,15 @@ public abstract interface class com/jakewharton/mosaic/layout/IntrinsicMeasurabl
 	public abstract fun minIntrinsicWidth (I)I
 }
 
-public final class com/jakewharton/mosaic/layout/IntrinsicSize : java/lang/Enum {
-	public static final field Max Lcom/jakewharton/mosaic/layout/IntrinsicSize;
-	public static final field Min Lcom/jakewharton/mosaic/layout/IntrinsicSize;
+public final class org/unitedsoftware/mosaic/layout/IntrinsicSize : java/lang/Enum {
+	public static final field Max Lorg/unitedsoftware/mosaic/layout/IntrinsicSize;
+	public static final field Min Lorg/unitedsoftware/mosaic/layout/IntrinsicSize;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/jakewharton/mosaic/layout/IntrinsicSize;
-	public static fun values ()[Lcom/jakewharton/mosaic/layout/IntrinsicSize;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/layout/IntrinsicSize;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/layout/IntrinsicSize;
 }
 
-public final class com/jakewharton/mosaic/layout/KeyEvent {
+public final class org/unitedsoftware/mosaic/layout/KeyEvent {
 	public static final field $stable I
 	public fun <init> (Ljava/lang/String;ZZZ)V
 	public synthetic fun <init> (Ljava/lang/String;ZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -154,75 +154,75 @@ public final class com/jakewharton/mosaic/layout/KeyEvent {
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/KeyModifier : com/jakewharton/mosaic/modifier/Modifier$Element {
-	public abstract fun onKeyEvent (Lcom/jakewharton/mosaic/layout/KeyEvent;)Z
-	public abstract fun onPreKeyEvent (Lcom/jakewharton/mosaic/layout/KeyEvent;)Z
+public abstract interface class org/unitedsoftware/mosaic/layout/KeyModifier : org/unitedsoftware/mosaic/modifier/Modifier$Element {
+	public abstract fun onKeyEvent (Lorg/unitedsoftware/mosaic/layout/KeyEvent;)Z
+	public abstract fun onPreKeyEvent (Lorg/unitedsoftware/mosaic/layout/KeyEvent;)Z
 }
 
-public final class com/jakewharton/mosaic/layout/KeyModifierKt {
-	public static final fun onKeyEvent (Lcom/jakewharton/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun onPreviewKeyEvent (Lcom/jakewharton/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/layout/KeyModifierKt {
+	public static final fun onKeyEvent (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun onPreviewKeyEvent (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public final class com/jakewharton/mosaic/layout/LayoutIdKt {
-	public static final fun getLayoutId (Lcom/jakewharton/mosaic/layout/Measurable;)Ljava/lang/Object;
-	public static final fun layoutId (Lcom/jakewharton/mosaic/modifier/Modifier;Ljava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/layout/LayoutIdKt {
+	public static final fun getLayoutId (Lorg/unitedsoftware/mosaic/layout/Measurable;)Ljava/lang/Object;
+	public static final fun layoutId (Lorg/unitedsoftware/mosaic/modifier/Modifier;Ljava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/LayoutModifier : com/jakewharton/mosaic/modifier/Modifier$Element {
-	public fun maxIntrinsicHeight (Lcom/jakewharton/mosaic/layout/IntrinsicMeasurable;I)I
-	public fun maxIntrinsicWidth (Lcom/jakewharton/mosaic/layout/IntrinsicMeasurable;I)I
-	public abstract fun measure-XHGvXM0 (Lcom/jakewharton/mosaic/layout/MeasureScope;Lcom/jakewharton/mosaic/layout/Measurable;J)Lcom/jakewharton/mosaic/layout/MeasureResult;
-	public fun minIntrinsicHeight (Lcom/jakewharton/mosaic/layout/IntrinsicMeasurable;I)I
-	public fun minIntrinsicWidth (Lcom/jakewharton/mosaic/layout/IntrinsicMeasurable;I)I
+public abstract interface class org/unitedsoftware/mosaic/layout/LayoutModifier : org/unitedsoftware/mosaic/modifier/Modifier$Element {
+	public fun maxIntrinsicHeight (Lorg/unitedsoftware/mosaic/layout/IntrinsicMeasurable;I)I
+	public fun maxIntrinsicWidth (Lorg/unitedsoftware/mosaic/layout/IntrinsicMeasurable;I)I
+	public abstract fun measure-evsceE4 (Lorg/unitedsoftware/mosaic/layout/MeasureScope;Lorg/unitedsoftware/mosaic/layout/Measurable;J)Lorg/unitedsoftware/mosaic/layout/MeasureResult;
+	public fun minIntrinsicHeight (Lorg/unitedsoftware/mosaic/layout/IntrinsicMeasurable;I)I
+	public fun minIntrinsicWidth (Lorg/unitedsoftware/mosaic/layout/IntrinsicMeasurable;I)I
 	public abstract fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/layout/LayoutModifierKt {
-	public static final fun layout (Lcom/jakewharton/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function3;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/layout/LayoutModifierKt {
+	public static final fun layout (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function3;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/Measurable : com/jakewharton/mosaic/layout/IntrinsicMeasurable {
-	public abstract fun measure-no9GUbM (J)Lcom/jakewharton/mosaic/layout/Placeable;
+public abstract interface class org/unitedsoftware/mosaic/layout/Measurable : org/unitedsoftware/mosaic/layout/IntrinsicMeasurable {
+	public abstract fun measure-Jch7uK0 (J)Lorg/unitedsoftware/mosaic/layout/Placeable;
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/MeasurePolicy {
+public abstract interface class org/unitedsoftware/mosaic/layout/MeasurePolicy {
 	public fun maxIntrinsicHeight (Ljava/util/List;I)I
 	public fun maxIntrinsicWidth (Ljava/util/List;I)I
-	public abstract fun measure-XHGvXM0 (Lcom/jakewharton/mosaic/layout/MeasureScope;Ljava/util/List;J)Lcom/jakewharton/mosaic/layout/MeasureResult;
+	public abstract fun measure-evsceE4 (Lorg/unitedsoftware/mosaic/layout/MeasureScope;Ljava/util/List;J)Lorg/unitedsoftware/mosaic/layout/MeasureResult;
 	public fun minIntrinsicHeight (Ljava/util/List;I)I
 	public fun minIntrinsicWidth (Ljava/util/List;I)I
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/MeasureResult {
+public abstract interface class org/unitedsoftware/mosaic/layout/MeasureResult {
 	public abstract fun getHeight ()I
 	public abstract fun getWidth ()I
 	public abstract fun placeChildren ()V
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/MeasureScope {
-	public fun layout (IILkotlin/jvm/functions/Function1;)Lcom/jakewharton/mosaic/layout/MeasureResult;
+public abstract interface class org/unitedsoftware/mosaic/layout/MeasureScope {
+	public fun layout (IILkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/layout/MeasureResult;
 }
 
-public final class com/jakewharton/mosaic/layout/OffsetKt {
-	public static final fun offset (Lcom/jakewharton/mosaic/modifier/Modifier;II)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun offset (Lcom/jakewharton/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function0;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun offset$default (Lcom/jakewharton/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/layout/OffsetKt {
+	public static final fun offset (Lorg/unitedsoftware/mosaic/modifier/Modifier;II)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun offset (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function0;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun offset$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public final class com/jakewharton/mosaic/layout/PaddingKt {
-	public static final fun padding (Lcom/jakewharton/mosaic/modifier/Modifier;I)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun padding (Lcom/jakewharton/mosaic/modifier/Modifier;II)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun padding (Lcom/jakewharton/mosaic/modifier/Modifier;IIII)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun padding$default (Lcom/jakewharton/mosaic/modifier/Modifier;IIIIILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun padding$default (Lcom/jakewharton/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/layout/PaddingKt {
+	public static final fun padding (Lorg/unitedsoftware/mosaic/modifier/Modifier;I)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun padding (Lorg/unitedsoftware/mosaic/modifier/Modifier;II)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun padding (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIII)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun padding$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun padding$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/ParentDataModifier : com/jakewharton/mosaic/modifier/Modifier$Element {
+public abstract interface class org/unitedsoftware/mosaic/layout/ParentDataModifier : org/unitedsoftware/mosaic/modifier/Modifier$Element {
 	public abstract fun modifyParentData (Ljava/lang/Object;)Ljava/lang/Object;
 }
 
-public abstract class com/jakewharton/mosaic/layout/Placeable {
+public abstract class org/unitedsoftware/mosaic/layout/Placeable {
 	public static final field $stable I
 	public fun <init> ()V
 	public abstract fun getHeight ()I
@@ -230,55 +230,55 @@ public abstract class com/jakewharton/mosaic/layout/Placeable {
 	protected abstract fun placeAt (II)V
 }
 
-public abstract interface class com/jakewharton/mosaic/layout/Placeable$PlacementScope {
+public abstract interface class org/unitedsoftware/mosaic/layout/Placeable$PlacementScope {
 	public abstract fun getX ()I
 	public abstract fun getY ()I
-	public fun place (Lcom/jakewharton/mosaic/layout/Placeable;II)V
-	public fun place-2QaL3TI (Lcom/jakewharton/mosaic/layout/Placeable;J)V
+	public fun place (Lorg/unitedsoftware/mosaic/layout/Placeable;II)V
+	public fun place-_kBr-tg (Lorg/unitedsoftware/mosaic/layout/Placeable;J)V
 }
 
-public final class com/jakewharton/mosaic/layout/SizeKt {
-	public static final fun defaultMinSize (Lcom/jakewharton/mosaic/modifier/Modifier;II)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun defaultMinSize$default (Lcom/jakewharton/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun fillMaxHeight (Lcom/jakewharton/mosaic/modifier/Modifier;F)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun fillMaxHeight$default (Lcom/jakewharton/mosaic/modifier/Modifier;FILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun fillMaxSize (Lcom/jakewharton/mosaic/modifier/Modifier;F)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun fillMaxSize$default (Lcom/jakewharton/mosaic/modifier/Modifier;FILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun fillMaxWidth (Lcom/jakewharton/mosaic/modifier/Modifier;F)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun fillMaxWidth$default (Lcom/jakewharton/mosaic/modifier/Modifier;FILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun height (Lcom/jakewharton/mosaic/modifier/Modifier;I)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun heightIn (Lcom/jakewharton/mosaic/modifier/Modifier;II)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun heightIn$default (Lcom/jakewharton/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun requiredHeight (Lcom/jakewharton/mosaic/modifier/Modifier;I)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun requiredHeightIn (Lcom/jakewharton/mosaic/modifier/Modifier;II)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun requiredHeightIn$default (Lcom/jakewharton/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun requiredSize (Lcom/jakewharton/mosaic/modifier/Modifier;I)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun requiredSize (Lcom/jakewharton/mosaic/modifier/Modifier;II)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun requiredSize-8eLrhyM (Lcom/jakewharton/mosaic/modifier/Modifier;J)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun requiredSizeIn (Lcom/jakewharton/mosaic/modifier/Modifier;IIII)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun requiredSizeIn$default (Lcom/jakewharton/mosaic/modifier/Modifier;IIIIILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun requiredWidth (Lcom/jakewharton/mosaic/modifier/Modifier;I)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun requiredWidthIn (Lcom/jakewharton/mosaic/modifier/Modifier;II)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun requiredWidthIn$default (Lcom/jakewharton/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun size (Lcom/jakewharton/mosaic/modifier/Modifier;I)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun size (Lcom/jakewharton/mosaic/modifier/Modifier;II)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun size-8eLrhyM (Lcom/jakewharton/mosaic/modifier/Modifier;J)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun sizeIn (Lcom/jakewharton/mosaic/modifier/Modifier;IIII)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun sizeIn$default (Lcom/jakewharton/mosaic/modifier/Modifier;IIIIILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun width (Lcom/jakewharton/mosaic/modifier/Modifier;I)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun widthIn (Lcom/jakewharton/mosaic/modifier/Modifier;II)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun widthIn$default (Lcom/jakewharton/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun wrapContentHeight (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Alignment$Vertical;Z)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun wrapContentHeight$default (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Alignment$Vertical;ZILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun wrapContentSize (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Alignment;Z)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun wrapContentSize$default (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Alignment;ZILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun wrapContentWidth (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Alignment$Horizontal;Z)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun wrapContentWidth$default (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Alignment$Horizontal;ZILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/layout/SizeKt {
+	public static final fun defaultMinSize (Lorg/unitedsoftware/mosaic/modifier/Modifier;II)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun defaultMinSize$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun fillMaxHeight (Lorg/unitedsoftware/mosaic/modifier/Modifier;F)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun fillMaxHeight$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;FILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun fillMaxSize (Lorg/unitedsoftware/mosaic/modifier/Modifier;F)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun fillMaxSize$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;FILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun fillMaxWidth (Lorg/unitedsoftware/mosaic/modifier/Modifier;F)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun fillMaxWidth$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;FILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun height (Lorg/unitedsoftware/mosaic/modifier/Modifier;I)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun heightIn (Lorg/unitedsoftware/mosaic/modifier/Modifier;II)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun heightIn$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun requiredHeight (Lorg/unitedsoftware/mosaic/modifier/Modifier;I)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun requiredHeightIn (Lorg/unitedsoftware/mosaic/modifier/Modifier;II)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun requiredHeightIn$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun requiredSize (Lorg/unitedsoftware/mosaic/modifier/Modifier;I)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun requiredSize (Lorg/unitedsoftware/mosaic/modifier/Modifier;II)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun requiredSize-9o19ltA (Lorg/unitedsoftware/mosaic/modifier/Modifier;J)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun requiredSizeIn (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIII)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun requiredSizeIn$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun requiredWidth (Lorg/unitedsoftware/mosaic/modifier/Modifier;I)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun requiredWidthIn (Lorg/unitedsoftware/mosaic/modifier/Modifier;II)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun requiredWidthIn$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun size (Lorg/unitedsoftware/mosaic/modifier/Modifier;I)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun size (Lorg/unitedsoftware/mosaic/modifier/Modifier;II)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun size-9o19ltA (Lorg/unitedsoftware/mosaic/modifier/Modifier;J)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun sizeIn (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIII)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun sizeIn$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun width (Lorg/unitedsoftware/mosaic/modifier/Modifier;I)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun widthIn (Lorg/unitedsoftware/mosaic/modifier/Modifier;II)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun widthIn$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;IIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun wrapContentHeight (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Alignment$Vertical;Z)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun wrapContentHeight$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Alignment$Vertical;ZILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun wrapContentSize (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Alignment;Z)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun wrapContentSize$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Alignment;ZILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun wrapContentWidth (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;Z)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun wrapContentWidth$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;ZILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public final class com/jakewharton/mosaic/modifier/CombinedModifier : com/jakewharton/mosaic/modifier/Modifier {
+public final class org/unitedsoftware/mosaic/modifier/CombinedModifier : org/unitedsoftware/mosaic/modifier/Modifier {
 	public static final field $stable I
-	public fun <init> (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/modifier/Modifier;)V
+	public fun <init> (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/modifier/Modifier;)V
 	public fun all (Lkotlin/jvm/functions/Function1;)Z
 	public fun any (Lkotlin/jvm/functions/Function1;)Z
 	public fun equals (Ljava/lang/Object;)Z
@@ -288,41 +288,41 @@ public final class com/jakewharton/mosaic/modifier/CombinedModifier : com/jakewh
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/modifier/ComposedModifierKt {
-	public static final fun composed (Lcom/jakewharton/mosaic/modifier/Modifier;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function3;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun composed (Lcom/jakewharton/mosaic/modifier/Modifier;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function3;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun composed (Lcom/jakewharton/mosaic/modifier/Modifier;Ljava/lang/String;Ljava/lang/Object;Lkotlin/jvm/functions/Function3;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun composed (Lcom/jakewharton/mosaic/modifier/Modifier;Ljava/lang/String;[Ljava/lang/Object;Lkotlin/jvm/functions/Function3;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun composed (Lcom/jakewharton/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function3;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static final fun materialize (Landroidx/compose/runtime/Composer;Lcom/jakewharton/mosaic/modifier/Modifier;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public final class org/unitedsoftware/mosaic/modifier/ComposedModifierKt {
+	public static final fun composed (Lorg/unitedsoftware/mosaic/modifier/Modifier;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function3;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun composed (Lorg/unitedsoftware/mosaic/modifier/Modifier;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function3;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun composed (Lorg/unitedsoftware/mosaic/modifier/Modifier;Ljava/lang/String;Ljava/lang/Object;Lkotlin/jvm/functions/Function3;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun composed (Lorg/unitedsoftware/mosaic/modifier/Modifier;Ljava/lang/String;[Ljava/lang/Object;Lkotlin/jvm/functions/Function3;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun composed (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function3;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun materialize (Landroidx/compose/runtime/Composer;Lorg/unitedsoftware/mosaic/modifier/Modifier;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public abstract interface class com/jakewharton/mosaic/modifier/Modifier {
-	public static final field Companion Lcom/jakewharton/mosaic/modifier/Modifier$Companion;
+public abstract interface class org/unitedsoftware/mosaic/modifier/Modifier {
+	public static final field Companion Lorg/unitedsoftware/mosaic/modifier/Modifier$Companion;
 	public abstract fun all (Lkotlin/jvm/functions/Function1;)Z
 	public abstract fun any (Lkotlin/jvm/functions/Function1;)Z
 	public abstract fun foldIn (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
 	public abstract fun foldOut (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
-	public fun then (Lcom/jakewharton/mosaic/modifier/Modifier;)Lcom/jakewharton/mosaic/modifier/Modifier;
+	public fun then (Lorg/unitedsoftware/mosaic/modifier/Modifier;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public final class com/jakewharton/mosaic/modifier/Modifier$Companion : com/jakewharton/mosaic/modifier/Modifier {
+public final class org/unitedsoftware/mosaic/modifier/Modifier$Companion : org/unitedsoftware/mosaic/modifier/Modifier {
 	public fun all (Lkotlin/jvm/functions/Function1;)Z
 	public fun any (Lkotlin/jvm/functions/Function1;)Z
 	public fun foldIn (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
 	public fun foldOut (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
-	public fun then (Lcom/jakewharton/mosaic/modifier/Modifier;)Lcom/jakewharton/mosaic/modifier/Modifier;
+	public fun then (Lorg/unitedsoftware/mosaic/modifier/Modifier;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class com/jakewharton/mosaic/modifier/Modifier$Element : com/jakewharton/mosaic/modifier/Modifier {
+public abstract interface class org/unitedsoftware/mosaic/modifier/Modifier$Element : org/unitedsoftware/mosaic/modifier/Modifier {
 	public fun all (Lkotlin/jvm/functions/Function1;)Z
 	public fun any (Lkotlin/jvm/functions/Function1;)Z
 	public fun foldIn (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
 	public fun foldOut (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
 }
 
-public final class com/jakewharton/mosaic/text/AnnotatedString : java/lang/CharSequence {
+public final class org/unitedsoftware/mosaic/text/AnnotatedString : java/lang/CharSequence {
 	public static final field $stable I
 	public final fun charAt (I)C
 	public fun equals (Ljava/lang/Object;)Z
@@ -332,37 +332,37 @@ public final class com/jakewharton/mosaic/text/AnnotatedString : java/lang/CharS
 	public final fun getText ()Ljava/lang/String;
 	public fun hashCode ()I
 	public final fun length ()I
-	public final fun plus (Lcom/jakewharton/mosaic/text/AnnotatedString;)Lcom/jakewharton/mosaic/text/AnnotatedString;
-	public fun subSequence (II)Lcom/jakewharton/mosaic/text/AnnotatedString;
+	public final fun plus (Lorg/unitedsoftware/mosaic/text/AnnotatedString;)Lorg/unitedsoftware/mosaic/text/AnnotatedString;
 	public synthetic fun subSequence (II)Ljava/lang/CharSequence;
+	public fun subSequence (II)Lorg/unitedsoftware/mosaic/text/AnnotatedString;
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/text/AnnotatedString$Builder : java/lang/Appendable {
+public final class org/unitedsoftware/mosaic/text/AnnotatedString$Builder : java/lang/Appendable {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lcom/jakewharton/mosaic/text/AnnotatedString;)V
 	public fun <init> (Ljava/lang/String;)V
-	public final fun addStyle (Lcom/jakewharton/mosaic/text/SpanStyle;II)V
-	public fun append (C)Lcom/jakewharton/mosaic/text/AnnotatedString$Builder;
+	public fun <init> (Lorg/unitedsoftware/mosaic/text/AnnotatedString;)V
+	public final fun addStyle (Lorg/unitedsoftware/mosaic/text/SpanStyle;II)V
 	public synthetic fun append (C)Ljava/lang/Appendable;
-	public final fun append (Lcom/jakewharton/mosaic/text/AnnotatedString;)V
-	public final fun append (Lcom/jakewharton/mosaic/text/AnnotatedString;II)V
-	public fun append (Ljava/lang/CharSequence;)Lcom/jakewharton/mosaic/text/AnnotatedString$Builder;
+	public fun append (C)Lorg/unitedsoftware/mosaic/text/AnnotatedString$Builder;
 	public synthetic fun append (Ljava/lang/CharSequence;)Ljava/lang/Appendable;
-	public fun append (Ljava/lang/CharSequence;II)Lcom/jakewharton/mosaic/text/AnnotatedString$Builder;
+	public fun append (Ljava/lang/CharSequence;)Lorg/unitedsoftware/mosaic/text/AnnotatedString$Builder;
 	public synthetic fun append (Ljava/lang/CharSequence;II)Ljava/lang/Appendable;
+	public fun append (Ljava/lang/CharSequence;II)Lorg/unitedsoftware/mosaic/text/AnnotatedString$Builder;
 	public final fun append (Ljava/lang/String;)V
+	public final fun append (Lorg/unitedsoftware/mosaic/text/AnnotatedString;)V
+	public final fun append (Lorg/unitedsoftware/mosaic/text/AnnotatedString;II)V
 	public final fun getLength ()I
 	public final fun pop ()V
 	public final fun pop (I)V
-	public final fun pushStyle (Lcom/jakewharton/mosaic/text/SpanStyle;)I
-	public final fun toAnnotatedString ()Lcom/jakewharton/mosaic/text/AnnotatedString;
+	public final fun pushStyle (Lorg/unitedsoftware/mosaic/text/SpanStyle;)I
+	public final fun toAnnotatedString ()Lorg/unitedsoftware/mosaic/text/AnnotatedString;
 }
 
-public final class com/jakewharton/mosaic/text/AnnotatedString$Range {
+public final class org/unitedsoftware/mosaic/text/AnnotatedString$Range {
 	public static final field $stable I
 	public fun <init> (Ljava/lang/Object;II)V
 	public fun equals (Ljava/lang/Object;)Z
@@ -373,114 +373,114 @@ public final class com/jakewharton/mosaic/text/AnnotatedString$Range {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/text/AnnotatedStringKt {
-	public static final fun AnnotatedString (Ljava/lang/String;Lcom/jakewharton/mosaic/text/SpanStyle;)Lcom/jakewharton/mosaic/text/AnnotatedString;
-	public static final fun buildAnnotatedString (Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/mosaic/text/AnnotatedString;
-	public static final fun withStyle (Lcom/jakewharton/mosaic/text/AnnotatedString$Builder;Lcom/jakewharton/mosaic/text/SpanStyle;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+public final class org/unitedsoftware/mosaic/text/AnnotatedStringKt {
+	public static final fun AnnotatedString (Ljava/lang/String;Lorg/unitedsoftware/mosaic/text/SpanStyle;)Lorg/unitedsoftware/mosaic/text/AnnotatedString;
+	public static final fun buildAnnotatedString (Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/text/AnnotatedString;
+	public static final fun withStyle (Lorg/unitedsoftware/mosaic/text/AnnotatedString$Builder;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 }
 
-public final class com/jakewharton/mosaic/text/SpanStyle {
+public final class org/unitedsoftware/mosaic/text/SpanStyle {
 	public static final field $stable I
 	public fun <init> ()V
 	public synthetic fun <init> (IIIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (IIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy-5kpQ8cY (IIIII)Lcom/jakewharton/mosaic/text/SpanStyle;
-	public static synthetic fun copy-5kpQ8cY$default (Lcom/jakewharton/mosaic/text/SpanStyle;IIIIIILjava/lang/Object;)Lcom/jakewharton/mosaic/text/SpanStyle;
+	public final fun copy-Wv8WuLs (IIIII)Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public static synthetic fun copy-Wv8WuLs$default (Lorg/unitedsoftware/mosaic/text/SpanStyle;IIIIIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/text/SpanStyle;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBackground-OrXnJU4 ()I
-	public final fun getColor-OrXnJU4 ()I
-	public final fun getTextStyle-4EWmQI8 ()I
-	public final fun getUnderlineColor-OrXnJU4 ()I
-	public final fun getUnderlineStyle-4rOp0I0 ()I
+	public final fun getBackground-tUi8tvw ()I
+	public final fun getColor-tUi8tvw ()I
+	public final fun getTextStyle-nHZupTw ()I
+	public final fun getUnderlineColor-tUi8tvw ()I
+	public final fun getUnderlineStyle-n3rDR_A ()I
 	public fun hashCode ()I
-	public final fun merge (Lcom/jakewharton/mosaic/text/SpanStyle;)Lcom/jakewharton/mosaic/text/SpanStyle;
-	public static synthetic fun merge$default (Lcom/jakewharton/mosaic/text/SpanStyle;Lcom/jakewharton/mosaic/text/SpanStyle;ILjava/lang/Object;)Lcom/jakewharton/mosaic/text/SpanStyle;
-	public final fun plus (Lcom/jakewharton/mosaic/text/SpanStyle;)Lcom/jakewharton/mosaic/text/SpanStyle;
+	public final fun merge (Lorg/unitedsoftware/mosaic/text/SpanStyle;)Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public static synthetic fun merge$default (Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;ILjava/lang/Object;)Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun plus (Lorg/unitedsoftware/mosaic/text/SpanStyle;)Lorg/unitedsoftware/mosaic/text/SpanStyle;
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class com/jakewharton/mosaic/ui/Alignment {
-	public static final field Companion Lcom/jakewharton/mosaic/ui/Alignment$Companion;
-	public abstract fun align-TebIBXo (JJ)J
+public abstract interface class org/unitedsoftware/mosaic/ui/Alignment {
+	public static final field Companion Lorg/unitedsoftware/mosaic/ui/Alignment$Companion;
+	public abstract fun align-VRkX1T4 (JJ)J
 }
 
-public final class com/jakewharton/mosaic/ui/Alignment$Companion {
-	public final fun getBottom ()Lcom/jakewharton/mosaic/ui/Alignment$Vertical;
-	public final fun getBottomCenter ()Lcom/jakewharton/mosaic/ui/Alignment;
-	public final fun getBottomEnd ()Lcom/jakewharton/mosaic/ui/Alignment;
-	public final fun getBottomStart ()Lcom/jakewharton/mosaic/ui/Alignment;
-	public final fun getCenter ()Lcom/jakewharton/mosaic/ui/Alignment;
-	public final fun getCenterEnd ()Lcom/jakewharton/mosaic/ui/Alignment;
-	public final fun getCenterHorizontally ()Lcom/jakewharton/mosaic/ui/Alignment$Horizontal;
-	public final fun getCenterStart ()Lcom/jakewharton/mosaic/ui/Alignment;
-	public final fun getCenterVertically ()Lcom/jakewharton/mosaic/ui/Alignment$Vertical;
-	public final fun getEnd ()Lcom/jakewharton/mosaic/ui/Alignment$Horizontal;
-	public final fun getStart ()Lcom/jakewharton/mosaic/ui/Alignment$Horizontal;
-	public final fun getTop ()Lcom/jakewharton/mosaic/ui/Alignment$Vertical;
-	public final fun getTopCenter ()Lcom/jakewharton/mosaic/ui/Alignment;
-	public final fun getTopEnd ()Lcom/jakewharton/mosaic/ui/Alignment;
-	public final fun getTopStart ()Lcom/jakewharton/mosaic/ui/Alignment;
+public final class org/unitedsoftware/mosaic/ui/Alignment$Companion {
+	public final fun getBottom ()Lorg/unitedsoftware/mosaic/ui/Alignment$Vertical;
+	public final fun getBottomCenter ()Lorg/unitedsoftware/mosaic/ui/Alignment;
+	public final fun getBottomEnd ()Lorg/unitedsoftware/mosaic/ui/Alignment;
+	public final fun getBottomStart ()Lorg/unitedsoftware/mosaic/ui/Alignment;
+	public final fun getCenter ()Lorg/unitedsoftware/mosaic/ui/Alignment;
+	public final fun getCenterEnd ()Lorg/unitedsoftware/mosaic/ui/Alignment;
+	public final fun getCenterHorizontally ()Lorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;
+	public final fun getCenterStart ()Lorg/unitedsoftware/mosaic/ui/Alignment;
+	public final fun getCenterVertically ()Lorg/unitedsoftware/mosaic/ui/Alignment$Vertical;
+	public final fun getEnd ()Lorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;
+	public final fun getStart ()Lorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;
+	public final fun getTop ()Lorg/unitedsoftware/mosaic/ui/Alignment$Vertical;
+	public final fun getTopCenter ()Lorg/unitedsoftware/mosaic/ui/Alignment;
+	public final fun getTopEnd ()Lorg/unitedsoftware/mosaic/ui/Alignment;
+	public final fun getTopStart ()Lorg/unitedsoftware/mosaic/ui/Alignment;
 }
 
-public abstract interface class com/jakewharton/mosaic/ui/Alignment$Horizontal {
+public abstract interface class org/unitedsoftware/mosaic/ui/Alignment$Horizontal {
 	public abstract fun align (II)I
 }
 
-public abstract interface class com/jakewharton/mosaic/ui/Alignment$Vertical {
+public abstract interface class org/unitedsoftware/mosaic/ui/Alignment$Vertical {
 	public abstract fun align (II)I
 }
 
-public final class com/jakewharton/mosaic/ui/Arrangement {
+public final class org/unitedsoftware/mosaic/ui/Arrangement {
 	public static final field $stable I
-	public static final field INSTANCE Lcom/jakewharton/mosaic/ui/Arrangement;
-	public final fun aligned (Lcom/jakewharton/mosaic/ui/Alignment$Horizontal;)Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun aligned (Lcom/jakewharton/mosaic/ui/Alignment$Vertical;)Lcom/jakewharton/mosaic/ui/Arrangement$Vertical;
-	public final fun getBottom ()Lcom/jakewharton/mosaic/ui/Arrangement$Vertical;
-	public final fun getCenter ()Lcom/jakewharton/mosaic/ui/Arrangement$HorizontalOrVertical;
-	public final fun getEnd ()Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun getSpaceAround ()Lcom/jakewharton/mosaic/ui/Arrangement$HorizontalOrVertical;
-	public final fun getSpaceBetween ()Lcom/jakewharton/mosaic/ui/Arrangement$HorizontalOrVertical;
-	public final fun getSpaceEvenly ()Lcom/jakewharton/mosaic/ui/Arrangement$HorizontalOrVertical;
-	public final fun getStart ()Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun getTop ()Lcom/jakewharton/mosaic/ui/Arrangement$Vertical;
-	public final fun spacedBy (I)Lcom/jakewharton/mosaic/ui/Arrangement$HorizontalOrVertical;
-	public final fun spacedBy (ILcom/jakewharton/mosaic/ui/Alignment$Horizontal;)Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun spacedBy (ILcom/jakewharton/mosaic/ui/Alignment$Vertical;)Lcom/jakewharton/mosaic/ui/Arrangement$Vertical;
+	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/Arrangement;
+	public final fun aligned (Lorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;)Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun aligned (Lorg/unitedsoftware/mosaic/ui/Alignment$Vertical;)Lorg/unitedsoftware/mosaic/ui/Arrangement$Vertical;
+	public final fun getBottom ()Lorg/unitedsoftware/mosaic/ui/Arrangement$Vertical;
+	public final fun getCenter ()Lorg/unitedsoftware/mosaic/ui/Arrangement$HorizontalOrVertical;
+	public final fun getEnd ()Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun getSpaceAround ()Lorg/unitedsoftware/mosaic/ui/Arrangement$HorizontalOrVertical;
+	public final fun getSpaceBetween ()Lorg/unitedsoftware/mosaic/ui/Arrangement$HorizontalOrVertical;
+	public final fun getSpaceEvenly ()Lorg/unitedsoftware/mosaic/ui/Arrangement$HorizontalOrVertical;
+	public final fun getStart ()Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun getTop ()Lorg/unitedsoftware/mosaic/ui/Arrangement$Vertical;
+	public final fun spacedBy (I)Lorg/unitedsoftware/mosaic/ui/Arrangement$HorizontalOrVertical;
+	public final fun spacedBy (ILorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;)Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun spacedBy (ILorg/unitedsoftware/mosaic/ui/Alignment$Vertical;)Lorg/unitedsoftware/mosaic/ui/Arrangement$Vertical;
 }
 
-public final class com/jakewharton/mosaic/ui/Arrangement$Absolute {
+public final class org/unitedsoftware/mosaic/ui/Arrangement$Absolute {
 	public static final field $stable I
-	public static final field INSTANCE Lcom/jakewharton/mosaic/ui/Arrangement$Absolute;
-	public final fun aligned (Lcom/jakewharton/mosaic/ui/Alignment$Horizontal;)Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun getCenter ()Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun getLeft ()Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun getRight ()Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun getSpaceAround ()Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun getSpaceBetween ()Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun getSpaceEvenly ()Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun spacedBy (I)Lcom/jakewharton/mosaic/ui/Arrangement$HorizontalOrVertical;
-	public final fun spacedBy (ILcom/jakewharton/mosaic/ui/Alignment$Horizontal;)Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;
-	public final fun spacedBy (ILcom/jakewharton/mosaic/ui/Alignment$Vertical;)Lcom/jakewharton/mosaic/ui/Arrangement$Vertical;
+	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/Arrangement$Absolute;
+	public final fun aligned (Lorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;)Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun getCenter ()Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun getLeft ()Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun getRight ()Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun getSpaceAround ()Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun getSpaceBetween ()Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun getSpaceEvenly ()Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun spacedBy (I)Lorg/unitedsoftware/mosaic/ui/Arrangement$HorizontalOrVertical;
+	public final fun spacedBy (ILorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;)Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;
+	public final fun spacedBy (ILorg/unitedsoftware/mosaic/ui/Alignment$Vertical;)Lorg/unitedsoftware/mosaic/ui/Arrangement$Vertical;
 }
 
-public abstract interface class com/jakewharton/mosaic/ui/Arrangement$Horizontal {
+public abstract interface class org/unitedsoftware/mosaic/ui/Arrangement$Horizontal {
 	public abstract fun arrange (I[I[I)V
 	public fun getSpacing ()I
 }
 
-public abstract interface class com/jakewharton/mosaic/ui/Arrangement$HorizontalOrVertical : com/jakewharton/mosaic/ui/Arrangement$Horizontal, com/jakewharton/mosaic/ui/Arrangement$Vertical {
+public abstract interface class org/unitedsoftware/mosaic/ui/Arrangement$HorizontalOrVertical : org/unitedsoftware/mosaic/ui/Arrangement$Horizontal, org/unitedsoftware/mosaic/ui/Arrangement$Vertical {
 	public fun getSpacing ()I
 }
 
-public abstract interface class com/jakewharton/mosaic/ui/Arrangement$Vertical {
+public abstract interface class org/unitedsoftware/mosaic/ui/Arrangement$Vertical {
 	public abstract fun arrange (I[I[I)V
 	public fun getSpacing ()I
 }
 
-public final class com/jakewharton/mosaic/ui/BiasAlignment : com/jakewharton/mosaic/ui/Alignment {
+public final class org/unitedsoftware/mosaic/ui/BiasAlignment : org/unitedsoftware/mosaic/ui/Alignment {
 	public static final field $stable I
 	public fun <init> (FF)V
-	public fun align-TebIBXo (JJ)J
+	public fun align-VRkX1T4 (JJ)J
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getHorizontalBias ()F
 	public final fun getVerticalBias ()F
@@ -488,7 +488,7 @@ public final class com/jakewharton/mosaic/ui/BiasAlignment : com/jakewharton/mos
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/ui/BiasAlignment$Horizontal : com/jakewharton/mosaic/ui/Alignment$Horizontal {
+public final class org/unitedsoftware/mosaic/ui/BiasAlignment$Horizontal : org/unitedsoftware/mosaic/ui/Alignment$Horizontal {
 	public static final field $stable I
 	public fun <init> (F)V
 	public fun align (II)I
@@ -498,7 +498,7 @@ public final class com/jakewharton/mosaic/ui/BiasAlignment$Horizontal : com/jake
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/ui/BiasAlignment$Vertical : com/jakewharton/mosaic/ui/Alignment$Vertical {
+public final class org/unitedsoftware/mosaic/ui/BiasAlignment$Vertical : org/unitedsoftware/mosaic/ui/Alignment$Vertical {
 	public static final field $stable I
 	public fun <init> (F)V
 	public fun align (II)I
@@ -508,19 +508,19 @@ public final class com/jakewharton/mosaic/ui/BiasAlignment$Vertical : com/jakewh
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/ui/Box {
-	public static final fun Box (Lcom/jakewharton/mosaic/modifier/Modifier;Landroidx/compose/runtime/Composer;II)V
-	public static final fun Box (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Alignment;ZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+public final class org/unitedsoftware/mosaic/ui/Box {
+	public static final fun Box (Lorg/unitedsoftware/mosaic/modifier/Modifier;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Box (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Alignment;ZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
-public abstract interface class com/jakewharton/mosaic/ui/BoxScope {
-	public abstract fun align (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Alignment;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public abstract fun matchParentSize (Lcom/jakewharton/mosaic/modifier/Modifier;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public abstract interface class org/unitedsoftware/mosaic/ui/BoxScope {
+	public abstract fun align (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Alignment;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public abstract fun matchParentSize (Lorg/unitedsoftware/mosaic/modifier/Modifier;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public final class com/jakewharton/mosaic/ui/Color {
-	public static final field Companion Lcom/jakewharton/mosaic/ui/Color$Companion;
-	public static final synthetic fun box-impl (I)Lcom/jakewharton/mosaic/ui/Color;
+public final class org/unitedsoftware/mosaic/ui/Color {
+	public static final field Companion Lorg/unitedsoftware/mosaic/ui/Color$Companion;
+	public static final synthetic fun box-impl (I)Lorg/unitedsoftware/mosaic/ui/Color;
 	public static final fun component1-impl (I)F
 	public static final fun component2-impl (I)F
 	public static final fun component3-impl (I)F
@@ -537,127 +537,127 @@ public final class com/jakewharton/mosaic/ui/Color {
 	public final synthetic fun unbox-impl ()I
 }
 
-public final class com/jakewharton/mosaic/ui/Color$Companion {
-	public final fun getBlack-OrXnJU4 ()I
-	public final fun getBlue-OrXnJU4 ()I
-	public final fun getCyan-OrXnJU4 ()I
-	public final fun getGreen-OrXnJU4 ()I
-	public final fun getMagenta-OrXnJU4 ()I
-	public final fun getRed-OrXnJU4 ()I
-	public final fun getUnspecified-OrXnJU4 ()I
-	public final fun getWhite-OrXnJU4 ()I
-	public final fun getYellow-OrXnJU4 ()I
+public final class org/unitedsoftware/mosaic/ui/Color$Companion {
+	public final fun getBlack-tUi8tvw ()I
+	public final fun getBlue-tUi8tvw ()I
+	public final fun getCyan-tUi8tvw ()I
+	public final fun getGreen-tUi8tvw ()I
+	public final fun getMagenta-tUi8tvw ()I
+	public final fun getRed-tUi8tvw ()I
+	public final fun getUnspecified-tUi8tvw ()I
+	public final fun getWhite-tUi8tvw ()I
+	public final fun getYellow-tUi8tvw ()I
 }
 
-public final class com/jakewharton/mosaic/ui/ColorKt {
+public final class org/unitedsoftware/mosaic/ui/ColorKt {
 	public static final field UnspecifiedColor I
 	public static final fun Color (FFF)I
 	public static final fun Color (III)I
-	public static final fun isSpecifiedColor-ZsyVsVM (I)Z
-	public static final fun isUnspecifiedColor-ZsyVsVM (I)Z
-	public static final fun takeOrElse-ZKdZ-WM (ILkotlin/jvm/functions/Function0;)I
+	public static final fun isSpecifiedColor-5RaSr6E (I)Z
+	public static final fun isUnspecifiedColor-5RaSr6E (I)Z
+	public static final fun takeOrElse-NDPSSGE (ILkotlin/jvm/functions/Function0;)I
 }
 
-public final class com/jakewharton/mosaic/ui/Column {
-	public static final fun Column (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Arrangement$Vertical;Lcom/jakewharton/mosaic/ui/Alignment$Horizontal;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+public final class org/unitedsoftware/mosaic/ui/Column {
+	public static final fun Column (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Arrangement$Vertical;Lorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
-public abstract interface class com/jakewharton/mosaic/ui/ColumnScope {
-	public abstract fun align (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Alignment$Horizontal;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public abstract fun weight (Lcom/jakewharton/mosaic/modifier/Modifier;FZ)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun weight$default (Lcom/jakewharton/mosaic/ui/ColumnScope;Lcom/jakewharton/mosaic/modifier/Modifier;FZILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public abstract interface class org/unitedsoftware/mosaic/ui/ColumnScope {
+	public abstract fun align (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Alignment$Horizontal;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public abstract fun weight (Lorg/unitedsoftware/mosaic/modifier/Modifier;FZ)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun weight$default (Lorg/unitedsoftware/mosaic/ui/ColumnScope;Lorg/unitedsoftware/mosaic/modifier/Modifier;FZILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public final class com/jakewharton/mosaic/ui/ComposableSingletons$BoxKt {
-	public static final field INSTANCE Lcom/jakewharton/mosaic/ui/ComposableSingletons$BoxKt;
+public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$BoxKt {
+	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$BoxKt;
 	public fun <init> ()V
-	public final fun getLambda$-781209811$com_jakewharton_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$563756490$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class com/jakewharton/mosaic/ui/ComposableSingletons$FillerKt {
-	public static final field INSTANCE Lcom/jakewharton/mosaic/ui/ComposableSingletons$FillerKt;
+public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$FillerKt {
+	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$FillerKt;
 	public fun <init> ()V
-	public final fun getLambda$927779251$com_jakewharton_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2053063676$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class com/jakewharton/mosaic/ui/ComposableSingletons$SpacerKt {
-	public static final field INSTANCE Lcom/jakewharton/mosaic/ui/ComposableSingletons$SpacerKt;
+public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$SpacerKt {
+	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$SpacerKt;
 	public fun <init> ()V
-	public final fun getLambda$-294102477$com_jakewharton_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$2041516420$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class com/jakewharton/mosaic/ui/FillerKt {
-	public static final fun Filler-GddN7rU (CLcom/jakewharton/mosaic/modifier/Modifier;IIILandroidx/compose/runtime/Composer;II)V
-	public static final fun Filler-GddN7rU (ILcom/jakewharton/mosaic/modifier/Modifier;IIILandroidx/compose/runtime/Composer;II)V
+public final class org/unitedsoftware/mosaic/ui/FillerKt {
+	public static final fun Filler-fUQeE84 (CLorg/unitedsoftware/mosaic/modifier/Modifier;IIILandroidx/compose/runtime/Composer;II)V
+	public static final fun Filler-fUQeE84 (ILorg/unitedsoftware/mosaic/modifier/Modifier;IIILandroidx/compose/runtime/Composer;II)V
 }
 
-public final class com/jakewharton/mosaic/ui/Layout {
-	public static final fun Layout (Lkotlin/jvm/functions/Function2;Lcom/jakewharton/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function0;Lcom/jakewharton/mosaic/layout/MeasurePolicy;Landroidx/compose/runtime/Composer;II)V
+public final class org/unitedsoftware/mosaic/ui/Layout {
+	public static final fun Layout (Lkotlin/jvm/functions/Function2;Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function0;Lorg/unitedsoftware/mosaic/layout/MeasurePolicy;Landroidx/compose/runtime/Composer;II)V
 }
 
-public abstract interface annotation class com/jakewharton/mosaic/ui/LayoutScopeMarker : java/lang/annotation/Annotation {
+public abstract interface annotation class org/unitedsoftware/mosaic/ui/LayoutScopeMarker : java/lang/annotation/Annotation {
 }
 
-public abstract interface annotation class com/jakewharton/mosaic/ui/MosaicComposable : java/lang/annotation/Annotation {
+public abstract interface annotation class org/unitedsoftware/mosaic/ui/MosaicComposable : java/lang/annotation/Annotation {
 }
 
-public final class com/jakewharton/mosaic/ui/Row {
-	public static final fun Row (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Arrangement$Horizontal;Lcom/jakewharton/mosaic/ui/Alignment$Vertical;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+public final class org/unitedsoftware/mosaic/ui/Row {
+	public static final fun Row (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;Lorg/unitedsoftware/mosaic/ui/Alignment$Vertical;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
 
-public abstract interface class com/jakewharton/mosaic/ui/RowScope {
-	public abstract fun align (Lcom/jakewharton/mosaic/modifier/Modifier;Lcom/jakewharton/mosaic/ui/Alignment$Vertical;)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public abstract fun weight (Lcom/jakewharton/mosaic/modifier/Modifier;FZ)Lcom/jakewharton/mosaic/modifier/Modifier;
-	public static synthetic fun weight$default (Lcom/jakewharton/mosaic/ui/RowScope;Lcom/jakewharton/mosaic/modifier/Modifier;FZILjava/lang/Object;)Lcom/jakewharton/mosaic/modifier/Modifier;
+public abstract interface class org/unitedsoftware/mosaic/ui/RowScope {
+	public abstract fun align (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Alignment$Vertical;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public abstract fun weight (Lorg/unitedsoftware/mosaic/modifier/Modifier;FZ)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun weight$default (Lorg/unitedsoftware/mosaic/ui/RowScope;Lorg/unitedsoftware/mosaic/modifier/Modifier;FZILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
-public final class com/jakewharton/mosaic/ui/SpacerKt {
-	public static final fun Spacer (Lcom/jakewharton/mosaic/modifier/Modifier;Landroidx/compose/runtime/Composer;II)V
+public final class org/unitedsoftware/mosaic/ui/SpacerKt {
+	public static final fun Spacer (Lorg/unitedsoftware/mosaic/modifier/Modifier;Landroidx/compose/runtime/Composer;II)V
 }
 
-public final class com/jakewharton/mosaic/ui/Text {
-	public static final fun Text-cbmis8g (Lcom/jakewharton/mosaic/text/AnnotatedString;Lcom/jakewharton/mosaic/modifier/Modifier;IIIIILandroidx/compose/runtime/Composer;II)V
-	public static final fun Text-cbmis8g (Ljava/lang/String;Lcom/jakewharton/mosaic/modifier/Modifier;IIIIILandroidx/compose/runtime/Composer;II)V
+public final class org/unitedsoftware/mosaic/ui/Text {
+	public static final fun Text-vQEq6vw (Ljava/lang/String;Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIILandroidx/compose/runtime/Composer;II)V
+	public static final fun Text-vQEq6vw (Lorg/unitedsoftware/mosaic/text/AnnotatedString;Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIILandroidx/compose/runtime/Composer;II)V
 }
 
-public final class com/jakewharton/mosaic/ui/TextStyle {
-	public static final field Companion Lcom/jakewharton/mosaic/ui/TextStyle$Companion;
-	public static final synthetic fun box-impl (I)Lcom/jakewharton/mosaic/ui/TextStyle;
-	public static final fun contains-kLqBjOQ (II)Z
+public final class org/unitedsoftware/mosaic/ui/TextStyle {
+	public static final field Companion Lorg/unitedsoftware/mosaic/ui/TextStyle$Companion;
+	public static final synthetic fun box-impl (I)Lorg/unitedsoftware/mosaic/ui/TextStyle;
+	public static final fun contains-gzk0PKc (II)Z
 	public fun equals (Ljava/lang/Object;)Z
 	public static fun equals-impl (ILjava/lang/Object;)Z
 	public static final fun equals-impl0 (II)Z
 	public fun hashCode ()I
 	public static fun hashCode-impl (I)I
-	public static final fun plus-h7PR1DU (II)I
+	public static final fun plus-Du6zY_w (II)I
 	public fun toString ()Ljava/lang/String;
 	public static fun toString-impl (I)Ljava/lang/String;
 	public final synthetic fun unbox-impl ()I
 }
 
-public final class com/jakewharton/mosaic/ui/TextStyle$Companion {
-	public final fun getBold-4EWmQI8 ()I
-	public final fun getDim-4EWmQI8 ()I
-	public final fun getEmpty-4EWmQI8 ()I
-	public final fun getInvert-4EWmQI8 ()I
-	public final fun getItalic-4EWmQI8 ()I
-	public final fun getStrikethrough-4EWmQI8 ()I
-	public final fun getUnspecified-4EWmQI8 ()I
+public final class org/unitedsoftware/mosaic/ui/TextStyle$Companion {
+	public final fun getBold-nHZupTw ()I
+	public final fun getDim-nHZupTw ()I
+	public final fun getEmpty-nHZupTw ()I
+	public final fun getInvert-nHZupTw ()I
+	public final fun getItalic-nHZupTw ()I
+	public final fun getStrikethrough-nHZupTw ()I
+	public final fun getUnspecified-nHZupTw ()I
 }
 
-public final class com/jakewharton/mosaic/ui/TextStyleKt {
+public final class org/unitedsoftware/mosaic/ui/TextStyleKt {
 	public static final field EmptyTextStyle I
 	public static final field UnspecifiedTextStyle I
-	public static final fun isEmptyTextStyle-kLqBjOQ (I)Z
-	public static final fun isNotEmptyTextStyle-kLqBjOQ (I)Z
-	public static final fun isSpecifiedTextStyle-kLqBjOQ (I)Z
-	public static final fun isUnspecifiedTextStyle-kLqBjOQ (I)Z
-	public static final fun takeOrElse-XIQd4Uw (ILkotlin/jvm/functions/Function0;)I
+	public static final fun isEmptyTextStyle-gzk0PKc (I)Z
+	public static final fun isNotEmptyTextStyle-gzk0PKc (I)Z
+	public static final fun isSpecifiedTextStyle-gzk0PKc (I)Z
+	public static final fun isUnspecifiedTextStyle-gzk0PKc (I)Z
+	public static final fun takeOrElse-KFzS1gQ (ILkotlin/jvm/functions/Function0;)I
 }
 
-public final class com/jakewharton/mosaic/ui/UnderlineStyle {
-	public static final field Companion Lcom/jakewharton/mosaic/ui/UnderlineStyle$Companion;
-	public static final synthetic fun box-impl (I)Lcom/jakewharton/mosaic/ui/UnderlineStyle;
+public final class org/unitedsoftware/mosaic/ui/UnderlineStyle {
+	public static final field Companion Lorg/unitedsoftware/mosaic/ui/UnderlineStyle$Companion;
+	public static final synthetic fun box-impl (I)Lorg/unitedsoftware/mosaic/ui/UnderlineStyle;
 	public fun equals (Ljava/lang/Object;)Z
 	public static fun equals-impl (ILjava/lang/Object;)Z
 	public static final fun equals-impl0 (II)Z
@@ -668,31 +668,31 @@ public final class com/jakewharton/mosaic/ui/UnderlineStyle {
 	public final synthetic fun unbox-impl ()I
 }
 
-public final class com/jakewharton/mosaic/ui/UnderlineStyle$Companion {
-	public final fun getCurly-4rOp0I0 ()I
-	public final fun getDashed-4rOp0I0 ()I
-	public final fun getDotted-4rOp0I0 ()I
-	public final fun getDouble-4rOp0I0 ()I
-	public final fun getNone-4rOp0I0 ()I
-	public final fun getStraight-4rOp0I0 ()I
-	public final fun getUnspecified-4rOp0I0 ()I
+public final class org/unitedsoftware/mosaic/ui/UnderlineStyle$Companion {
+	public final fun getCurly-n3rDR_A ()I
+	public final fun getDashed-n3rDR_A ()I
+	public final fun getDotted-n3rDR_A ()I
+	public final fun getDouble-n3rDR_A ()I
+	public final fun getNone-n3rDR_A ()I
+	public final fun getStraight-n3rDR_A ()I
+	public final fun getUnspecified-n3rDR_A ()I
 }
 
-public final class com/jakewharton/mosaic/ui/UnderlineStyleKt {
+public final class org/unitedsoftware/mosaic/ui/UnderlineStyleKt {
 	public static final field NoUnderlineStyle I
 	public static final field UnspecifiedUnderlineStyle I
-	public static final fun isSpecifiedUnderlineStyle-0vVbRVg (I)Z
-	public static final fun isUnspecifiedUnderlineStyle-0vVbRVg (I)Z
-	public static final fun takeOrElse-Eh-XDHA (ILkotlin/jvm/functions/Function0;)I
+	public static final fun isSpecifiedUnderlineStyle--eHPJwg (I)Z
+	public static final fun isUnspecifiedUnderlineStyle--eHPJwg (I)Z
+	public static final fun takeOrElse-RjBKtGo (ILkotlin/jvm/functions/Function0;)I
 }
 
-public final class com/jakewharton/mosaic/ui/unit/Constraints {
-	public static final field Companion Lcom/jakewharton/mosaic/ui/unit/Constraints$Companion;
+public final class org/unitedsoftware/mosaic/ui/unit/Constraints {
+	public static final field Companion Lorg/unitedsoftware/mosaic/ui/unit/Constraints$Companion;
 	public static final field Infinity I
-	public static final synthetic fun box-impl (J)Lcom/jakewharton/mosaic/ui/unit/Constraints;
+	public static final synthetic fun box-impl (J)Lorg/unitedsoftware/mosaic/ui/unit/Constraints;
 	public static fun constructor-impl (J)J
-	public static final fun copy-HlOINDE (JIIII)J
-	public static synthetic fun copy-HlOINDE$default (JIIIIILjava/lang/Object;)J
+	public static final fun copy-5AQ0-wM (JIIII)J
+	public static synthetic fun copy-5AQ0-wM$default (JIIIIILjava/lang/Object;)J
 	public fun equals (Ljava/lang/Object;)Z
 	public static fun equals-impl (JLjava/lang/Object;)Z
 	public static final fun equals-impl0 (JJ)Z
@@ -712,32 +712,32 @@ public final class com/jakewharton/mosaic/ui/unit/Constraints {
 	public final synthetic fun unbox-impl ()J
 }
 
-public final class com/jakewharton/mosaic/ui/unit/Constraints$Companion {
-	public final fun fixed-gZLMRcE (II)J
-	public final fun fixedHeight-VXdwswQ (I)J
-	public final fun fixedWidth-VXdwswQ (I)J
+public final class org/unitedsoftware/mosaic/ui/unit/Constraints$Companion {
+	public final fun fixed-xNOW1L0 (II)J
+	public final fun fixedHeight-mJzQ02w (I)J
+	public final fun fixedWidth-mJzQ02w (I)J
 }
 
-public final class com/jakewharton/mosaic/ui/unit/ConstraintsKt {
+public final class org/unitedsoftware/mosaic/ui/unit/ConstraintsKt {
 	public static final fun Constraints (IIII)J
 	public static synthetic fun Constraints$default (IIIIILjava/lang/Object;)J
-	public static final fun constrain-D3LIfVM (JJ)J
-	public static final fun constrain-pufMJ9U (JJ)J
-	public static final fun constrainHeight-cqq_y88 (JI)I
-	public static final fun constrainWidth-cqq_y88 (JI)I
-	public static final fun isSatisfiedBy-D3LIfVM (JJ)Z
-	public static final fun offset-cpom3Pk (JII)J
-	public static synthetic fun offset-cpom3Pk$default (JIIILjava/lang/Object;)J
+	public static final fun constrain-aMS3jzU (JJ)J
+	public static final fun constrain-z_2OoTE (JJ)J
+	public static final fun constrainHeight-GiQg0Nw (JI)I
+	public static final fun constrainWidth-GiQg0Nw (JI)I
+	public static final fun isSatisfiedBy-aMS3jzU (JJ)Z
+	public static final fun offset-kWhuxcU (JII)J
+	public static synthetic fun offset-kWhuxcU$default (JIIILjava/lang/Object;)J
 }
 
-public final class com/jakewharton/mosaic/ui/unit/IntOffset {
-	public static final field Companion Lcom/jakewharton/mosaic/ui/unit/IntOffset$Companion;
-	public static final synthetic fun box-impl (J)Lcom/jakewharton/mosaic/ui/unit/IntOffset;
+public final class org/unitedsoftware/mosaic/ui/unit/IntOffset {
+	public static final field Companion Lorg/unitedsoftware/mosaic/ui/unit/IntOffset$Companion;
+	public static final synthetic fun box-impl (J)Lorg/unitedsoftware/mosaic/ui/unit/IntOffset;
 	public static final fun component1-impl (J)I
 	public static final fun component2-impl (J)I
-	public static final fun copy-7csj7JA (JII)J
-	public static synthetic fun copy-7csj7JA$default (JIIILjava/lang/Object;)J
-	public static final fun div-9yqpgAw (JF)J
+	public static final fun copy-w0SntOw (JII)J
+	public static synthetic fun copy-w0SntOw$default (JIIILjava/lang/Object;)J
+	public static final fun div-Ix2LhP0 (JF)J
 	public fun equals (Ljava/lang/Object;)Z
 	public static fun equals-impl (JLjava/lang/Object;)Z
 	public static final fun equals-impl0 (JJ)Z
@@ -745,30 +745,30 @@ public final class com/jakewharton/mosaic/ui/unit/IntOffset {
 	public static final fun getY-impl (J)I
 	public fun hashCode ()I
 	public static fun hashCode-impl (J)I
-	public static final fun minus-BRpaCmg (JJ)J
-	public static final fun plus-BRpaCmg (JJ)J
-	public static final fun rem-9yqpgAw (JI)J
-	public static final fun times-9yqpgAw (JF)J
+	public static final fun minus-rie9N9A (JJ)J
+	public static final fun plus-rie9N9A (JJ)J
+	public static final fun rem-Ix2LhP0 (JI)J
+	public static final fun times-Ix2LhP0 (JF)J
 	public fun toString ()Ljava/lang/String;
 	public static fun toString-impl (J)Ljava/lang/String;
-	public static final fun unaryMinus--lBJcEo (J)J
+	public static final fun unaryMinus-MRcZ450 (J)J
 	public final synthetic fun unbox-impl ()J
 }
 
-public final class com/jakewharton/mosaic/ui/unit/IntOffset$Companion {
-	public final fun getZero--lBJcEo ()J
+public final class org/unitedsoftware/mosaic/ui/unit/IntOffset$Companion {
+	public final fun getZero-MRcZ450 ()J
 }
 
-public final class com/jakewharton/mosaic/ui/unit/IntOffsetKt {
+public final class org/unitedsoftware/mosaic/ui/unit/IntOffsetKt {
 	public static final fun IntOffset (II)J
 }
 
-public final class com/jakewharton/mosaic/ui/unit/IntSize {
-	public static final field Companion Lcom/jakewharton/mosaic/ui/unit/IntSize$Companion;
-	public static final synthetic fun box-impl (J)Lcom/jakewharton/mosaic/ui/unit/IntSize;
+public final class org/unitedsoftware/mosaic/ui/unit/IntSize {
+	public static final field Companion Lorg/unitedsoftware/mosaic/ui/unit/IntSize$Companion;
+	public static final synthetic fun box-impl (J)Lorg/unitedsoftware/mosaic/ui/unit/IntSize;
 	public static final fun component1-impl (J)I
 	public static final fun component2-impl (J)I
-	public static final fun div-8WEgse0 (JI)J
+	public static final fun div-Cr2lzcg (JI)J
 	public fun equals (Ljava/lang/Object;)Z
 	public static fun equals-impl (JLjava/lang/Object;)Z
 	public static final fun equals-impl0 (JJ)Z
@@ -776,17 +776,17 @@ public final class com/jakewharton/mosaic/ui/unit/IntSize {
 	public static final fun getWidth-impl (J)I
 	public fun hashCode ()I
 	public static fun hashCode-impl (J)I
-	public static final fun times-8WEgse0 (JI)J
+	public static final fun times-Cr2lzcg (JI)J
 	public fun toString ()Ljava/lang/String;
 	public static fun toString-impl (J)Ljava/lang/String;
 	public final synthetic fun unbox-impl ()J
 }
 
-public final class com/jakewharton/mosaic/ui/unit/IntSize$Companion {
-	public final fun getZero-Usd9Mdw ()J
+public final class org/unitedsoftware/mosaic/ui/unit/IntSize$Companion {
+	public final fun getZero-sGRHxc0 ()J
 }
 
-public final class com/jakewharton/mosaic/ui/unit/IntSizeKt {
+public final class org/unitedsoftware/mosaic/ui/unit/IntSizeKt {
 	public static final fun IntSize (II)J
 }
 

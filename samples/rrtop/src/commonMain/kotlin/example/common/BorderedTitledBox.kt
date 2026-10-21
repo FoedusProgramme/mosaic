@@ -1,17 +1,17 @@
 package example.common
 
 import androidx.compose.runtime.Composable
-import com.jakewharton.mosaic.layout.offset
-import com.jakewharton.mosaic.layout.padding
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.text.SpanStyle
-import com.jakewharton.mosaic.text.buildAnnotatedString
-import com.jakewharton.mosaic.text.withStyle
-import com.jakewharton.mosaic.ui.Alignment
-import com.jakewharton.mosaic.ui.Box
-import com.jakewharton.mosaic.ui.BoxScope
-import com.jakewharton.mosaic.ui.Color
-import com.jakewharton.mosaic.ui.Text
+import org.unitedsoftware.mosaic.layout.offset
+import org.unitedsoftware.mosaic.layout.padding
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.text.SpanStyle
+import org.unitedsoftware.mosaic.text.buildAnnotatedString
+import org.unitedsoftware.mosaic.text.withStyle
+import org.unitedsoftware.mosaic.ui.Alignment
+import org.unitedsoftware.mosaic.ui.Box
+import org.unitedsoftware.mosaic.ui.BoxScope
+import org.unitedsoftware.mosaic.ui.Color
+import org.unitedsoftware.mosaic.ui.Text
 
 @Composable
 fun BorderedTitledBox(

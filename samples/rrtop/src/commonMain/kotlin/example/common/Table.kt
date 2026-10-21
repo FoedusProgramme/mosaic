@@ -2,16 +2,16 @@ package example.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import com.jakewharton.mosaic.layout.drawBehind
-import com.jakewharton.mosaic.layout.fillMaxSize
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.text.SpanStyle
-import com.jakewharton.mosaic.text.buildAnnotatedString
-import com.jakewharton.mosaic.text.withStyle
-import com.jakewharton.mosaic.ui.Box
-import com.jakewharton.mosaic.ui.Color
-import com.jakewharton.mosaic.ui.Spacer
 import kotlin.math.roundToInt
+import org.unitedsoftware.mosaic.layout.drawBehind
+import org.unitedsoftware.mosaic.layout.fillMaxSize
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.text.SpanStyle
+import org.unitedsoftware.mosaic.text.buildAnnotatedString
+import org.unitedsoftware.mosaic.text.withStyle
+import org.unitedsoftware.mosaic.ui.Box
+import org.unitedsoftware.mosaic.ui.Color
+import org.unitedsoftware.mosaic.ui.Spacer
 
 @Immutable
 data class TableData<T>(val items: List<T>)

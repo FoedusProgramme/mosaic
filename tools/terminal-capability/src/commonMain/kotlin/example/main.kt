@@ -7,13 +7,13 @@ import com.github.ajalt.clikt.core.main
 import com.github.ajalt.clikt.parameters.options.help
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
-import com.jakewharton.mosaic.terminal.Terminal
-import com.jakewharton.mosaic.tty.Tty
-import com.jakewharton.mosaic.tty.terminal.asTerminalIn
 import kotlin.io.path.createParentDirectories
 import kotlin.io.path.writeText
 import kotlin.reflect.KProperty
 import kotlinx.coroutines.runBlocking
+import org.unitedsoftware.mosaic.terminal.Terminal
+import org.unitedsoftware.mosaic.tty.Tty
+import org.unitedsoftware.mosaic.tty.terminal.asTerminalIn
 
 fun main(vararg args: String) {
 	TerminalCapabilityCommand().main(args)

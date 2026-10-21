@@ -1,7 +1,7 @@
 package example.palletes
 
-import com.jakewharton.mosaic.ui.Color
 import example.RrtopColorsPalette
+import org.unitedsoftware.mosaic.ui.Color
 
 private val Nord0 = Color(46, 52, 64)
 private val Nord1 = Color(59, 66, 82)

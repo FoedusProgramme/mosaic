@@ -1,12 +1,12 @@
 plugins {
 	alias(libs.plugins.kotlin.multiplatform)
-	id("com.jakewharton.mosaic.targets")
-	id("com.jakewharton.mosaic.publish")
-	id("com.jakewharton.mosaic.build")
+	id("org.unitedsoftware.mosaic.targets")
+	id("org.unitedsoftware.mosaic.publish")
+	id("org.unitedsoftware.mosaic.build")
 }
 
 mosaicBuild {
-	patchJavaModuleWithKotlinClasses("mosaic.tty.terminal")
+	patchJavaModuleWithKotlinClasses("org.unitedsoftware.mosaic.tty.terminal")
 }
 
 kotlin {

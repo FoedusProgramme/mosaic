@@ -1,7 +1,7 @@
 package example.palletes
 
-import com.jakewharton.mosaic.ui.Color
 import example.RrtopColorsPalette
+import org.unitedsoftware.mosaic.ui.Color
 
 private val White = Color(253, 247, 205)
 private val Cyan = Color(0, 236, 216)

@@ -1,9 +1,9 @@
 package example
 
-import com.jakewharton.mosaic.layout.KeyEvent
-import com.jakewharton.mosaic.layout.onKeyEvent
-import com.jakewharton.mosaic.modifier.Modifier
 import example.models.Direction
+import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.onKeyEvent
+import org.unitedsoftware.mosaic.modifier.Modifier
 
 private val Escape = KeyEvent("Escape")
 private val q = KeyEvent("q")

@@ -2,7 +2,7 @@ package example
 
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.jakewharton.mosaic.runMosaicBlocking
+import org.unitedsoftware.mosaic.runMosaicBlocking
 
 fun main() {
 	runMosaicBlocking {

@@ -7,7 +7,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 plugins {
 	alias(libs.plugins.kotlin.multiplatform)
 	alias(libs.plugins.kotlin.compose)
-	id("com.jakewharton.mosaic.targets")
+	id("org.unitedsoftware.mosaic.targets")
 }
 
 kotlin {

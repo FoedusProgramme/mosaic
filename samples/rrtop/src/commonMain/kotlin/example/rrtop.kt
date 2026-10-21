@@ -1,12 +1,12 @@
 package example
 
-import com.jakewharton.mosaic.runMosaicBlocking
 import example.palletes.BlackBirdColorsPalette
 import example.palletes.DefaultColorsPalette
 import example.palletes.DraculaColorsPalette
 import example.palletes.NordColorsPalette
 import example.palletes.OneDarkColorsPalette
 import example.palletes.SolarizedDarkColorsPalette
+import org.unitedsoftware.mosaic.runMosaicBlocking
 
 fun main(vararg args: String) {
 	val rrtopColorsPalette = parseArgsForColorsPalette(args)

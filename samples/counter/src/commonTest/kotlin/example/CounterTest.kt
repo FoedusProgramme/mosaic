@@ -2,9 +2,9 @@ package example
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import com.jakewharton.mosaic.testing.runMosaicTest
 import kotlin.test.Test
 import kotlinx.coroutines.test.runTest
+import org.unitedsoftware.mosaic.testing.runMosaicTest
 
 class CounterTest {
 	@Test

@@ -1,7 +1,7 @@
-module mosaic.testing {
+module org.unitedsoftware.mosaic.testing {
 	requires transitive kotlin.stdlib;
 	requires transitive kotlinx.coroutines.core;
-	requires transitive mosaic.runtime;
+	requires transitive org.unitedsoftware.mosaic.runtime;
 
-	exports com.jakewharton.mosaic.testing;
+	exports org.unitedsoftware.mosaic.testing;
 }

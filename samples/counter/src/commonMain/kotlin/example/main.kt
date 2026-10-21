@@ -8,12 +8,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.jakewharton.mosaic.NonInteractivePolicy.Ignore
-import com.jakewharton.mosaic.runMosaicBlocking
-import com.jakewharton.mosaic.ui.Text
 import kotlin.jvm.JvmName
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
+import org.unitedsoftware.mosaic.NonInteractivePolicy.Ignore
+import org.unitedsoftware.mosaic.runMosaicBlocking
+import org.unitedsoftware.mosaic.ui.Text
 
 @Composable
 fun Counter() {

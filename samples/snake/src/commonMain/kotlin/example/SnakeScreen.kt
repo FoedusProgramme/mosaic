@@ -4,23 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.jakewharton.mosaic.layout.DrawStyle
-import com.jakewharton.mosaic.layout.drawBehind
-import com.jakewharton.mosaic.layout.height
-import com.jakewharton.mosaic.layout.padding
-import com.jakewharton.mosaic.layout.size
-import com.jakewharton.mosaic.layout.width
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.text.buildAnnotatedString
-import com.jakewharton.mosaic.ui.Alignment
-import com.jakewharton.mosaic.ui.Box
-import com.jakewharton.mosaic.ui.Column
-import com.jakewharton.mosaic.ui.Row
-import com.jakewharton.mosaic.ui.Spacer
-import com.jakewharton.mosaic.ui.Text
-import com.jakewharton.mosaic.ui.TextStyle
-import com.jakewharton.mosaic.ui.unit.IntOffset
-import com.jakewharton.mosaic.ui.unit.IntSize
 import example.models.INVALID_FOOD
 import example.models.Phase
 import example.models.asPoint
@@ -28,6 +11,23 @@ import example.models.height
 import example.models.width
 import example.models.x
 import example.models.y
+import org.unitedsoftware.mosaic.layout.DrawStyle
+import org.unitedsoftware.mosaic.layout.drawBehind
+import org.unitedsoftware.mosaic.layout.height
+import org.unitedsoftware.mosaic.layout.padding
+import org.unitedsoftware.mosaic.layout.size
+import org.unitedsoftware.mosaic.layout.width
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.text.buildAnnotatedString
+import org.unitedsoftware.mosaic.ui.Alignment
+import org.unitedsoftware.mosaic.ui.Box
+import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.Row
+import org.unitedsoftware.mosaic.ui.Spacer
+import org.unitedsoftware.mosaic.ui.Text
+import org.unitedsoftware.mosaic.ui.TextStyle
+import org.unitedsoftware.mosaic.ui.unit.IntOffset
+import org.unitedsoftware.mosaic.ui.unit.IntSize
 
 @Composable
 fun SnakeScreen(viewModel: SnakeViewModel) {

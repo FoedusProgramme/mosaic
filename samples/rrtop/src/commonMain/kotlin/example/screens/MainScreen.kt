@@ -2,32 +2,32 @@ package example.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import com.jakewharton.mosaic.LocalTerminalState
-import com.jakewharton.mosaic.layout.drawBehind
-import com.jakewharton.mosaic.layout.fillMaxHeight
-import com.jakewharton.mosaic.layout.fillMaxSize
-import com.jakewharton.mosaic.layout.fillMaxWidth
-import com.jakewharton.mosaic.layout.height
-import com.jakewharton.mosaic.layout.padding
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.text.SpanStyle
-import com.jakewharton.mosaic.text.buildAnnotatedString
-import com.jakewharton.mosaic.text.withStyle
-import com.jakewharton.mosaic.ui.Alignment
-import com.jakewharton.mosaic.ui.Box
-import com.jakewharton.mosaic.ui.Color
-import com.jakewharton.mosaic.ui.Column
-import com.jakewharton.mosaic.ui.Row
-import com.jakewharton.mosaic.ui.Spacer
-import com.jakewharton.mosaic.ui.Text
-import com.jakewharton.mosaic.ui.unit.IntOffset
-import com.jakewharton.mosaic.ui.unit.IntSize
 import example.LocalRrtopColorsPalette
 import example.MainScreenUiState
 import example.common.BorderedTitledBox
 import example.common.Table
 import example.common.TableConfig
 import example.common.TableData
+import org.unitedsoftware.mosaic.LocalTerminalState
+import org.unitedsoftware.mosaic.layout.drawBehind
+import org.unitedsoftware.mosaic.layout.fillMaxHeight
+import org.unitedsoftware.mosaic.layout.fillMaxSize
+import org.unitedsoftware.mosaic.layout.fillMaxWidth
+import org.unitedsoftware.mosaic.layout.height
+import org.unitedsoftware.mosaic.layout.padding
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.text.SpanStyle
+import org.unitedsoftware.mosaic.text.buildAnnotatedString
+import org.unitedsoftware.mosaic.text.withStyle
+import org.unitedsoftware.mosaic.ui.Alignment
+import org.unitedsoftware.mosaic.ui.Box
+import org.unitedsoftware.mosaic.ui.Color
+import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.Row
+import org.unitedsoftware.mosaic.ui.Spacer
+import org.unitedsoftware.mosaic.ui.Text
+import org.unitedsoftware.mosaic.ui.unit.IntOffset
+import org.unitedsoftware.mosaic.ui.unit.IntSize
 
 @Composable
 fun MainScreen(uiState: MainScreenUiState, modifier: Modifier = Modifier) {

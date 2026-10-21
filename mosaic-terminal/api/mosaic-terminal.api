@@ -1,14 +1,14 @@
-public final class com/jakewharton/mosaic/terminal/AnsiLevel : java/lang/Enum {
-	public static final field ANSI16 Lcom/jakewharton/mosaic/terminal/AnsiLevel;
-	public static final field ANSI256 Lcom/jakewharton/mosaic/terminal/AnsiLevel;
-	public static final field NONE Lcom/jakewharton/mosaic/terminal/AnsiLevel;
-	public static final field TRUECOLOR Lcom/jakewharton/mosaic/terminal/AnsiLevel;
+public final class org/unitedsoftware/mosaic/terminal/AnsiLevel : java/lang/Enum {
+	public static final field ANSI16 Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;
+	public static final field ANSI256 Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;
+	public static final field NONE Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;
+	public static final field TRUECOLOR Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/jakewharton/mosaic/terminal/AnsiLevel;
-	public static fun values ()[Lcom/jakewharton/mosaic/terminal/AnsiLevel;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;
 }
 
-public final class com/jakewharton/mosaic/terminal/BracketedPasteEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/BracketedPasteEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (Z)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getStart ()Z
@@ -16,7 +16,7 @@ public final class com/jakewharton/mosaic/terminal/BracketedPasteEvent : com/jak
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/CapabilityQueryEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/CapabilityQueryEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (ZLjava/util/Map;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getData ()Ljava/util/Map;
@@ -25,7 +25,7 @@ public final class com/jakewharton/mosaic/terminal/CapabilityQueryEvent : com/ja
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/CursorPositionEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/CursorPositionEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (II)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColumn ()I
@@ -34,39 +34,39 @@ public final class com/jakewharton/mosaic/terminal/CursorPositionEvent : com/jak
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/DebugEvent : com/jakewharton/mosaic/terminal/Event {
-	public fun <init> (Lcom/jakewharton/mosaic/terminal/Event;[B)V
+public final class org/unitedsoftware/mosaic/terminal/DebugEvent : org/unitedsoftware/mosaic/terminal/Event {
+	public fun <init> (Lorg/unitedsoftware/mosaic/terminal/Event;[B)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBytes ()[B
-	public final fun getEvent ()Lcom/jakewharton/mosaic/terminal/Event;
+	public final fun getEvent ()Lorg/unitedsoftware/mosaic/terminal/Event;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/DecModeReportEvent : com/jakewharton/mosaic/terminal/Event {
-	public fun <init> (ILcom/jakewharton/mosaic/terminal/DecModeReportEvent$Setting;)V
+public final class org/unitedsoftware/mosaic/terminal/DecModeReportEvent : org/unitedsoftware/mosaic/terminal/Event {
+	public fun <init> (ILorg/unitedsoftware/mosaic/terminal/DecModeReportEvent$Setting;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getMode ()I
-	public final fun getSetting ()Lcom/jakewharton/mosaic/terminal/DecModeReportEvent$Setting;
+	public final fun getSetting ()Lorg/unitedsoftware/mosaic/terminal/DecModeReportEvent$Setting;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/DecModeReportEvent$Setting : java/lang/Enum {
-	public static final field NotRecognized Lcom/jakewharton/mosaic/terminal/DecModeReportEvent$Setting;
-	public static final field PermanentlyReset Lcom/jakewharton/mosaic/terminal/DecModeReportEvent$Setting;
-	public static final field PermanentlySet Lcom/jakewharton/mosaic/terminal/DecModeReportEvent$Setting;
-	public static final field Reset Lcom/jakewharton/mosaic/terminal/DecModeReportEvent$Setting;
-	public static final field Set Lcom/jakewharton/mosaic/terminal/DecModeReportEvent$Setting;
+public final class org/unitedsoftware/mosaic/terminal/DecModeReportEvent$Setting : java/lang/Enum {
+	public static final field NotRecognized Lorg/unitedsoftware/mosaic/terminal/DecModeReportEvent$Setting;
+	public static final field PermanentlyReset Lorg/unitedsoftware/mosaic/terminal/DecModeReportEvent$Setting;
+	public static final field PermanentlySet Lorg/unitedsoftware/mosaic/terminal/DecModeReportEvent$Setting;
+	public static final field Reset Lorg/unitedsoftware/mosaic/terminal/DecModeReportEvent$Setting;
+	public static final field Set Lorg/unitedsoftware/mosaic/terminal/DecModeReportEvent$Setting;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/jakewharton/mosaic/terminal/DecModeReportEvent$Setting;
-	public static fun values ()[Lcom/jakewharton/mosaic/terminal/DecModeReportEvent$Setting;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/terminal/DecModeReportEvent$Setting;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/terminal/DecModeReportEvent$Setting;
 }
 
-public abstract interface class com/jakewharton/mosaic/terminal/Event {
+public abstract interface class org/unitedsoftware/mosaic/terminal/Event {
 }
 
-public final class com/jakewharton/mosaic/terminal/FocusEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/FocusEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (Z)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getFocused ()Z
@@ -74,8 +74,8 @@ public final class com/jakewharton/mosaic/terminal/FocusEvent : com/jakewharton/
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/KeyboardEvent : com/jakewharton/mosaic/terminal/Event {
-	public static final field Companion Lcom/jakewharton/mosaic/terminal/KeyboardEvent$Companion;
+public final class org/unitedsoftware/mosaic/terminal/KeyboardEvent : org/unitedsoftware/mosaic/terminal/Event {
+	public static final field Companion Lorg/unitedsoftware/mosaic/terminal/KeyboardEvent$Companion;
 	public static final field Delete I
 	public static final field Down I
 	public static final field End I
@@ -131,10 +131,10 @@ public final class com/jakewharton/mosaic/terminal/KeyboardEvent : com/jakewhart
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/KeyboardEvent$Companion {
+public final class org/unitedsoftware/mosaic/terminal/KeyboardEvent$Companion {
 }
 
-public final class com/jakewharton/mosaic/terminal/KittyGraphicsEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/KittyGraphicsEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (ILjava/lang/String;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getId ()I
@@ -143,7 +143,7 @@ public final class com/jakewharton/mosaic/terminal/KittyGraphicsEvent : com/jake
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/KittyKeyboardQueryEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/KittyKeyboardQueryEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (I)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDisambiguateEscapeCodes ()Z
@@ -156,7 +156,7 @@ public final class com/jakewharton/mosaic/terminal/KittyKeyboardQueryEvent : com
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/KittyNotificationEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/KittyNotificationEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (Ljava/lang/String;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getRaw ()Ljava/lang/String;
@@ -164,10 +164,10 @@ public final class com/jakewharton/mosaic/terminal/KittyNotificationEvent : com/
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class com/jakewharton/mosaic/terminal/KittyPointerQueryEvent : com/jakewharton/mosaic/terminal/Event {
+public abstract interface class org/unitedsoftware/mosaic/terminal/KittyPointerQueryEvent : org/unitedsoftware/mosaic/terminal/Event {
 }
 
-public final class com/jakewharton/mosaic/terminal/KittyPointerQueryNameEvent : com/jakewharton/mosaic/terminal/KittyPointerQueryEvent {
+public final class org/unitedsoftware/mosaic/terminal/KittyPointerQueryNameEvent : org/unitedsoftware/mosaic/terminal/KittyPointerQueryEvent {
 	public fun <init> (Ljava/lang/String;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getName ()Ljava/lang/String;
@@ -175,7 +175,7 @@ public final class com/jakewharton/mosaic/terminal/KittyPointerQueryNameEvent : 
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/KittyPointerQuerySupportEvent : com/jakewharton/mosaic/terminal/KittyPointerQueryEvent {
+public final class org/unitedsoftware/mosaic/terminal/KittyPointerQuerySupportEvent : org/unitedsoftware/mosaic/terminal/KittyPointerQueryEvent {
 	public fun <init> ([Z)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getValues ()[Z
@@ -183,48 +183,48 @@ public final class com/jakewharton/mosaic/terminal/KittyPointerQuerySupportEvent
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/MouseEvent : com/jakewharton/mosaic/terminal/Event {
-	public fun <init> (IILcom/jakewharton/mosaic/terminal/MouseEvent$Type;Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;ZZZ)V
-	public synthetic fun <init> (IILcom/jakewharton/mosaic/terminal/MouseEvent$Type;Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;ZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+public final class org/unitedsoftware/mosaic/terminal/MouseEvent : org/unitedsoftware/mosaic/terminal/Event {
+	public fun <init> (IILorg/unitedsoftware/mosaic/terminal/MouseEvent$Type;Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;ZZZ)V
+	public synthetic fun <init> (IILorg/unitedsoftware/mosaic/terminal/MouseEvent$Type;Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;ZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAlt ()Z
-	public final fun getButton ()Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
+	public final fun getButton ()Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
 	public final fun getCtrl ()Z
 	public final fun getShift ()Z
-	public final fun getType ()Lcom/jakewharton/mosaic/terminal/MouseEvent$Type;
+	public final fun getType ()Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Type;
 	public final fun getX ()I
 	public final fun getY ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/MouseEvent$Button : java/lang/Enum {
-	public static final field Button10 Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
-	public static final field Button11 Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
-	public static final field Button8 Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
-	public static final field Button9 Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
-	public static final field Left Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
-	public static final field Middle Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
-	public static final field None Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
-	public static final field Right Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
-	public static final field WheelDown Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
-	public static final field WheelUp Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
+public final class org/unitedsoftware/mosaic/terminal/MouseEvent$Button : java/lang/Enum {
+	public static final field Button10 Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
+	public static final field Button11 Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
+	public static final field Button8 Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
+	public static final field Button9 Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
+	public static final field Left Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
+	public static final field Middle Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
+	public static final field None Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
+	public static final field Right Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
+	public static final field WheelDown Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
+	public static final field WheelUp Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
-	public static fun values ()[Lcom/jakewharton/mosaic/terminal/MouseEvent$Button;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Button;
 }
 
-public final class com/jakewharton/mosaic/terminal/MouseEvent$Type : java/lang/Enum {
-	public static final field Drag Lcom/jakewharton/mosaic/terminal/MouseEvent$Type;
-	public static final field Motion Lcom/jakewharton/mosaic/terminal/MouseEvent$Type;
-	public static final field Press Lcom/jakewharton/mosaic/terminal/MouseEvent$Type;
-	public static final field Release Lcom/jakewharton/mosaic/terminal/MouseEvent$Type;
+public final class org/unitedsoftware/mosaic/terminal/MouseEvent$Type : java/lang/Enum {
+	public static final field Drag Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Type;
+	public static final field Motion Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Type;
+	public static final field Press Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Type;
+	public static final field Release Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Type;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/jakewharton/mosaic/terminal/MouseEvent$Type;
-	public static fun values ()[Lcom/jakewharton/mosaic/terminal/MouseEvent$Type;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Type;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/terminal/MouseEvent$Type;
 }
 
-public final class com/jakewharton/mosaic/terminal/OperatingStatusResponseEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/OperatingStatusResponseEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (Z)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getOk ()Z
@@ -232,7 +232,7 @@ public final class com/jakewharton/mosaic/terminal/OperatingStatusResponseEvent 
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/PaletteColorEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/PaletteColorEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (ILjava/lang/String;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColor ()I
@@ -241,7 +241,7 @@ public final class com/jakewharton/mosaic/terminal/PaletteColorEvent : com/jakew
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/PrimaryDeviceAttributesEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/PrimaryDeviceAttributesEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (ILjava/lang/String;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getData ()Ljava/lang/String;
@@ -250,7 +250,7 @@ public final class com/jakewharton/mosaic/terminal/PrimaryDeviceAttributesEvent 
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/ResizeEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/ResizeEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (IIII)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColumns ()I
@@ -261,7 +261,7 @@ public final class com/jakewharton/mosaic/terminal/ResizeEvent : com/jakewharton
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/SecondaryDeviceAttributesEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/SecondaryDeviceAttributesEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (III)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getFirmwareVersion ()I
@@ -271,7 +271,7 @@ public final class com/jakewharton/mosaic/terminal/SecondaryDeviceAttributesEven
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/SystemThemeEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/SystemThemeEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (Z)V
 	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
@@ -279,16 +279,16 @@ public final class com/jakewharton/mosaic/terminal/SystemThemeEvent : com/jakewh
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class com/jakewharton/mosaic/terminal/Terminal : java/lang/AutoCloseable {
-	public abstract fun getCapabilities ()Lcom/jakewharton/mosaic/terminal/Terminal$Capabilities;
+public abstract interface class org/unitedsoftware/mosaic/terminal/Terminal : java/lang/AutoCloseable {
+	public abstract fun getCapabilities ()Lorg/unitedsoftware/mosaic/terminal/Terminal$Capabilities;
 	public abstract fun getEvents ()Lkotlinx/coroutines/channels/ReceiveChannel;
 	public abstract fun getInteractive ()Z
 	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun getState ()Lcom/jakewharton/mosaic/terminal/Terminal$State;
+	public abstract fun getState ()Lorg/unitedsoftware/mosaic/terminal/Terminal$State;
 }
 
-public abstract interface class com/jakewharton/mosaic/terminal/Terminal$Capabilities {
-	public abstract fun getAnsiLevel ()Lcom/jakewharton/mosaic/terminal/AnsiLevel;
+public abstract interface class org/unitedsoftware/mosaic/terminal/Terminal$Capabilities {
+	public abstract fun getAnsiLevel ()Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;
 	public abstract fun getCursorVisibility ()Z
 	public abstract fun getFocusEvents ()Z
 	public abstract fun getInBandResizeEvents ()Z
@@ -303,8 +303,8 @@ public abstract interface class com/jakewharton/mosaic/terminal/Terminal$Capabil
 	public abstract fun getThemeEvents ()Z
 }
 
-public final class com/jakewharton/mosaic/terminal/Terminal$Size {
-	public static final field Companion Lcom/jakewharton/mosaic/terminal/Terminal$Size$Companion;
+public final class org/unitedsoftware/mosaic/terminal/Terminal$Size {
+	public static final field Companion Lorg/unitedsoftware/mosaic/terminal/Terminal$Size$Companion;
 	public fun <init> (IIII)V
 	public synthetic fun <init> (IIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
@@ -316,44 +316,44 @@ public final class com/jakewharton/mosaic/terminal/Terminal$Size {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/Terminal$Size$Companion {
-	public final fun getDefault ()Lcom/jakewharton/mosaic/terminal/Terminal$Size;
+public final class org/unitedsoftware/mosaic/terminal/Terminal$Size$Companion {
+	public final fun getDefault ()Lorg/unitedsoftware/mosaic/terminal/Terminal$Size;
 }
 
-public abstract interface class com/jakewharton/mosaic/terminal/Terminal$State {
+public abstract interface class org/unitedsoftware/mosaic/terminal/Terminal$State {
 	public abstract fun getFocused ()Lkotlinx/coroutines/flow/StateFlow;
 	public abstract fun getSize ()Lkotlinx/coroutines/flow/StateFlow;
 	public abstract fun getTheme ()Lkotlinx/coroutines/flow/StateFlow;
 }
 
-public final class com/jakewharton/mosaic/terminal/Terminal$Theme : java/lang/Enum {
-	public static final field Dark Lcom/jakewharton/mosaic/terminal/Terminal$Theme;
-	public static final field Light Lcom/jakewharton/mosaic/terminal/Terminal$Theme;
-	public static final field Unknown Lcom/jakewharton/mosaic/terminal/Terminal$Theme;
+public final class org/unitedsoftware/mosaic/terminal/Terminal$Theme : java/lang/Enum {
+	public static final field Dark Lorg/unitedsoftware/mosaic/terminal/Terminal$Theme;
+	public static final field Light Lorg/unitedsoftware/mosaic/terminal/Terminal$Theme;
+	public static final field Unknown Lorg/unitedsoftware/mosaic/terminal/Terminal$Theme;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/jakewharton/mosaic/terminal/Terminal$Theme;
-	public static fun values ()[Lcom/jakewharton/mosaic/terminal/Terminal$Theme;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/terminal/Terminal$Theme;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/terminal/Terminal$Theme;
 }
 
-public final class com/jakewharton/mosaic/terminal/TerminalColorEvent : com/jakewharton/mosaic/terminal/Event {
-	public fun <init> (Lcom/jakewharton/mosaic/terminal/TerminalColorEvent$Color;Ljava/lang/String;)V
+public final class org/unitedsoftware/mosaic/terminal/TerminalColorEvent : org/unitedsoftware/mosaic/terminal/Event {
+	public fun <init> (Lorg/unitedsoftware/mosaic/terminal/TerminalColorEvent$Color;Ljava/lang/String;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getColor ()Lcom/jakewharton/mosaic/terminal/TerminalColorEvent$Color;
+	public final fun getColor ()Lorg/unitedsoftware/mosaic/terminal/TerminalColorEvent$Color;
 	public final fun getValue ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/TerminalColorEvent$Color : java/lang/Enum {
-	public static final field Background Lcom/jakewharton/mosaic/terminal/TerminalColorEvent$Color;
-	public static final field Cursor Lcom/jakewharton/mosaic/terminal/TerminalColorEvent$Color;
-	public static final field Foreground Lcom/jakewharton/mosaic/terminal/TerminalColorEvent$Color;
+public final class org/unitedsoftware/mosaic/terminal/TerminalColorEvent$Color : java/lang/Enum {
+	public static final field Background Lorg/unitedsoftware/mosaic/terminal/TerminalColorEvent$Color;
+	public static final field Cursor Lorg/unitedsoftware/mosaic/terminal/TerminalColorEvent$Color;
+	public static final field Foreground Lorg/unitedsoftware/mosaic/terminal/TerminalColorEvent$Color;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lcom/jakewharton/mosaic/terminal/TerminalColorEvent$Color;
-	public static fun values ()[Lcom/jakewharton/mosaic/terminal/TerminalColorEvent$Color;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/terminal/TerminalColorEvent$Color;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/terminal/TerminalColorEvent$Color;
 }
 
-public final class com/jakewharton/mosaic/terminal/TerminalVersionEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/TerminalVersionEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (Ljava/lang/String;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getData ()Ljava/lang/String;
@@ -361,7 +361,7 @@ public final class com/jakewharton/mosaic/terminal/TerminalVersionEvent : com/ja
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/TertiaryDeviceAttributesEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/TertiaryDeviceAttributesEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (II)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getManufacturingSite ()I
@@ -370,7 +370,7 @@ public final class com/jakewharton/mosaic/terminal/TertiaryDeviceAttributesEvent
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/UnknownEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/UnknownEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> ([B)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBytes ()[B
@@ -378,7 +378,7 @@ public final class com/jakewharton/mosaic/terminal/UnknownEvent : com/jakewharto
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/XtermCharacterSizeEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/XtermCharacterSizeEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (II)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColumns ()I
@@ -387,7 +387,7 @@ public final class com/jakewharton/mosaic/terminal/XtermCharacterSizeEvent : com
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/jakewharton/mosaic/terminal/XtermPixelSizeEvent : com/jakewharton/mosaic/terminal/Event {
+public final class org/unitedsoftware/mosaic/terminal/XtermPixelSizeEvent : org/unitedsoftware/mosaic/terminal/Event {
 	public fun <init> (II)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getHeight ()I

@@ -4,26 +4,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.jakewharton.mosaic.LocalTerminalState
-import com.jakewharton.mosaic.layout.KeyEvent
-import com.jakewharton.mosaic.layout.background
-import com.jakewharton.mosaic.layout.fillMaxWidth
-import com.jakewharton.mosaic.layout.height
-import com.jakewharton.mosaic.layout.onKeyEvent
-import com.jakewharton.mosaic.layout.padding
-import com.jakewharton.mosaic.layout.width
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.text.SpanStyle
-import com.jakewharton.mosaic.text.buildAnnotatedString
-import com.jakewharton.mosaic.text.withStyle
-import com.jakewharton.mosaic.ui.Alignment
-import com.jakewharton.mosaic.ui.Box
-import com.jakewharton.mosaic.ui.Text
 import example.screens.CmdScreen
 import example.screens.MainScreen
 import example.screens.RawScreen
 import example.screens.SlowScreen
 import example.screens.StatScreen
+import org.unitedsoftware.mosaic.LocalTerminalState
+import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.background
+import org.unitedsoftware.mosaic.layout.fillMaxWidth
+import org.unitedsoftware.mosaic.layout.height
+import org.unitedsoftware.mosaic.layout.onKeyEvent
+import org.unitedsoftware.mosaic.layout.padding
+import org.unitedsoftware.mosaic.layout.width
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.text.SpanStyle
+import org.unitedsoftware.mosaic.text.buildAnnotatedString
+import org.unitedsoftware.mosaic.text.withStyle
+import org.unitedsoftware.mosaic.ui.Alignment
+import org.unitedsoftware.mosaic.ui.Box
+import org.unitedsoftware.mosaic.ui.Text
 
 @Composable
 fun RrtopApp(rrtopViewModel: RrtopViewModel, colorsPalette: RrtopColorsPalette) {

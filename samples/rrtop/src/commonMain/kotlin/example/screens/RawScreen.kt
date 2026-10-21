@@ -1,13 +1,13 @@
 package example.screens
 
 import androidx.compose.runtime.Composable
-import com.jakewharton.mosaic.modifier.Modifier
 import example.LocalRrtopColorsPalette
 import example.RawScreenUiState
 import example.common.BorderedTitledBox
 import example.common.Table
 import example.common.TableConfig
 import example.common.TableData
+import org.unitedsoftware.mosaic.modifier.Modifier
 
 @Composable
 fun RawScreen(uiState: RawScreenUiState, modifier: Modifier = Modifier) {

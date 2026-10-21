@@ -8,23 +8,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.jakewharton.mosaic.layout.KeyEvent
-import com.jakewharton.mosaic.layout.background
-import com.jakewharton.mosaic.layout.drawBehind
-import com.jakewharton.mosaic.layout.padding
-import com.jakewharton.mosaic.layout.width
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.text.SpanStyle
-import com.jakewharton.mosaic.text.buildAnnotatedString
-import com.jakewharton.mosaic.text.withStyle
-import com.jakewharton.mosaic.ui.Box
-import com.jakewharton.mosaic.ui.Color
-import com.jakewharton.mosaic.ui.Column
-import com.jakewharton.mosaic.ui.Row
-import com.jakewharton.mosaic.ui.Text
-import com.jakewharton.mosaic.ui.TextStyle
 import kotlin.math.roundToInt
 import kotlinx.coroutines.delay
+import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.background
+import org.unitedsoftware.mosaic.layout.drawBehind
+import org.unitedsoftware.mosaic.layout.padding
+import org.unitedsoftware.mosaic.layout.width
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.text.SpanStyle
+import org.unitedsoftware.mosaic.text.buildAnnotatedString
+import org.unitedsoftware.mosaic.text.withStyle
+import org.unitedsoftware.mosaic.ui.Box
+import org.unitedsoftware.mosaic.ui.Color
+import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.Row
+import org.unitedsoftware.mosaic.ui.Text
+import org.unitedsoftware.mosaic.ui.TextStyle
 
 // Mosaic ships layout primitives only. Everything in this file is a recipe built on top of them.
 

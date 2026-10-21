@@ -1,11 +1,11 @@
 package example.common
 
 import androidx.compose.runtime.Stable
-import com.jakewharton.mosaic.layout.ContentDrawScope
-import com.jakewharton.mosaic.layout.DrawModifier
-import com.jakewharton.mosaic.layout.padding
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.ui.Color
+import org.unitedsoftware.mosaic.layout.ContentDrawScope
+import org.unitedsoftware.mosaic.layout.DrawModifier
+import org.unitedsoftware.mosaic.layout.padding
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.ui.Color
 
 @Stable
 fun Modifier.border(

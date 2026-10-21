@@ -1,20 +1,20 @@
-public final class com/jakewharton/mosaic/tty/terminal/EofException : java/lang/RuntimeException {
+public final class org/unitedsoftware/mosaic/tty/terminal/EofException : java/lang/RuntimeException {
 	public fun <init> ()V
 }
 
-public final class com/jakewharton/mosaic/tty/terminal/EventParser {
-	public fun <init> (Lcom/jakewharton/mosaic/tty/Tty;)V
+public final class org/unitedsoftware/mosaic/tty/terminal/EventParser {
+	public fun <init> (Lorg/unitedsoftware/mosaic/tty/Tty;)V
 	public final fun copyBuffer ()[B
 	public final fun getKittyDisambiguateEscapeCodes ()Z
 	public final fun getXtermExtendedUtf8Mouse ()Z
-	public final fun next ()Lcom/jakewharton/mosaic/terminal/Event;
-	public final fun nextDebug ()Lcom/jakewharton/mosaic/terminal/DebugEvent;
+	public final fun next ()Lorg/unitedsoftware/mosaic/terminal/Event;
+	public final fun nextDebug ()Lorg/unitedsoftware/mosaic/terminal/DebugEvent;
 	public final fun setKittyDisambiguateEscapeCodes (Z)V
 	public final fun setXtermExtendedUtf8Mouse (Z)V
 }
 
-public final class com/jakewharton/mosaic/tty/terminal/TtyTerminalKt {
-	public static final fun asTerminalIn (Lcom/jakewharton/mosaic/tty/Tty;Lkotlinx/coroutines/CoroutineScope;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun asTerminalIn$default (Lcom/jakewharton/mosaic/tty/Tty;Lkotlinx/coroutines/CoroutineScope;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+public final class org/unitedsoftware/mosaic/tty/terminal/TtyTerminalKt {
+	public static final fun asTerminalIn (Lorg/unitedsoftware/mosaic/tty/Tty;Lkotlinx/coroutines/CoroutineScope;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun asTerminalIn$default (Lorg/unitedsoftware/mosaic/tty/Tty;Lkotlinx/coroutines/CoroutineScope;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 

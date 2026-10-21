@@ -2,30 +2,30 @@ package example
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import com.jakewharton.mosaic.animation.LinearEasing
-import com.jakewharton.mosaic.animation.animateFloat
-import com.jakewharton.mosaic.animation.infiniteRepeatable
-import com.jakewharton.mosaic.animation.rememberInfiniteTransition
-import com.jakewharton.mosaic.animation.tween
-import com.jakewharton.mosaic.layout.DrawStyle
-import com.jakewharton.mosaic.layout.background
-import com.jakewharton.mosaic.layout.drawBehind
-import com.jakewharton.mosaic.layout.height
-import com.jakewharton.mosaic.layout.size
-import com.jakewharton.mosaic.layout.width
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.ui.Box
-import com.jakewharton.mosaic.ui.Column
-import com.jakewharton.mosaic.ui.Filler
-import com.jakewharton.mosaic.ui.Row
-import com.jakewharton.mosaic.ui.Spacer
-import com.jakewharton.mosaic.ui.Text
-import com.jakewharton.mosaic.ui.TextStyle
-import com.jakewharton.mosaic.ui.unit.IntOffset
-import com.jakewharton.mosaic.ui.unit.IntSize
 import kotlin.math.PI
 import kotlin.math.roundToInt
 import kotlin.math.sin
+import org.unitedsoftware.mosaic.animation.LinearEasing
+import org.unitedsoftware.mosaic.animation.animateFloat
+import org.unitedsoftware.mosaic.animation.infiniteRepeatable
+import org.unitedsoftware.mosaic.animation.rememberInfiniteTransition
+import org.unitedsoftware.mosaic.animation.tween
+import org.unitedsoftware.mosaic.layout.DrawStyle
+import org.unitedsoftware.mosaic.layout.background
+import org.unitedsoftware.mosaic.layout.drawBehind
+import org.unitedsoftware.mosaic.layout.height
+import org.unitedsoftware.mosaic.layout.size
+import org.unitedsoftware.mosaic.layout.width
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.ui.Box
+import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.Filler
+import org.unitedsoftware.mosaic.ui.Row
+import org.unitedsoftware.mosaic.ui.Spacer
+import org.unitedsoftware.mosaic.ui.Text
+import org.unitedsoftware.mosaic.ui.TextStyle
+import org.unitedsoftware.mosaic.ui.unit.IntOffset
+import org.unitedsoftware.mosaic.ui.unit.IntSize
 
 @Composable
 fun SpacerFillerPage() {

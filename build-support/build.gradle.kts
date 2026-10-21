@@ -8,22 +8,22 @@ plugins {
 gradlePlugin {
 	plugins {
 		create("mosaicBuild") {
-			id = "com.jakewharton.mosaic.build"
+			id = "org.unitedsoftware.mosaic.build"
 			displayName = "Mosaic Build plugin"
 			description = "Gradle plugin for Mosaic build things"
-			implementationClass = "com.jakewharton.mosaic.buildsupport.MosaicBuildPlugin"
+			implementationClass = "org.unitedsoftware.mosaic.buildsupport.MosaicBuildPlugin"
 		}
 		create("mosaicTargets") {
-			id = "com.jakewharton.mosaic.targets"
+			id = "org.unitedsoftware.mosaic.targets"
 			displayName = "Mosaic targets plugin"
 			description = "Adds every Kotlin target Mosaic supports"
-			implementationClass = "com.jakewharton.mosaic.buildsupport.MosaicTargetsPlugin"
+			implementationClass = "org.unitedsoftware.mosaic.buildsupport.MosaicTargetsPlugin"
 		}
 		create("mosaicPublish") {
-			id = "com.jakewharton.mosaic.publish"
+			id = "org.unitedsoftware.mosaic.publish"
 			displayName = "Mosaic publish plugin"
 			description = "Publishing, API validation, and docs for Mosaic libraries"
-			implementationClass = "com.jakewharton.mosaic.buildsupport.MosaicPublishPlugin"
+			implementationClass = "org.unitedsoftware.mosaic.buildsupport.MosaicPublishPlugin"
 		}
 	}
 }

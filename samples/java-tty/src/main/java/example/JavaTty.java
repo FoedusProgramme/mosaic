@@ -1,6 +1,6 @@
 package example;
 
-import com.jakewharton.mosaic.tty.Tty;
+import org.unitedsoftware.mosaic.tty.Tty;
 import java.io.IOException;
 import java.io.PrintStream;
 

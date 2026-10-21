@@ -1,6 +1,6 @@
-module mosaic.animation {
+module org.unitedsoftware.mosaic.animation {
 	requires transitive kotlin.stdlib;
-	requires transitive mosaic.runtime;
+	requires transitive org.unitedsoftware.mosaic.runtime;
 
-	exports com.jakewharton.mosaic.animation;
+	exports org.unitedsoftware.mosaic.animation;
 }

@@ -9,15 +9,15 @@ import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.enum
 import com.jakewharton.finalization.withFinalizationHook
-import com.jakewharton.mosaic.terminal.KeyboardEvent
-import com.jakewharton.mosaic.terminal.KeyboardEvent.Companion.ModifierCtrl
-import com.jakewharton.mosaic.tty.Tty
-import com.jakewharton.mosaic.tty.terminal.EventParser
 import kotlin.jvm.JvmName
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.unitedsoftware.mosaic.terminal.KeyboardEvent
+import org.unitedsoftware.mosaic.terminal.KeyboardEvent.Companion.ModifierCtrl
+import org.unitedsoftware.mosaic.tty.Tty
+import org.unitedsoftware.mosaic.tty.terminal.EventParser
 
 fun main(vararg args: String) = RawModeEchoCommand().main(args)
 

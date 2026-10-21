@@ -7,14 +7,14 @@ pub fn build(b: *std.Build) !void {
 		return;
 	};
 
-	setupMosaicTarget(b, javaHeaders, .linux, .aarch64, "com/jakewharton/mosaic/tty/jni/aarch64");
-	setupMosaicTarget(b, javaHeaders, .linux, .riscv64, "com/jakewharton/mosaic/tty/jni/riscv64");
-	setupMosaicTarget(b, javaHeaders, .linux, .s390x, "com/jakewharton/mosaic/tty/jni/s390x");
-	setupMosaicTarget(b, javaHeaders, .linux, .x86_64, "com/jakewharton/mosaic/tty/jni/amd64");
-	setupMosaicTarget(b, javaHeaders, .macos, .aarch64, "com/jakewharton/mosaic/tty/jni/aarch64");
-	setupMosaicTarget(b, javaHeaders, .macos, .x86_64, "com/jakewharton/mosaic/tty/jni/x86_64");
-	setupMosaicTarget(b, javaHeaders, .windows, .aarch64, "com/jakewharton/mosaic/tty/jni/aarch64");
-	setupMosaicTarget(b, javaHeaders, .windows, .x86_64, "com/jakewharton/mosaic/tty/jni/amd64");
+	setupMosaicTarget(b, javaHeaders, .linux, .aarch64, "org/unitedsoftware/mosaic/tty/jni/aarch64");
+	setupMosaicTarget(b, javaHeaders, .linux, .riscv64, "org/unitedsoftware/mosaic/tty/jni/riscv64");
+	setupMosaicTarget(b, javaHeaders, .linux, .s390x, "org/unitedsoftware/mosaic/tty/jni/s390x");
+	setupMosaicTarget(b, javaHeaders, .linux, .x86_64, "org/unitedsoftware/mosaic/tty/jni/amd64");
+	setupMosaicTarget(b, javaHeaders, .macos, .aarch64, "org/unitedsoftware/mosaic/tty/jni/aarch64");
+	setupMosaicTarget(b, javaHeaders, .macos, .x86_64, "org/unitedsoftware/mosaic/tty/jni/x86_64");
+	setupMosaicTarget(b, javaHeaders, .windows, .aarch64, "org/unitedsoftware/mosaic/tty/jni/aarch64");
+	setupMosaicTarget(b, javaHeaders, .windows, .x86_64, "org/unitedsoftware/mosaic/tty/jni/amd64");
 }
 
 fn setupMosaicTarget(b: *std.Build, headers: []const u8, tag: std.Target.Os.Tag, arch: std.Target.Cpu.Arch, dir: []const u8) void {
@@ -51,7 +51,7 @@ fn setupMosaicTarget(b: *std.Build, headers: []const u8, tag: std.Target.Os.Tag,
 			"src/commonMain/c/mosaic-tty-windows.c",
 			"src/commonMain/c/mosaic-utils-posix.c",
 			"src/commonMain/c/mosaic-utils-windows.c",
-			"src/jvmMain/c/com_jakewharton_mosaic_tty_Jni.c",
+			"src/jvmMain/c/org_unitedsoftware_mosaic_tty_Jni.c",
 		},
 		.flags = &.{
 			"-std=gnu11",

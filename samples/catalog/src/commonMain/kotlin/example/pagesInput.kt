@@ -6,19 +6,19 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.jakewharton.mosaic.layout.KeyEvent
-import com.jakewharton.mosaic.layout.height
-import com.jakewharton.mosaic.layout.onKeyEvent
-import com.jakewharton.mosaic.layout.onPreviewKeyEvent
-import com.jakewharton.mosaic.layout.padding
-import com.jakewharton.mosaic.layout.width
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.ui.Color
-import com.jakewharton.mosaic.ui.Column
-import com.jakewharton.mosaic.ui.Row
-import com.jakewharton.mosaic.ui.Spacer
-import com.jakewharton.mosaic.ui.Text
-import com.jakewharton.mosaic.ui.TextStyle
+import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.height
+import org.unitedsoftware.mosaic.layout.onKeyEvent
+import org.unitedsoftware.mosaic.layout.onPreviewKeyEvent
+import org.unitedsoftware.mosaic.layout.padding
+import org.unitedsoftware.mosaic.layout.width
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.ui.Color
+import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.Row
+import org.unitedsoftware.mosaic.ui.Spacer
+import org.unitedsoftware.mosaic.ui.Text
+import org.unitedsoftware.mosaic.ui.TextStyle
 
 private fun KeyEvent.describe(): String = buildString {
 	if (ctrl) append("ctrl+")

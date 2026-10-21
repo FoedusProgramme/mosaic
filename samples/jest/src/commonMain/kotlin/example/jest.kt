@@ -9,27 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.jakewharton.mosaic.NonInteractivePolicy.Ignore
-import com.jakewharton.mosaic.StaticEffect
-import com.jakewharton.mosaic.layout.background
-import com.jakewharton.mosaic.layout.height
-import com.jakewharton.mosaic.layout.padding
-import com.jakewharton.mosaic.layout.size
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.runMosaicBlocking
-import com.jakewharton.mosaic.text.SpanStyle
-import com.jakewharton.mosaic.text.buildAnnotatedString
-import com.jakewharton.mosaic.text.withStyle
-import com.jakewharton.mosaic.ui.Color
-import com.jakewharton.mosaic.ui.Color.Companion.Black
-import com.jakewharton.mosaic.ui.Color.Companion.Green
-import com.jakewharton.mosaic.ui.Color.Companion.Red
-import com.jakewharton.mosaic.ui.Color.Companion.Yellow
-import com.jakewharton.mosaic.ui.Column
-import com.jakewharton.mosaic.ui.Row
-import com.jakewharton.mosaic.ui.Spacer
-import com.jakewharton.mosaic.ui.Text
-import com.jakewharton.mosaic.ui.TextStyle.Companion.Bold
 import example.TestState.Fail
 import example.TestState.Pass
 import example.TestState.Running
@@ -39,6 +18,27 @@ import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.unitedsoftware.mosaic.NonInteractivePolicy.Ignore
+import org.unitedsoftware.mosaic.StaticEffect
+import org.unitedsoftware.mosaic.layout.background
+import org.unitedsoftware.mosaic.layout.height
+import org.unitedsoftware.mosaic.layout.padding
+import org.unitedsoftware.mosaic.layout.size
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.runMosaicBlocking
+import org.unitedsoftware.mosaic.text.SpanStyle
+import org.unitedsoftware.mosaic.text.buildAnnotatedString
+import org.unitedsoftware.mosaic.text.withStyle
+import org.unitedsoftware.mosaic.ui.Color
+import org.unitedsoftware.mosaic.ui.Color.Companion.Black
+import org.unitedsoftware.mosaic.ui.Color.Companion.Green
+import org.unitedsoftware.mosaic.ui.Color.Companion.Red
+import org.unitedsoftware.mosaic.ui.Color.Companion.Yellow
+import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.Row
+import org.unitedsoftware.mosaic.ui.Spacer
+import org.unitedsoftware.mosaic.ui.Text
+import org.unitedsoftware.mosaic.ui.TextStyle.Companion.Bold
 
 private val Gray = Color(128, 128, 128)
 

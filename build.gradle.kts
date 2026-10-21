@@ -20,9 +20,9 @@ plugins {
 	alias(libs.plugins.testDistribution) apply false
 	alias(libs.plugins.spotless) apply false
 	alias(libs.plugins.burst) apply false
-	id("com.jakewharton.mosaic.build") apply false
-	id("com.jakewharton.mosaic.publish") apply false
-	id("com.jakewharton.mosaic.targets") apply false
+	id("org.unitedsoftware.mosaic.build") apply false
+	id("org.unitedsoftware.mosaic.publish") apply false
+	id("org.unitedsoftware.mosaic.targets") apply false
 }
 
 dependencies {

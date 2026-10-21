@@ -1,5 +1,5 @@
-module mosaic.tty {
+module org.unitedsoftware.mosaic.tty {
 	requires transitive kotlin.stdlib;
 
-	exports com.jakewharton.mosaic.tty;
+	exports org.unitedsoftware.mosaic.tty;
 }

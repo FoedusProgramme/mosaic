@@ -6,22 +6,22 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.jakewharton.mosaic.layout.DrawStyle
-import com.jakewharton.mosaic.layout.KeyEvent
-import com.jakewharton.mosaic.layout.drawBehind
-import com.jakewharton.mosaic.layout.height
-import com.jakewharton.mosaic.layout.offset
-import com.jakewharton.mosaic.layout.onKeyEvent
-import com.jakewharton.mosaic.layout.padding
-import com.jakewharton.mosaic.layout.size
-import com.jakewharton.mosaic.modifier.Modifier
-import com.jakewharton.mosaic.runMosaicMain
-import com.jakewharton.mosaic.ui.Box
-import com.jakewharton.mosaic.ui.Column
-import com.jakewharton.mosaic.ui.Spacer
-import com.jakewharton.mosaic.ui.Text
-import com.jakewharton.mosaic.ui.unit.IntOffset
 import kotlinx.coroutines.awaitCancellation
+import org.unitedsoftware.mosaic.layout.DrawStyle
+import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.drawBehind
+import org.unitedsoftware.mosaic.layout.height
+import org.unitedsoftware.mosaic.layout.offset
+import org.unitedsoftware.mosaic.layout.onKeyEvent
+import org.unitedsoftware.mosaic.layout.padding
+import org.unitedsoftware.mosaic.layout.size
+import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.runMosaicMain
+import org.unitedsoftware.mosaic.ui.Box
+import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.Spacer
+import org.unitedsoftware.mosaic.ui.Text
+import org.unitedsoftware.mosaic.ui.unit.IntOffset
 
 private const val worldWidth = 20
 private const val worldHeight = 10
