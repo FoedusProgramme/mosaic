@@ -160,6 +160,13 @@ render in successive lines instead.
 
 Run your programs directly in a terminal emulator–no IDE and no Gradle.
 
+### "A restricted method in java.lang.System has been called" warning on JDK 24 and newer
+
+Mosaic loads a small native library to talk to the terminal, which recent JDKs warn about unless
+native access is enabled. Pass `--enable-native-access=ALL-UNNAMED` to `java`, or
+`--enable-native-access=org.unitedsoftware.mosaic.tty` when using the module path.
+The flag is not recognized before JDK 17.
+
 
 # License
 
