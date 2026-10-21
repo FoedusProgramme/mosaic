@@ -604,6 +604,12 @@ public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$SpacerKt {
 	public final fun getLambda$2041516420$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$TextFieldKt {
+	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$TextFieldKt;
+	public fun <init> ()V
+	public final fun getLambda$-70105931$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class org/unitedsoftware/mosaic/ui/FillerKt {
 	public static final fun Filler-fUQeE84 (CLorg/unitedsoftware/mosaic/modifier/Modifier;IIILandroidx/compose/runtime/Composer;II)V
 	public static final fun Filler-fUQeE84 (ILorg/unitedsoftware/mosaic/modifier/Modifier;IIILandroidx/compose/runtime/Composer;II)V
@@ -636,6 +642,23 @@ public final class org/unitedsoftware/mosaic/ui/SpacerKt {
 public final class org/unitedsoftware/mosaic/ui/Text {
 	public static final fun Text-vQEq6vw (Ljava/lang/String;Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIILandroidx/compose/runtime/Composer;II)V
 	public static final fun Text-vQEq6vw (Lorg/unitedsoftware/mosaic/text/AnnotatedString;Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIILandroidx/compose/runtime/Composer;II)V
+}
+
+public final class org/unitedsoftware/mosaic/ui/TextFieldKt {
+	public static final fun TextField-CCrYOx0 (Lorg/unitedsoftware/mosaic/ui/TextFieldState;Lorg/unitedsoftware/mosaic/modifier/Modifier;ZZILjava/lang/String;IIILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class org/unitedsoftware/mosaic/ui/TextFieldState {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun clear ()V
+	public final fun getCursor ()I
+	public final fun getText ()Ljava/lang/String;
+	public final fun insert (Ljava/lang/String;)V
+	public final fun setCursor (I)V
+	public final fun setText (Ljava/lang/String;)V
 }
 
 public final class org/unitedsoftware/mosaic/ui/TextStyle {

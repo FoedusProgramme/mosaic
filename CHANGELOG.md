@@ -9,6 +9,7 @@ New:
 - `Modifier.onPasteEvent` receives pasted text as a single `PasteEvent` in terminals which support bracketed paste, rather than one key event per character with `Enter` for each line break. Unhandled pastes are still delivered as key events.
 - `TestMosaic.sendEvent` sends any terminal event, such as the `BracketedPasteEvent`s around pasted text.
 - `DrawScope.drawCursor` places and shows the terminal's cursor once the frame is rendered, so that input methods show their composition at the caret of text input.
+- `TextField` and `TextFieldState` for editing text. Text wraps to the field's width, `maxLines` limits its height, and the terminal's cursor marks the caret. With `onSubmit`, Enter submits and Shift+Enter or Alt+Enter break lines. Pastes are inserted as a whole, and Ctrl+A, Ctrl+E, Ctrl+U, Ctrl+K, and Ctrl+W work like in a shell.
 
 Changed:
 - Use the AndroidX versions of the Compose runtime and lifecycle dependencies which are now fully multiplatform. Dependency constraints to the corresponding JetBrains artifacts (which are now empty) are present to prevent symbol duplication.
