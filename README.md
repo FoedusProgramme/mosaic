@@ -97,6 +97,10 @@ Snapshot documentation is available at [jakewharton.github.io/mosaic/docs/latest
 
 Run `./gradlew installDist` to build the sample binaries.
 
+ * [Catalog](samples/catalog): An interactive tour of every component, modifier, and capability, plus recipes for components Mosaic does not ship.
+
+   `./gradlew :samples:catalog:installJvmDist && ./samples/catalog/build/install/catalog-jvm/bin/catalog`
+
  * [Counter](samples/counter): A simple increasing number from 0 until 20.
 
    `./samples/counter/build/install/counter/bin/counter`

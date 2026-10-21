@@ -23,6 +23,7 @@ include ':mosaic-testing'
 include ':mosaic-tty'
 include ':mosaic-tty-terminal'
 
+include ':samples:catalog'
 include ':samples:counter'
 include ':samples:demo'
 include ':samples:java-tty'
