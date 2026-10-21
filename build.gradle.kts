@@ -15,7 +15,6 @@ plugins {
 	alias(libs.plugins.cite) apply false
 	alias(libs.plugins.poko) apply false
 	alias(libs.plugins.binaryCompatibilityValidator) apply false
-	alias(libs.plugins.cklib) apply false
 	alias(libs.plugins.jextract) apply false
 	alias(libs.plugins.testDistribution) apply false
 	alias(libs.plugins.spotless) apply false

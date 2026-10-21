@@ -1,5 +1,5 @@
-import co.touchlab.cklib.gradle.CompileToBitcode.Language.C
 import org.unitedsoftware.mosaic.buildsupport.ZigDownloadTask
+import org.unitedsoftware.mosaic.buildsupport.ZigStaticLibraryTask
 import java.nio.file.FileSystems
 import java.nio.file.Files
 import org.gradle.language.base.plugins.LifecycleBasePlugin.BUILD_GROUP
@@ -13,7 +13,6 @@ plugins {
 	alias(libs.plugins.kotlin.multiplatform)
 	id("org.unitedsoftware.mosaic.targets")
 	id("org.unitedsoftware.mosaic.publish")
-	alias(libs.plugins.cklib)
 	id("org.unitedsoftware.mosaic.build")
 	alias(libs.plugins.testDistribution)
 	alias(libs.plugins.jextract)
@@ -262,16 +261,48 @@ kotlin {
 
 	val linkNativeDebugTests = tasks.register("linkNativeDebugTests")
 
+	// The C sources are compiled into a static library with Zig, which cinterop embeds into its klib.
+	val cSources = fileTree("src/commonMain/c") { include("*.c") }
+	val cHeaders = fileTree("src/commonMain/c") { include("*.h") }
+	val cFlags = listOf("-std=gnu11", "-Wall", "-Wextra", "-Werror")
+	// Match the sysroots and minimum OS versions which Kotlin/Native links against.
+	val zigTargets = mapOf(
+		"linuxArm64" to "aarch64-linux-gnu.2.25",
+		"linuxX64" to "x86_64-linux-gnu.2.19",
+		"macosArm64" to "aarch64-macos.12.0",
+		"mingwX64" to "x86_64-windows-gnu",
+	)
+
 	targets.withType<KotlinNativeTarget>().configureEach {
-		compilations.getByName(MAIN_COMPILATION_NAME).cinterops.create("mosaic") {
+		val nativeTarget = this
+		val staticLibraryDir = layout.buildDirectory.dir("zigStatic/${nativeTarget.name}")
+		val staticLibrary = tasks.register<ZigStaticLibraryTask>("${nativeTarget.name}MosaicStaticLibrary") {
+			zigDirectory = zigDownload.flatMap { it.outputDir }
+			zigVersion = libs.versions.zig
+			target = zigTargets.getValue(nativeTarget.name)
+			compilerArgs.addAll(cFlags)
+			compilerArgs.addAll("-O2", "-fno-stack-protector", "-fno-sanitize=undefined")
+			if (nativeTarget.name != "mingwX64") {
+				compilerArgs.add("-fPIC")
+			}
+			sources.from(cSources)
+			headers.from(cHeaders)
+			library = staticLibraryDir.map { it.file("libmosaic.a") }
+		}
+
+		val cinterop = compilations.getByName(MAIN_COMPILATION_NAME).cinterops.create("mosaic") {
 			header(file("src/commonMain/c/mosaic.h"))
 			packageName("org.unitedsoftware.mosaic.tty")
-			compilerOpts(
-				"-std=gnu11",
-				"-Wall",
-				"-Wextra",
-				"-Werror",
+			compilerOpts(cFlags)
+			extraOpts(
+				"-libraryPath",
+				staticLibraryDir.get().asFile.absolutePath,
+				"-staticLibrary",
+				"libmosaic.a",
 			)
+		}
+		tasks.named(cinterop.interopProcessingTaskName) {
+			inputs.files(staticLibrary).withPathSensitivity(PathSensitivity.NAME_ONLY)
 		}
 		val testBinariesTaskName = compilations.getByName(TEST_COMPILATION_NAME).binariesTaskName
 		linkNativeDebugTests.configure {
@@ -280,12 +311,4 @@ kotlin {
 	}
 
 	compilerOptions.freeCompilerArgs.add("-Xexpect-actual-classes")
-}
-
-cklib {
-	config.kotlinVersion = libs.versions.kotlin.get()
-	create("mosaic", file("src/commonMain/c"), listOf("main")) {
-		srcDirs = files("src/commonMain/c")
-		language = C
-	}
 }
