@@ -3,12 +3,17 @@
 An experimental tool for building console UI in Kotlin using the Jetpack Compose compiler/runtime.
 Inspired by [Ink](https://github.com/vadimdemedes/ink).
 
+This is United Software's fork of [JakeWharton/mosaic](https://github.com/JakeWharton/mosaic),
+published under the `org.unitedsoftware.mosaic` group and package so that it can be used next to
+the upstream artifacts.
+
 <img src="samples/jest/demo.gif">
 
 Jump to:
 [Introduction](#Introduction) |
 [Usage](#Usage) |
 [Samples](#Samples) |
+[Building](#Building) |
 [FAQ](#FAQ) |
 [License](#License)
 
@@ -61,69 +66,75 @@ Mosaic is a library for Compose, and it relies on JetBrains' Kotlin Compose plug
 Any module which wants to call `runMosaic` or define `@Composable` functions for use with Mosaic must have this plugin applied.
 For more information, see [the JetBrains Compose compiler documentation](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-compiler.html).
 
-Mosaic itself can then be added like any other dependency:
+Mosaic itself can then be added like any other dependency.
+There is no release under the `org.unitedsoftware.mosaic` group yet, but snapshots of `master` are
+published to the Central Portal Snapshots repository:
 
-```groovy
-dependencies {
-  implementation("com.jakewharton.mosaic:mosaic-runtime:0.18.0")
-}
-```
-
-Documentation is available at [jakewharton.github.io/mosaic/docs/0.x/](https://jakewharton.github.io/mosaic/docs/0.x/).
-
-<details>
-<summary>Snapshots of the development version are available in the Central Portal Snapshots repository.</summary>
-<p>
-
-```groovy
-repository {
+```kotlin
+repositories {
   mavenCentral()
-  maven {
-    url 'https://central.sonatype.com/repository/maven-snapshots/'
-  }
+  maven("https://central.sonatype.com/repository/maven-snapshots/")
 }
 dependencies {
-  implementation("com.jakewharton.mosaic:mosaic-runtime:0.19.0-SNAPSHOT")
+  implementation("org.unitedsoftware.mosaic:mosaic-runtime:0.19.0-SNAPSHOT")
 }
 ```
 
-Snapshot documentation is available at [jakewharton.github.io/mosaic/docs/latest/](https://jakewharton.github.io/mosaic/docs/latest/).
+Snapshot documentation is available at
+[foedusprogramme.github.io/mosaic/docs/latest/](https://foedusprogramme.github.io/mosaic/docs/latest/).
 
-</p>
-</details>
+Upstream releases up to 0.18.0 are available as `com.jakewharton.mosaic:mosaic-runtime`.
 
 
 ## Samples
 
-Run `./gradlew installDist` to build the sample binaries.
+Run `./gradlew installJvmDist` to build the JVM sample binaries, then run them from a terminal.
+Native binaries are built with `./gradlew linkReleaseExecutable<Target>`, for example
+`./gradlew :samples:counter:linkReleaseExecutableMacosArm64` produces
+`samples/counter/build/bin/macosArm64/releaseExecutable/counter.kexe`.
 
  * [Catalog](samples/catalog): An interactive tour of every component, modifier, and capability, plus recipes for components Mosaic does not ship.
 
-   `./gradlew :samples:catalog:installJvmDist && ./samples/catalog/build/install/catalog-jvm/bin/catalog`
+   `./samples/catalog/build/install/catalog-jvm/bin/catalog`
 
  * [Counter](samples/counter): A simple increasing number from 0 until 20.
 
-   `./samples/counter/build/install/counter/bin/counter`
+   `./samples/counter/build/install/counter-jvm/bin/counter`
 
  * [Demo](samples/demo): A playground for demonstrating many features of Mosaic.
 
-   `./samples/demo/build/install/demo/bin/demo`
+   `./samples/demo/build/install/demo-jvm/bin/demo`
 
  * [Jest](samples/jest): Example output of a test framework (such as JS's 'Jest').
 
-   `./samples/jest/build/install/jest/bin/jest`
+   `./samples/jest/build/install/jest-jvm/bin/jest`
 
  * [Robot](samples/robot): An interactive, game-like program with keyboard control.
 
-   `./samples/robot/build/install/robot/bin/robot`
+   `./samples/robot/build/install/robot-jvm/bin/robot`
 
  * [rrtop](samples/rrtop): An example inspired by [rrtop](https://github.com/wojciech-zurek/rrtop).
 
-   `./samples/rrtop/build/install/rrtop/bin/rrtop`
+   `./samples/rrtop/build/install/rrtop-jvm/bin/rrtop`
 
  * [snake](samples/snake): Snake game.
 
-   `./samples/snake/build/install/snake/bin/snake`
+   `./samples/snake/build/install/snake-jvm/bin/snake`
+
+## Building
+
+Run `./gradlew build` to build and test everything.
+
+ * Gradle runs on Azul Zulu JDK 26, as declared in `gradle/gradle-daemon-jvm.properties`. It is
+   found among the installed JDKs, or downloaded automatically, so `JAVA_HOME` does not matter.
+ * Zig is downloaded automatically to compile the C parts of `mosaic-tty`, both the JNI library for
+   the JVM and the static library embedded into the native klibs.
+ * Building every native target (Linux, macOS, and Windows) works from a Mac.
+   Pass `-Pmosaic.hostOnly=true`, or set it in `~/.gradle/gradle.properties`, to only build the JVM
+   and the native target of the current machine, which is much faster.
+   This skips the klib API check, which CI still runs.
+ * After changing public API, run `./gradlew apiDump` (without `mosaic.hostOnly`) and commit the
+   updated files in each module's `api/` directory.
 
 ## FAQ
 
@@ -153,6 +164,7 @@ Run your programs directly in a terminal emulator–no IDE and no Gradle.
 # License
 
     Copyright 2020 Jake Wharton
+    Copyright 2026 United Software
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

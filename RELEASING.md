@@ -37,4 +37,10 @@
    $ git push && git push --tags
    ```
 
-   This will trigger a GitHub Action workflow which will create a GitHub release and push to Maven Central.
+   This will trigger a GitHub Action workflow which will create a GitHub release and upload the
+   artifacts to Maven Central. The workflow fails if the tag does not match `VERSION_NAME`.
+
+9. Publish the deployment by hand at [central.sonatype.com](https://central.sonatype.com/publishing/deployments).
+
+   When the `MAVEN_CENTRAL_RELEASE` repository variable is `true`, the workflow publishes it
+   automatically instead.
