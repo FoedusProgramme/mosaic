@@ -94,9 +94,11 @@ public suspend fun Tty.asTerminalIn(
 
 	// Each of these will become true when their respective feature is recognized by the terminal
 	// and was not already configured to our desired setting. Revert each toggled setting on exit.
+	var toggleBracketedPaste = false
 	var toggleCursor = false
 	var toggleFocus = false
 	var toggleInBandResize = false
+	var toggleKittyKeyboard = false
 	var toggleSystemTheme = false
 
 	// TODO The design of finalization hook fights us here. We don't need suspension.
@@ -104,6 +106,8 @@ public suspend fun Tty.asTerminalIn(
 		withFinalizationHook(
 			hook = {
 				setCallback(null)
+				if (toggleKittyKeyboard) write(kittyKeyboardPop)
+				if (toggleBracketedPaste) write(bracketedPasteDisable)
 				if (toggleSystemTheme) write(systemThemeDisable)
 				if (toggleInBandResize) write(inBandResizeDisable)
 				if (toggleFocus) write(focusDisable)
@@ -167,6 +171,7 @@ public suspend fun Tty.asTerminalIn(
 							"$CSI?$synchronizedOutputMode\$p" +
 							"$CSI?$systemThemeMode\$p" +
 							"$CSI?$inBandResizeMode\$p" +
+							"$CSI?$bracketedPasteMode\$p" +
 							"$CSI?996n" + // Theme query
 							"${APC}Gi=31,s=1,v=1,a=q,t=d,f=24;AAAA$ST" + // Kitty graphics
 							"$CSI?u" + // Kitty keyboard
@@ -213,6 +218,14 @@ public suspend fun Tty.asTerminalIn(
 							}
 						}
 
+						bracketedPasteMode -> {
+							// Pasted text is then delivered as a whole instead of as individual key presses.
+							if (event.setting == Setting.Reset) {
+								toggleBracketedPaste = true
+								write(bracketedPasteEnable)
+							}
+						}
+
 						inBandResizeMode -> {
 							if (event.setting.isSupported) {
 								inBandResizeEvents = true
@@ -243,6 +256,10 @@ public suspend fun Tty.asTerminalIn(
 				is KittyKeyboardQueryEvent -> {
 					if (stage == StageCapabilityQueries) {
 						kittyKeyboard = true
+						// Allows distinguishing keys like Shift+Enter from Enter. Pushed onto the terminal's
+						// stack of flags so that popping it on exit restores whatever was there before.
+						toggleKittyKeyboard = true
+						write(kittyKeyboardPushDisambiguate)
 					}
 				}
 

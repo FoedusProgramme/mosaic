@@ -26,3 +26,11 @@ internal const val systemThemeDisable = "$CSI?${systemThemeMode}l"
 internal const val inBandResizeMode = 2048
 internal const val inBandResizeEnable = "$CSI?${inBandResizeMode}h"
 internal const val inBandResizeDisable = "$CSI?${inBandResizeMode}l"
+
+internal const val bracketedPasteMode = 2004
+internal const val bracketedPasteEnable = "$CSI?${bracketedPasteMode}h"
+internal const val bracketedPasteDisable = "$CSI?${bracketedPasteMode}l"
+
+/** Push the Kitty keyboard protocol flag which disambiguates escape codes, such as Shift+Enter. */
+internal const val kittyKeyboardPushDisambiguate = "$CSI>1u"
+internal const val kittyKeyboardPop = "$CSI<u"

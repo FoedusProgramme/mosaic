@@ -5,6 +5,7 @@
 
 New:
 - JVM support for RISC-V and s390x!
+- Keys with modifiers which used to be indistinguishable, such as Shift+Enter and Enter, are now reported separately in terminals which support the Kitty keyboard protocol.
 
 Changed:
 - Use the AndroidX versions of the Compose runtime and lifecycle dependencies which are now fully multiplatform. Dependency constraints to the corresponding JetBrains artifacts (which are now empty) are present to prevent symbol duplication.
