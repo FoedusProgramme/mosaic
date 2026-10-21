@@ -5,7 +5,7 @@ on:
   workflow_dispatch: {}
   push:
     branches:
-      - 'trunk'
+      - 'master'
     tags-ignore:
       - '**'
 
@@ -263,7 +263,7 @@ jobs:
           fi
 
   publish:
-    if: ${{ github.ref == 'refs/heads/trunk' && github.repository == 'JakeWharton/mosaic' }}
+    if: ${{ github.ref == 'refs/heads/master' && github.repository == 'JakeWharton/mosaic' }}
     runs-on: macos-15
     needs:
       - final-status
