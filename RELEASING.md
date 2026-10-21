@@ -44,3 +44,9 @@
 
    When the `MAVEN_CENTRAL_RELEASE` repository variable is `true`, the workflow publishes it
    automatically instead.
+
+## Snapshots
+
+Every push to `master` publishes a snapshot of `VERSION_NAME` to the Central Portal Snapshots
+repository when the `MAVEN_CENTRAL_SNAPSHOTS` repository variable is `true`. Snapshots must first be
+enabled for the `org.unitedsoftware` namespace in the Central Portal.

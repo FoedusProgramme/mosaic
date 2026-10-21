@@ -67,8 +67,9 @@ Any module which wants to call `runMosaic` or define `@Composable` functions for
 For more information, see [the JetBrains Compose compiler documentation](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-compiler.html).
 
 Mosaic itself can then be added like any other dependency.
-There is no release under the `org.unitedsoftware.mosaic` group yet, but snapshots of `master` are
-published to the Central Portal Snapshots repository:
+Nothing has been published under the `org.unitedsoftware.mosaic` group yet. Until then, run
+`./gradlew publishToMavenLocal` and add `mavenLocal()` to your repositories. Once enabled, snapshots
+of `master` will be published to the Central Portal Snapshots repository:
 
 ```kotlin
 repositories {
