@@ -47,8 +47,7 @@ dokka = "org.jetbrains.dokka:2.2.0"
 cite = "com.jakewharton.cite:0.9.0"
 poko = "dev.drewhamilton.poko:0.23.2"
 binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatibilityValidator" }
-# Newer versions apply the 'java' plugin which is incompatible with Kotlin multiplatform.
-jextract = "de.infolektuell.jextract:1.0.0"
+jextract = "de.infolektuell.jextract:1.4.1"
 testDistribution = "com.jakewharton.test-distribution:0.4.1"
 spotless = "com.diffplug.spotless:8.10.4"
 burst = "app.cash.burst:2.14.0"

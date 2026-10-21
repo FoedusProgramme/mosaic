@@ -33,6 +33,7 @@ include(":mosaic-runtime")
 include(":mosaic-terminal")
 include(":mosaic-testing")
 include(":mosaic-tty")
+include(":mosaic-tty:ffm")
 include(":mosaic-tty-terminal")
 
 include(":samples:catalog")
