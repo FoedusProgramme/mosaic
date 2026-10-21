@@ -14,6 +14,7 @@ abstract interface <#A: kotlin/Any?> org.unitedsoftware.mosaic.testing/TestMosai
     abstract val state // org.unitedsoftware.mosaic.testing/TestMosaic.state|{}state[0]
         abstract fun <get-state>(): org.unitedsoftware.mosaic.testing/TestTerminal.State // org.unitedsoftware.mosaic.testing/TestMosaic.state.<get-state>|<get-state>(){}[0]
 
+    abstract fun sendEvent(org.unitedsoftware.mosaic.terminal/Event) // org.unitedsoftware.mosaic.testing/TestMosaic.sendEvent|sendEvent(org.unitedsoftware.mosaic.terminal.Event){}[0]
     abstract fun sendKeyEvent(org.unitedsoftware.mosaic.terminal/KeyboardEvent) // org.unitedsoftware.mosaic.testing/TestMosaic.sendKeyEvent|sendKeyEvent(org.unitedsoftware.mosaic.terminal.KeyboardEvent){}[0]
     abstract fun setContentAndSnapshot(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>): #A // org.unitedsoftware.mosaic.testing/TestMosaic.setContentAndSnapshot|setContentAndSnapshot(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
     abstract suspend fun awaitSnapshot(kotlin.time/Duration = ...): #A // org.unitedsoftware.mosaic.testing/TestMosaic.awaitSnapshot|awaitSnapshot(kotlin.time.Duration){}[0]

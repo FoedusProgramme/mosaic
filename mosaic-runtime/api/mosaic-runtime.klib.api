@@ -158,6 +158,10 @@ abstract interface org.unitedsoftware.mosaic.layout/ParentDataModifier : org.uni
     abstract fun modifyParentData(kotlin/Any?): kotlin/Any? // org.unitedsoftware.mosaic.layout/ParentDataModifier.modifyParentData|modifyParentData(kotlin.Any?){}[0]
 }
 
+abstract interface org.unitedsoftware.mosaic.layout/PasteModifier : org.unitedsoftware.mosaic.modifier/Modifier.Element { // org.unitedsoftware.mosaic.layout/PasteModifier|null[0]
+    abstract fun onPasteEvent(org.unitedsoftware.mosaic.layout/PasteEvent): kotlin/Boolean // org.unitedsoftware.mosaic.layout/PasteModifier.onPasteEvent|onPasteEvent(org.unitedsoftware.mosaic.layout.PasteEvent){}[0]
+}
+
 abstract interface org.unitedsoftware.mosaic.modifier/Modifier { // org.unitedsoftware.mosaic.modifier/Modifier|null[0]
     abstract fun <#A1: kotlin/Any?> foldIn(#A1, kotlin/Function2<#A1, org.unitedsoftware.mosaic.modifier/Modifier.Element, #A1>): #A1 // org.unitedsoftware.mosaic.modifier/Modifier.foldIn|foldIn(0:0;kotlin.Function2<0:0,org.unitedsoftware.mosaic.modifier.Modifier.Element,0:0>){0§<kotlin.Any?>}[0]
     abstract fun <#A1: kotlin/Any?> foldOut(#A1, kotlin/Function2<org.unitedsoftware.mosaic.modifier/Modifier.Element, #A1, #A1>): #A1 // org.unitedsoftware.mosaic.modifier/Modifier.foldOut|foldOut(0:0;kotlin.Function2<org.unitedsoftware.mosaic.modifier.Modifier.Element,0:0,0:0>){0§<kotlin.Any?>}[0]
@@ -268,6 +272,17 @@ final class org.unitedsoftware.mosaic.layout/KeyEvent { // org.unitedsoftware.mo
     final fun equals(kotlin/Any?): kotlin/Boolean // org.unitedsoftware.mosaic.layout/KeyEvent.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // org.unitedsoftware.mosaic.layout/KeyEvent.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // org.unitedsoftware.mosaic.layout/KeyEvent.toString|toString(){}[0]
+}
+
+final class org.unitedsoftware.mosaic.layout/PasteEvent { // org.unitedsoftware.mosaic.layout/PasteEvent|null[0]
+    constructor <init>(kotlin/String) // org.unitedsoftware.mosaic.layout/PasteEvent.<init>|<init>(kotlin.String){}[0]
+
+    final val text // org.unitedsoftware.mosaic.layout/PasteEvent.text|{}text[0]
+        final fun <get-text>(): kotlin/String // org.unitedsoftware.mosaic.layout/PasteEvent.text.<get-text>|<get-text>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // org.unitedsoftware.mosaic.layout/PasteEvent.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // org.unitedsoftware.mosaic.layout/PasteEvent.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // org.unitedsoftware.mosaic.layout/PasteEvent.toString|toString(){}[0]
 }
 
 final class org.unitedsoftware.mosaic.modifier/CombinedModifier : org.unitedsoftware.mosaic.modifier/Modifier { // org.unitedsoftware.mosaic.modifier/CombinedModifier|null[0]
@@ -677,6 +692,7 @@ final val org.unitedsoftware.mosaic.layout/layoutId // org.unitedsoftware.mosaic
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop|#static{}org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop[0]
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop|#static{}org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop[0]
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_KeyEvent$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_KeyEvent$stableprop|#static{}org_unitedsoftware_mosaic_layout_KeyEvent$stableprop[0]
+final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PasteEvent$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PasteEvent$stableprop|#static{}org_unitedsoftware_mosaic_layout_PasteEvent$stableprop[0]
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_Placeable$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_Placeable$stableprop|#static{}org_unitedsoftware_mosaic_layout_Placeable$stableprop[0]
 final val org.unitedsoftware.mosaic.modifier/org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop // org.unitedsoftware.mosaic.modifier/org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop|#static{}org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop[0]
 final val org.unitedsoftware.mosaic.text/org_unitedsoftware_mosaic_text_AnnotatedString$stableprop // org.unitedsoftware.mosaic.text/org_unitedsoftware_mosaic_text_AnnotatedString$stableprop|#static{}org_unitedsoftware_mosaic_text_AnnotatedString$stableprop[0]
@@ -727,6 +743,7 @@ final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosai
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/offset(kotlin/Function0<org.unitedsoftware.mosaic.ui.unit/IntOffset>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/offset|offset@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function0<org.unitedsoftware.mosaic.ui.unit.IntOffset>){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/offset(kotlin/Int = ..., kotlin/Int = ...): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/offset|offset@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Int;kotlin.Int){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/onKeyEvent(kotlin/Function1<org.unitedsoftware.mosaic.layout/KeyEvent, kotlin/Boolean>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/onKeyEvent|onKeyEvent@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function1<org.unitedsoftware.mosaic.layout.KeyEvent,kotlin.Boolean>){}[0]
+final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/onPasteEvent(kotlin/Function1<org.unitedsoftware.mosaic.layout/PasteEvent, kotlin/Boolean>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/onPasteEvent|onPasteEvent@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function1<org.unitedsoftware.mosaic.layout.PasteEvent,kotlin.Boolean>){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/onPreviewKeyEvent(kotlin/Function1<org.unitedsoftware.mosaic.layout/KeyEvent, kotlin/Boolean>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/onPreviewKeyEvent|onPreviewKeyEvent@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function1<org.unitedsoftware.mosaic.layout.KeyEvent,kotlin.Boolean>){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/padding(kotlin/Int = ..., kotlin/Int = ...): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/padding|padding@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Int;kotlin.Int){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/padding(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ...): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/padding|padding@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
@@ -765,6 +782,7 @@ final fun (org.unitedsoftware.mosaic.ui.unit/Constraints).org.unitedsoftware.mos
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop_getter|org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop_getter|org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_KeyEvent$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_KeyEvent$stableprop_getter|org_unitedsoftware_mosaic_layout_KeyEvent$stableprop_getter(){}[0]
+final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PasteEvent$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PasteEvent$stableprop_getter|org_unitedsoftware_mosaic_layout_PasteEvent$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_Placeable$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_Placeable$stableprop_getter|org_unitedsoftware_mosaic_layout_Placeable$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.modifier/org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.modifier/org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop_getter|org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.text/AnnotatedString(kotlin/String, org.unitedsoftware.mosaic.text/SpanStyle): org.unitedsoftware.mosaic.text/AnnotatedString // org.unitedsoftware.mosaic.text/AnnotatedString|AnnotatedString(kotlin.String;org.unitedsoftware.mosaic.text.SpanStyle){}[0]

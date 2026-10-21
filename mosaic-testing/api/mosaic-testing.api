@@ -13,6 +13,7 @@ public abstract interface class org/unitedsoftware/mosaic/testing/TestMosaic : o
 	public abstract fun awaitSnapshot-VtjQ1oo (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun awaitSnapshot-VtjQ1oo$default (Lorg/unitedsoftware/mosaic/testing/TestMosaic;JLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public abstract fun getState ()Lorg/unitedsoftware/mosaic/testing/TestTerminal$State;
+	public abstract fun sendEvent (Lorg/unitedsoftware/mosaic/terminal/Event;)V
 	public abstract fun sendKeyEvent (Lorg/unitedsoftware/mosaic/terminal/KeyboardEvent;)V
 	public abstract fun setContentAndSnapshot (Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
 }

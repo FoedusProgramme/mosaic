@@ -222,6 +222,23 @@ public abstract interface class org/unitedsoftware/mosaic/layout/ParentDataModif
 	public abstract fun modifyParentData (Ljava/lang/Object;)Ljava/lang/Object;
 }
 
+public final class org/unitedsoftware/mosaic/layout/PasteEvent {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getText ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class org/unitedsoftware/mosaic/layout/PasteModifier : org/unitedsoftware/mosaic/modifier/Modifier$Element {
+	public abstract fun onPasteEvent (Lorg/unitedsoftware/mosaic/layout/PasteEvent;)Z
+}
+
+public final class org/unitedsoftware/mosaic/layout/PasteModifierKt {
+	public static final fun onPasteEvent (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+}
+
 public abstract class org/unitedsoftware/mosaic/layout/Placeable {
 	public static final field $stable I
 	public fun <init> ()V

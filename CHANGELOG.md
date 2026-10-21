@@ -6,6 +6,8 @@
 New:
 - JVM support for RISC-V and s390x!
 - Keys with modifiers which used to be indistinguishable, such as Shift+Enter and Enter, are now reported separately in terminals which support the Kitty keyboard protocol.
+- `Modifier.onPasteEvent` receives pasted text as a single `PasteEvent` in terminals which support bracketed paste, rather than one key event per character with `Enter` for each line break. Unhandled pastes are still delivered as key events.
+- `TestMosaic.sendEvent` sends any terminal event, such as the `BracketedPasteEvent`s around pasted text.
 
 Changed:
 - Use the AndroidX versions of the Compose runtime and lifecycle dependencies which are now fully multiplatform. Dependency constraints to the corresponding JetBrains artifacts (which are now empty) are present to prevent symbol duplication.

@@ -1,6 +1,7 @@
 package org.unitedsoftware.mosaic
 
 import de.cketti.codepoints.CodePoints
+import de.cketti.codepoints.appendCodePoint
 import org.unitedsoftware.mosaic.layout.KeyEvent
 import org.unitedsoftware.mosaic.terminal.KeyboardEvent
 
@@ -62,4 +63,31 @@ internal fun KeyboardEvent.toKeyEventOrNull(): KeyEvent? {
 		ctrl = ctrl,
 		shift = shift,
 	)
+}
+
+/** The text of key events received during a bracketed paste, with line breaks as `\n`. */
+internal fun List<KeyboardEvent>.toPastedText(): String = buildString {
+	for (event in this@toPastedText) {
+		if (event.eventType != KeyboardEvent.EventTypePress) continue
+		event.text?.let {
+			append(it)
+			continue
+		}
+		val codepoint = event.codepoint
+		when {
+			codepoint == 13 -> append('\n')
+
+			codepoint == 9 -> append('\t')
+
+			// Other control characters are parsed into keys with modifiers, which are not text.
+			event.ctrl || event.alt -> {}
+
+			codepoint < 32 || codepoint in 127..159 || codepoint in 0xD800..0xDFFF -> {}
+
+			// Functional keys of the Kitty keyboard protocol.
+			codepoint in 57344..63743 -> {}
+
+			CodePoints.isValidCodePoint(codepoint) -> appendCodePoint(codepoint)
+		}
+	}
 }

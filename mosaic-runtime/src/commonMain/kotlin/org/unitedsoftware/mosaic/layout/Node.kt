@@ -59,6 +59,10 @@ internal abstract class MosaicNodeLayer :
 		return next?.sendKeyEvent(keyEvent) ?: false
 	}
 
+	open fun sendPasteEvent(pasteEvent: PasteEvent): Boolean {
+		return next?.sendPasteEvent(pasteEvent) ?: false
+	}
+
 	override fun minIntrinsicWidth(height: Int): Int {
 		return next?.minIntrinsicWidth(height) ?: 0
 	}
@@ -113,6 +117,9 @@ internal class MosaicNode(
 			if (element is KeyModifier) {
 				nextLayer = KeyLayer(element, nextLayer)
 			}
+			if (element is PasteModifier) {
+				nextLayer = PasteLayer(element, nextLayer)
+			}
 			if (element is ParentDataModifier) {
 				parentData = element.modifyParentData(parentData)
 			}
@@ -147,6 +154,10 @@ internal class MosaicNode(
 
 	fun sendKeyEvent(keyEvent: KeyEvent): Boolean {
 		return topLayer.sendKeyEvent(keyEvent)
+	}
+
+	fun sendPasteEvent(pasteEvent: PasteEvent): Boolean {
+		return topLayer.sendPasteEvent(pasteEvent)
 	}
 
 	override fun minIntrinsicWidth(height: Int): Int {
@@ -188,6 +199,15 @@ private class BottomLayer(
 	override fun sendKeyEvent(keyEvent: KeyEvent): Boolean {
 		for (child in node.children) {
 			if (child.sendKeyEvent(keyEvent)) {
+				return true
+			}
+		}
+		return false
+	}
+
+	override fun sendPasteEvent(pasteEvent: PasteEvent): Boolean {
+		for (child in node.children) {
+			if (child.sendPasteEvent(pasteEvent)) {
 				return true
 			}
 		}
@@ -254,6 +274,14 @@ private class DrawLayer(
 		canvas.translationX = oldX
 		canvas.translationY = oldY
 	}
+}
+
+private class PasteLayer(
+	private val element: PasteModifier,
+	override val next: MosaicNodeLayer,
+) : MosaicNodeLayer() {
+	override fun sendPasteEvent(pasteEvent: PasteEvent) = next.sendPasteEvent(pasteEvent) ||
+		element.onPasteEvent(pasteEvent)
 }
 
 private class KeyLayer(

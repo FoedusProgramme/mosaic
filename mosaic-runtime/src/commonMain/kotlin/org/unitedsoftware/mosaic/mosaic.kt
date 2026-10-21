@@ -33,6 +33,8 @@ import kotlinx.coroutines.runBlocking
 import org.unitedsoftware.mosaic.NonInteractivePolicy.Exit
 import org.unitedsoftware.mosaic.layout.KeyEvent
 import org.unitedsoftware.mosaic.layout.MosaicNode
+import org.unitedsoftware.mosaic.layout.PasteEvent
+import org.unitedsoftware.mosaic.terminal.BracketedPasteEvent
 import org.unitedsoftware.mosaic.terminal.KeyboardEvent
 import org.unitedsoftware.mosaic.terminal.Terminal
 import org.unitedsoftware.mosaic.ui.BoxMeasurePolicy
@@ -280,18 +282,48 @@ internal class MosaicComposition(
 	private fun startFrameListener() {
 		scope.launch(start = UNDISPATCHED) {
 			val ctrlC = KeyEvent("c", ctrl = true)
+			// Key events received since the start of a bracketed paste, or null when not pasting.
+			var pasted: MutableList<KeyboardEvent>? = null
+
+			/** Returns false when the key was an unhandled Ctrl+C which cancelled the program. */
+			fun sendKeyEvent(event: KeyboardEvent): Boolean {
+				val keyEvent = event.toKeyEventOrNull() ?: return true
+				val keyHandled = rootNode.sendKeyEvent(keyEvent)
+				if (!keyHandled && keyEvent == ctrlC) {
+					job.cancel()
+					return false
+				}
+				return true
+			}
 
 			do {
 				externalClock.withFrameNanos { nanos ->
-					// Drain any pending key events before triggering the frame.
+					// Drain any pending input events before triggering the frame.
 					while (true) {
-						val event = terminal.events.tryReceive().getOrNull() ?: break
-						if (event !is KeyboardEvent) continue
-						val keyEvent = event.toKeyEventOrNull() ?: continue
-						val keyHandled = rootNode.sendKeyEvent(keyEvent)
-						if (!keyHandled && keyEvent == ctrlC) {
-							job.cancel()
-							return@withFrameNanos
+						when (val event = terminal.events.tryReceive().getOrNull() ?: break) {
+							is BracketedPasteEvent -> if (event.start) {
+								pasted = mutableListOf()
+							} else {
+								val events = pasted ?: continue
+								pasted = null
+								if (!rootNode.sendPasteEvent(PasteEvent(events.toPastedText()))) {
+									// Nothing handled the paste, so fall back to delivering it as key presses.
+									for (keyboardEvent in events) {
+										if (!sendKeyEvent(keyboardEvent)) return@withFrameNanos
+									}
+								}
+							}
+
+							is KeyboardEvent -> {
+								val events = pasted
+								if (events != null) {
+									events += event
+								} else if (!sendKeyEvent(event)) {
+									return@withFrameNanos
+								}
+							}
+
+							else -> {}
 						}
 					}
 

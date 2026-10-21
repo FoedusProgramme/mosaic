@@ -10,6 +10,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeout
 import org.unitedsoftware.mosaic.Mosaic
 import org.unitedsoftware.mosaic.terminal.AnsiLevel
+import org.unitedsoftware.mosaic.terminal.BracketedPasteEvent
+import org.unitedsoftware.mosaic.terminal.Event
 import org.unitedsoftware.mosaic.terminal.KeyboardEvent
 import org.unitedsoftware.mosaic.terminal.Terminal
 
@@ -48,6 +50,9 @@ public interface TestMosaic<T> : Mosaic {
 	public suspend fun awaitSnapshot(duration: Duration = 1.seconds): T
 
 	public fun sendKeyEvent(keyEvent: KeyboardEvent)
+
+	/** Sends any terminal [event], such as the [BracketedPasteEvent]s around pasted text. */
+	public fun sendEvent(event: Event)
 	public val state: TestTerminal.State
 }
 
@@ -103,6 +108,10 @@ private class RealTestMosaic<T>(
 
 	override fun sendKeyEvent(keyEvent: KeyboardEvent) {
 		testTerminal.events.trySend(keyEvent)
+	}
+
+	override fun sendEvent(event: Event) {
+		testTerminal.events.trySend(event)
 	}
 
 	override fun draw() = mosaic.draw()
