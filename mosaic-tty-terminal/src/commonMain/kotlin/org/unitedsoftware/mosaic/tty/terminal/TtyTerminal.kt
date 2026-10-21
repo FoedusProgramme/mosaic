@@ -95,6 +95,8 @@ public suspend fun Tty.asTerminalIn(
 	// Each of these will become true when their respective feature is recognized by the terminal
 	// and was not already configured to our desired setting. Revert each toggled setting on exit.
 	var toggleBracketedPaste = false
+	var bracketedPasteReported = false
+	var deviceAttributesReported = false
 	var toggleCursor = false
 	var toggleFocus = false
 	var toggleInBandResize = false
@@ -156,6 +158,7 @@ public suspend fun Tty.asTerminalIn(
 			when (event) {
 				is PrimaryDeviceAttributesEvent -> {
 					if (stage == StageNormalOperation) continue
+					deviceAttributesReported = true
 
 					if (event.id == 1) {
 						// VT100 terminals can't handle most of the other queries so just bail.
@@ -219,7 +222,7 @@ public suspend fun Tty.asTerminalIn(
 						}
 
 						bracketedPasteMode -> {
-							// Pasted text is then delivered as a whole instead of as individual key presses.
+							bracketedPasteReported = true
 							if (event.setting == Setting.Reset) {
 								toggleBracketedPaste = true
 								write(bracketedPasteEnable)
@@ -348,6 +351,15 @@ public suspend fun Tty.asTerminalIn(
 		bootstrapDone.await()
 	}
 	stage = StageNormalOperation
+
+	// Pasted text is delivered as a whole instead of as individual key presses with bracketed paste.
+	// Some terminals which support it, like tmux which also identifies as a VT100, do not report
+	// modes. Enabling it is harmless in terminals which do not support it, so only skip it when the
+	// terminal said it is unsupported, or did not identify as a terminal at all.
+	if (deviceAttributesReported && !bracketedPasteReported) {
+		toggleBracketedPaste = true
+		write(bracketedPasteEnable)
+	}
 
 	if (debugBootstrap) {
 		write("\r\n")
