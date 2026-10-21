@@ -14,8 +14,13 @@ public class MosaicPublishPlugin : Plugin<Project> {
 		target.pluginManager.apply("org.jetbrains.kotlinx.binary-compatibility-validator")
 		target.pluginManager.apply("org.jetbrains.dokka")
 
+		// The klib ABI dump lists every target, so it cannot be checked when only building the host.
+		val hostOnly = target.providers.gradleProperty("mosaic.hostOnly")
+			.map(String::toBoolean)
+			.getOrElse(false)
+
 		target.extensions.configure(ApiValidationExtension::class.java) { apiValidation ->
-			apiValidation.klib.enabled = true
+			apiValidation.klib.enabled = !hostOnly
 
 			// We run API checks on a Mac where all possible Kotlin targets are available.
 			// Setting this to true will allow us to catch when targets are removed.
