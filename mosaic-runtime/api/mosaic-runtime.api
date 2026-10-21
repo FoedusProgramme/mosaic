@@ -381,6 +381,7 @@ public final class com/jakewharton/mosaic/text/AnnotatedStringKt {
 
 public final class com/jakewharton/mosaic/text/SpanStyle {
 	public static final field $stable I
+	public fun <init> ()V
 	public synthetic fun <init> (IIIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (IIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun copy-5kpQ8cY (IIIII)Lcom/jakewharton/mosaic/text/SpanStyle;
@@ -570,19 +571,19 @@ public abstract interface class com/jakewharton/mosaic/ui/ColumnScope {
 public final class com/jakewharton/mosaic/ui/ComposableSingletons$BoxKt {
 	public static final field INSTANCE Lcom/jakewharton/mosaic/ui/ComposableSingletons$BoxKt;
 	public fun <init> ()V
-	public final fun getLambda$-781209811$mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-781209811$com_jakewharton_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class com/jakewharton/mosaic/ui/ComposableSingletons$FillerKt {
 	public static final field INSTANCE Lcom/jakewharton/mosaic/ui/ComposableSingletons$FillerKt;
 	public fun <init> ()V
-	public final fun getLambda$927779251$mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$927779251$com_jakewharton_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class com/jakewharton/mosaic/ui/ComposableSingletons$SpacerKt {
 	public static final field INSTANCE Lcom/jakewharton/mosaic/ui/ComposableSingletons$SpacerKt;
 	public fun <init> ()V
-	public final fun getLambda$-294102477$mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-294102477$com_jakewharton_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class com/jakewharton/mosaic/ui/FillerKt {

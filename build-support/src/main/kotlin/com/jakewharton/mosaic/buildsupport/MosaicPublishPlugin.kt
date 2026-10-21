@@ -1,12 +1,14 @@
 package com.jakewharton.mosaic.buildsupport
 
 import kotlinx.validation.ApiValidationExtension
+import kotlinx.validation.ExperimentalBCVApi
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 /** Publishing, API compatibility tracking, and documentation for a library module. */
 @Suppress("unused") // Invoked reflectively by Gradle.
 public class MosaicPublishPlugin : Plugin<Project> {
+	@OptIn(ExperimentalBCVApi::class) // klib validation.
 	override fun apply(target: Project) {
 		target.pluginManager.apply("com.vanniktech.maven.publish")
 		target.pluginManager.apply("org.jetbrains.kotlinx.binary-compatibility-validator")

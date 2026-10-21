@@ -254,7 +254,7 @@ kotlin {
 		// Adding additional test runs somehow removes the configuration capabilities which allow
 		// automatic resolution of the junit test dependency. Add it explicitly instead.
 		testCompilation.configure {
-			dependencies {
+			defaultSourceSet.dependencies {
 				implementation(libs.kotlin.test.junit)
 			}
 		}

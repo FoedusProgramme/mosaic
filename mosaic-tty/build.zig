@@ -7,42 +7,33 @@ pub fn build(b: *std.Build) !void {
 		return;
 	};
 
-	// The Windows builds create a .lib file in the lib/ directory which we don't need.
-	const deleteLib = b.addRemoveDirTree(.{ .cwd_relative = b.getInstallPath(.prefix, "lib") });
-	b.getInstallStep().dependOn(&deleteLib.step);
-
-	setupMosaicTarget(b, &deleteLib.step, javaHeaders, .linux, .aarch64, "com/jakewharton/mosaic/tty/jni/aarch64");
-	setupMosaicTarget(b, &deleteLib.step, javaHeaders, .linux, .riscv64, "com/jakewharton/mosaic/tty/jni/riscv64");
-	setupMosaicTarget(b, &deleteLib.step, javaHeaders, .linux, .s390x, "com/jakewharton/mosaic/tty/jni/s390x");
-	setupMosaicTarget(b, &deleteLib.step, javaHeaders, .linux, .x86_64, "com/jakewharton/mosaic/tty/jni/amd64");
-	setupMosaicTarget(b, &deleteLib.step, javaHeaders, .macos, .aarch64, "com/jakewharton/mosaic/tty/jni/aarch64");
-	setupMosaicTarget(b, &deleteLib.step, javaHeaders, .macos, .x86_64, "com/jakewharton/mosaic/tty/jni/x86_64");
-	setupMosaicTarget(b, &deleteLib.step, javaHeaders, .windows, .aarch64, "com/jakewharton/mosaic/tty/jni/aarch64");
-	setupMosaicTarget(b, &deleteLib.step, javaHeaders, .windows, .x86_64, "com/jakewharton/mosaic/tty/jni/amd64");
+	setupMosaicTarget(b, javaHeaders, .linux, .aarch64, "com/jakewharton/mosaic/tty/jni/aarch64");
+	setupMosaicTarget(b, javaHeaders, .linux, .riscv64, "com/jakewharton/mosaic/tty/jni/riscv64");
+	setupMosaicTarget(b, javaHeaders, .linux, .s390x, "com/jakewharton/mosaic/tty/jni/s390x");
+	setupMosaicTarget(b, javaHeaders, .linux, .x86_64, "com/jakewharton/mosaic/tty/jni/amd64");
+	setupMosaicTarget(b, javaHeaders, .macos, .aarch64, "com/jakewharton/mosaic/tty/jni/aarch64");
+	setupMosaicTarget(b, javaHeaders, .macos, .x86_64, "com/jakewharton/mosaic/tty/jni/x86_64");
+	setupMosaicTarget(b, javaHeaders, .windows, .aarch64, "com/jakewharton/mosaic/tty/jni/aarch64");
+	setupMosaicTarget(b, javaHeaders, .windows, .x86_64, "com/jakewharton/mosaic/tty/jni/amd64");
 }
 
-fn setupMosaicTarget(b: *std.Build, step: *std.Build.Step, headers: []const u8, tag: std.Target.Os.Tag, arch: std.Target.Cpu.Arch, dir: []const u8) void {
-	const lib = b.addLibrary(.{
-		.name = "mosaic",
-		.linkage = .dynamic,
-		.root_module = b.createModule(.{
-			.target = b.resolveTargetQuery(.{
-				.cpu_arch = arch,
-				.os_tag = tag,
-				// We need to explicitly specify gnu for linux, as otherwise it defaults to musl.
-				// See https://github.com/ziglang/zig/issues/16624#issuecomment-1801175600.
+fn setupMosaicTarget(b: *std.Build, headers: []const u8, tag: std.Target.Os.Tag, arch: std.Target.Cpu.Arch, dir: []const u8) void {
+	const module = b.createModule(.{
+		.target = b.resolveTargetQuery(.{
+			.cpu_arch = arch,
+			.os_tag = tag,
+			// We need to explicitly specify gnu for linux, as otherwise it defaults to musl.
+			// See https://github.com/ziglang/zig/issues/16624#issuecomment-1801175600.
 			.abi = if (tag == .linux) .gnu else null,
-			}),
-			.optimize = .ReleaseSmall,
 		}),
+		.optimize = .ReleaseSmall,
+		.link_libc = true,
 	});
 
-	lib.linkLibC();
-
-	lib.addIncludePath(b.path("src/commonMain/c"));
-	lib.addIncludePath(b.path(headers));
-	lib.addIncludePath(b.path("src/jvmMain/include/share"));
-	lib.addIncludePath(
+	module.addIncludePath(b.path("src/commonMain/c"));
+	module.addIncludePath(b.path(headers));
+	module.addIncludePath(b.path("src/jvmMain/include/share"));
+	module.addIncludePath(
 		switch (tag) {
 			.windows => b.path("src/jvmMain/include/windows"),
 			else => b.path("src/jvmMain/include/unix"),
@@ -50,7 +41,7 @@ fn setupMosaicTarget(b: *std.Build, step: *std.Build.Step, headers: []const u8, 
 	);
 
 	// TODO Tree-walk these two dirs for all C files.
-	lib.addCSourceFiles(.{
+	module.addCSourceFiles(.{
 		.files = &.{
 			"src/commonMain/c/mosaic-streams-posix.c",
 			"src/commonMain/c/mosaic-streams-windows.c",
@@ -70,13 +61,21 @@ fn setupMosaicTarget(b: *std.Build, step: *std.Build.Step, headers: []const u8, 
 		},
 	});
 
+	const lib = b.addLibrary(.{
+		.name = "mosaic",
+		.linkage = .dynamic,
+		.root_module = module,
+	});
+
 	const install = b.addInstallArtifact(lib, .{
 		.dest_dir = .{
 			.override = .{
 				.custom = dir,
 			},
 		},
+		// The Windows builds create a .lib import library which we don't need.
+		.implib_dir = .disabled,
 	});
 
-	step.dependOn(&install.step);
+	b.getInstallStep().dependOn(&install.step);
 }

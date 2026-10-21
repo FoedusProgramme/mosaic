@@ -1,9 +1,9 @@
 [versions]
-kotlin = "2.3.21"
+kotlin = "2.4.21"
 kotlinx-coroutines = "1.11.0"
 binaryCompatibilityValidator = "0.18.2"
 # Downloaded by the ZigDownloadTask in build-support and used to build the JNI library.
-zig = "0.15.1"
+zig = "0.17.0"
 
 [libraries]
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -33,7 +33,7 @@ apache-compress = "org.apache.commons:commons-compress:1.28.0"
 
 # Shrinkers which run over the mosaic-tty tests.
 proguard = "com.guardsquare:proguard-base:7.10.0"
-r8 = "com.android.tools:r8:9.5.26"
+r8 = "com.android.tools:r8:9.5.28"
 
 junit4 = "junit:junit:4.13.2"
 assertk = "com.willowtreeapps.assertk:assertk:0.28.1"
@@ -44,11 +44,12 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 mavenPublish = "com.vanniktech.maven.publish:0.37.0"
 dokka = "org.jetbrains.dokka:2.2.0"
-cite = "com.jakewharton.cite:0.8.0"
-poko = "dev.drewhamilton.poko:0.22.1"
+cite = "com.jakewharton.cite:0.9.0"
+poko = "dev.drewhamilton.poko:0.23.2"
 binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatibilityValidator" }
 cklib = "co.touchlab.cklib:0.3.5"
+# Newer versions apply the 'java' plugin which is incompatible with Kotlin multiplatform.
 jextract = "de.infolektuell.jextract:1.0.0"
 testDistribution = "com.jakewharton.test-distribution:0.4.1"
 spotless = "com.diffplug.spotless:8.10.4"
-burst = "app.cash.burst:2.12.2"
+burst = "app.cash.burst:2.14.0"

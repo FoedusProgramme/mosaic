@@ -150,7 +150,7 @@ public final class com/jakewharton/mosaic/animation/AnimationVector1D : com/jake
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()F
 	public fun hashCode ()I
-	public synthetic fun newVector$mosaic_animation ()Lcom/jakewharton/mosaic/animation/AnimationVector;
+	public synthetic fun newVector$com_jakewharton_mosaic_mosaic_animation ()Lcom/jakewharton/mosaic/animation/AnimationVector;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -161,7 +161,7 @@ public final class com/jakewharton/mosaic/animation/AnimationVector2D : com/jake
 	public final fun getV1 ()F
 	public final fun getV2 ()F
 	public fun hashCode ()I
-	public synthetic fun newVector$mosaic_animation ()Lcom/jakewharton/mosaic/animation/AnimationVector;
+	public synthetic fun newVector$com_jakewharton_mosaic_mosaic_animation ()Lcom/jakewharton/mosaic/animation/AnimationVector;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -173,7 +173,7 @@ public final class com/jakewharton/mosaic/animation/AnimationVector3D : com/jake
 	public final fun getV2 ()F
 	public final fun getV3 ()F
 	public fun hashCode ()I
-	public synthetic fun newVector$mosaic_animation ()Lcom/jakewharton/mosaic/animation/AnimationVector;
+	public synthetic fun newVector$com_jakewharton_mosaic_mosaic_animation ()Lcom/jakewharton/mosaic/animation/AnimationVector;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -186,7 +186,7 @@ public final class com/jakewharton/mosaic/animation/AnimationVector4D : com/jake
 	public final fun getV3 ()F
 	public final fun getV4 ()F
 	public fun hashCode ()I
-	public synthetic fun newVector$mosaic_animation ()Lcom/jakewharton/mosaic/animation/AnimationVector;
+	public synthetic fun newVector$com_jakewharton_mosaic_mosaic_animation ()Lcom/jakewharton/mosaic/animation/AnimationVector;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -262,7 +262,9 @@ public final class com/jakewharton/mosaic/animation/DeferredTargetAnimation {
 }
 
 public abstract interface class com/jakewharton/mosaic/animation/DurationBasedAnimationSpec : com/jakewharton/mosaic/animation/FiniteAnimationSpec {
+	public synthetic fun vectorize (Lcom/jakewharton/mosaic/animation/TwoWayConverter;)Lcom/jakewharton/mosaic/animation/VectorizedAnimationSpec;
 	public abstract fun vectorize (Lcom/jakewharton/mosaic/animation/TwoWayConverter;)Lcom/jakewharton/mosaic/animation/VectorizedDurationBasedAnimationSpec;
+	public synthetic fun vectorize (Lcom/jakewharton/mosaic/animation/TwoWayConverter;)Lcom/jakewharton/mosaic/animation/VectorizedFiniteAnimationSpec;
 }
 
 public abstract interface class com/jakewharton/mosaic/animation/Easing {
@@ -323,6 +325,7 @@ public abstract interface annotation class com/jakewharton/mosaic/animation/Expe
 }
 
 public abstract interface class com/jakewharton/mosaic/animation/FiniteAnimationSpec : com/jakewharton/mosaic/animation/AnimationSpec {
+	public synthetic fun vectorize (Lcom/jakewharton/mosaic/animation/TwoWayConverter;)Lcom/jakewharton/mosaic/animation/VectorizedAnimationSpec;
 	public abstract fun vectorize (Lcom/jakewharton/mosaic/animation/TwoWayConverter;)Lcom/jakewharton/mosaic/animation/VectorizedFiniteAnimationSpec;
 }
 
@@ -465,7 +468,7 @@ public final class com/jakewharton/mosaic/animation/KeyframesSpec$KeyframesSpecC
 	public fun at (Ljava/lang/Object;I)Lcom/jakewharton/mosaic/animation/KeyframesSpec$KeyframeEntity;
 	public synthetic fun atFraction (Ljava/lang/Object;F)Lcom/jakewharton/mosaic/animation/KeyframeBaseEntity;
 	public fun atFraction (Ljava/lang/Object;F)Lcom/jakewharton/mosaic/animation/KeyframesSpec$KeyframeEntity;
-	public synthetic fun createEntityFor$mosaic_animation (Ljava/lang/Object;)Lcom/jakewharton/mosaic/animation/KeyframeBaseEntity;
+	public synthetic fun createEntityFor$com_jakewharton_mosaic_mosaic_animation (Ljava/lang/Object;)Lcom/jakewharton/mosaic/animation/KeyframeBaseEntity;
 	public final fun using-iQtcwOg (Lcom/jakewharton/mosaic/animation/KeyframesSpec$KeyframeEntity;I)Lcom/jakewharton/mosaic/animation/KeyframesSpec$KeyframeEntity;
 }
 
@@ -493,7 +496,7 @@ public final class com/jakewharton/mosaic/animation/KeyframesWithSplineSpec : co
 public final class com/jakewharton/mosaic/animation/KeyframesWithSplineSpec$KeyframesWithSplineSpecConfig : com/jakewharton/mosaic/animation/KeyframesSpecBaseConfig {
 	public static final field $stable I
 	public fun <init> ()V
-	public synthetic fun createEntityFor$mosaic_animation (Ljava/lang/Object;)Lcom/jakewharton/mosaic/animation/KeyframeBaseEntity;
+	public synthetic fun createEntityFor$com_jakewharton_mosaic_mosaic_animation (Ljava/lang/Object;)Lcom/jakewharton/mosaic/animation/KeyframeBaseEntity;
 }
 
 public abstract interface class com/jakewharton/mosaic/animation/MotionDurationScale : kotlin/coroutines/CoroutineContext$Element {
@@ -519,7 +522,7 @@ public final class com/jakewharton/mosaic/animation/MutableTransitionState : com
 	public fun getTargetState ()Ljava/lang/Object;
 	public final fun isIdle ()Z
 	public fun setTargetState (Ljava/lang/Object;)V
-	public synthetic fun setTargetState$mosaic_animation (Ljava/lang/Object;)V
+	public synthetic fun setTargetState$com_jakewharton_mosaic_mosaic_animation (Ljava/lang/Object;)V
 }
 
 public final class com/jakewharton/mosaic/animation/RepeatMode : java/lang/Enum {
