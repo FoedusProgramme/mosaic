@@ -281,6 +281,8 @@ kotlin {
 		val nativeTarget = this
 		val staticLibraryDir = layout.buildDirectory.dir("zigStatic/${nativeTarget.name}")
 		val staticLibrary = tasks.register<ZigStaticLibraryTask>("${nativeTarget.name}MosaicStaticLibrary") {
+			// The directory is not an input, so the dependency on the download is explicit.
+			dependsOn(zigDownload)
 			zigDirectory = zigDownload.flatMap { it.outputDir }
 			zigVersion = libs.versions.zig
 			target = zigTargets.getValue(nativeTarget.name)
