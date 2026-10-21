@@ -16,6 +16,7 @@ Fixed:
 - Frame times on Linux and Windows no longer jump backwards once per second.
 - Fix arc-based animations on native targets, which built their lookup table incorrectly.
 - Report Shift+Tab as a key event when the terminal sends it as `CSI Z`.
+- Typing characters outside of ASCII, such as CJK text committed by an input method, no longer crashes. They are delivered as `KeyEvent`s whose `key` is the character.
 
 
 ## [0.18.0] - 2025-08-21
