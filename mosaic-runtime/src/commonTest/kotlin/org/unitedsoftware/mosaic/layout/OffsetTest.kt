@@ -6,7 +6,6 @@ import kotlin.test.Test
 import kotlinx.coroutines.test.runTest
 import org.unitedsoftware.mosaic.TestChar
 import org.unitedsoftware.mosaic.TestFiller
-import org.unitedsoftware.mosaic.assertFailure
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.testing.runMosaicTest
 import org.unitedsoftware.mosaic.ui.Box
@@ -40,10 +39,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -54,10 +60,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -88,10 +101,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -102,10 +122,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -136,10 +163,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -150,10 +184,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -189,10 +230,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -203,10 +251,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -237,10 +292,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -251,10 +313,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -285,10 +354,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 
@@ -299,10 +375,17 @@ class OffsetTest {
 					TestFiller(modifier = Modifier.size(1))
 				}
 			}
-			// check when going beyond the border of the TextSurface#get
-			assertFailure<IllegalStateException> {
-				awaitSnapshot()
-			}
+			// Content beyond the border of the surface is clipped.
+			assertThat(awaitSnapshot()).isEqualTo(
+				"""
+				|
+				|
+				|
+				|
+				|
+				|
+				""".trimMargin(),
+			)
 		}
 	}
 

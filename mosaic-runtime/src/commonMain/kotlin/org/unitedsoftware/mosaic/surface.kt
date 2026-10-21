@@ -37,12 +37,51 @@ internal class TextSurface(
 
 	private val cells = Array(width * height) { TextPixel(SpaceCharCodePoint) }
 
-	operator fun get(row: Int, column: Int): TextPixel {
+	/** The pixel at [row] and [column], or null when it is outside the surface. */
+	fun getOrNull(row: Int, column: Int): TextPixel? {
 		val x = translationX + column
 		val y = row + translationY
-		check(x in 0 until width)
-		check(y in 0 until height)
+		if (x !in 0 until width || y !in 0 until height) {
+			return null
+		}
 		return cells[y * width + x]
+	}
+
+	/**
+	 * Writes [codePoint], which occupies [columns] columns, at [row] and [column]. Returns the pixel
+	 * written to, or null when it is outside the surface and the write was dropped.
+	 *
+	 * A two column code point also takes over the next pixel. When there is no next pixel, a space
+	 * is written instead so that the row does not overflow. Overwriting either half of an existing
+	 * two column code point turns its other half into a space.
+	 */
+	fun setCodePoint(row: Int, column: Int, codePoint: Int, columns: Int): TextPixel? {
+		val x = translationX + column
+		val y = row + translationY
+		if (x !in 0 until width || y !in 0 until height) {
+			return null
+		}
+		val index = y * width + x
+		val pixel = cells[index]
+		pixel.unlinkWide(index)
+
+		if (columns == 2 && x + 1 < width) {
+			val next = cells[index + 1]
+			next.unlinkWide(index + 1)
+			next.setCodePoint(SpaceCharCodePoint, columns = 0)
+			pixel.setCodePoint(codePoint, columns = 2)
+		} else {
+			pixel.setCodePoint(if (columns == 2) SpaceCharCodePoint else codePoint, columns = 1)
+		}
+		return pixel
+	}
+
+	/** Turns the other half of the two column code point this pixel is part of into a space. */
+	private fun TextPixel.unlinkWide(index: Int) {
+		when (columns) {
+			0 -> cells[index - 1].setCodePoint(SpaceCharCodePoint, columns = 1)
+			2 -> cells[index + 1].setCodePoint(SpaceCharCodePoint, columns = 1)
+		}
 	}
 
 	override fun appendRowTo(appendable: Appendable, row: Int, ansiLevel: AnsiLevel, supportsKittyUnderlines: Boolean) {
@@ -65,6 +104,10 @@ internal class TextSurface(
 		var lastPixel = blankPixel
 		for (columnIndex in rowStart until rowStop) {
 			val pixel = cells[columnIndex]
+			if (pixel.columns == 0) {
+				// Covered by the two column code point before it.
+				continue
+			}
 
 			if (ansiLevel != AnsiLevel.NONE) {
 				if (pixel.foreground != lastPixel.foreground) {
@@ -135,6 +178,7 @@ internal class TextSurface(
 			}
 
 			appendable.appendCodePoint(pixel.codePoint)
+			pixel.combining?.let(appendable::append)
 			lastPixel = pixel
 		}
 
@@ -204,15 +248,44 @@ internal class TextSurface(
 	}
 }
 
-internal class TextPixel(var codePoint: Int) {
+internal class TextPixel(codePoint: Int) {
+	var codePoint: Int = codePoint
+		private set
+
+	/**
+	 * The number of columns [codePoint] occupies. Zero for the second half of a two column code
+	 * point, whose [codePoint] is not rendered.
+	 */
+	var columns: Int = 1
+		private set
+
+	/** Zero width code points, such as combining marks, rendered after [codePoint]. */
+	var combining: String? = null
+		private set
+
 	var background: Color = Color.Unspecified
 	var foreground: Color = Color.Unspecified
 	var textStyle: TextStyle = TextStyle.Empty
 	var underlineStyle: UnderlineStyle = UnderlineStyle.Unspecified
 	var underlineColor: Color = Color.Unspecified
 
+	fun setCodePoint(codePoint: Int, columns: Int) {
+		this.codePoint = codePoint
+		this.columns = columns
+		combining = null
+	}
+
+	fun appendCombining(codePoint: Int) {
+		combining = buildString {
+			combining?.let(::append)
+			appendCodePoint(codePoint)
+		}
+	}
+
 	fun isEmpty(): Boolean {
 		return codePoint == SpaceCharCodePoint &&
+			columns == 1 &&
+			combining == null &&
 			background.isUnspecifiedColor &&
 			foreground.isUnspecifiedColor &&
 			textStyle.isEmptyTextStyle &&
@@ -223,6 +296,7 @@ internal class TextPixel(var codePoint: Int) {
 	override fun toString() = buildString {
 		append("TextPixel(\"")
 		appendCodePoint(codePoint)
+		combining?.let(::append)
 		append("\"")
 		if (background.isSpecifiedColor) {
 			append(" bg=")

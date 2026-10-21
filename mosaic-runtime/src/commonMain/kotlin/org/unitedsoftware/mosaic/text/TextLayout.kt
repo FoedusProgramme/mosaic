@@ -1,7 +1,5 @@
 package org.unitedsoftware.mosaic.text
 
-import de.cketti.codepoints.codePointCount
-
 internal abstract class TextLayout<T : CharSequence>(initialValue: T) {
 
 	var value: T = initialValue
@@ -39,7 +37,7 @@ internal abstract class TextLayout<T : CharSequence>(initialValue: T) {
 		if (!dirty) return
 
 		val lines = value.splitByLines()
-		width = lines.maxOf { it.codePointCount(0, it.length) }
+		width = lines.maxOf { it.columnWidth() }
 		height = lines.size
 		this.lines = lines
 		dirty = false

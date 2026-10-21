@@ -17,6 +17,8 @@ Fixed:
 - Fix arc-based animations on native targets, which built their lookup table incorrectly.
 - Report Shift+Tab as a key event when the terminal sends it as `CSI Z`.
 - Typing characters outside of ASCII, such as CJK text committed by an input method, no longer crashes. They are delivered as `KeyEvent`s whose `key` is the character.
+- Wide characters, such as CJK text and most emoji, are measured and drawn as two columns, so they no longer push the rest of the row out of place. Combining marks and emoji joined with zero width joiners stay in the column of the character they modify. Widths follow Unicode 18.
+- Drawing outside of the surface, for example while the terminal is being resized, is clipped instead of crashing.
 
 
 ## [0.18.0] - 2025-08-21

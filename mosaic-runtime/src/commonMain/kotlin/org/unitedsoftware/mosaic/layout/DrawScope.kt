@@ -18,8 +18,8 @@
 
 package org.unitedsoftware.mosaic.layout
 
-import de.cketti.codepoints.codePointAt
 import kotlin.math.max
+import org.unitedsoftware.mosaic.SpaceCharCodePoint
 import org.unitedsoftware.mosaic.TextPixel
 import org.unitedsoftware.mosaic.TextSurface
 import org.unitedsoftware.mosaic.UnspecifiedCodePoint
@@ -27,6 +27,8 @@ import org.unitedsoftware.mosaic.isSpecifiedCodePoint
 import org.unitedsoftware.mosaic.isUnspecifiedCodePoint
 import org.unitedsoftware.mosaic.text.AnnotatedString
 import org.unitedsoftware.mosaic.text.SpanStyle
+import org.unitedsoftware.mosaic.text.codePointWidth
+import org.unitedsoftware.mosaic.text.forEachCodePointWithWidth
 import org.unitedsoftware.mosaic.text.getLocalRawSpanStyles
 import org.unitedsoftware.mosaic.ui.Color
 import org.unitedsoftware.mosaic.ui.TextStyle
@@ -212,7 +214,7 @@ internal open class TextCanvasDrawScope(
 		}
 	}
 
-	private inline fun drawSolidRect(
+	private fun drawSolidRect(
 		codePoint: Int,
 		foreground: Color,
 		background: Color,
@@ -220,9 +222,22 @@ internal open class TextCanvasDrawScope(
 		topLeft: IntOffset,
 		size: IntSize,
 	) {
+		val right = topLeft.x + size.width
+		val codePointColumns = if (codePoint.isSpecifiedCodePoint) codePointWidth(codePoint).coerceAtLeast(1) else 1
 		for (y in topLeft.y until topLeft.y + size.height) {
-			for (x in topLeft.x until topLeft.x + size.width) {
-				drawTextPixel(x, y, codePoint, foreground, background, textStyle)
+			var x = topLeft.x
+			while (x < right) {
+				// A two column code point which does not fit in the rectangle becomes a space.
+				val columns = if (codePointColumns == 2 && x + 1 < right) 2 else 1
+				val pixel = if (codePoint.isUnspecifiedCodePoint) {
+					canvas.getOrNull(y, x)
+				} else if (columns < codePointColumns) {
+					canvas.setCodePoint(y, x, SpaceCharCodePoint, 1)
+				} else {
+					canvas.setCodePoint(y, x, codePoint, columns)
+				}
+				pixel?.updateStyle(foreground, background, textStyle, UnderlineStyle.Unspecified, Color.Unspecified)
+				x += columns
 			}
 		}
 	}
@@ -266,50 +281,34 @@ internal open class TextCanvasDrawScope(
 		underlineColor: Color,
 		spanStylesProvider: ((start: Int, end: Int) -> List<SpanStyle>)?,
 	) {
-		var pixelIndex = 0
 		var characterColumn = column
-		while (pixelIndex < text.length) {
-			val character = canvas[row, characterColumn++]
-
-			val pixelEnd = if (text[pixelIndex].isHighSurrogate()) {
-				pixelIndex + 2
-			} else {
-				pixelIndex + 1
+		var previous: TextPixel? = null
+		text.forEachCodePointWithWidth { start, end, codePoint, columns ->
+			if (columns == 0) {
+				previous?.appendCombining(codePoint)
+				return@forEachCodePointWithWidth
 			}
 
-			character.updateTextPixel(text.codePointAt(pixelIndex), foreground, background, textStyle, underlineStyle, underlineColor)
-			spanStylesProvider?.invoke(pixelIndex, pixelEnd)?.forEach {
-				character.updateTextPixel(UnspecifiedCodePoint, it.color, it.background, it.textStyle, it.underlineStyle, it.underlineColor)
+			val pixel = canvas.setCodePoint(row, characterColumn, codePoint, columns)
+			if (pixel != null) {
+				pixel.updateStyle(foreground, background, textStyle, underlineStyle, underlineColor)
+				spanStylesProvider?.invoke(start, end)?.forEach {
+					pixel.updateStyle(it.color, it.background, it.textStyle, it.underlineStyle, it.underlineColor)
+				}
 			}
 
-			pixelIndex = pixelEnd
+			previous = pixel
+			characterColumn += columns
 		}
 	}
 
-	private inline fun drawTextPixel(
-		x: Int,
-		y: Int,
-		codePoint: Int = UnspecifiedCodePoint,
-		foreground: Color = Color.Unspecified,
-		background: Color = Color.Unspecified,
-		textStyle: TextStyle = TextStyle.Unspecified,
-		underlineStyle: UnderlineStyle = UnderlineStyle.Unspecified,
-		underlineColor: Color = Color.Unspecified,
-	) {
-		canvas[y, x].updateTextPixel(codePoint, foreground, background, textStyle, underlineStyle, underlineColor)
-	}
-
-	private inline fun TextPixel.updateTextPixel(
-		codePoint: Int,
+	private fun TextPixel.updateStyle(
 		foreground: Color,
 		background: Color,
 		textStyle: TextStyle,
 		underlineStyle: UnderlineStyle,
 		underlineColor: Color,
 	) {
-		if (codePoint.isSpecifiedCodePoint) {
-			this.codePoint = codePoint
-		}
 		if (foreground.isSpecifiedColor) {
 			this.foreground = foreground
 		}
