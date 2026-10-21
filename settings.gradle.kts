@@ -10,6 +10,8 @@ pluginManagement {
 
 plugins {
 	id("com.gradle.develocity") version "4.6.1"
+	// Provisions the daemon JDK declared in gradle/gradle-daemon-jvm.properties when none is installed.
+	id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 develocity {
