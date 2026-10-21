@@ -32,3 +32,8 @@ configurations.consumable("ffmBindingsElements") {
 		tasks.named<JextractGenerateTask>(mosaic.get().generateBindingsTaskName).flatMap { it.sources },
 	)
 }
+
+// The generated bindings use the FFM API, which is final as of JDK 22.
+tasks.compileJava {
+	options.release = 22
+}
