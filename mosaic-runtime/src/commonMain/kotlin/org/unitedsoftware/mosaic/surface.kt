@@ -115,6 +115,7 @@ internal class TextSurface(
 		}
 
 		var lastPixel = blankPixel
+		var openLink: String? = null
 		for (columnIndex in rowStart until rowStop) {
 			val pixel = cells[columnIndex]
 			if (pixel.columns == 0) {
@@ -190,9 +191,18 @@ internal class TextSurface(
 				}
 			}
 
+			if (ansiLevel != AnsiLevel.NONE && pixel.link != openLink) {
+				appendable.appendHyperlink(pixel.link)
+				openLink = pixel.link
+			}
+
 			appendable.appendCodePoint(pixel.codePoint)
 			pixel.combining?.let(appendable::append)
 			lastPixel = pixel
+		}
+
+		if (openLink != null) {
+			appendable.appendHyperlink(null)
 		}
 
 		if (
@@ -208,6 +218,14 @@ internal class TextSurface(
 			appendable.append(ansiReset)
 			appendable.append(ansiClosingCharacter)
 		}
+	}
+
+	/** Starts an OSC 8 hyperlink to [url], or ends the current one when null. */
+	private fun Appendable.appendHyperlink(url: String?) {
+		append(OSC)
+		append("8;;")
+		if (url != null) append(url)
+		append(ST)
 	}
 
 	private fun MutableList<String>.addColor(
@@ -282,10 +300,15 @@ internal class TextPixel(codePoint: Int) {
 	var underlineStyle: UnderlineStyle = UnderlineStyle.Unspecified
 	var underlineColor: Color = Color.Unspecified
 
+	/** The URL this pixel links to, if any. */
+	var link: String? = null
+
 	fun setCodePoint(codePoint: Int, columns: Int) {
 		this.codePoint = codePoint
 		this.columns = columns
 		combining = null
+		// Text drawn over a link is not part of it, unless its own style links it again.
+		link = null
 	}
 
 	fun appendCombining(codePoint: Int) {
@@ -299,6 +322,7 @@ internal class TextPixel(codePoint: Int) {
 		return codePoint == SpaceCharCodePoint &&
 			columns == 1 &&
 			combining == null &&
+			link == null &&
 			background.isUnspecifiedColor &&
 			foreground.isUnspecifiedColor &&
 			textStyle.isEmptyTextStyle &&

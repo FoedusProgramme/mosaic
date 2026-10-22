@@ -11,6 +11,9 @@ New:
 - `DrawScope.drawCursor` places and shows the terminal's cursor once the frame is rendered, so that input methods show their composition at the caret of text input.
 - `TextField` and `TextFieldState` for editing text. Text wraps to the field's width, `maxLines` limits its height, and the terminal's cursor marks the caret. With `onSubmit`, Enter submits and Shift+Enter or Alt+Enter break lines. Pastes are inserted as a whole, and Ctrl+A, Ctrl+E, Ctrl+U, Ctrl+K, and Ctrl+W work like in a shell.
 - `runMosaic`, `runMosaicBlocking`, and `runMosaicMain` take `alternateScreen`, which renders full screen on the terminal's alternate screen and restores what it showed before when done. Static output is written once done.
+- `WindowTitle` sets the title of the terminal window while it is in the composition, restoring the previous title afterwards in terminals which support it.
+- `LocalClipboard` copies text to the clipboard with OSC 52, and `LocalNotifier` shows desktop notifications with the Kitty notification protocol or OSC 9.
+- `SpanStyle.link` and `withLink` link text to a URL with OSC 8 hyperlinks.
 
 Changed:
 - Only rows which changed since the last frame are written to the terminal again.

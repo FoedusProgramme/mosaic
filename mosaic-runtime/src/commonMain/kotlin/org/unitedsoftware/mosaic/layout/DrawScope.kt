@@ -302,6 +302,9 @@ internal open class TextCanvasDrawScope(
 				pixel.updateStyle(foreground, background, textStyle, underlineStyle, underlineColor)
 				spanStylesProvider?.invoke(start, end)?.forEach {
 					pixel.updateStyle(it.color, it.background, it.textStyle, it.underlineStyle, it.underlineColor)
+					if (it.link != null) {
+						pixel.link = it.link
+					}
 				}
 			}
 

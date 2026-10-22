@@ -41,6 +41,12 @@ internal class DebugRendering(
 			}
 			lastRender = systemClock.markNow()
 
+			mosaic.title()?.let { title ->
+				append("TITLE: ")
+				append(title)
+				append("\r\n")
+			}
+
 			append("NODES:\r\n")
 			append(mosaic.dumpNodes().replace("\n", "\r\n"))
 			append("\r\n\r\n")
@@ -72,6 +78,40 @@ internal class DebugRendering(
 	}
 }
 
+/** Writes the window title and other terminal commands ahead of frames. */
+internal class TerminalCommandWriter {
+	private var lastTitle: String? = null
+	private var titlePushed = false
+
+	fun appendTo(builder: StringBuilder, mosaic: Mosaic) {
+		val title = mosaic.title()
+		if (title != lastTitle) {
+			if (title == null) {
+				// Restore the title from before the first one was set.
+				builder.append(windowTitlePop)
+				titlePushed = false
+			} else {
+				if (!titlePushed) {
+					builder.append(windowTitlePush)
+					titlePushed = true
+				}
+				builder.append(OSC)
+				builder.append("2;")
+				builder.append(title)
+				builder.append(ST)
+			}
+			lastTitle = title
+		}
+		mosaic.terminalCommands()?.let(builder::append)
+	}
+
+	fun appendFinishTo(builder: StringBuilder) {
+		if (titlePushed) {
+			builder.append(windowTitlePop)
+		}
+	}
+}
+
 /**
  * Renders frames inline, below whatever the terminal showed before, like most command line programs.
  * Rows which did not change since the last frame are not written again.
@@ -100,6 +140,8 @@ internal class AnsiRendering(
 	/** Whether the cursor is in the first column. Output is assumed to start on a new line. */
 	private var atLineStart = true
 
+	private val commandWriter = TerminalCommandWriter()
+
 	override fun render(mosaic: Mosaic): CharSequence {
 		return stringBuilder.apply {
 			clear()
@@ -111,6 +153,7 @@ internal class AnsiRendering(
 				// Avoid the cursor flickering across the screen while the frame is written.
 				append(cursorHide)
 			}
+			commandWriter.appendTo(this, mosaic)
 
 			var current = cursorRow
 			fun moveTo(row: Int) {
@@ -209,6 +252,7 @@ internal class AnsiRendering(
 		if (cursorShown) {
 			append(cursorHide)
 		}
+		commandWriter.appendFinishTo(this)
 	}
 }
 
@@ -223,6 +267,8 @@ internal class AlternateScreenRendering(
 	private val stringBuilder = StringBuilder(100)
 	private val rowBuilder = StringBuilder(100)
 	private val pendingStatic = StringBuilder()
+
+	private val commandWriter = TerminalCommandWriter()
 
 	private var started = false
 	private var lastRows = emptyList<String>()
@@ -243,6 +289,7 @@ internal class AlternateScreenRendering(
 			if (cursorShown) {
 				append(cursorHide)
 			}
+			commandWriter.appendTo(this, mosaic)
 
 			mosaic.static()?.let { static ->
 				pendingStatic.append(static)
@@ -311,6 +358,7 @@ internal class AlternateScreenRendering(
 		if (started) {
 			append(alternateScreenDisable)
 		}
+		commandWriter.appendFinishTo(this)
 		append(pendingStatic)
 	}
 }

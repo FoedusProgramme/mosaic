@@ -202,13 +202,23 @@ abstract interface org.unitedsoftware.mosaic.ui/RowScope { // org.unitedsoftware
     abstract fun (org.unitedsoftware.mosaic.modifier/Modifier).weight(kotlin/Float, kotlin/Boolean = ...): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.ui/RowScope.weight|weight@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Float;kotlin.Boolean){}[0]
 }
 
+abstract interface org.unitedsoftware.mosaic/Clipboard { // org.unitedsoftware.mosaic/Clipboard|null[0]
+    abstract fun setText(kotlin/String) // org.unitedsoftware.mosaic/Clipboard.setText|setText(kotlin.String){}[0]
+}
+
 abstract interface org.unitedsoftware.mosaic/Mosaic { // org.unitedsoftware.mosaic/Mosaic|null[0]
     abstract fun cancel() // org.unitedsoftware.mosaic/Mosaic.cancel|cancel(){}[0]
     abstract fun draw(): org.unitedsoftware.mosaic/TextCanvas // org.unitedsoftware.mosaic/Mosaic.draw|draw(){}[0]
     abstract fun dumpNodes(): kotlin/String // org.unitedsoftware.mosaic/Mosaic.dumpNodes|dumpNodes(){}[0]
     abstract fun setContent(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>) // org.unitedsoftware.mosaic/Mosaic.setContent|setContent(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
     abstract fun static(): kotlin/String? // org.unitedsoftware.mosaic/Mosaic.static|static(){}[0]
+    abstract fun terminalCommands(): kotlin/String? // org.unitedsoftware.mosaic/Mosaic.terminalCommands|terminalCommands(){}[0]
+    abstract fun title(): kotlin/String? // org.unitedsoftware.mosaic/Mosaic.title|title(){}[0]
     abstract suspend fun awaitComplete() // org.unitedsoftware.mosaic/Mosaic.awaitComplete|awaitComplete(){}[0]
+}
+
+abstract interface org.unitedsoftware.mosaic/Notifier { // org.unitedsoftware.mosaic/Notifier|null[0]
+    abstract fun notify(kotlin/String, kotlin/String = ...) // org.unitedsoftware.mosaic/Notifier.notify|notify(kotlin.String;kotlin.String){}[0]
 }
 
 abstract interface org.unitedsoftware.mosaic/TextCanvas { // org.unitedsoftware.mosaic/TextCanvas|null[0]
@@ -351,12 +361,14 @@ final class org.unitedsoftware.mosaic.text/AnnotatedString : kotlin/CharSequence
 }
 
 final class org.unitedsoftware.mosaic.text/SpanStyle { // org.unitedsoftware.mosaic.text/SpanStyle|null[0]
-    constructor <init>(org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.ui/TextStyle = ..., org.unitedsoftware.mosaic.ui/UnderlineStyle = ..., org.unitedsoftware.mosaic.ui/Color = ...) // org.unitedsoftware.mosaic.text/SpanStyle.<init>|<init>(org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.ui.TextStyle;org.unitedsoftware.mosaic.ui.UnderlineStyle;org.unitedsoftware.mosaic.ui.Color){}[0]
+    constructor <init>(org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.ui/TextStyle = ..., org.unitedsoftware.mosaic.ui/UnderlineStyle = ..., org.unitedsoftware.mosaic.ui/Color = ..., kotlin/String? = ...) // org.unitedsoftware.mosaic.text/SpanStyle.<init>|<init>(org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.ui.TextStyle;org.unitedsoftware.mosaic.ui.UnderlineStyle;org.unitedsoftware.mosaic.ui.Color;kotlin.String?){}[0]
 
     final val background // org.unitedsoftware.mosaic.text/SpanStyle.background|{}background[0]
         final fun <get-background>(): org.unitedsoftware.mosaic.ui/Color // org.unitedsoftware.mosaic.text/SpanStyle.background.<get-background>|<get-background>(){}[0]
     final val color // org.unitedsoftware.mosaic.text/SpanStyle.color|{}color[0]
         final fun <get-color>(): org.unitedsoftware.mosaic.ui/Color // org.unitedsoftware.mosaic.text/SpanStyle.color.<get-color>|<get-color>(){}[0]
+    final val link // org.unitedsoftware.mosaic.text/SpanStyle.link|{}link[0]
+        final fun <get-link>(): kotlin/String? // org.unitedsoftware.mosaic.text/SpanStyle.link.<get-link>|<get-link>(){}[0]
     final val textStyle // org.unitedsoftware.mosaic.text/SpanStyle.textStyle|{}textStyle[0]
         final fun <get-textStyle>(): org.unitedsoftware.mosaic.ui/TextStyle // org.unitedsoftware.mosaic.text/SpanStyle.textStyle.<get-textStyle>|<get-textStyle>(){}[0]
     final val underlineColor // org.unitedsoftware.mosaic.text/SpanStyle.underlineColor|{}underlineColor[0]
@@ -364,7 +376,7 @@ final class org.unitedsoftware.mosaic.text/SpanStyle { // org.unitedsoftware.mos
     final val underlineStyle // org.unitedsoftware.mosaic.text/SpanStyle.underlineStyle|{}underlineStyle[0]
         final fun <get-underlineStyle>(): org.unitedsoftware.mosaic.ui/UnderlineStyle // org.unitedsoftware.mosaic.text/SpanStyle.underlineStyle.<get-underlineStyle>|<get-underlineStyle>(){}[0]
 
-    final fun copy(org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.ui/TextStyle = ..., org.unitedsoftware.mosaic.ui/UnderlineStyle = ..., org.unitedsoftware.mosaic.ui/Color = ...): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.text/SpanStyle.copy|copy(org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.ui.TextStyle;org.unitedsoftware.mosaic.ui.UnderlineStyle;org.unitedsoftware.mosaic.ui.Color){}[0]
+    final fun copy(org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.ui/TextStyle = ..., org.unitedsoftware.mosaic.ui/UnderlineStyle = ..., org.unitedsoftware.mosaic.ui/Color = ..., kotlin/String? = ...): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.text/SpanStyle.copy|copy(org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.ui.TextStyle;org.unitedsoftware.mosaic.ui.UnderlineStyle;org.unitedsoftware.mosaic.ui.Color;kotlin.String?){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // org.unitedsoftware.mosaic.text/SpanStyle.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // org.unitedsoftware.mosaic.text/SpanStyle.hashCode|hashCode(){}[0]
     final fun merge(org.unitedsoftware.mosaic.text/SpanStyle? = ...): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.text/SpanStyle.merge|merge(org.unitedsoftware.mosaic.text.SpanStyle?){}[0]
@@ -736,6 +748,10 @@ final val org.unitedsoftware.mosaic.ui/org_unitedsoftware_mosaic_ui_BiasAlignmen
 final val org.unitedsoftware.mosaic.ui/org_unitedsoftware_mosaic_ui_BiasAlignment_Horizontal$stableprop // org.unitedsoftware.mosaic.ui/org_unitedsoftware_mosaic_ui_BiasAlignment_Horizontal$stableprop|#static{}org_unitedsoftware_mosaic_ui_BiasAlignment_Horizontal$stableprop[0]
 final val org.unitedsoftware.mosaic.ui/org_unitedsoftware_mosaic_ui_BiasAlignment_Vertical$stableprop // org.unitedsoftware.mosaic.ui/org_unitedsoftware_mosaic_ui_BiasAlignment_Vertical$stableprop|#static{}org_unitedsoftware_mosaic_ui_BiasAlignment_Vertical$stableprop[0]
 final val org.unitedsoftware.mosaic.ui/org_unitedsoftware_mosaic_ui_TextFieldState$stableprop // org.unitedsoftware.mosaic.ui/org_unitedsoftware_mosaic_ui_TextFieldState$stableprop|#static{}org_unitedsoftware_mosaic_ui_TextFieldState$stableprop[0]
+final val org.unitedsoftware.mosaic/LocalClipboard // org.unitedsoftware.mosaic/LocalClipboard|{}LocalClipboard[0]
+    final fun <get-LocalClipboard>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/Clipboard> // org.unitedsoftware.mosaic/LocalClipboard.<get-LocalClipboard>|<get-LocalClipboard>(){}[0]
+final val org.unitedsoftware.mosaic/LocalNotifier // org.unitedsoftware.mosaic/LocalNotifier|{}LocalNotifier[0]
+    final fun <get-LocalNotifier>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/Notifier> // org.unitedsoftware.mosaic/LocalNotifier.<get-LocalNotifier>|<get-LocalNotifier>(){}[0]
 final val org.unitedsoftware.mosaic/LocalStaticLogger // org.unitedsoftware.mosaic/LocalStaticLogger|{}LocalStaticLogger[0]
     final fun <get-LocalStaticLogger>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/StaticLogger> // org.unitedsoftware.mosaic/LocalStaticLogger.<get-LocalStaticLogger>|<get-LocalStaticLogger>(){}[0]
 final val org.unitedsoftware.mosaic/LocalTerminalState // org.unitedsoftware.mosaic/LocalTerminalState|{}LocalTerminalState[0]
@@ -835,6 +851,7 @@ final fun org.unitedsoftware.mosaic.ui/org_unitedsoftware_mosaic_ui_BiasAlignmen
 final fun org.unitedsoftware.mosaic.ui/org_unitedsoftware_mosaic_ui_TextFieldState$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.ui/org_unitedsoftware_mosaic_ui_TextFieldState$stableprop_getter|org_unitedsoftware_mosaic_ui_TextFieldState$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic/Mosaic(kotlin.coroutines/CoroutineContext, kotlin/Function1<org.unitedsoftware.mosaic/Mosaic, kotlin/Unit>, org.unitedsoftware.mosaic.terminal/Terminal): org.unitedsoftware.mosaic/Mosaic // org.unitedsoftware.mosaic/Mosaic|Mosaic(kotlin.coroutines.CoroutineContext;kotlin.Function1<org.unitedsoftware.mosaic.Mosaic,kotlin.Unit>;org.unitedsoftware.mosaic.terminal.Terminal){}[0]
 final fun org.unitedsoftware.mosaic/StaticEffect(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // org.unitedsoftware.mosaic/StaticEffect|StaticEffect(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun org.unitedsoftware.mosaic/WindowTitle(kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int) // org.unitedsoftware.mosaic/WindowTitle|WindowTitle(kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_StaticLogger$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_StaticLogger$stableprop_getter|org_unitedsoftware_mosaic_StaticLogger$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stableprop_getter|org_unitedsoftware_mosaic_TerminalState$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic/runMosaicBlocking(org.unitedsoftware.mosaic/NonInteractivePolicy = ..., kotlin/Boolean = ..., kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>): kotlin/Boolean // org.unitedsoftware.mosaic/runMosaicBlocking|runMosaicBlocking(org.unitedsoftware.mosaic.NonInteractivePolicy;kotlin.Boolean;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
@@ -842,6 +859,7 @@ final fun org.unitedsoftware.mosaic/runMosaicMain(kotlin/Boolean = ..., kotlin/F
 final inline fun (org.unitedsoftware.mosaic.ui/Color).org.unitedsoftware.mosaic.ui/takeOrElse(kotlin/Function0<org.unitedsoftware.mosaic.ui/Color>): org.unitedsoftware.mosaic.ui/Color // org.unitedsoftware.mosaic.ui/takeOrElse|takeOrElse@org.unitedsoftware.mosaic.ui.Color(kotlin.Function0<org.unitedsoftware.mosaic.ui.Color>){}[0]
 final inline fun (org.unitedsoftware.mosaic.ui/TextStyle).org.unitedsoftware.mosaic.ui/takeOrElse(kotlin/Function0<org.unitedsoftware.mosaic.ui/TextStyle>): org.unitedsoftware.mosaic.ui/TextStyle // org.unitedsoftware.mosaic.ui/takeOrElse|takeOrElse@org.unitedsoftware.mosaic.ui.TextStyle(kotlin.Function0<org.unitedsoftware.mosaic.ui.TextStyle>){}[0]
 final inline fun (org.unitedsoftware.mosaic.ui/UnderlineStyle).org.unitedsoftware.mosaic.ui/takeOrElse(kotlin/Function0<org.unitedsoftware.mosaic.ui/UnderlineStyle>): org.unitedsoftware.mosaic.ui/UnderlineStyle // org.unitedsoftware.mosaic.ui/takeOrElse|takeOrElse@org.unitedsoftware.mosaic.ui.UnderlineStyle(kotlin.Function0<org.unitedsoftware.mosaic.ui.UnderlineStyle>){}[0]
+final inline fun <#A: kotlin/Any> (org.unitedsoftware.mosaic.text/AnnotatedString.Builder).org.unitedsoftware.mosaic.text/withLink(kotlin/String, kotlin/Function1<org.unitedsoftware.mosaic.text/AnnotatedString.Builder, #A>): #A // org.unitedsoftware.mosaic.text/withLink|withLink@org.unitedsoftware.mosaic.text.AnnotatedString.Builder(kotlin.String;kotlin.Function1<org.unitedsoftware.mosaic.text.AnnotatedString.Builder,0:0>){0§<kotlin.Any>}[0]
 final inline fun <#A: kotlin/Any> (org.unitedsoftware.mosaic.text/AnnotatedString.Builder).org.unitedsoftware.mosaic.text/withStyle(org.unitedsoftware.mosaic.text/SpanStyle, kotlin/Function1<org.unitedsoftware.mosaic.text/AnnotatedString.Builder, #A>): #A // org.unitedsoftware.mosaic.text/withStyle|withStyle@org.unitedsoftware.mosaic.text.AnnotatedString.Builder(org.unitedsoftware.mosaic.text.SpanStyle;kotlin.Function1<org.unitedsoftware.mosaic.text.AnnotatedString.Builder,0:0>){0§<kotlin.Any>}[0]
 final inline fun org.unitedsoftware.mosaic.text/buildAnnotatedString(kotlin/Function1<org.unitedsoftware.mosaic.text/AnnotatedString.Builder, kotlin/Unit>): org.unitedsoftware.mosaic.text/AnnotatedString // org.unitedsoftware.mosaic.text/buildAnnotatedString|buildAnnotatedString(kotlin.Function1<org.unitedsoftware.mosaic.text.AnnotatedString.Builder,kotlin.Unit>){}[0]
 final suspend fun org.unitedsoftware.mosaic/runMosaic(org.unitedsoftware.mosaic/NonInteractivePolicy = ..., kotlin/Boolean = ..., kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>): kotlin/Boolean // org.unitedsoftware.mosaic/runMosaic|runMosaic(org.unitedsoftware.mosaic.NonInteractivePolicy;kotlin.Boolean;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]

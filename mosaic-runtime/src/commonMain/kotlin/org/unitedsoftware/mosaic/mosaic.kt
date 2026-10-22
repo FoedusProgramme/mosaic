@@ -131,6 +131,15 @@ public interface Mosaic {
 	public fun static(): String?
 	public fun dumpNodes(): String
 
+	/** The title for the terminal window set with [WindowTitle], or null when none is. */
+	public fun title(): String?
+
+	/**
+	 * Escape sequences requested since the last call which do not draw anything, such as copying to
+	 * the clipboard or showing a notification, or null when there are none.
+	 */
+	public fun terminalCommands(): String?
+
 	public suspend fun awaitComplete()
 	public fun cancel()
 }
@@ -166,6 +175,11 @@ internal class MosaicComposition(
 	private val composition = Composition(applier, recomposer)
 
 	private val staticLogs = Channel<Any>(UNLIMITED)
+
+	private val windowTitleManager = WindowTitleManager()
+	private val commands = Channel<String>(UNLIMITED)
+	private val clipboard = CommandClipboard(commands) { needDraw = true }
+	private val notifier = CommandNotifier(terminal.capabilities.kittyNotifications, commands) { needDraw = true }
 	private val staticLogger = StaticLogger(staticLogs) { needDraw = true }
 
 	override val lifecycle = LifecycleRegistry.createUnsafe(this)
@@ -276,6 +290,18 @@ internal class MosaicComposition(
 		}
 	}
 
+	override fun title(): String? = windowTitleManager.title
+
+	override fun terminalCommands(): String? {
+		var command = commands.tryReceive().getOrNull() ?: return null
+		return buildString {
+			do {
+				append(command)
+				command = commands.tryReceive().getOrNull() ?: break
+			} while (true)
+		}
+	}
+
 	override fun dumpNodes(): String {
 		return rootNode.toString()
 	}
@@ -372,6 +398,9 @@ internal class MosaicComposition(
 			CompositionLocalProvider(
 				LocalTerminalState provides terminalState.value,
 				LocalStaticLogger provides staticLogger,
+				LocalWindowTitleManager provides windowTitleManager,
+				LocalClipboard provides clipboard,
+				LocalNotifier provides notifier,
 				LocalLifecycleOwner provides this,
 				content = content,
 			)

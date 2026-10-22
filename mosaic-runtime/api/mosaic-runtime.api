@@ -1,3 +1,7 @@
+public abstract interface class org/unitedsoftware/mosaic/Clipboard {
+	public abstract fun setText (Ljava/lang/String;)V
+}
+
 public abstract interface class org/unitedsoftware/mosaic/Mosaic {
 	public abstract fun awaitComplete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun cancel ()V
@@ -5,6 +9,8 @@ public abstract interface class org/unitedsoftware/mosaic/Mosaic {
 	public abstract fun dumpNodes ()Ljava/lang/String;
 	public abstract fun setContent (Lkotlin/jvm/functions/Function2;)V
 	public abstract fun static ()Ljava/lang/String;
+	public abstract fun terminalCommands ()Ljava/lang/String;
+	public abstract fun title ()Ljava/lang/String;
 }
 
 public final class org/unitedsoftware/mosaic/MosaicKt {
@@ -28,6 +34,11 @@ public final class org/unitedsoftware/mosaic/NonInteractivePolicy : java/lang/En
 	public static fun values ()[Lorg/unitedsoftware/mosaic/NonInteractivePolicy;
 }
 
+public abstract interface class org/unitedsoftware/mosaic/Notifier {
+	public abstract fun notify (Ljava/lang/String;Ljava/lang/String;)V
+	public static synthetic fun notify$default (Lorg/unitedsoftware/mosaic/Notifier;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+}
+
 public final class org/unitedsoftware/mosaic/Static {
 	public static final fun StaticEffect (Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
 	public static final fun getLocalStaticLogger ()Landroidx/compose/runtime/ProvidableCompositionLocal;
@@ -39,6 +50,11 @@ public final class org/unitedsoftware/mosaic/StaticLogger {
 	public final fun log (Lorg/unitedsoftware/mosaic/TextCanvas;)V
 	public final fun plusAssign (Ljava/lang/String;)V
 	public final fun plusAssign (Lorg/unitedsoftware/mosaic/TextCanvas;)V
+}
+
+public final class org/unitedsoftware/mosaic/TerminalCommandsKt {
+	public static final fun getLocalClipboard ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun getLocalNotifier ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
 public final class org/unitedsoftware/mosaic/TerminalState {
@@ -61,6 +77,10 @@ public abstract interface class org/unitedsoftware/mosaic/TextCanvas {
 	public abstract fun getHeight ()I
 	public abstract fun getWidth ()I
 	public abstract fun render (Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;Z)Ljava/lang/String;
+}
+
+public final class org/unitedsoftware/mosaic/WindowTitleKt {
+	public static final fun WindowTitle (Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
 }
 
 public final class org/unitedsoftware/mosaic/layout/AspectRatioKt {
@@ -395,19 +415,21 @@ public final class org/unitedsoftware/mosaic/text/AnnotatedString$Range {
 public final class org/unitedsoftware/mosaic/text/AnnotatedStringKt {
 	public static final fun AnnotatedString (Ljava/lang/String;Lorg/unitedsoftware/mosaic/text/SpanStyle;)Lorg/unitedsoftware/mosaic/text/AnnotatedString;
 	public static final fun buildAnnotatedString (Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/text/AnnotatedString;
+	public static final fun withLink (Lorg/unitedsoftware/mosaic/text/AnnotatedString$Builder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public static final fun withStyle (Lorg/unitedsoftware/mosaic/text/AnnotatedString$Builder;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 }
 
 public final class org/unitedsoftware/mosaic/text/SpanStyle {
 	public static final field $stable I
 	public fun <init> ()V
-	public synthetic fun <init> (IIIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (IIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy-Wv8WuLs (IIIII)Lorg/unitedsoftware/mosaic/text/SpanStyle;
-	public static synthetic fun copy-Wv8WuLs$default (Lorg/unitedsoftware/mosaic/text/SpanStyle;IIIIIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public synthetic fun <init> (IIIIILjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (IIIIILjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-gi8mmF0 (IIIIILjava/lang/String;)Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public static synthetic fun copy-gi8mmF0$default (Lorg/unitedsoftware/mosaic/text/SpanStyle;IIIIILjava/lang/String;ILjava/lang/Object;)Lorg/unitedsoftware/mosaic/text/SpanStyle;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBackground-tUi8tvw ()I
 	public final fun getColor-tUi8tvw ()I
+	public final fun getLink ()Ljava/lang/String;
 	public final fun getTextStyle-nHZupTw ()I
 	public final fun getUnderlineColor-tUi8tvw ()I
 	public final fun getUnderlineStyle-n3rDR_A ()I

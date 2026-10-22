@@ -422,6 +422,14 @@ public inline fun <R : Any> Builder.withStyle(
 }
 
 /**
+ * Links the text appended in [block] to [url], like [withStyle] with a [SpanStyle] with that link.
+ */
+public inline fun <R : Any> Builder.withLink(
+	url: String,
+	block: Builder.() -> R,
+): R = withStyle(SpanStyle(link = url), block)
+
+/**
  * Create an AnnotatedString with a [spanStyle] that will apply to the whole text.
  *
  * @param spanStyle [SpanStyle] to be applied to whole text

@@ -5,6 +5,10 @@ import org.unitedsoftware.mosaic.ui.Color
 
 internal const val ESC = "\u001B"
 internal const val CSI = "$ESC["
+internal const val OSC = "$ESC]"
+
+/** String terminator, which ends OSC sequences. */
+internal const val ST = "$ESC\\"
 
 internal const val synchronizedOutputMode = 2026
 internal const val synchronizedOutputEnable = "$CSI?${synchronizedOutputMode}h"
@@ -17,6 +21,10 @@ internal const val cursorShow = "$CSI?25h"
 internal const val cursorHide = "$CSI?25l"
 internal const val alternateScreenEnable = "$CSI?1049h"
 internal const val alternateScreenDisable = "$CSI?1049l"
+
+/** Saves the window title on the terminal's stack, to be restored by [windowTitlePop]. */
+internal const val windowTitlePush = "${CSI}22;0t"
+internal const val windowTitlePop = "${CSI}23;0t"
 
 internal const val ansiSeparator = ";"
 internal const val ansiClosingCharacter = "m"

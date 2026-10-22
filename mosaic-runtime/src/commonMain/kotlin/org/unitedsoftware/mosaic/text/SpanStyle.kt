@@ -15,6 +15,11 @@ public class SpanStyle(
 	public val textStyle: TextStyle = TextStyle.Unspecified,
 	public val underlineStyle: UnderlineStyle = UnderlineStyle.Unspecified,
 	public val underlineColor: Color = Color.Unspecified,
+	/**
+	 * A URL the text links to, which terminals supporting OSC 8 hyperlinks let users open. Other
+	 * terminals show the text as usual.
+	 */
+	public val link: String? = null,
 ) {
 
 	/**
@@ -35,6 +40,7 @@ public class SpanStyle(
 			textStyle = other.textStyle.takeOrElse { this.textStyle },
 			underlineStyle = other.underlineStyle.takeOrElse { this.underlineStyle },
 			underlineColor = other.underlineColor.takeOrElse { this.underlineColor },
+			link = other.link ?: this.link,
 		)
 	}
 
@@ -50,6 +56,7 @@ public class SpanStyle(
 		textStyle: TextStyle = this.textStyle,
 		underlineStyle: UnderlineStyle = this.underlineStyle,
 		underlineColor: Color = this.underlineColor,
+		link: String? = this.link,
 	): SpanStyle {
 		return SpanStyle(
 			color = color,
@@ -57,6 +64,7 @@ public class SpanStyle(
 			textStyle = textStyle,
 			underlineStyle = underlineStyle,
 			underlineColor = underlineColor,
+			link = link,
 		)
 	}
 
@@ -71,6 +79,7 @@ public class SpanStyle(
 		if (textStyle != other.textStyle) return false
 		if (underlineStyle != other.underlineStyle) return false
 		if (underlineColor != other.underlineColor) return false
+		if (link != other.link) return false
 
 		return true
 	}
@@ -81,6 +90,7 @@ public class SpanStyle(
 		result = 31 * result + textStyle.hashCode()
 		result = 31 * result + underlineStyle.hashCode()
 		result = 31 * result + underlineColor.hashCode()
+		result = 31 * result + link.hashCode()
 		return result
 	}
 
@@ -91,6 +101,7 @@ public class SpanStyle(
 			"textStyle=$textStyle, " +
 			"underlineStyle=$underlineStyle, " +
 			"underlineColor=$underlineColor, " +
+			"link=$link, " +
 			")"
 	}
 }
