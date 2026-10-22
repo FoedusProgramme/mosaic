@@ -1,7 +1,11 @@
 # Change log
 
 ## [Unreleased]
-[Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.19.0...HEAD
+[Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.20.0...HEAD
+
+
+## [0.20.0] - 2026-10-22
+[0.20.0]: https://github.com/FoedusProgramme/mosaic/releases/tag/0.20.0
 
 New:
 - `LocalTerminalControl` hands the terminal over to other programs with `released`, like an editor or an interactive command, and takes it over again afterwards, drawing everything anew. Meanwhile, nothing is drawn, input is left to those programs, and stdout and stderr are no longer intercepted.
