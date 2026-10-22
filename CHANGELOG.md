@@ -19,6 +19,7 @@ New:
 - `LazyColumn` with `LazyListState` only composes the items which are visible, so it can hold long lists like the messages of a conversation. Keyed items keep their position when items are added before them, and `scrollToEnd` scrolls to the latest item.
 - A focus system: `Modifier.focusable`, `Modifier.focusRequester`, `Modifier.onFocusChanged`, and `LocalFocusManager`. Key and paste events go to the focused node and its ancestors first, and to the other nodes only when those do not handle them. Tab and Shift+Tab move the focus, and the first focusable node is focused when nothing else is.
 - `Popup` shows content on top of everything else, like a completion menu, without taking up space in the layout or being clipped by its ancestors. Its `alignment` lets it extend up from its position, for example above a text field at the bottom of the screen.
+- Writes to stdout and stderr by other means than Mosaic, like `println` or a logging library, are intercepted while `runMosaic` runs and shown as static output above the display, rather than corrupting it (#681).
 
 Changed:
 - `TextField` is focusable and edits while focused, instead of taking a `focused` parameter.

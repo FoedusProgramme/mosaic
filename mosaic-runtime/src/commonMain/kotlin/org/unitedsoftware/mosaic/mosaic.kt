@@ -89,43 +89,48 @@ public suspend fun runMosaic(
 		{ Constraints(maxWidth = it.columns) }
 	}
 
-	runMosaicComposition(terminal, rendering, rootConstraints, content)
+	val output = if (terminal.interactive) InterceptingOutput.tryStart() ?: PrintOutput else PrintOutput
+	runMosaicComposition(terminal, rendering, rootConstraints, output, content)
 }
 
 internal suspend fun runMosaicComposition(
 	terminal: Terminal,
 	rendering: Rendering,
 	rootConstraints: (Terminal.Size) -> Constraints,
+	output: Output,
 	content: @Composable () -> Unit,
 ) {
 	val clock = BroadcastFrameClock()
 	val mosaicComposition = MosaicComposition(
 		coroutineContext = coroutineContext + clock,
 		onDraw = { rootNode ->
-			print(rendering.render(rootNode).toString())
+			output.write(rendering.render(rootNode).toString())
 		},
 		terminal = terminal,
 		rootConstraints = rootConstraints,
 	)
 
-	mosaicComposition.setContent(content)
-
-	mosaicComposition.scope.launch {
-		while (true) {
-			clock.sendFrame(nanoTime())
-
-			// "1000 FPS should be enough for anybody"
-			// We need to yield in order for other coroutines on this dispatcher to run, otherwise
-			// this is effectively a spin loop. We do a delay instead of a yield since dispatchers
-			// are not required to support yield, but reasonable delay support is almost a guarantee.
-			delay(1)
-		}
-	}
-
 	try {
+		// Lines written to stdout and stderr by other means are shown above the display.
+		output.startIntercepting(mosaicComposition::logStatic)
+		mosaicComposition.setContent(content)
+
+		mosaicComposition.scope.launch {
+			while (true) {
+				clock.sendFrame(nanoTime())
+
+				// "1000 FPS should be enough for anybody"
+				// We need to yield in order for other coroutines on this dispatcher to run, otherwise
+				// this is effectively a spin loop. We do a delay instead of a yield since dispatchers
+				// are not required to support yield, but reasonable delay support is almost a guarantee.
+				delay(1)
+			}
+		}
+
 		mosaicComposition.awaitComplete()
 	} finally {
-		print(rendering.finish().toString())
+		output.write(rendering.finish().toString())
+		output.stop()
 	}
 }
 
@@ -313,6 +318,12 @@ internal class MosaicComposition(
 				command = commands.tryReceive().getOrNull() ?: break
 			} while (true)
 		}
+	}
+
+	/** Shows [text] above the display. Safe to call from any thread. */
+	fun logStatic(text: String) {
+		staticLogs.trySend(text)
+		needDraw = true
 	}
 
 	override fun dumpNodes(): String {

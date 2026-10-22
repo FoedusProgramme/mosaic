@@ -111,6 +111,7 @@ class MosaicTest {
 			rendering = AnsiRendering(terminal.capabilities),
 			terminal = terminal,
 			rootConstraints = { Constraints() },
+			output = PrintOutput,
 		) {
 			LaunchedEffect(Unit) {
 				withFrameNanos { frameTimeNanos ->

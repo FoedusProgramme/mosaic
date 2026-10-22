@@ -66,7 +66,7 @@ private val pages = listOf(
 	Page("Input", "Text input", "Recipe: focus handling and editable text fields.", listOf("tab" to "focus", "enter" to "submit")) { TextInputPage() },
 	Page("Animation", "Animation", "Infinite transitions, easings, and springs.", listOf("space" to "spring")) { AnimationPage() },
 	Page("Terminal", "Terminal state", "LocalTerminalState and the focus lifecycle.") { TerminalStatePage() },
-	Page("Terminal", "Static output", "Lines written once above the live region.", listOf("enter" to "log a line")) { StaticOutputPage() },
+	Page("Terminal", "Static output", "Lines written once above the live region.", listOf("enter" to "log a line", "p" to "println")) { StaticOutputPage() },
 	Page("Recipes", "Panels", "Box-drawing borders built with drawBehind.") { PanelsPage() },
 	Page("Recipes", "Progress", "Progress bars and spinners.") { ProgressPage() },
 	Page("Recipes", "Tabs", "A tab bar driven by key events.", listOf("←→" to "tab")) { TabsPage() },

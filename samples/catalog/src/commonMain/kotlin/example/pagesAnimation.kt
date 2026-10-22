@@ -154,12 +154,21 @@ fun StaticOutputPage() {
 	}
 	Column(
 		Modifier.onKeyEvent {
-			if (it == KeyEvent("Enter")) {
-				count++
-				logger.log("Static log line #$count")
-				true
-			} else {
-				false
+			when (it) {
+				KeyEvent("Enter") -> {
+					count++
+					logger.log("Static log line #$count")
+					true
+				}
+
+				KeyEvent("p") -> {
+					count++
+					// Mosaic intercepts other writes to stdout and shows them as static output.
+					println("println line #$count")
+					true
+				}
+
+				else -> false
 			}
 		},
 	) {
@@ -168,6 +177,7 @@ fun StaticOutputPage() {
 		Text("like the test results in the jest sample.")
 		Spacer(Modifier.height(1))
 		Labeled("StaticEffect") { Text("ran once when this page opened", color = palette.good) }
+		Labeled("println") { Text("intercepted and shown the same way", color = palette.good) }
 		Labeled("lines logged") { Text("$count", color = palette.accent, textStyle = TextStyle.Bold) }
 		Spacer(Modifier.height(1))
 		Text("This catalog fills the screen, so static lines go", color = palette.muted)
