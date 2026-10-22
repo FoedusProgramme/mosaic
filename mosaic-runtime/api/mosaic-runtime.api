@@ -751,6 +751,12 @@ public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$FillerKt {
 	public final fun getLambda$2053063676$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$ImageKt {
+	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$ImageKt;
+	public fun <init> ()V
+	public final fun getLambda$1279303423$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$SpacerKt {
 	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$SpacerKt;
 	public fun <init> ()V
@@ -773,6 +779,19 @@ public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$TextKt {
 public final class org/unitedsoftware/mosaic/ui/FillerKt {
 	public static final fun Filler-fUQeE84 (CLorg/unitedsoftware/mosaic/modifier/Modifier;IIILandroidx/compose/runtime/Composer;II)V
 	public static final fun Filler-fUQeE84 (ILorg/unitedsoftware/mosaic/modifier/Modifier;IIILandroidx/compose/runtime/Composer;II)V
+}
+
+public final class org/unitedsoftware/mosaic/ui/ImageBitmap {
+	public static final field $stable I
+	public fun <init> (II[I)V
+	public final fun getHeight ()I
+	public final fun getPixels ()[I
+	public final fun getWidth ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/unitedsoftware/mosaic/ui/ImageKt {
+	public static final fun Image (Lorg/unitedsoftware/mosaic/ui/ImageBitmap;Lorg/unitedsoftware/mosaic/modifier/Modifier;Ljava/lang/String;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class org/unitedsoftware/mosaic/ui/Layout {

@@ -42,6 +42,7 @@ import org.unitedsoftware.mosaic.terminal.KeyboardEvent
 import org.unitedsoftware.mosaic.terminal.Terminal
 import org.unitedsoftware.mosaic.ui.BoxMeasurePolicy
 import org.unitedsoftware.mosaic.ui.LocalPopupHost
+import org.unitedsoftware.mosaic.ui.LocalTerminalCapabilities
 import org.unitedsoftware.mosaic.ui.PopupHost
 import org.unitedsoftware.mosaic.ui.unit.Constraints
 
@@ -444,6 +445,7 @@ internal class MosaicComposition(
 				LocalLayoutInvalidator provides layoutInvalidator,
 				LocalFocusManager provides focusOwner,
 				LocalPopupHost provides popupHost,
+				LocalTerminalCapabilities provides terminal.capabilities,
 				content = content,
 			)
 		}
