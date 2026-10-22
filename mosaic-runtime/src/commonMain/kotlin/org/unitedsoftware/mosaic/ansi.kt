@@ -26,6 +26,9 @@ internal const val alternateScreenDisable = "$CSI?1049l"
 internal const val windowTitlePush = "${CSI}22;0t"
 internal const val windowTitlePop = "${CSI}23;0t"
 
+internal const val cursorSave = "${ESC}7"
+internal const val cursorRestore = "${ESC}8"
+
 /** Restores the pointer shape from before the last one pushed with Kitty's pointer shape protocol. */
 internal const val pointerShapePop = "${OSC}22;<$ST"
 

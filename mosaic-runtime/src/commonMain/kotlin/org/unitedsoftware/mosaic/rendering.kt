@@ -170,6 +170,9 @@ internal class AnsiRendering(
 	/** Whether the cursor is in the first column. Output is assumed to start on a new line. */
 	private var atLineStart = true
 
+	/** The Sixel images of the last output, in its rows. */
+	private var lastSixels = emptyList<SixelPlacement>()
+
 	private val commandWriter = TerminalCommandWriter(capabilities)
 
 	override fun render(mosaic: Mosaic): CharSequence {
@@ -233,8 +236,22 @@ internal class AnsiRendering(
 				rowBuilder.toString()
 			}
 
+			val sixels = (surface as? TextSurface)?.sixels.orEmpty().mapNotNull { sixel ->
+				if (sixel.y < firstRow) return@mapNotNull null
+				SixelPlacement(sixel.x, sixel.y - firstRow, sixel.columns, sixel.rows, sixel.data)
+			}
+			// Rows of images which went away are written again, which erases their pixels.
+			val rewrite = BooleanArray(rows.size)
+			if (previousRows.isNotEmpty()) {
+				for (sixel in lastSixels) {
+					if (sixel in sixels) continue
+					for (row in sixel.y until minOf(sixel.y + sixel.rows, rows.size)) rewrite[row] = true
+				}
+			}
+
 			for ((index, row) in rows.withIndex()) {
-				if (index < previousRows.size && previousRows[index] == row) continue
+				if (!rewrite[index] && index < previousRows.size && previousRows[index] == row) continue
+				rewrite[index] = true
 				moveTo(index)
 				if (index < previousRows.size) {
 					append(clearLine)
@@ -242,6 +259,24 @@ internal class AnsiRendering(
 				append(row)
 				atLineStart = row.isEmpty()
 			}
+
+			// Images go over the rows, again whenever one of their rows was written, which erases them.
+			for (sixel in sixels) {
+				val end = minOf(sixel.y + sixel.rows, rows.size)
+				if (sixel in lastSixels && (sixel.y until end).none { rewrite[it] }) continue
+				moveTo(sixel.y)
+				if (sixel.x > 0) {
+					append(CSI)
+					append(sixel.x + 1)
+					append('G')
+				}
+				// Where the cursor ends up after an image differs between terminals.
+				append(cursorSave)
+				append(sixel.data)
+				append(cursorRestore)
+				atLineStart = sixel.x == 0
+			}
+			lastSixels = sixels
 
 			moveTo(rows.size)
 			if (rows.size < previousRows.size) {
@@ -305,6 +340,7 @@ internal class AlternateScreenRendering(
 	private var lastRows = emptyList<String>()
 	private var lastSize: Terminal.Size? = null
 	private var cursorShown = false
+	private var lastSixels = emptyList<SixelPlacement>()
 
 	override fun render(mosaic: Mosaic): CharSequence {
 		return stringBuilder.apply {
@@ -344,12 +380,33 @@ internal class AlternateScreenRendering(
 				rowBuilder.toString()
 			}
 
+			val sixels = (surface as? TextSurface)?.sixels.orEmpty().filter { it.y + it.rows <= rows.size }
+			// Rows of images which went away are written again, which erases their pixels.
+			val rewrite = BooleanArray(rows.size)
+			if (previousRows.isNotEmpty()) {
+				for (sixel in lastSixels) {
+					if (sixel in sixels) continue
+					for (row in sixel.y until minOf(sixel.y + sixel.rows, rows.size)) rewrite[row] = true
+				}
+			}
+
 			for ((index, row) in rows.withIndex()) {
-				if (index < previousRows.size && previousRows[index] == row) continue
+				if (!rewrite[index] && index < previousRows.size && previousRows[index] == row) continue
+				rewrite[index] = true
 				appendCursorPosition(index, 0)
 				append(clearLine)
 				append(row)
 			}
+
+			// Images go over the rows, again whenever one of their rows was written, which erases them.
+			for (sixel in sixels) {
+				if (sixel in lastSixels && (sixel.y until sixel.y + sixel.rows).none { rewrite[it] }) continue
+				appendCursorPosition(sixel.y, sixel.x)
+				append(cursorSave)
+				append(sixel.data)
+				append(cursorRestore)
+			}
+			lastSixels = sixels
 			if (rows.size < previousRows.size) {
 				appendCursorPosition(rows.size, 0)
 				append(clearDisplay)

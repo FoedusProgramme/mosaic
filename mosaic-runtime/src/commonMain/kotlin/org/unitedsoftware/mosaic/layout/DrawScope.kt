@@ -317,6 +317,11 @@ internal open class TextCanvasDrawScope(
 		canvas.setCursor(row, column)
 	}
 
+	/** Places a Sixel image, see [TextSurface.addSixel]. */
+	fun drawSixel(row: Int, column: Int, columns: Int, rows: Int, data: String) {
+		canvas.addSixel(row, column, columns, rows, data)
+	}
+
 	/** Runs [block] with drawing limited to the bounds of this scope. */
 	fun <R> clipToBounds(block: () -> R): R {
 		val left = canvas.translationX

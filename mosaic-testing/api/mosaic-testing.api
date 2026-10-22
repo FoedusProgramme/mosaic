@@ -43,8 +43,8 @@ public final class org/unitedsoftware/mosaic/testing/TestTerminal : org/unitedso
 public final class org/unitedsoftware/mosaic/testing/TestTerminal$Capabilities : org/unitedsoftware/mosaic/terminal/Terminal$Capabilities {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;ZZZZZZZZZZZZ)V
-	public synthetic fun <init> (Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;ZZZZZZZZZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;ZZZZZZZZZZZZZ)V
+	public synthetic fun <init> (Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;ZZZZZZZZZZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAnsiLevel ()Lorg/unitedsoftware/mosaic/terminal/AnsiLevel;
 	public fun getCursorVisibility ()Z
 	public fun getFocusEvents ()Z
@@ -56,6 +56,7 @@ public final class org/unitedsoftware/mosaic/testing/TestTerminal$Capabilities :
 	public fun getKittyTextSizingScale ()Z
 	public fun getKittyTextSizingWidth ()Z
 	public fun getKittyUnderline ()Z
+	public fun getSixelGraphics ()Z
 	public fun getSynchronizedOutput ()Z
 	public fun getThemeEvents ()Z
 }

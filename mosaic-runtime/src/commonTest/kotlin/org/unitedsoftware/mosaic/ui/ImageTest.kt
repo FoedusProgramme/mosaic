@@ -46,7 +46,7 @@ class ImageTest {
 	@Test fun halfBlocks() = runTest {
 		// Red over blue, then red over nothing, then nothing over blue, then nothing.
 		val bitmap = ImageBitmap(4, 2, intArrayOf(red, red, clear, clear, blue, clear, blue, clear))
-		runMosaicTest(capabilities = TestTerminal.Capabilities(kittyGraphics = false)) {
+		runMosaicTest(capabilities = TestTerminal.Capabilities(kittyGraphics = false, sixelGraphics = false)) {
 			setContent {
 				Image(bitmap, modifier = Modifier.width(4))
 			}
@@ -79,7 +79,7 @@ class ImageTest {
 
 	@Test fun kittyGraphicsNeedsTrueColor() = runTest {
 		val bitmap = ImageBitmap(1, 2, intArrayOf(red, blue))
-		runMosaicTest(capabilities = TestTerminal.Capabilities(ansiLevel = AnsiLevel.ANSI256)) {
+		runMosaicTest(capabilities = TestTerminal.Capabilities(ansiLevel = AnsiLevel.ANSI256, sixelGraphics = false)) {
 			setContent {
 				Image(bitmap, modifier = Modifier.size(1, 1))
 			}

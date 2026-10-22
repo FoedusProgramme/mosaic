@@ -37,7 +37,7 @@ final class org.unitedsoftware.mosaic.testing/TestTerminal : org.unitedsoftware.
     final fun close() // org.unitedsoftware.mosaic.testing/TestTerminal.close|close(){}[0]
 
     final class Capabilities : org.unitedsoftware.mosaic.terminal/Terminal.Capabilities { // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities|null[0]
-        constructor <init>(org.unitedsoftware.mosaic.terminal/AnsiLevel = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.<init>|<init>(org.unitedsoftware.mosaic.terminal.AnsiLevel;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+        constructor <init>(org.unitedsoftware.mosaic.terminal/AnsiLevel = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.<init>|<init>(org.unitedsoftware.mosaic.terminal.AnsiLevel;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
 
         final val ansiLevel // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.ansiLevel|{}ansiLevel[0]
             final fun <get-ansiLevel>(): org.unitedsoftware.mosaic.terminal/AnsiLevel // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.ansiLevel.<get-ansiLevel>|<get-ansiLevel>(){}[0]
@@ -61,6 +61,8 @@ final class org.unitedsoftware.mosaic.testing/TestTerminal : org.unitedsoftware.
             final fun <get-kittyTextSizingWidth>(): kotlin/Boolean // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.kittyTextSizingWidth.<get-kittyTextSizingWidth>|<get-kittyTextSizingWidth>(){}[0]
         final val kittyUnderline // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.kittyUnderline|{}kittyUnderline[0]
             final fun <get-kittyUnderline>(): kotlin/Boolean // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.kittyUnderline.<get-kittyUnderline>|<get-kittyUnderline>(){}[0]
+        final val sixelGraphics // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.sixelGraphics|{}sixelGraphics[0]
+            final fun <get-sixelGraphics>(): kotlin/Boolean // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.sixelGraphics.<get-sixelGraphics>|<get-sixelGraphics>(){}[0]
         final val synchronizedOutput // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.synchronizedOutput|{}synchronizedOutput[0]
             final fun <get-synchronizedOutput>(): kotlin/Boolean // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.synchronizedOutput.<get-synchronizedOutput>|<get-synchronizedOutput>(){}[0]
         final val themeEvents // org.unitedsoftware.mosaic.testing/TestTerminal.Capabilities.themeEvents|{}themeEvents[0]

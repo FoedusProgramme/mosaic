@@ -299,6 +299,7 @@ public abstract interface class org/unitedsoftware/mosaic/terminal/Terminal$Capa
 	public abstract fun getKittyTextSizingScale ()Z
 	public abstract fun getKittyTextSizingWidth ()Z
 	public abstract fun getKittyUnderline ()Z
+	public abstract fun getSixelGraphics ()Z
 	public abstract fun getSynchronizedOutput ()Z
 	public abstract fun getThemeEvents ()Z
 }

@@ -65,6 +65,7 @@ private class TtyTerminal(
 		override val kittyTextSizingScale: Boolean,
 		override val kittyTextSizingWidth: Boolean,
 		override val kittyUnderline: Boolean,
+		override val sixelGraphics: Boolean,
 		override val synchronizedOutput: Boolean,
 		override val themeEvents: Boolean,
 	) : Terminal.Capabilities
@@ -135,6 +136,7 @@ public suspend fun Tty.asTerminalIn(
 	var focusEvents = false
 	var inBandResizeEvents = false
 	var kittyGraphics = false
+	var sixelGraphics = false
 	var kittyKeyboard = false
 	var kittyNotifications = false
 	var kittyPointerShape = false
@@ -159,6 +161,8 @@ public suspend fun Tty.asTerminalIn(
 				is PrimaryDeviceAttributesEvent -> {
 					if (stage == StageNormalOperation) continue
 					deviceAttributesReported = true
+					// Attribute 4 announces Sixel graphics.
+					sixelGraphics = "4" in event.data.split(';')
 
 					if (event.id == 1) {
 						// VT100 terminals can't handle most of the other queries so just bail.
@@ -393,6 +397,7 @@ public suspend fun Tty.asTerminalIn(
 			kittyTextSizingScale = kittyTextSizingScale,
 			kittyTextSizingWidth = kittyTextSizingWidth,
 			kittyUnderline = kittyUnderlines,
+			sixelGraphics = sixelGraphics,
 			synchronizedOutput = synchronizedOutput,
 			themeEvents = themeEvents,
 		),

@@ -21,7 +21,8 @@ New:
 - `Popup` shows content on top of everything else, like a completion menu, without taking up space in the layout or being clipped by its ancestors. Its `alignment` lets it extend up from its position, for example above a text field at the bottom of the screen.
 - Writes to stdout and stderr by other means than Mosaic, like `println` or a logging library, are intercepted while `runMosaic` runs and shown as static output above the display, rather than corrupting it (#681).
 - `Text` takes `softWrap`, `maxLines`, and `overflow`. `TextOverflow.Ellipsis` ends text which does not fit with an ellipsis.
-- `Image` shows an `ImageBitmap`, scaled to fit. Terminals which support the Kitty graphics protocol show the image itself, using Unicode placeholders so that it moves with the text, and others show it with half block characters.
+- `Image` shows an `ImageBitmap`, scaled to fit. Terminals which support the Kitty graphics protocol show the image itself, using Unicode placeholders so that it moves with the text. Terminals which report Sixel support show it as Sixel graphics, and others with half block characters.
+- `Terminal.Capabilities.sixelGraphics` is true when the terminal reports Sixel support in its primary device attributes.
 - `WindowPointerShape` sets the shape of the mouse pointer with the Kitty pointer shape protocol while it is in the composition, restoring the previous shape afterwards.
 - `Modifier.border` draws a box of a `BorderStyle` around the content, with an optional title.
 - New `mosaic-markdown` library with `Markdown`, which renders Markdown with syntax highlighted code, diffs, tables, task lists, and OSC 8 links. It handles incomplete input, so responses of language models can be rendered while they stream in.

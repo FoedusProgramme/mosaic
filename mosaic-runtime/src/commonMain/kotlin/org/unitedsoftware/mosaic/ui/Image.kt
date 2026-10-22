@@ -13,6 +13,7 @@ import org.unitedsoftware.mosaic.layout.Measurable
 import org.unitedsoftware.mosaic.layout.MeasurePolicy
 import org.unitedsoftware.mosaic.layout.MeasureResult
 import org.unitedsoftware.mosaic.layout.MeasureScope
+import org.unitedsoftware.mosaic.layout.TextCanvasDrawScope
 import org.unitedsoftware.mosaic.layout.drawBehind
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.terminal.AnsiLevel
@@ -65,6 +66,7 @@ public fun Image(
 	} else {
 		null
 	}
+	val sixel = if (kitty == null && capabilities.sixelGraphics) remember(bitmap) { SixelCache(bitmap) } else null
 	DisposableEffect(kitty) {
 		onDispose {
 			kitty?.delete()
@@ -75,6 +77,8 @@ public fun Image(
 		modifier = modifier.drawBehind {
 			if (kitty != null && width <= kittyMaxCells && height <= kittyMaxCells) {
 				kitty.draw(this, width, height, cell)
+			} else if (sixel != null) {
+				(this as TextCanvasDrawScope).drawSixel(0, 0, width, height, sixel.encode(width, height, cell))
 			} else {
 				blocks.draw(this, width, height)
 			}
@@ -120,6 +124,26 @@ internal fun fit(bitmap: ImageBitmap, cell: Pair<Double, Double>, constraints: C
 	val width = constraints.constrainWidth(ceil(columns - 0.01).roundToInt().coerceAtLeast(1))
 	val height = constraints.constrainHeight(ceil(rows - 0.01).roundToInt().coerceAtLeast(1))
 	return width to height
+}
+
+/** The Sixel encoding of an image, kept for the last size it was drawn at. */
+private class SixelCache(private val bitmap: ImageBitmap) {
+	private var columns = -1
+	private var rows = -1
+	private var data = ""
+
+	fun encode(columns: Int, rows: Int, cell: Pair<Double, Double>): String {
+		if (columns != this.columns || rows != this.rows) {
+			// As large as the cells allow while keeping the aspect ratio, so it covers no other cells.
+			val scale = minOf(columns * cell.first / bitmap.width, rows * cell.second / bitmap.height)
+			val width = (bitmap.width * scale).toInt().coerceAtLeast(1)
+			val height = (bitmap.height * scale).toInt().coerceAtLeast(1)
+			data = encodeSixel(bitmap.resample(width, height), width, height)
+			this.columns = columns
+			this.rows = rows
+		}
+		return data
+	}
 }
 
 /** The colors of a half block rendering, kept for the last size it was drawn at. */

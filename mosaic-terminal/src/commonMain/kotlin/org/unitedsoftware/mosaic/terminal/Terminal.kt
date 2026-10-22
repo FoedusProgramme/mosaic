@@ -121,6 +121,13 @@ public interface Terminal : AutoCloseable {
 		public val kittyUnderline: Boolean
 
 		/**
+		 * True when this terminal reports support for Sixel graphics in its primary device attributes.
+		 *
+		 * See: https://vt100.net/docs/vt3xx-gp/chapter14.html
+		 */
+		public val sixelGraphics: Boolean
+
+		/**
 		 * True when synchronized output (mode 2026) is supported by this terminal. This ensures a set
 		 * of commands (usually output-related) are atomically reflected in the rendering. Without this,
 		 * updates may be partially rendered and cause a tearing effect.

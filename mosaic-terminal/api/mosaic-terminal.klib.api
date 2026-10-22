@@ -66,6 +66,8 @@ abstract interface org.unitedsoftware.mosaic.terminal/Terminal : kotlin/AutoClos
             abstract fun <get-kittyTextSizingWidth>(): kotlin/Boolean // org.unitedsoftware.mosaic.terminal/Terminal.Capabilities.kittyTextSizingWidth.<get-kittyTextSizingWidth>|<get-kittyTextSizingWidth>(){}[0]
         abstract val kittyUnderline // org.unitedsoftware.mosaic.terminal/Terminal.Capabilities.kittyUnderline|{}kittyUnderline[0]
             abstract fun <get-kittyUnderline>(): kotlin/Boolean // org.unitedsoftware.mosaic.terminal/Terminal.Capabilities.kittyUnderline.<get-kittyUnderline>|<get-kittyUnderline>(){}[0]
+        abstract val sixelGraphics // org.unitedsoftware.mosaic.terminal/Terminal.Capabilities.sixelGraphics|{}sixelGraphics[0]
+            abstract fun <get-sixelGraphics>(): kotlin/Boolean // org.unitedsoftware.mosaic.terminal/Terminal.Capabilities.sixelGraphics.<get-sixelGraphics>|<get-sixelGraphics>(){}[0]
         abstract val synchronizedOutput // org.unitedsoftware.mosaic.terminal/Terminal.Capabilities.synchronizedOutput|{}synchronizedOutput[0]
             abstract fun <get-synchronizedOutput>(): kotlin/Boolean // org.unitedsoftware.mosaic.terminal/Terminal.Capabilities.synchronizedOutput.<get-synchronizedOutput>|<get-synchronizedOutput>(){}[0]
         abstract val themeEvents // org.unitedsoftware.mosaic.terminal/Terminal.Capabilities.themeEvents|{}themeEvents[0]

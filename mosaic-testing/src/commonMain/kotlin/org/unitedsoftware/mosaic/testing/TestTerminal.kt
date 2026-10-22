@@ -37,6 +37,7 @@ public class TestTerminal(
 		override val kittyTextSizingScale: Boolean = true,
 		override val kittyTextSizingWidth: Boolean = true,
 		override val kittyUnderline: Boolean = true,
+		override val sixelGraphics: Boolean = true,
 		override val synchronizedOutput: Boolean = true,
 		override val themeEvents: Boolean = true,
 	) : Terminal.Capabilities
