@@ -49,6 +49,24 @@ internal fun Layout(
 	)
 }
 
+/**
+ * A layout without children, like [Layout] with empty content but without composing that content,
+ * which is noticeably cheaper for nodes as common as text.
+ */
+@Composable
+@MosaicComposable
+internal fun LeafLayout(
+	debugInfo: () -> String,
+	measurePolicy: MeasurePolicy,
+	modifier: Modifier = Modifier,
+) {
+	Node(
+		measurePolicy = measurePolicy,
+		debugPolicy = { debugInfo() + " x=$x y=$y w=$width h=$height${modifier.toDebugString()}" },
+		modifier = modifier,
+	)
+}
+
 private class NoContentMeasurePolicyMeasurePolicy(
 	private val noContentMeasurePolicy: NoContentMeasurePolicy,
 ) : MeasurePolicy {

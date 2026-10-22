@@ -58,13 +58,14 @@ internal class TextSurface(
 	private var links: Array<String?>? = null
 
 	// Writes outside of this rectangle, in surface coordinates, are dropped.
-	private var clipLeft = 0
-	private var clipTop = 0
-	private var clipRight = width
-	private var clipBottom = height
+	// Not private, since the inline withClip changes them.
+	var clipLeft = 0
+	var clipTop = 0
+	var clipRight = width
+	var clipBottom = height
 
 	/** Runs [block] with writes limited to the intersection of the current clip and the rectangle. */
-	fun <R> withClip(left: Int, top: Int, right: Int, bottom: Int, block: () -> R): R {
+	inline fun <R> withClip(left: Int, top: Int, right: Int, bottom: Int, block: () -> R): R {
 		val oldLeft = clipLeft
 		val oldTop = clipTop
 		val oldRight = clipRight

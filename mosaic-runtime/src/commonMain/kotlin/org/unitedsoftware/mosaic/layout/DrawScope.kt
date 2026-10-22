@@ -129,7 +129,7 @@ public interface DrawScope {
 }
 
 internal open class TextCanvasDrawScope(
-	private val canvas: TextSurface,
+	internal val canvas: TextSurface,
 	override val width: Int,
 	override val height: Int,
 ) : DrawScope {
@@ -325,7 +325,7 @@ internal open class TextCanvasDrawScope(
 	}
 
 	/** Runs [block] with drawing limited to the bounds of this scope. */
-	fun <R> clipToBounds(block: () -> R): R {
+	inline fun <R> clipToBounds(block: () -> R): R {
 		val left = canvas.translationX
 		val top = canvas.translationY
 		return canvas.withClip(left, top, left + width, top + height, block)

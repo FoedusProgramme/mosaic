@@ -48,12 +48,18 @@ public fun Text(
 	val layout = remember { StringTextLayout() }
 	layout.value = value
 
-	Layout(
-		content = {},
+	LeafLayout(
 		modifier = modifier.drawBehind {
-			(this as TextCanvasDrawScope).clipToBounds {
+			// Clipping is only needed for text which does not fit, which is uncommon.
+			if (layout.width <= width && layout.height <= height) {
 				layout.lines.forEachIndexed { row, line ->
 					drawText(row, 0, line, color, background, textStyle, underlineStyle, underlineColor)
+				}
+			} else {
+				(this as TextCanvasDrawScope).clipToBounds {
+					layout.lines.forEachIndexed { row, line ->
+						drawText(row, 0, line, color, background, textStyle, underlineStyle, underlineColor)
+					}
 				}
 			}
 		},
@@ -92,12 +98,18 @@ public fun Text(
 	val layout = remember { AnnotatedStringTextLayout() }
 	layout.value = value
 
-	Layout(
-		content = {},
+	LeafLayout(
 		modifier = modifier.drawBehind {
-			(this as TextCanvasDrawScope).clipToBounds {
+			// Clipping is only needed for text which does not fit, which is uncommon.
+			if (layout.width <= width && layout.height <= height) {
 				layout.lines.forEachIndexed { row, line ->
 					drawText(row, 0, line, color, background, textStyle, underlineStyle, underlineColor)
+				}
+			} else {
+				(this as TextCanvasDrawScope).clipToBounds {
+					layout.lines.forEachIndexed { row, line ->
+						drawText(row, 0, line, color, background, textStyle, underlineStyle, underlineColor)
+					}
 				}
 			}
 		},
