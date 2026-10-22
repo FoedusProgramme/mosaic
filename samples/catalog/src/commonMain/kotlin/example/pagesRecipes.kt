@@ -26,10 +26,12 @@ import org.unitedsoftware.mosaic.layout.width
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.ui.Box
 import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.LazyColumn
 import org.unitedsoftware.mosaic.ui.Row
 import org.unitedsoftware.mosaic.ui.Spacer
 import org.unitedsoftware.mosaic.ui.Text
 import org.unitedsoftware.mosaic.ui.TextStyle
+import org.unitedsoftware.mosaic.ui.rememberLazyListState
 import org.unitedsoftware.mosaic.ui.unit.IntOffset
 import org.unitedsoftware.mosaic.ui.unit.IntSize
 
@@ -228,34 +230,45 @@ private val fruits = listOf(
 @Composable
 fun ScrollingListPage() {
 	val palette = LocalPalette.current
-	val items = remember { List(40) { "Item ${(it + 1).toString().padStart(2, '0')}  ${fruits[it % fruits.size]}" } }
+	val count = 10_000
 	var selected by remember { mutableIntStateOf(0) }
+	val state = rememberLazyListState()
+	// Keep the selection in view, scrolling as little as possible.
+	LaunchedEffect(selected) {
+		when {
+			selected < state.firstVisibleItemIndex -> state.scrollToItem(selected)
+			selected > state.lastVisibleItemIndex -> state.scrollToItem(selected - state.viewportSize + 1)
+		}
+	}
 	Column(
 		Modifier.onKeyEvent {
 			when (it) {
-				KeyEvent("j") -> selected = (selected + 1).coerceAtMost(items.lastIndex)
+				KeyEvent("j") -> selected = (selected + 1).coerceAtMost(count - 1)
 				KeyEvent("k") -> selected = (selected - 1).coerceAtLeast(0)
 				KeyEvent("g") -> selected = 0
-				KeyEvent("G"), KeyEvent("g", shift = true) -> selected = items.lastIndex
+				KeyEvent("G"), KeyEvent("g", shift = true) -> selected = count - 1
 				else -> return@onKeyEvent false
 			}
 			true
 		},
 	) {
-		Panel(modifier = Modifier.width(40), title = "${selected + 1} of ${items.size}") {
-			ScrollingList(items, selected = selected, height = 12) { item, isSelected ->
-				if (isSelected) {
-					Box(Modifier.fillMaxWidth().background(palette.accentContainer)) {
-						Text("▸ $item", color = palette.accent, textStyle = TextStyle.Bold)
+		Panel(modifier = Modifier.width(40), title = "${selected + 1} of $count") {
+			LazyColumn(modifier = Modifier.height(12), state = state) {
+				items(count) { index ->
+					val item = "Item ${(index + 1).toString().padStart(5, '0')}  ${fruits[index % fruits.size]}"
+					if (index == selected) {
+						Box(Modifier.fillMaxWidth().background(palette.accentContainer)) {
+							Text("▸ $item", color = palette.accent, textStyle = TextStyle.Bold)
+						}
+					} else {
+						Text("  $item")
 					}
-				} else {
-					Text("  $item")
 				}
 			}
 		}
 		Spacer(Modifier.height(1))
-		Text("Only visible rows are composed and the window", color = palette.muted)
-		Text("follows the selection. j/k move, g/G jump.", color = palette.muted)
+		Text("LazyColumn composes only the visible rows of its", color = palette.muted)
+		Text("10,000 items. j/k move, g/G jump.", color = palette.muted)
 	}
 }
 
@@ -291,11 +304,12 @@ private val fixes = listOf(
 	"Typing CJK through an input method works (#972)",
 	"Shift+Enter, pastes, and the IME caret work",
 	"Resizing the terminal no longer crashes (#1167)",
+	"Text wraps to its constraints, nodes can clip",
+	"Focus, scrolling, LazyColumn, Popup, alt screen",
+	"println shows above the display (#681)",
 )
 
 private val gaps = listOf(
-	"Text ignores incoming size constraints",
-	"Drawing is only clipped to the terminal, not nodes",
 	"Mouse events never reach composables (#495)",
-	"No focus system, scrolling, or alt screen",
+	"No border modifier or images yet",
 )

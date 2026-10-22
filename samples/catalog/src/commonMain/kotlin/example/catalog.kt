@@ -65,6 +65,7 @@ private val pages = listOf(
 	Page("Drawing", "DrawScope", "drawBehind with drawRect and drawText.") { DrawScopePage() },
 	Page("Input", "Keyboard", "Raw KeyEvents as delivered to onPreviewKeyEvent.") { KeyboardPage() },
 	Page("Input", "Text input", "Recipe: focus handling and editable text fields.", listOf("tab" to "focus", "enter" to "submit")) { TextInputPage() },
+	Page("Input", "Completion popup", "A Popup above a TextField, like slash commands.", listOf("/" to "commands", "↑↓" to "choose", "tab" to "complete")) { CompletionPage() },
 	Page("Animation", "Animation", "Infinite transitions, easings, and springs.", listOf("space" to "spring")) { AnimationPage() },
 	Page("Terminal", "Terminal state", "LocalTerminalState and the focus lifecycle.") { TerminalStatePage() },
 	Page("Terminal", "Static output", "Lines written once above the live region.", listOf("enter" to "log a line", "p" to "println")) { StaticOutputPage() },
@@ -72,7 +73,7 @@ private val pages = listOf(
 	Page("Recipes", "Progress", "Progress bars and spinners.") { ProgressPage() },
 	Page("Recipes", "Tabs", "A tab bar driven by key events.", listOf("←→" to "tab")) { TabsPage() },
 	Page("Recipes", "Table", "Column-aligned table with a sort key.", listOf("space" to "sort")) { TablePage() },
-	Page("Recipes", "Scrolling list", "Windowed list with a scrollbar.", listOf("j/k" to "move")) { ScrollingListPage() },
+	Page("Recipes", "Scrolling list", "LazyColumn with a moving selection.", listOf("j/k" to "move")) { ScrollingListPage() },
 	Page("Gaps", "Limitations", "What Mosaic cannot do yet.") { LimitationsPage() },
 )
 
