@@ -7,6 +7,15 @@ New:
 - `LocalTerminalControl` hands the terminal over to other programs with `release`, like an editor or an interactive command, and takes it over again afterwards, drawing everything anew. Meanwhile, nothing is drawn, input is left to those programs, and stdout and stderr are no longer intercepted.
 - Ctrl+Z suspends the program when no key handler consumes it, like it does in a shell, and `fg` resumes it. `TerminalControl.suspendProcess` does the same. Neither is supported on Windows.
 - `Terminal.released`, `Terminal.suspendProcess`, and `Tty.suspendProcess` are what these are built on.
+- `TextField` moves between rows with ↑ and ↓, leaving them to other handlers on the first and last row, for example to recall earlier input. Alt or Ctrl with ← and →, and Alt+B and Alt+F, move by words, and Alt+Backspace and Alt+D delete them.
+- `TextField` selects with Shift and the keys which move the cursor, and by dragging the mouse, which copies the selection to the clipboard. Typing and pasting replace the selection. `TextFieldState` has `selectionStart`, `selectionEnd`, `selectedText`, `select`, and `selectAll`.
+- `TextField` undoes edits with Ctrl+_ (or Ctrl+/) and redoes them with Ctrl+Shift+Z, grouping typed characters by word. `TextFieldState` has `undo`, `redo`, `canUndo`, and `canRedo`.
+- Text deleted with Ctrl+U, Ctrl+K, Ctrl+W, Alt+Backspace, and Alt+D is inserted again with Ctrl+Y, like in a shell.
+- `TextField` takes `minLines`.
+- `Modifier.onPreviewPasteEvent` receives pastes before the focused node, like a text field, so that ancestors can intercept them, for example to insert a placeholder for a large paste.
+
+Changed:
+- Ctrl+\, Ctrl+], Ctrl+^, and Ctrl+_ are reported as those keys with Ctrl in terminals without the Kitty keyboard protocol, rather than as control characters which were dropped.
 
 
 ## [0.19.0] - 2026-10-22

@@ -157,22 +157,22 @@ class EventParserGroundKeyboardEventTest : BaseEventParserTest() {
 
 	@Test fun hex1c() {
 		testTerminal.writeHex("1c")
-		assertThat(parser.next()).isEqualTo(KeyboardEvent(0x1c))
+		assertThat(parser.next()).isEqualTo(KeyboardEvent('\\'.code, modifiers = ModifierCtrl))
 	}
 
 	@Test fun hex1d() {
 		testTerminal.writeHex("1d")
-		assertThat(parser.next()).isEqualTo(KeyboardEvent(0x1d))
+		assertThat(parser.next()).isEqualTo(KeyboardEvent(']'.code, modifiers = ModifierCtrl))
 	}
 
 	@Test fun hex1e() {
 		testTerminal.writeHex("1e")
-		assertThat(parser.next()).isEqualTo(KeyboardEvent(0x1e))
+		assertThat(parser.next()).isEqualTo(KeyboardEvent('^'.code, modifiers = ModifierCtrl))
 	}
 
 	@Test fun hex1f() {
 		testTerminal.writeHex("1f")
-		assertThat(parser.next()).isEqualTo(KeyboardEvent(0x1f))
+		assertThat(parser.next()).isEqualTo(KeyboardEvent('_'.code, modifiers = ModifierCtrl))
 	}
 
 	@Test fun utf8TwoBytes() {

@@ -13,6 +13,7 @@ import org.unitedsoftware.mosaic.layout.background
 import org.unitedsoftware.mosaic.layout.height
 import org.unitedsoftware.mosaic.layout.onKeyEvent
 import org.unitedsoftware.mosaic.layout.onPreviewKeyEvent
+import org.unitedsoftware.mosaic.layout.onPreviewPasteEvent
 import org.unitedsoftware.mosaic.layout.padding
 import org.unitedsoftware.mosaic.layout.width
 import org.unitedsoftware.mosaic.modifier.Modifier
@@ -93,6 +94,7 @@ fun TextInputPage() {
 	val message = remember { TextFieldState() }
 	val focusManager = LocalFocusManager.current
 	var sent by remember { mutableStateOf(emptyList<String>()) }
+	var pastes by remember { mutableIntStateOf(0) }
 	Column(
 		// Tab moves the focus between the fields. The single line name field does not handle Enter,
 		// so it reaches the column, which moves on to the message.
@@ -115,8 +117,24 @@ fun TextInputPage() {
 		Labeled("Message", labelWidth = 9) {
 			TextField(
 				message,
-				modifier = Modifier.width(40).background(palette.surface),
-				maxLines = 3,
+				modifier = Modifier
+					.width(40)
+					.background(palette.surface)
+					// ↑ on the first row is left to the parent, which recalls the last message.
+					.onKeyEvent {
+						if (it.key != "ArrowUp" || sent.isEmpty()) return@onKeyEvent false
+						message.text = sent.last().substringAfter(": ")
+						true
+					}
+					// Large pastes become a short placeholder, before the field inserts them.
+					.onPreviewPasteEvent {
+						val lines = it.text.lines().size
+						if (lines < 3) return@onPreviewPasteEvent false
+						message.insert("[Pasted text #${++pastes} +$lines lines]")
+						true
+					},
+				minLines = 2,
+				maxLines = 4,
 				placeholder = "Say something",
 				onSubmit = {
 					if (it.isBlank()) return@TextField
@@ -127,7 +145,8 @@ fun TextInputPage() {
 			)
 		}
 		Spacer(Modifier.height(1))
-		Text("tab focus · enter send · shift/alt+enter new line", color = palette.muted)
+		Text("tab focus · enter send · shift/alt+enter new line · ↑ recall", color = palette.muted)
+		Text("shift+arrows or drag select · alt+←→ words · ctrl+_ undo", color = palette.muted)
 		Spacer(Modifier.height(1))
 		Text("Sent", textStyle = TextStyle.Bold)
 		for (index in 0 until 4) {

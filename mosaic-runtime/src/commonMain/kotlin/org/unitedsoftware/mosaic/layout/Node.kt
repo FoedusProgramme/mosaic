@@ -349,9 +349,12 @@ private class PasteLayer(
 ) : MosaicNodeLayer() {
 	override fun sendPasteEvent(pasteEvent: PasteEvent, phase: DispatchPhase): Boolean {
 		// Nodes on the focused path already got the event, and only pass it on now.
-		val skip = phase == DispatchPhase.Rest && node.containsFocus
-		return next.sendPasteEvent(pasteEvent, phase) ||
-			(!skip && element.onPasteEvent(pasteEvent))
+		if (phase == DispatchPhase.Rest && node.containsFocus) {
+			return next.sendPasteEvent(pasteEvent, phase)
+		}
+		return element.onPrePasteEvent(pasteEvent) ||
+			next.sendPasteEvent(pasteEvent, phase) ||
+			element.onPasteEvent(pasteEvent)
 	}
 }
 

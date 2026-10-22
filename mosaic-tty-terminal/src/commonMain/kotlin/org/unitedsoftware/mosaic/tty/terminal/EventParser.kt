@@ -207,6 +207,11 @@ public class EventParser(
 				else -> KeyboardEvent(b1 + 0x60, modifiers = KeyboardEvent.ModifierCtrl)
 			}
 		}
+		if (b1 in 0x1C..0x1F) {
+			// Ctrl+\, Ctrl+], Ctrl+^, and Ctrl+_, where Ctrl+_ is also what Ctrl+/ sends.
+			offset = start + 1
+			return KeyboardEvent(b1 + 0x40, modifiers = KeyboardEvent.ModifierCtrl)
+		}
 
 		// TODO Non-UTF-8 support?
 		// TODO multi-codepoint grapheme support

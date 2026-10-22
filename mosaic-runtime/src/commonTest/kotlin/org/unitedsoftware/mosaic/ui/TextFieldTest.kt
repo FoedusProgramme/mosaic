@@ -5,21 +5,29 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import assertk.assertThat
+import assertk.assertions.contains
 import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
+import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import kotlin.test.Test
 import kotlinx.coroutines.test.runTest
 import org.unitedsoftware.mosaic.AnsiRendering
 import org.unitedsoftware.mosaic.CSI
+import org.unitedsoftware.mosaic.OSC
 import org.unitedsoftware.mosaic.RenderingSnapshots
+import org.unitedsoftware.mosaic.ST
 import org.unitedsoftware.mosaic.cursorShow
 import org.unitedsoftware.mosaic.layout.onKeyEvent
+import org.unitedsoftware.mosaic.layout.onPreviewPasteEvent
 import org.unitedsoftware.mosaic.layout.width
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.terminal.BracketedPasteEvent
 import org.unitedsoftware.mosaic.terminal.KeyboardEvent
+import org.unitedsoftware.mosaic.terminal.KeyboardEvent.Companion.ModifierAlt
 import org.unitedsoftware.mosaic.terminal.KeyboardEvent.Companion.ModifierCtrl
 import org.unitedsoftware.mosaic.terminal.KeyboardEvent.Companion.ModifierShift
+import org.unitedsoftware.mosaic.terminal.MouseEvent
 import org.unitedsoftware.mosaic.testing.TestMosaic
 import org.unitedsoftware.mosaic.testing.TestTerminal
 import org.unitedsoftware.mosaic.testing.runMosaicTest
@@ -237,6 +245,226 @@ class TextFieldTest {
 			assertThat(awaitSnapshot()).isEqualTo(
 				"中文\r${CSI}5G$cursorShow".wrapWithAnsiSynchronizedUpdate(),
 			)
+		}
+	}
+
+	private fun key(codePoint: Int, modifiers: Int = 0) = KeyboardEvent(codePoint, modifiers = modifiers)
+
+	private val up = key(57352)
+	private val down = key(57353)
+
+	@Test fun arrowsMoveBetweenRowsAndLeaveTheEdgesToOthers() = runTest {
+		val state = TextFieldState("hello\nhi\nworld")
+		runMosaicTest {
+			setContent {
+				var keys by remember { mutableStateOf("") }
+				Column(
+					modifier = Modifier.onKeyEvent {
+						keys += it.key
+						true
+					},
+				) {
+					TextField(state, modifier = Modifier.width(10))
+					Text("keys:$keys")
+				}
+			}
+			awaitSnapshot()
+			// The column is kept through the shorter row.
+			sendKeyEvent(up)
+			sendKeyEvent(up)
+			type("!")
+			assertThat(awaitSnapshot()).isEqualTo("hello!\nhi\nworld\nkeys:")
+
+			sendKeyEvent(up)
+			assertThat(awaitSnapshot()).isEqualTo("hello!\nhi\nworld\nkeys:ArrowUp")
+
+			sendKeyEvent(down)
+			sendKeyEvent(down)
+			sendKeyEvent(down)
+			assertThat(awaitSnapshot()).isEqualTo("hello!\nhi\nworld\nkeys:ArrowUpArrowDown")
+			assertThat(state.cursor).isEqualTo(state.text.length)
+		}
+	}
+
+	@Test fun arrowsMoveBetweenWrappedRows() = runTest {
+		val state = TextFieldState("ab cdefgh")
+		state.cursor = 6
+		runMosaicTest {
+			setContent {
+				TextField(state, modifier = Modifier.width(4))
+			}
+			assertThat(awaitSnapshot()).isEqualTo("ab\ncdef\ngh")
+			sendKeyEvent(up)
+			type("!")
+			// The cursor stays on the first row, before its last character, rather than at its end,
+			// which is the start of the second row.
+			awaitSnapshot()
+			assertThat(state.text).isEqualTo("ab! cdefgh")
+		}
+	}
+
+	@Test fun wordMovementAndDeletion() = runTest {
+		val state = TextFieldState("one two-three four")
+		runMosaicTest {
+			setContent {
+				TextField(state, modifier = Modifier.width(30))
+			}
+			awaitSnapshot()
+			sendKeyEvent(key('b'.code, ModifierAlt))
+			sendKeyEvent(key(57350, ModifierCtrl))
+			type("X")
+			assertThat(awaitSnapshot()).isEqualTo("one two-Xthree four")
+
+			sendKeyEvent(key(0x7F, ModifierAlt))
+			assertThat(awaitSnapshot()).isEqualTo("one two-three four")
+			sendKeyEvent(key(57356))
+			sendKeyEvent(key('f'.code, ModifierAlt))
+			sendKeyEvent(key('d'.code, ModifierAlt))
+			assertThat(awaitSnapshot()).isEqualTo("one-three four")
+		}
+	}
+
+	@Test fun shiftSelectsAndTypingReplacesTheSelection() = runTest {
+		val state = TextFieldState("hello world")
+		runMosaicTest {
+			setContent {
+				TextField(state, modifier = Modifier.width(20))
+			}
+			awaitSnapshot()
+			sendKeyEvent(key(57350, ModifierShift or ModifierAlt))
+			assertThat(awaitSnapshot()).isEqualTo("hello world")
+			assertThat(state.selectedText).isEqualTo("world")
+
+			type("there")
+			assertThat(awaitSnapshot()).isEqualTo("hello there")
+			assertThat(state.hasSelection).isFalse()
+
+			sendKeyEvent(key(57356, ModifierShift))
+			sendKeyEvent(backspace)
+			assertThat(awaitSnapshot()).isEqualTo("")
+		}
+	}
+
+	@Test fun selectedTextIsInverted() = runTest {
+		val state = TextFieldState("abc")
+		val rendering = AnsiRendering(TestTerminal.Capabilities())
+		runMosaicTest(RenderingSnapshots(rendering)) {
+			setContent {
+				TextField(state, modifier = Modifier.width(6))
+			}
+			awaitSnapshot()
+			sendKeyEvent(key(57350, ModifierShift))
+			assertThat(awaitSnapshot()).contains("ab${CSI}7mc")
+		}
+	}
+
+	@Test fun undoAndRedoGroupTypingByWord() = runTest {
+		val state = TextFieldState()
+		val undo = key('_'.code, ModifierCtrl)
+		val redo = key('z'.code, ModifierCtrl or ModifierShift)
+		runMosaicTest {
+			setContent {
+				TextField(state, modifier = Modifier.width(20))
+			}
+			awaitSnapshot()
+			type("hello big world")
+			sendKeyEvent(backspace)
+			sendKeyEvent(backspace)
+			assertThat(awaitSnapshot()).isEqualTo("hello big wor")
+
+			sendKeyEvent(undo)
+			assertThat(awaitSnapshot()).isEqualTo("hello big world")
+			sendKeyEvent(undo)
+			awaitSnapshot()
+			assertThat(state.text).isEqualTo("hello big ")
+			sendKeyEvent(undo)
+			sendKeyEvent(undo)
+			assertThat(awaitSnapshot()).isEqualTo("")
+			assertThat(state.canUndo).isFalse()
+
+			sendKeyEvent(redo)
+			awaitSnapshot()
+			assertThat(state.text).isEqualTo("hello ")
+			assertThat(state.redo()).isTrue()
+			assertThat(state.text).isEqualTo("hello big ")
+
+			// Editing drops what could be redone.
+			type("!")
+			awaitSnapshot()
+			assertThat(state.canRedo).isFalse()
+		}
+	}
+
+	@Test fun killsAreCollectedForYanking() = runTest {
+		val state = TextFieldState("one two three")
+		runMosaicTest {
+			setContent {
+				TextField(state, modifier = Modifier.width(20))
+			}
+			awaitSnapshot()
+			sendKeyEvent(key('w'.code, ModifierCtrl))
+			sendKeyEvent(key('w'.code, ModifierCtrl))
+			assertThat(awaitSnapshot()).isEqualTo("one")
+			sendKeyEvent(key('a'.code, ModifierCtrl))
+			sendKeyEvent(key('y'.code, ModifierCtrl))
+			assertThat(awaitSnapshot()).isEqualTo("two threeone")
+		}
+	}
+
+	@Test fun minLines() = runTest {
+		val state = TextFieldState("a")
+		runMosaicTest {
+			setContent {
+				Column {
+					TextField(state, modifier = Modifier.width(5), minLines = 3, maxLines = 4)
+					Text("below")
+				}
+			}
+			assertThat(awaitSnapshot()).isEqualTo("a\n\n\nbelow")
+			state.text = "1\n2\n3\n4\n5"
+			assertThat(awaitSnapshot()).isEqualTo("2\n3\n4\n5\nbelow")
+		}
+	}
+
+	@Test fun mouseDragSelectsAndCopies() = runTest {
+		val state = TextFieldState("hello world")
+		runMosaicTest {
+			setContent {
+				TextField(state, modifier = Modifier.width(20))
+			}
+			awaitSnapshot()
+			sendEvent(MouseEvent(1, 0, MouseEvent.Type.Press, MouseEvent.Button.Left))
+			sendEvent(MouseEvent(4, 0, MouseEvent.Type.Drag, MouseEvent.Button.Left))
+			sendEvent(MouseEvent(4, 0, MouseEvent.Type.Release, MouseEvent.Button.Left))
+			awaitSnapshot()
+			assertThat(state.selectedText).isEqualTo("ell")
+			assertThat(terminalCommands()).isEqualTo("${OSC}52;c;ZWxs$ST")
+		}
+	}
+
+	@Test fun previewPasteEventsComeBeforeTheField() = runTest {
+		val state = TextFieldState()
+		runMosaicTest {
+			setContent {
+				Column(
+					modifier = Modifier.onPreviewPasteEvent {
+						if (it.text.length < 5) return@onPreviewPasteEvent false
+						state.insert("[${it.text.length} chars]")
+						true
+					},
+				) {
+					TextField(state, modifier = Modifier.width(20))
+				}
+			}
+			awaitSnapshot()
+			sendEvent(BracketedPasteEvent(start = true))
+			type("abc")
+			sendEvent(BracketedPasteEvent(start = false))
+			assertThat(awaitSnapshot()).isEqualTo("abc")
+			sendEvent(BracketedPasteEvent(start = true))
+			type("abcdef")
+			sendEvent(BracketedPasteEvent(start = false))
+			assertThat(awaitSnapshot()).isEqualTo("abc[6 chars]")
 		}
 	}
 }

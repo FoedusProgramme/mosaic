@@ -374,10 +374,12 @@ public final class org/unitedsoftware/mosaic/layout/PasteEvent {
 
 public abstract interface class org/unitedsoftware/mosaic/layout/PasteModifier : org/unitedsoftware/mosaic/modifier/Modifier$Element {
 	public abstract fun onPasteEvent (Lorg/unitedsoftware/mosaic/layout/PasteEvent;)Z
+	public fun onPrePasteEvent (Lorg/unitedsoftware/mosaic/layout/PasteEvent;)Z
 }
 
 public final class org/unitedsoftware/mosaic/layout/PasteModifierKt {
 	public static final fun onPasteEvent (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun onPreviewPasteEvent (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
 public abstract class org/unitedsoftware/mosaic/layout/Placeable {
@@ -823,7 +825,7 @@ public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$SpacerKt {
 public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$TextFieldKt {
 	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$TextFieldKt;
 	public fun <init> ()V
-	public final fun getLambda$1982145425$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-1087869682$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class org/unitedsoftware/mosaic/ui/FillerKt {
@@ -912,20 +914,31 @@ public final class org/unitedsoftware/mosaic/ui/Text {
 }
 
 public final class org/unitedsoftware/mosaic/ui/TextFieldKt {
-	public static final fun TextField--NNhATQ (Lorg/unitedsoftware/mosaic/ui/TextFieldState;Lorg/unitedsoftware/mosaic/modifier/Modifier;ZILjava/lang/String;IIILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun TextField-CCrYOx0 (Lorg/unitedsoftware/mosaic/ui/TextFieldState;Lorg/unitedsoftware/mosaic/modifier/Modifier;ZIILjava/lang/String;IIILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class org/unitedsoftware/mosaic/ui/TextFieldState {
 	public static final field $stable I
+	public static final field MaxUndoEntries I
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun clear ()V
+	public final fun getCanRedo ()Z
+	public final fun getCanUndo ()Z
 	public final fun getCursor ()I
+	public final fun getHasSelection ()Z
+	public final fun getSelectedText ()Ljava/lang/String;
+	public final fun getSelectionEnd ()I
+	public final fun getSelectionStart ()I
 	public final fun getText ()Ljava/lang/String;
 	public final fun insert (Ljava/lang/String;)V
+	public final fun redo ()Z
+	public final fun select (II)V
+	public final fun selectAll ()V
 	public final fun setCursor (I)V
 	public final fun setText (Ljava/lang/String;)V
+	public final fun undo ()Z
 }
 
 public final class org/unitedsoftware/mosaic/ui/TextOverflow : java/lang/Enum {
