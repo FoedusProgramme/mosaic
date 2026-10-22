@@ -16,6 +16,7 @@ New:
 - `SpanStyle.link` and `withLink` link text to a URL with OSC 8 hyperlinks.
 - `Modifier.clipToBounds` keeps the content of a node, including its children, within its bounds.
 - `Modifier.verticalScroll` and `Modifier.horizontalScroll` with `ScrollState` show part of content which is larger than the node. `ScrollState.scrollToEnd` keeps following the end as the content grows.
+- `LazyColumn` with `LazyListState` only composes the items which are visible, so it can hold long lists like the messages of a conversation. Keyed items keep their position when items are added before them, and `scrollToEnd` scrolls to the latest item.
 
 Changed:
 - Only rows which changed since the last frame are written to the terminal again.

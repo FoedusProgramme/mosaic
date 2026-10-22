@@ -11,6 +11,7 @@ import androidx.compose.runtime.Recomposer
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.ObserverHandle
 import androidx.compose.runtime.snapshots.Snapshot
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -170,6 +171,7 @@ internal class MosaicComposition(
 	val scope = CoroutineScope(composeContext)
 
 	private val applier = MosaicNodeApplier { needLayout = true }
+	private val layoutInvalidator = { needLayout = true }
 	val rootNode = applier.root
 	private val recomposer = Recomposer(composeContext)
 	private val composition = Composition(applier, recomposer)
@@ -402,6 +404,7 @@ internal class MosaicComposition(
 				LocalClipboard provides clipboard,
 				LocalNotifier provides notifier,
 				LocalLifecycleOwner provides this,
+				LocalLayoutInvalidator provides layoutInvalidator,
 				content = content,
 			)
 		}
@@ -435,6 +438,11 @@ internal class MosaicComposition(
 		recomposer.cancel()
 		job.cancel()
 	}
+}
+
+/** Requests another layout, for changes the snapshot system does not track, like subcompositions. */
+internal val LocalLayoutInvalidator = staticCompositionLocalOf<() -> Unit> {
+	throw IllegalStateException("No layout invalidator provided")
 }
 
 internal class MosaicNodeApplier(

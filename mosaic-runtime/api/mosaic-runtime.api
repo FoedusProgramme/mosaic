@@ -670,6 +670,40 @@ public final class org/unitedsoftware/mosaic/ui/Layout {
 public abstract interface annotation class org/unitedsoftware/mosaic/ui/LayoutScopeMarker : java/lang/annotation/Annotation {
 }
 
+public final class org/unitedsoftware/mosaic/ui/LazyColumnKt {
+	public static final fun LazyColumn (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/LazyListState;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun items (Lorg/unitedsoftware/mosaic/ui/LazyListScope;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;)V
+	public static synthetic fun items$default (Lorg/unitedsoftware/mosaic/ui/LazyListScope;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)V
+	public static final fun itemsIndexed (Lorg/unitedsoftware/mosaic/ui/LazyListScope;Ljava/util/List;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function4;)V
+	public static synthetic fun itemsIndexed$default (Lorg/unitedsoftware/mosaic/ui/LazyListScope;Ljava/util/List;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function4;ILjava/lang/Object;)V
+	public static final fun rememberLazyListState (IILandroidx/compose/runtime/Composer;II)Lorg/unitedsoftware/mosaic/ui/LazyListState;
+}
+
+public abstract interface class org/unitedsoftware/mosaic/ui/LazyListScope {
+	public abstract fun item (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun item$default (Lorg/unitedsoftware/mosaic/ui/LazyListScope;Ljava/lang/Object;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public abstract fun items (ILkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;)V
+	public static synthetic fun items$default (Lorg/unitedsoftware/mosaic/ui/LazyListScope;ILkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;ILjava/lang/Object;)V
+}
+
+public final class org/unitedsoftware/mosaic/ui/LazyListState {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (II)V
+	public synthetic fun <init> (IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getCanScrollBackward ()Z
+	public final fun getCanScrollForward ()Z
+	public final fun getFirstVisibleItemIndex ()I
+	public final fun getFirstVisibleItemScrollOffset ()I
+	public final fun getLastVisibleItemIndex ()I
+	public final fun getTotalItemsCount ()I
+	public final fun getViewportSize ()I
+	public final fun scrollBy (I)V
+	public final fun scrollToEnd ()V
+	public final fun scrollToItem (II)V
+	public static synthetic fun scrollToItem$default (Lorg/unitedsoftware/mosaic/ui/LazyListState;IIILjava/lang/Object;)V
+}
+
 public abstract interface annotation class org/unitedsoftware/mosaic/ui/MosaicComposable : java/lang/annotation/Annotation {
 }
 
