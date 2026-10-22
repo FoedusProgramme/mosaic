@@ -16,6 +16,7 @@ kotlin {
 			dependencies {
 				implementation(projects.mosaicRuntime)
 				implementation(projects.mosaicAnimation)
+				implementation(projects.mosaicMarkdown)
 			}
 		}
 	}

@@ -54,6 +54,7 @@ private val pages = listOf(
 	Page("Text", "Text styles", "TextStyle flags and UnderlineStyle variants.") { TextStylesPage() },
 	Page("Text", "Colors", "Named colors, 24-bit color, and theme awareness.") { ColorsPage() },
 	Page("Text", "Rich text", "AnnotatedString spans, nested with withStyle.") { RichTextPage() },
+	Page("Text", "Markdown", "mosaic-markdown rendering a response as it streams in.", listOf("space" to "restart")) { MarkdownPage() },
 	Page("Layout", "Row & Column", "Arrangement along the main axis.", listOf("←→" to "arrangement")) { ArrangementPage() },
 	Page("Layout", "Box & Alignment", "Box(contentAlignment) with all nine alignments.") { AlignmentPage() },
 	Page("Layout", "Modifiers", "Modifier order matters: each wraps the next.") { ModifiersPage() },
