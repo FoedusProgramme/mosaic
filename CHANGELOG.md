@@ -20,9 +20,11 @@ New:
 - A focus system: `Modifier.focusable`, `Modifier.focusRequester`, `Modifier.onFocusChanged`, and `LocalFocusManager`. Key and paste events go to the focused node and its ancestors first, and to the other nodes only when those do not handle them. Tab and Shift+Tab move the focus, and the first focusable node is focused when nothing else is.
 - `Popup` shows content on top of everything else, like a completion menu, without taking up space in the layout or being clipped by its ancestors. Its `alignment` lets it extend up from its position, for example above a text field at the bottom of the screen.
 - Writes to stdout and stderr by other means than Mosaic, like `println` or a logging library, are intercepted while `runMosaic` runs and shown as static output above the display, rather than corrupting it (#681).
+- `Text` takes `softWrap`, `maxLines`, and `overflow`. `TextOverflow.Ellipsis` ends text which does not fit with an ellipsis.
 
 Changed:
 - `TextField` is focusable and edits while focused, instead of taking a `focused` parameter.
+- `Text` respects the incoming constraints. Lines wider than the maximum width wrap, after the last space which fits where possible, and text is clipped to the bounds of its node. Previously text was always as large as its content and drew over its surroundings.
 - Only rows which changed since the last frame are written to the terminal again.
 - Output taller than the terminal shows its bottom instead of corrupting the screen, since the cursor cannot move above the top of the screen to redraw it.
 - Content is measured with the width of the terminal as its maximum width. With `alternateScreen`, it is measured to exactly the size of the terminal.

@@ -13,8 +13,10 @@ import org.unitedsoftware.mosaic.layout.onKeyEvent
 import org.unitedsoftware.mosaic.layout.onPasteEvent
 import org.unitedsoftware.mosaic.layout.rememberFocusTarget
 import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.text.TextRow
 import org.unitedsoftware.mosaic.text.columnWidth
 import org.unitedsoftware.mosaic.text.forEachCodePointWithWidth
+import org.unitedsoftware.mosaic.text.wrap
 
 /**
  * The editable text of a [TextField] and the position of its cursor.
@@ -137,7 +139,7 @@ public fun TextField(
 	// Read in composition so that edits trigger a new layout.
 	val text = state.text
 	val cursor = state.cursor
-	var rows = emptyList<TextFieldRow>()
+	var rows = emptyList<TextRow>()
 	var firstRow = 0
 	var cursorRow = 0
 	var cursorColumn = 0
@@ -176,7 +178,7 @@ public fun TextField(
 		if (cursorColumn >= wrapWidth) {
 			cursorRow++
 			cursorColumn = 0
-			rows = rows.toMutableList().apply { add(cursorRow, TextFieldRow(cursor, cursor, 0)) }
+			rows = rows.toMutableList().apply { add(cursorRow, TextRow(cursor, cursor, 0)) }
 		}
 
 		val visibleRows = rows.size.coerceAtMost(maxRows)
@@ -237,58 +239,8 @@ private fun TextFieldState.onKeyEvent(
 	return true
 }
 
-/** A row of wrapped text, spanning [start] until [end] of the text and taking [columns] columns. */
-internal class TextFieldRow(val start: Int, val end: Int, val columns: Int)
-
-/**
- * Wraps this text into rows at most [width] columns wide, breaking after the last space of a row
- * where possible. Line breaks are not part of any row.
- */
-internal fun String.wrap(width: Int): List<TextFieldRow> {
-	val rows = mutableListOf<TextFieldRow>()
-	var lineStart = 0
-	while (true) {
-		val lineEnd = indexOf('\n', lineStart).let { if (it == -1) length else it }
-		var rowStart = lineStart
-		var rowColumns = 0
-		var breakAfterSpace = -1
-		var breakColumns = 0
-		subSequence(lineStart, lineEnd).forEachCodePointWithWidth { start, _, codePoint, columns ->
-			val index = lineStart + start
-			if (rowColumns + columns > width && index > rowStart) {
-				if (codePoint == ' '.code) {
-					// The space which does not fit becomes the break itself.
-					rows += TextFieldRow(rowStart, index, rowColumns)
-					rowColumns = 0
-					rowStart = index + 1
-					breakAfterSpace = -1
-					return@forEachCodePointWithWidth
-				}
-				if (breakAfterSpace > rowStart) {
-					rows += TextFieldRow(rowStart, breakAfterSpace, breakColumns)
-					rowColumns -= breakColumns
-					rowStart = breakAfterSpace
-				} else {
-					rows += TextFieldRow(rowStart, index, rowColumns)
-					rowColumns = 0
-					rowStart = index
-				}
-				breakAfterSpace = -1
-			}
-			rowColumns += columns
-			if (codePoint == ' '.code) {
-				breakAfterSpace = index + 1
-				breakColumns = rowColumns
-			}
-		}
-		rows += TextFieldRow(rowStart, lineEnd, rowColumns)
-		if (lineEnd == length) return rows
-		lineStart = lineEnd + 1
-	}
-}
-
 /** The row and column of the cursor at [index] of [text]. */
-internal fun List<TextFieldRow>.positionOf(index: Int, text: String): Pair<Int, Int> {
+internal fun List<TextRow>.positionOf(index: Int, text: String): Pair<Int, Int> {
 	for ((row, line) in withIndex()) {
 		// A cursor at the boundary between two wrapped rows belongs to the second one.
 		val isLast = row == lastIndex || this[row + 1].start != line.end

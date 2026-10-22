@@ -1,5 +1,6 @@
 package org.unitedsoftware.mosaic.layout
 
+import androidx.compose.runtime.Composable
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import kotlin.test.Test
@@ -8,16 +9,23 @@ import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.testing.runMosaicTest
 import org.unitedsoftware.mosaic.ui.Box
 import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.Spacer
 import org.unitedsoftware.mosaic.ui.Text
 
 class ClipTest {
+	/** Draws [text] without being limited to its size of one column. */
+	@Composable
+	private fun Overflowing(text: String) {
+		Spacer(modifier = Modifier.size(1).drawBehind { drawText(0, 0, text) })
+	}
+
 	@Test fun contentOverflowsWithoutClipping() = runTest {
 		runMosaicTest {
 			setContent {
 				Column {
 					Text("123456")
 					Box(modifier = Modifier.size(3, 1)) {
-						Text("abcdef")
+						Overflowing("abcdef")
 					}
 				}
 			}
@@ -31,7 +39,7 @@ class ClipTest {
 				Column {
 					Text("123456")
 					Box(modifier = Modifier.size(3, 1).clipToBounds()) {
-						Text("abcdef")
+						Overflowing("abcdef")
 					}
 				}
 			}
@@ -45,7 +53,7 @@ class ClipTest {
 				Column {
 					Text("123456")
 					Box(modifier = Modifier.size(3, 1).clipToBounds()) {
-						Text("a中文")
+						Overflowing("a中文")
 					}
 				}
 			}

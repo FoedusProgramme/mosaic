@@ -23,6 +23,8 @@ import org.unitedsoftware.mosaic.terminal.KeyboardEvent.Companion.ModifierShift
 import org.unitedsoftware.mosaic.testing.TestMosaic
 import org.unitedsoftware.mosaic.testing.TestTerminal
 import org.unitedsoftware.mosaic.testing.runMosaicTest
+import org.unitedsoftware.mosaic.text.TextRow
+import org.unitedsoftware.mosaic.text.wrap
 import org.unitedsoftware.mosaic.wrapWithAnsiSynchronizedUpdate
 
 class TextFieldTest {
@@ -43,7 +45,7 @@ class TextFieldTest {
 		}
 	}
 
-	private fun List<TextFieldRow>.texts(text: String) = map { text.substring(it.start, it.end) }
+	private fun List<TextRow>.texts(text: String) = map { text.substring(it.start, it.end) }
 
 	@Test fun wrapsAtSpaces() {
 		val text = "hello big world"

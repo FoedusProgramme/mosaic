@@ -695,6 +695,13 @@ public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$TextFieldKt
 	public final fun getLambda$1982145425$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$TextKt {
+	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$TextKt;
+	public fun <init> ()V
+	public final fun getLambda$-1335098369$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1686722991$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class org/unitedsoftware/mosaic/ui/FillerKt {
 	public static final fun Filler-fUQeE84 (CLorg/unitedsoftware/mosaic/modifier/Modifier;IIILandroidx/compose/runtime/Composer;II)V
 	public static final fun Filler-fUQeE84 (ILorg/unitedsoftware/mosaic/modifier/Modifier;IIILandroidx/compose/runtime/Composer;II)V
@@ -763,8 +770,8 @@ public final class org/unitedsoftware/mosaic/ui/SpacerKt {
 }
 
 public final class org/unitedsoftware/mosaic/ui/Text {
-	public static final fun Text-vQEq6vw (Ljava/lang/String;Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIILandroidx/compose/runtime/Composer;II)V
-	public static final fun Text-vQEq6vw (Lorg/unitedsoftware/mosaic/text/AnnotatedString;Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIILandroidx/compose/runtime/Composer;II)V
+	public static final fun Text-2Ex1PKM (Ljava/lang/String;Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIIZILorg/unitedsoftware/mosaic/ui/TextOverflow;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Text-2Ex1PKM (Lorg/unitedsoftware/mosaic/text/AnnotatedString;Lorg/unitedsoftware/mosaic/modifier/Modifier;IIIIIZILorg/unitedsoftware/mosaic/ui/TextOverflow;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class org/unitedsoftware/mosaic/ui/TextFieldKt {
@@ -782,6 +789,14 @@ public final class org/unitedsoftware/mosaic/ui/TextFieldState {
 	public final fun insert (Ljava/lang/String;)V
 	public final fun setCursor (I)V
 	public final fun setText (Ljava/lang/String;)V
+}
+
+public final class org/unitedsoftware/mosaic/ui/TextOverflow : java/lang/Enum {
+	public static final field Clip Lorg/unitedsoftware/mosaic/ui/TextOverflow;
+	public static final field Ellipsis Lorg/unitedsoftware/mosaic/ui/TextOverflow;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/ui/TextOverflow;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/ui/TextOverflow;
 }
 
 public final class org/unitedsoftware/mosaic/ui/TextStyle {
