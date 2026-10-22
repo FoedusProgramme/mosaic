@@ -38,7 +38,7 @@
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
         <div class="navigation-controls--break ui-kit_mobile-only"></div>
-        <div class="library-version" id="library-version">0.19.0
+        <div class="library-version" id="library-version">0.20.0
         </div>
         <div class="navigation-controls">
         <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
@@ -164,7 +164,22 @@
       </div>
       <div data-togglable="PROPERTY">
         <h2 class="tableheader">Properties</h2>
-        <div class="table"><a data-name="1115070269%2FProperties%2F-1406523176" anchor-label="capabilities" id="1115070269%2FProperties%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+        <div class="table"><a data-name="-1673692700%2FProperties%2F-1406523176" anchor-label="canSuspendProcess" id="-1673692700%2FProperties%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="can-suspend-process.html"><span>can</span><wbr><span>Suspend</span><wbr><span><span>Process</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1673692700%2FProperties%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="can-suspend-process.html">canSuspendProcess</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Whether <a href="suspend-process.html">suspendProcess</a> is supported. It needs job control, which Windows does not have, and only applies to the terminal the process was started in, not, for example, a remote one.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1115070269%2FProperties%2F-1406523176" anchor-label="capabilities" id="1115070269%2FProperties%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
           <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
@@ -254,6 +269,36 @@
               <div>
                 <div class="title">
                   <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">expect </span><span class="token keyword">abstract </span><span class="token keyword">fun </span><a href="index.html#-2024188833%2FFunctions%2F-1406523176"><span class="token function">close</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2104572518%2FFunctions%2F-1406523176" anchor-label="released" id="-2104572518%2FFunctions%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="released.html"><span><span>released</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2104572518%2FFunctions%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="released.html">T</a><span class="token operator">&gt; </span><a href="released.html"><span class="token function">released</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="released.html">T</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="released.html">T</a></div><div class="brief "><p class="paragraph">Restores the terminal to how it was before this took it over while <a href="released.html">block</a> runs, so that other programs can use it, like an editor or an interactive command, and takes it over again afterwards. No events are read meanwhile, so they go to those programs instead.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-423538304%2FFunctions%2F-1406523176" anchor-label="suspendProcess" id="-423538304%2FFunctions%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="suspend-process.html"><span>suspend</span><wbr><span><span>Process</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-423538304%2FFunctions%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="suspend-process.html"><span class="token function">suspendProcess</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Stops the process like Ctrl+Z normally does in a shell, with the terminal <a href="released.html">released</a>, and returns once the shell continues it, like with <code class="lang-kotlin">fg</code>. Returns false right away when <a href="can-suspend-process.html">canSuspendProcess</a> is false.</p></div></div></div>
                 </div>
               </div>
             </div>
