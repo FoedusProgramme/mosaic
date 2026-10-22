@@ -1,7 +1,13 @@
 # Change log
 
 ## [Unreleased]
-[Unreleased]: https://github.com/JakeWharton/mosaic/compare/0.18.0...HEAD
+[Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.19.0...HEAD
+
+
+## [0.19.0] - 2026-10-22
+[0.19.0]: https://github.com/FoedusProgramme/mosaic/releases/tag/0.19.0
+
+The first release of the fork, under the `org.unitedsoftware.mosaic` group and packages.
 
 New:
 - JVM support for RISC-V and s390x!

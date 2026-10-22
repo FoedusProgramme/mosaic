@@ -67,9 +67,20 @@ Any module which wants to call `runMosaic` or define `@Composable` functions for
 For more information, see [the JetBrains Compose compiler documentation](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-compiler.html).
 
 Mosaic itself can then be added like any other dependency.
-Nothing has been published under the `org.unitedsoftware.mosaic` group yet. Until then, run
-`./gradlew publishToMavenLocal` and add `mavenLocal()` to your repositories. Once enabled, snapshots
-of `master` will be published to the Central Portal Snapshots repository:
+
+```kotlin
+dependencies {
+  implementation("org.unitedsoftware.mosaic:mosaic-runtime:0.19.0")
+}
+```
+
+Documentation is available at
+[foedusprogramme.github.io/mosaic/docs/0.x/](https://foedusprogramme.github.io/mosaic/docs/0.x/).
+
+<details>
+<summary>Snapshots of the development version</summary>
+
+Once enabled, snapshots of `master` are published to the Central Portal Snapshots repository:
 
 ```kotlin
 repositories {
@@ -77,12 +88,13 @@ repositories {
   maven("https://central.sonatype.com/repository/maven-snapshots/")
 }
 dependencies {
-  implementation("org.unitedsoftware.mosaic:mosaic-runtime:0.19.0-SNAPSHOT")
+  implementation("org.unitedsoftware.mosaic:mosaic-runtime:0.20.0-SNAPSHOT")
 }
 ```
 
 Snapshot documentation is available at
 [foedusprogramme.github.io/mosaic/docs/latest/](https://foedusprogramme.github.io/mosaic/docs/latest/).
+</details>
 
 `mosaic-animation` adds Compose's animation APIs, and `mosaic-markdown` renders Markdown, also
 while it streams in. See [its README](mosaic-markdown/README.md).
