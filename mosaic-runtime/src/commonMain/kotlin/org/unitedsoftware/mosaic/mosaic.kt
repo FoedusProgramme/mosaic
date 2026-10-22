@@ -41,6 +41,8 @@ import org.unitedsoftware.mosaic.terminal.BracketedPasteEvent
 import org.unitedsoftware.mosaic.terminal.KeyboardEvent
 import org.unitedsoftware.mosaic.terminal.Terminal
 import org.unitedsoftware.mosaic.ui.BoxMeasurePolicy
+import org.unitedsoftware.mosaic.ui.LocalPopupHost
+import org.unitedsoftware.mosaic.ui.PopupHost
 import org.unitedsoftware.mosaic.ui.unit.Constraints
 
 /**
@@ -175,7 +177,8 @@ internal class MosaicComposition(
 	private val applier = MosaicNodeApplier { needLayout = true }
 	private val layoutInvalidator = { needLayout = true }
 	val rootNode = applier.root
-	private val focusOwner = FocusOwner(rootNode)
+	private val popupHost = PopupHost()
+	private val focusOwner = FocusOwner { listOf(rootNode) + popupHost.popups.map { it.root } }
 	private val recomposer = Recomposer(composeContext)
 	private val composition = Composition(applier, recomposer)
 
@@ -243,7 +246,9 @@ internal class MosaicComposition(
 
 		readStatesOnLayout.clear()
 		Snapshot.observe(readObserver = readStatesOnLayoutObserver) {
-			rootNode.measureAndPlace(rootConstraints(terminalState.value.size))
+			val constraints = rootConstraints(terminalState.value.size)
+			rootNode.measureAndPlace(constraints)
+			popupHost.layout(rootNode, constraints)
 		}
 		focusOwner.onLayout()
 		// Send the focus changes now, which this frame draws, rather than scheduling another frame.
@@ -260,7 +265,7 @@ internal class MosaicComposition(
 	override fun draw(): TextCanvas {
 		readStatesOnDraw.clear()
 		return Snapshot.observe(readObserver = readStatesOnDrawObserver) {
-			rootNode.draw()
+			popupHost.draw(rootNode, rootConstraints(terminalState.value.size))
 		}
 	}
 
@@ -311,7 +316,13 @@ internal class MosaicComposition(
 	}
 
 	override fun dumpNodes(): String {
-		return rootNode.toString()
+		return buildString {
+			append(rootNode)
+			for (popup in popupHost.popups) {
+				append("\n")
+				append(popup.root)
+			}
+		}
 	}
 
 	private fun registerSnapshotApplyObserver(): ObserverHandle {
@@ -350,7 +361,7 @@ internal class MosaicComposition(
 			/** Returns false when the key was an unhandled Ctrl+C which cancelled the program. */
 			fun sendKeyEvent(event: KeyboardEvent): Boolean {
 				val keyEvent = event.toKeyEventOrNull() ?: return true
-				val keyHandled = focusOwner.dispatch { rootNode.sendKeyEvent(keyEvent, it) } ||
+				val keyHandled = focusOwner.dispatch { root, phase -> root.sendKeyEvent(keyEvent, phase) } ||
 					focusOwner.onUnhandledKeyEvent(keyEvent)
 				if (!keyHandled && keyEvent == ctrlC) {
 					job.cancel()
@@ -370,7 +381,7 @@ internal class MosaicComposition(
 								val events = pasted ?: continue
 								pasted = null
 								val pasteEvent = PasteEvent(events.toPastedText())
-								if (!focusOwner.dispatch { rootNode.sendPasteEvent(pasteEvent, it) }) {
+								if (!focusOwner.dispatch { root, phase -> root.sendPasteEvent(pasteEvent, phase) }) {
 									// Nothing handled the paste, so fall back to delivering it as key presses.
 									for (keyboardEvent in events) {
 										if (!sendKeyEvent(keyboardEvent)) return@withFrameNanos
@@ -414,6 +425,7 @@ internal class MosaicComposition(
 				LocalLifecycleOwner provides this,
 				LocalLayoutInvalidator provides layoutInvalidator,
 				LocalFocusManager provides focusOwner,
+				LocalPopupHost provides popupHost,
 				content = content,
 			)
 		}

@@ -744,6 +744,10 @@ public final class org/unitedsoftware/mosaic/ui/LazyListState {
 public abstract interface annotation class org/unitedsoftware/mosaic/ui/MosaicComposable : java/lang/annotation/Annotation {
 }
 
+public final class org/unitedsoftware/mosaic/ui/PopupKt {
+	public static final fun Popup-IxzCevg (Lorg/unitedsoftware/mosaic/ui/Alignment;JLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
 public final class org/unitedsoftware/mosaic/ui/Row {
 	public static final fun Row (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;Lorg/unitedsoftware/mosaic/ui/Alignment$Vertical;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }

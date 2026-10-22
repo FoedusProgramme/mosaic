@@ -117,6 +117,18 @@ internal class TextSurface(
 		return pixel
 	}
 
+	/** Resets the pixels in the rectangle, in surface coordinates, to unstyled spaces. */
+	fun clear(left: Int, top: Int, right: Int, bottom: Int) {
+		for (y in maxOf(top, clipTop) until minOf(bottom, clipBottom)) {
+			for (x in maxOf(left, clipLeft) until minOf(right, clipRight)) {
+				val index = y * width + x
+				val pixel = cells[index]
+				pixel.unlinkWide(index)
+				pixel.reset()
+			}
+		}
+	}
+
 	/** Turns the other half of the two column code point this pixel is part of into a space. */
 	private fun TextPixel.unlinkWide(index: Int) {
 		when (columns) {
@@ -337,6 +349,15 @@ internal class TextPixel(codePoint: Int) {
 		combining = null
 		// Text drawn over a link is not part of it, unless its own style links it again.
 		link = null
+	}
+
+	fun reset() {
+		setCodePoint(SpaceCharCodePoint, columns = 1)
+		background = Color.Unspecified
+		foreground = Color.Unspecified
+		textStyle = TextStyle.Empty
+		underlineStyle = UnderlineStyle.Unspecified
+		underlineColor = Color.Unspecified
 	}
 
 	fun appendCombining(codePoint: Int) {

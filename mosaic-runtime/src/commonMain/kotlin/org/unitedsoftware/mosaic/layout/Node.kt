@@ -80,6 +80,11 @@ internal abstract class MosaicNodeLayer :
 	}
 }
 
+private object RootPlacementScope : PlacementScope {
+	override val x get() = 0
+	override val y get() = 0
+}
+
 internal object NotMeasured : MeasureResult {
 	override val width get() = 0
 	override val height get() = 0
@@ -154,9 +159,9 @@ internal class MosaicNode(
 	val x: Int get() = topLayer.x
 	val y: Int get() = topLayer.y
 
-	fun measureAndPlace(constraints: Constraints = Constraints()) {
+	fun measureAndPlace(constraints: Constraints = Constraints(), x: Int = 0, y: Int = 0) {
 		val placeable = measure(constraints)
-		topLayer.run { placeable.place(0, 0) }
+		RootPlacementScope.run { placeable.place(x, y) }
 	}
 
 	/**
@@ -167,6 +172,10 @@ internal class MosaicNode(
 		val surface = TextSurface(width, height)
 		topLayer.drawTo(surface)
 		return surface
+	}
+
+	fun drawTo(surface: TextSurface) {
+		topLayer.drawTo(surface)
 	}
 
 	fun sendKeyEvent(keyEvent: KeyEvent, phase: DispatchPhase = DispatchPhase.All): Boolean {

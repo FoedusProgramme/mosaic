@@ -180,7 +180,11 @@ internal enum class DispatchPhase {
 	Rest,
 }
 
-internal class FocusOwner(private val root: MosaicNode) : FocusManager {
+/**
+ * Moves the focus between the nodes of [roots], which are the root of the composition followed by
+ * the roots of its popups in the order they are drawn.
+ */
+internal class FocusOwner(private val roots: () -> List<MosaicNode>) : FocusManager {
 	var focused: FocusTarget? = null
 		private set
 
@@ -203,7 +207,9 @@ internal class FocusOwner(private val root: MosaicNode) : FocusManager {
 
 	override fun moveFocus(direction: FocusDirection): Boolean {
 		val targets = ArrayList<FocusTarget>()
-		root.collectFocusTargets(targets)
+		for (root in roots()) {
+			root.collectFocusTargets(targets)
+		}
 		if (targets.isEmpty()) return false
 		val index = targets.indexOf(focused)
 		val next = when (direction) {
@@ -232,12 +238,12 @@ internal class FocusOwner(private val root: MosaicNode) : FocusManager {
 	/** Moves the focus to the first node when there is none, and tells observers about changes. */
 	fun onLayout() {
 		val focused = focused
-		if (focused != null && root.pathTo(focused, ArrayList()) == null) {
+		if (focused != null && roots().none { it.pathTo(focused, ArrayList()) != null }) {
 			// The node of the target was removed while the target itself is still composed.
 			onCannotFocus(focused)
 		}
 		if (this.focused == null && !cleared) {
-			val target = root.firstFocusTarget()
+			val target = roots().firstNotNullOfOrNull { it.firstFocusTarget() }
 			if (target != null) {
 				focus(target)
 				return
@@ -246,11 +252,20 @@ internal class FocusOwner(private val root: MosaicNode) : FocusManager {
 		notifyObservers()
 	}
 
-	/** Offers an event to the focused path first, then to the rest of the nodes. */
-	fun dispatch(send: (DispatchPhase) -> Boolean): Boolean {
+	/**
+	 * Offers an event to the focused path first, then to the rest of the nodes, starting with the
+	 * popup drawn last.
+	 */
+	fun dispatch(send: (root: MosaicNode, phase: DispatchPhase) -> Boolean): Boolean {
 		updatePath()
-		if (path.isEmpty()) return send(DispatchPhase.All)
-		return send(DispatchPhase.FocusedPath) || send(DispatchPhase.Rest)
+		val roots = roots()
+		val focusedRoot = path.firstOrNull()
+		if (focusedRoot != null && send(focusedRoot, DispatchPhase.FocusedPath)) return true
+		for (index in roots.indices.reversed()) {
+			val root = roots[index]
+			if (send(root, if (root === focusedRoot) DispatchPhase.Rest else DispatchPhase.All)) return true
+		}
+		return false
 	}
 
 	fun onUnhandledKeyEvent(event: KeyEvent): Boolean {
@@ -264,14 +279,18 @@ internal class FocusOwner(private val root: MosaicNode) : FocusManager {
 		}
 		path.clear()
 		val focused = focused ?: return
-		root.pathTo(focused, path)
+		for (root in roots()) {
+			if (root.pathTo(focused, path) != null) break
+		}
 		for (node in path) {
 			node.containsFocus = true
 		}
 	}
 
 	private fun notifyObservers() {
-		root.notifyFocusObservers(focused)
+		for (root in roots()) {
+			root.notifyFocusObservers(focused)
+		}
 	}
 }
 
