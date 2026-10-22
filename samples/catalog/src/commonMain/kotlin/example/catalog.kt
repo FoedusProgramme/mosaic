@@ -12,11 +12,15 @@ import androidx.compose.runtime.setValue
 import kotlinx.coroutines.awaitCancellation
 import org.unitedsoftware.mosaic.LocalTerminalState
 import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.PointerEventType
 import org.unitedsoftware.mosaic.layout.background
 import org.unitedsoftware.mosaic.layout.fillMaxHeight
 import org.unitedsoftware.mosaic.layout.fillMaxWidth
 import org.unitedsoftware.mosaic.layout.height
+import org.unitedsoftware.mosaic.layout.onClick
+import org.unitedsoftware.mosaic.layout.onHover
 import org.unitedsoftware.mosaic.layout.onKeyEvent
+import org.unitedsoftware.mosaic.layout.onPointerEvent
 import org.unitedsoftware.mosaic.layout.padding
 import org.unitedsoftware.mosaic.layout.size
 import org.unitedsoftware.mosaic.layout.width
@@ -66,6 +70,7 @@ private val pages = listOf(
 	Page("Drawing", "Images", "Image with Kitty graphics, inline images, Sixel, or half blocks.") { ImagesPage() },
 	Page("Input", "Keyboard", "Raw KeyEvents as delivered to onPreviewKeyEvent.") { KeyboardPage() },
 	Page("Input", "Text input", "Recipe: focus handling and editable text fields.", listOf("tab" to "focus", "enter" to "submit")) { TextInputPage() },
+	Page("Input", "Mouse", "Clicks, hover, drags, and the wheel with onPointerEvent.") { MousePage() },
 	Page("Input", "Completion popup", "A Popup above a TextField, like slash commands.", listOf("/" to "commands", "↑↓" to "choose", "tab" to "complete")) { CompletionPage() },
 	Page("Animation", "Animation", "Infinite transitions, easings, and springs.", listOf("space" to "spring")) { AnimationPage() },
 	Page("Terminal", "Terminal state", "LocalTerminalState, the focus lifecycle, and pointer shapes.", listOf("p" to "pointer")) { TerminalStatePage() },
@@ -75,7 +80,7 @@ private val pages = listOf(
 	Page("Recipes", "Tabs", "A tab bar driven by key events.", listOf("←→" to "tab")) { TabsPage() },
 	Page("Recipes", "Table", "Column-aligned table with a sort key.", listOf("space" to "sort")) { TablePage() },
 	Page("Recipes", "Scrolling list", "LazyColumn with a moving selection.", listOf("j/k" to "move")) { ScrollingListPage() },
-	Page("Gaps", "Limitations", "What Mosaic cannot do yet.") { LimitationsPage() },
+	Page("Gaps", "Limitations", "What this fork fixed of the gaps found in Mosaic.") { LimitationsPage() },
 )
 
 /**
@@ -131,6 +136,7 @@ private fun Catalog(initialPage: Int, onExit: () -> Unit) {
 			Sidebar(
 				selected = selected,
 				height = size.rows - 2,
+				onSelect = { selected = it },
 				modifier = Modifier.width(SidebarWidth).fillMaxHeight(),
 			)
 			Filler('│', modifier = Modifier.width(1).fillMaxHeight(), foreground = LocalPalette.current.muted)
@@ -196,20 +202,36 @@ private val sidebarEntries: List<SidebarEntry> = buildList {
 private fun Sidebar(
 	selected: Int,
 	height: Int,
+	onSelect: (page: Int) -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	val palette = LocalPalette.current
 	val selectedEntry = sidebarEntries.indexOfFirst { it is SidebarEntry.Item && it.index == selected }
-	ScrollingList(sidebarEntries, selected = selectedEntry, height = height, modifier = modifier) { entry, isSelected ->
+	// The wheel moves through the pages, and clicks pick one.
+	val wheel = Modifier.onPointerEvent {
+		if (it.type != PointerEventType.Scroll) return@onPointerEvent false
+		onSelect((selected + it.scrollDelta).coerceIn(0, pages.lastIndex))
+		true
+	}
+	ScrollingList(sidebarEntries, selected = selectedEntry, height = height, modifier = modifier.then(wheel)) { entry, isSelected ->
 		when (entry) {
 			is SidebarEntry.Header -> Text(" ${entry.section.uppercase()}", color = palette.muted, textStyle = TextStyle.Bold)
 
-			is SidebarEntry.Item -> if (isSelected) {
-				Box(Modifier.fillMaxWidth().background(palette.accentContainer)) {
-					Text(" ▸ ${entry.page.title}", color = palette.accent, textStyle = TextStyle.Bold)
+			is SidebarEntry.Item -> {
+				var hovered by remember { mutableStateOf(false) }
+				val item = Modifier
+					.fillMaxWidth()
+					.onClick { onSelect(entry.index) }
+					.onHover { hovered = it }
+				if (isSelected) {
+					Box(item.background(palette.accentContainer)) {
+						Text(" ▸ ${entry.page.title}", color = palette.accent, textStyle = TextStyle.Bold)
+					}
+				} else {
+					Box(if (hovered) item.background(palette.surface) else item) {
+						Text("   ${entry.page.title}", color = palette.text)
+					}
 				}
-			} else {
-				Text("   ${entry.page.title}", color = palette.text)
 			}
 		}
 	}

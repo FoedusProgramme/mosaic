@@ -298,14 +298,6 @@ fun LimitationsPage() {
 				Text(fix)
 			}
 		}
-		Spacer(Modifier.height(1))
-		Text("Still missing", textStyle = TextStyle.Bold)
-		for (gap in gaps) {
-			Row {
-				Text("• ", color = palette.warn)
-				Text(gap)
-			}
-		}
 	}
 }
 
@@ -317,8 +309,5 @@ private val fixes = listOf(
 	"Focus, scrolling, LazyColumn, Popup, alt screen",
 	"println shows above the display (#681)",
 	"Borders, images, and pointer shapes",
-)
-
-private val gaps = listOf(
-	"Mouse events never reach composables (#495)",
+	"Mouse clicks, hover, and the wheel (#495)",
 )
