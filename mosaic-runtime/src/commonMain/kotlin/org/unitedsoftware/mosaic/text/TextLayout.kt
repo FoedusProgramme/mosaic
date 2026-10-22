@@ -70,24 +70,32 @@ internal abstract class TextLayout<T : CharSequence>(initialValue: T) {
 		val rows = value.wrap(wrapWidth)
 		val visible = rows.size.coerceAtMost(maxLines.coerceAtLeast(1))
 		val lines = ArrayList<T>(visible)
+		var width = 0
 		for (index in 0 until visible) {
 			val row = rows[index]
 			var end = row.end
+			// The wrapping already counted the columns, which spares counting them again.
+			var columns = row.columns
 			// Spaces where a line was wrapped are not part of either row.
 			if (row.end < value.length && value[row.end] != '\n') {
-				while (end > row.start && value[end - 1] == ' ') end--
+				while (end > row.start && value[end - 1] == ' ') {
+					end--
+					columns--
+				}
 			}
 			var line = value.slice(row.start, end)
 			if (overflow == TextOverflow.Ellipsis) {
 				val truncated = index == visible - 1 && visible < rows.size
-				if (truncated || (bounded && line.columnWidth() > maxWidth)) {
+				if (truncated || (bounded && columns > maxWidth)) {
 					line = line.ellipsized(if (bounded) maxWidth else Int.MAX_VALUE)
+					columns = line.columnWidth()
 				}
 			}
 			lines += line
+			if (columns > width) width = columns
 		}
 
-		width = lines.maxOf { it.columnWidth() }
+		this.width = width
 		height = lines.size
 		this.lines = lines
 		dirty = false

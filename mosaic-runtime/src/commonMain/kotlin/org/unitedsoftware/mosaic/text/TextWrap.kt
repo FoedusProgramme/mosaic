@@ -12,12 +12,20 @@ internal fun CharSequence.wrap(width: Int): List<TextRow> {
 	var lineStart = 0
 	while (true) {
 		val lineEnd = indexOf('\n', lineStart).let { if (it == -1) length else it }
+		if (width == Int.MAX_VALUE) {
+			// Without a width, lines are never wrapped, so only their columns are needed.
+			var columns = 0
+			forEachCodePointWithWidth(lineStart, lineEnd) { _, _, _, codePointColumns -> columns += codePointColumns }
+			rows += TextRow(lineStart, lineEnd, columns)
+			if (lineEnd == length) return rows
+			lineStart = lineEnd + 1
+			continue
+		}
 		var rowStart = lineStart
 		var rowColumns = 0
 		var breakAfterSpace = -1
 		var breakColumns = 0
-		subSequence(lineStart, lineEnd).forEachCodePointWithWidth { start, _, codePoint, columns ->
-			val index = lineStart + start
+		forEachCodePointWithWidth(lineStart, lineEnd) { index, _, codePoint, columns ->
 			if (rowColumns + columns > width && index > rowStart) {
 				if (codePoint == ' '.code) {
 					// The space which does not fit becomes the break itself.

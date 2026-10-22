@@ -27,10 +27,21 @@ internal fun codePointWidth(codePoint: Int): Int {
 internal inline fun CharSequence.forEachCodePointWithWidth(
 	block: (start: Int, end: Int, codePoint: Int, width: Int) -> Unit,
 ) {
-	var index = 0
+	forEachCodePointWithWidth(0, length, block)
+}
+
+/** Like [forEachCodePointWithWidth], for the code points from [startIndex] until [endIndex]. */
+internal inline fun CharSequence.forEachCodePointWithWidth(
+	startIndex: Int,
+	endIndex: Int,
+	block: (start: Int, end: Int, codePoint: Int, width: Int) -> Unit,
+) {
+	var index = startIndex
 	var joined = false
-	while (index < length) {
-		val codePoint = codePointAt(index)
+	while (index < endIndex) {
+		val char = this[index]
+		// Most text is in the Basic Multilingual Plane, which needs no decoding.
+		val codePoint = if (char.isHighSurrogate()) codePointAt(index) else char.code
 		val end = index + if (codePoint >= 0x10000) 2 else 1
 		val width = if (joined) 0 else codePointWidth(codePoint)
 		joined = codePoint == ZeroWidthJoiner
