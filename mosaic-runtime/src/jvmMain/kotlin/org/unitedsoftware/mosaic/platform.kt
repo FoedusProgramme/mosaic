@@ -16,3 +16,8 @@ internal actual fun nonInteractiveExit(): Nothing {
 	}
 	exitProcess(1)
 }
+
+// The JIT compiles these to vectorized comparisons.
+internal actual fun IntArray.rangeEquals(start: Int, other: IntArray, otherStart: Int, size: Int): Boolean = java.util.Arrays.equals(this, start, start + size, other, otherStart, otherStart + size)
+
+internal actual fun ByteArray.rangeEquals(start: Int, other: ByteArray, otherStart: Int, size: Int): Boolean = java.util.Arrays.equals(this, start, start + size, other, otherStart, otherStart + size)

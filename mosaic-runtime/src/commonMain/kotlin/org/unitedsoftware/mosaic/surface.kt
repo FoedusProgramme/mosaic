@@ -108,6 +108,18 @@ internal class TextSurface(
 	fun rowEquals(row: Int, other: TextSurface, otherRow: Int): Boolean {
 		val start = row * width
 		val otherStart = otherRow * other.width
+		if (width == other.width) {
+			// Comparing whole ranges of each property is much faster than going pixel by pixel.
+			return codePoints.rangeEquals(start, other.codePoints, otherStart, width) &&
+				columnCounts.rangeEquals(start, other.columnCounts, otherStart, width) &&
+				foregrounds.rangeEquals(start, other.foregrounds, otherStart, width) &&
+				backgrounds.rangeEquals(start, other.backgrounds, otherStart, width) &&
+				textStyles.rangeEquals(start, other.textStyles, otherStart, width) &&
+				underlineStyles.rangeEquals(start, other.underlineStyles, otherStart, width) &&
+				underlineColors.rangeEquals(start, other.underlineColors, otherStart, width) &&
+				stringsEqual(combinings, start, other.combinings, otherStart) &&
+				stringsEqual(links, start, other.links, otherStart)
+		}
 		val common = minOf(width, other.width)
 		for (column in 0 until common) {
 			if (!pixelEquals(start + column, other, otherStart + column)) return false
@@ -131,6 +143,15 @@ internal class TextSurface(
 			underlineColors[index] == other.underlineColors[otherIndex] &&
 			combiningAt(index) == other.combiningAt(otherIndex) &&
 			linkAt(index) == other.linkAt(otherIndex)
+	}
+
+	/** Whether a row of combining marks or links equals another, treating missing arrays as empty. */
+	private fun stringsEqual(strings: Array<String?>?, start: Int, other: Array<String?>?, otherStart: Int): Boolean {
+		if (strings == null && other == null) return true
+		for (column in 0 until width) {
+			if (strings?.get(start + column) != other?.get(otherStart + column)) return false
+		}
+		return true
 	}
 
 	private fun combiningAt(index: Int) = combinings?.get(index)
