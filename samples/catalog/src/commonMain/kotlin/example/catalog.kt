@@ -79,10 +79,10 @@ private val pages = listOf(
 )
 
 /**
- * Runs the catalog. `--fullscreen` uses the alternate screen, and `--page <title>` starts on the
- * page with that title instead of the first one.
+ * Runs the catalog on the alternate screen, or inline with `--inline`. `--page <title>` starts on
+ * the page with that title instead of the first one.
  */
-fun main(args: Array<String>) = runMosaicMain(alternateScreen = "--fullscreen" in args) {
+fun main(args: Array<String>) = runMosaicMain(alternateScreen = "--inline" !in args) {
 	val initialPage = args.indexOf("--page").takeIf { it != -1 }?.let { args.getOrNull(it + 1) }
 		?.let { title -> pages.indexOfFirst { it.title.equals(title, ignoreCase = true) } }
 		?.coerceAtLeast(0) ?: 0
