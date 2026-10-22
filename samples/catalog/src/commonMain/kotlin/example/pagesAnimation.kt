@@ -14,7 +14,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.unitedsoftware.mosaic.LocalStaticLogger
 import org.unitedsoftware.mosaic.LocalTerminalState
+import org.unitedsoftware.mosaic.PointerShape
 import org.unitedsoftware.mosaic.StaticEffect
+import org.unitedsoftware.mosaic.WindowPointerShape
 import org.unitedsoftware.mosaic.animation.EaseInOutBack
 import org.unitedsoftware.mosaic.animation.EaseOutBounce
 import org.unitedsoftware.mosaic.animation.EaseOutElastic
@@ -110,6 +112,9 @@ fun TerminalStatePage() {
 	val lifecycle by LocalLifecycleOwner.current.lifecycle.currentStateAsState()
 	val scope = rememberCoroutineScope()
 	var ticks by remember { mutableIntStateOf(0) }
+	var pointer by remember { mutableIntStateOf(0) }
+	val shape = pointerShapes[pointer]
+	if (shape != null) WindowPointerShape(shape)
 	LifecycleResumeEffect(Unit) {
 		val job = scope.launch {
 			while (true) {
@@ -119,7 +124,13 @@ fun TerminalStatePage() {
 		}
 		onPauseOrDispose { job.cancel() }
 	}
-	Column {
+	Column(
+		Modifier.onKeyEvent {
+			if (it != KeyEvent("p")) return@onKeyEvent false
+			pointer = (pointer + 1) % pointerShapes.size
+			true
+		},
+	) {
 		Labeled("size") {
 			Text("${state.size.columns} × ${state.size.rows} cells", color = palette.accent, textStyle = TextStyle.Bold)
 		}
@@ -133,6 +144,7 @@ fun TerminalStatePage() {
 		}
 		Labeled("lifecycle") { Text(lifecycle.name) }
 		Labeled("resumed for") { Text("${ticks}s") }
+		Labeled("pointer") { Text(shape?.name ?: "unchanged", color = palette.accent) }
 		Spacer(Modifier.height(1))
 		Text("Resize the window, focus another window, or flip", color = palette.muted)
 		Text("the terminal's color scheme to see these update.", color = palette.muted)
@@ -184,3 +196,5 @@ fun StaticOutputPage() {
 		Text("straight to scrollback: scroll up or quit to read.", color = palette.muted)
 	}
 }
+
+private val pointerShapes = listOf(null, PointerShape.Wait, PointerShape.Text, PointerShape.Crosshair, PointerShape.NotAllowed)

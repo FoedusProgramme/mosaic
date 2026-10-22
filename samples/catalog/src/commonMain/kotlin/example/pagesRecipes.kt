@@ -316,9 +316,9 @@ private val fixes = listOf(
 	"Text wraps to its constraints, nodes can clip",
 	"Focus, scrolling, LazyColumn, Popup, alt screen",
 	"println shows above the display (#681)",
+	"Borders, images, and pointer shapes",
 )
 
 private val gaps = listOf(
 	"Mouse events never reach composables (#495)",
-	"No border modifier or images yet",
 )
