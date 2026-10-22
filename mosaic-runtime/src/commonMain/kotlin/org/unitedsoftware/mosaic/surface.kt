@@ -3,6 +3,7 @@ package org.unitedsoftware.mosaic
 import de.cketti.codepoints.appendCodePoint
 import org.unitedsoftware.mosaic.terminal.AnsiLevel
 import org.unitedsoftware.mosaic.ui.Color
+import org.unitedsoftware.mosaic.ui.EmptyTextStyle
 import org.unitedsoftware.mosaic.ui.TextStyle
 import org.unitedsoftware.mosaic.ui.TextStyle.Companion.Bold
 import org.unitedsoftware.mosaic.ui.TextStyle.Companion.Dim
@@ -10,15 +11,16 @@ import org.unitedsoftware.mosaic.ui.TextStyle.Companion.Invert
 import org.unitedsoftware.mosaic.ui.TextStyle.Companion.Italic
 import org.unitedsoftware.mosaic.ui.TextStyle.Companion.Strikethrough
 import org.unitedsoftware.mosaic.ui.UnderlineStyle
+import org.unitedsoftware.mosaic.ui.UnspecifiedColor
+import org.unitedsoftware.mosaic.ui.UnspecifiedUnderlineStyle
 import org.unitedsoftware.mosaic.ui.isEmptyTextStyle
 import org.unitedsoftware.mosaic.ui.isNotEmptyTextStyle
 import org.unitedsoftware.mosaic.ui.isSpecifiedColor
+import org.unitedsoftware.mosaic.ui.isSpecifiedTextStyle
 import org.unitedsoftware.mosaic.ui.isSpecifiedUnderlineStyle
 import org.unitedsoftware.mosaic.ui.isUnspecifiedColor
 import org.unitedsoftware.mosaic.ui.isUnspecifiedUnderlineStyle
 import org.unitedsoftware.mosaic.ui.unit.IntOffset
-
-private val blankPixel = TextPixel(SpaceCharCodePoint)
 
 public interface TextCanvas {
 	public val height: Int
@@ -36,7 +38,24 @@ internal class TextSurface(
 	var translationX = 0
 	var translationY = 0
 
-	private val cells = Array(width * height) { TextPixel(SpaceCharCodePoint) }
+	// The pixels, as one array for each of their properties rather than an object for each pixel,
+	// which makes creating and comparing surfaces much cheaper.
+	private val size = width * height
+	private val codePoints = IntArray(size).also { it.fill(SpaceCharCodePoint) }
+
+	/** Columns of the code point: 0 for the second half of a two column one, which is not rendered. */
+	private val columnCounts = ByteArray(size).also { it.fill(1) }
+	private val foregrounds = IntArray(size).also { it.fill(UnspecifiedColor) }
+	private val backgrounds = IntArray(size).also { it.fill(UnspecifiedColor) }
+	private val textStyles = IntArray(size).also { it.fill(EmptyTextStyle) }
+	private val underlineStyles = IntArray(size).also { it.fill(UnspecifiedUnderlineStyle) }
+	private val underlineColors = IntArray(size).also { it.fill(UnspecifiedColor) }
+
+	/** Zero width code points, such as combining marks, rendered after the code point, if any. */
+	private var combinings: Array<String?>? = null
+
+	/** The URLs pixels link to, if any. */
+	private var links: Array<String?>? = null
 
 	// Writes outside of this rectangle, in surface coordinates, are dropped.
 	private var clipLeft = 0
@@ -81,6 +100,54 @@ internal class TextSurface(
 		graphics += GraphicPlacement(x, y, columns, rows, data)
 	}
 
+	/**
+	 * Whether [row] shows the same as [otherRow] of [other], which can be of a different width, with
+	 * the missing pixels of the narrower one being empty.
+	 */
+	fun rowEquals(row: Int, other: TextSurface, otherRow: Int): Boolean {
+		val start = row * width
+		val otherStart = otherRow * other.width
+		val common = minOf(width, other.width)
+		for (column in 0 until common) {
+			if (!pixelEquals(start + column, other, otherStart + column)) return false
+		}
+		for (column in common until width) {
+			if (!isEmpty(start + column)) return false
+		}
+		for (column in common until other.width) {
+			if (!other.isEmpty(otherStart + column)) return false
+		}
+		return true
+	}
+
+	private fun pixelEquals(index: Int, other: TextSurface, otherIndex: Int): Boolean {
+		return codePoints[index] == other.codePoints[otherIndex] &&
+			columnCounts[index] == other.columnCounts[otherIndex] &&
+			foregrounds[index] == other.foregrounds[otherIndex] &&
+			backgrounds[index] == other.backgrounds[otherIndex] &&
+			textStyles[index] == other.textStyles[otherIndex] &&
+			underlineStyles[index] == other.underlineStyles[otherIndex] &&
+			underlineColors[index] == other.underlineColors[otherIndex] &&
+			combiningAt(index) == other.combiningAt(otherIndex) &&
+			linkAt(index) == other.linkAt(otherIndex)
+	}
+
+	private fun combiningAt(index: Int) = combinings?.get(index)
+
+	private fun linkAt(index: Int) = links?.get(index)
+
+	private fun isEmpty(index: Int): Boolean {
+		return codePoints[index] == SpaceCharCodePoint &&
+			columnCounts[index] == 1.toByte() &&
+			foregrounds[index] == UnspecifiedColor &&
+			backgrounds[index] == UnspecifiedColor &&
+			textStyles[index] == EmptyTextStyle &&
+			underlineStyles[index] == UnspecifiedUnderlineStyle &&
+			underlineColors[index] == UnspecifiedColor &&
+			combiningAt(index) == null &&
+			linkAt(index) == null
+	}
+
 	/** Where the terminal's cursor should be placed after rendering, if anywhere. */
 	var cursor: IntOffset? = null
 		private set
@@ -93,43 +160,79 @@ internal class TextSurface(
 		}
 	}
 
-	/** The pixel at [row] and [column], or null when it is outside the surface. */
-	fun getOrNull(row: Int, column: Int): TextPixel? {
+	/** The index of the pixel at [row] and [column], or -1 when it is outside the clip. */
+	fun indexOf(row: Int, column: Int): Int {
 		val x = translationX + column
 		val y = row + translationY
 		if (isClipped(x, y)) {
-			return null
+			return -1
 		}
-		return cells[y * width + x]
+		return y * width + x
 	}
 
 	/**
-	 * Writes [codePoint], which occupies [columns] columns, at [row] and [column]. Returns the pixel
-	 * written to, or null when it is outside the surface and the write was dropped.
+	 * Writes [codePoint], which occupies [columns] columns, at [row] and [column]. Returns the index
+	 * of the pixel written to, or -1 when it is outside the clip and the write was dropped.
 	 *
 	 * A two column code point also takes over the next pixel. When there is no next pixel, a space
 	 * is written instead so that the row does not overflow. Overwriting either half of an existing
 	 * two column code point turns its other half into a space.
 	 */
-	fun setCodePoint(row: Int, column: Int, codePoint: Int, columns: Int): TextPixel? {
+	fun setCodePoint(row: Int, column: Int, codePoint: Int, columns: Int): Int {
 		val x = translationX + column
 		val y = row + translationY
 		if (isClipped(x, y)) {
-			return null
+			return -1
 		}
 		val index = y * width + x
-		val pixel = cells[index]
-		pixel.unlinkWide(index)
+		unlinkWide(index)
 
 		if (columns == 2 && x + 1 < clipRight) {
-			val next = cells[index + 1]
-			next.unlinkWide(index + 1)
-			next.setCodePoint(SpaceCharCodePoint, columns = 0)
-			pixel.setCodePoint(codePoint, columns = 2)
+			unlinkWide(index + 1)
+			writeCodePoint(index + 1, SpaceCharCodePoint, columns = 0)
+			writeCodePoint(index, codePoint, columns = 2)
 		} else {
-			pixel.setCodePoint(if (columns == 2) SpaceCharCodePoint else codePoint, columns = 1)
+			writeCodePoint(index, if (columns == 2) SpaceCharCodePoint else codePoint, columns = 1)
 		}
-		return pixel
+		return index
+	}
+
+	private fun writeCodePoint(index: Int, codePoint: Int, columns: Int) {
+		codePoints[index] = codePoint
+		columnCounts[index] = columns.toByte()
+		combinings?.set(index, null)
+		// Text drawn over a link is not part of it, unless its own style links it again.
+		links?.set(index, null)
+	}
+
+	/** Applies the specified ones of the colors and styles to the pixel at [index]. */
+	fun updateStyle(
+		index: Int,
+		foreground: Color,
+		background: Color,
+		textStyle: TextStyle,
+		underlineStyle: UnderlineStyle,
+		underlineColor: Color,
+	) {
+		if (foreground.isSpecifiedColor) foregrounds[index] = foreground.value
+		if (background.isSpecifiedColor) backgrounds[index] = background.value
+		if (textStyle.isSpecifiedTextStyle) textStyles[index] = textStyle.bits
+		if (underlineStyle.isSpecifiedUnderlineStyle) underlineStyles[index] = underlineStyle.value
+		if (underlineColor.isSpecifiedColor) underlineColors[index] = underlineColor.value
+	}
+
+	fun setLink(index: Int, link: String) {
+		val links = links ?: arrayOfNulls<String>(size).also { links = it }
+		links[index] = link
+	}
+
+	/** Adds a zero width code point, like a combining mark, to the pixel at [index]. */
+	fun appendCombining(index: Int, codePoint: Int) {
+		val combinings = combinings ?: arrayOfNulls<String>(size).also { combinings = it }
+		combinings[index] = buildString {
+			combinings[index]?.let(::append)
+			appendCodePoint(codePoint)
+		}
 	}
 
 	/** Resets the pixels in the rectangle, in surface coordinates, to unstyled spaces. */
@@ -139,18 +242,22 @@ internal class TextSurface(
 		for (y in maxOf(top, clipTop) until minOf(bottom, clipBottom)) {
 			for (x in maxOf(left, clipLeft) until minOf(right, clipRight)) {
 				val index = y * width + x
-				val pixel = cells[index]
-				pixel.unlinkWide(index)
-				pixel.reset()
+				unlinkWide(index)
+				writeCodePoint(index, SpaceCharCodePoint, columns = 1)
+				foregrounds[index] = UnspecifiedColor
+				backgrounds[index] = UnspecifiedColor
+				textStyles[index] = EmptyTextStyle
+				underlineStyles[index] = UnspecifiedUnderlineStyle
+				underlineColors[index] = UnspecifiedColor
 			}
 		}
 	}
 
-	/** Turns the other half of the two column code point this pixel is part of into a space. */
-	private fun TextPixel.unlinkWide(index: Int) {
-		when (columns) {
-			0 -> cells[index - 1].setCodePoint(SpaceCharCodePoint, columns = 1)
-			2 -> cells[index + 1].setCodePoint(SpaceCharCodePoint, columns = 1)
+	/** Turns the other half of the two column code point the pixel at [index] is part of into a space. */
+	private fun unlinkWide(index: Int) {
+		when (columnCounts[index].toInt()) {
+			0 -> writeCodePoint(index - 1, SpaceCharCodePoint, columns = 1)
+			2 -> writeCodePoint(index + 1, SpaceCharCodePoint, columns = 1)
 		}
 	}
 
@@ -160,64 +267,57 @@ internal class TextSurface(
 
 		val rowStart = row * width
 		var rowStop = rowStart + width
-
-		while (rowStop > rowStart) {
-			val lastIndex = rowStop - 1
-			val pixel = cells[lastIndex]
-			if (pixel.isEmpty()) {
-				rowStop = lastIndex
-			} else {
-				break
-			}
+		while (rowStop > rowStart && isEmpty(rowStop - 1)) {
+			rowStop--
 		}
 
-		var lastPixel = blankPixel
+		// The attributes of the previous pixel, starting from those of an empty one.
+		var lastForeground = UnspecifiedColor
+		var lastBackground = UnspecifiedColor
+		var lastTextStyle = TextStyle(EmptyTextStyle)
+		var lastUnderlineStyle = UnspecifiedUnderlineStyle
+		var lastUnderlineColor = UnspecifiedColor
 		var openLink: String? = null
-		for (columnIndex in rowStart until rowStop) {
-			val pixel = cells[columnIndex]
-			if (pixel.columns == 0) {
+		val links = links
+		val combinings = combinings
+		for (index in rowStart until rowStop) {
+			if (columnCounts[index] == 0.toByte()) {
 				// Covered by the two column code point before it.
 				continue
 			}
 
 			if (ansiLevel != AnsiLevel.NONE) {
-				if (pixel.foreground != lastPixel.foreground) {
-					attributes.addColor(
-						pixel.foreground,
-						ansiLevel,
-						ansiFgColorSelector,
-						ansiFgColorReset,
-						ansiFgColorOffset,
-					)
+				val foreground = foregrounds[index]
+				if (foreground != lastForeground) {
+					attributes.addColor(Color(foreground), ansiLevel, ansiFgColorSelector, ansiFgColorReset, ansiFgColorOffset)
+					lastForeground = foreground
 				}
-				if (pixel.background != lastPixel.background) {
-					attributes.addColor(
-						pixel.background,
-						ansiLevel,
-						ansiBgColorSelector,
-						ansiBgColorReset,
-						ansiBgColorOffset,
-					)
+				val background = backgrounds[index]
+				if (background != lastBackground) {
+					attributes.addColor(Color(background), ansiLevel, ansiBgColorSelector, ansiBgColorReset, ansiBgColorOffset)
+					lastBackground = background
 				}
-
-				fun maybeToggleStyle(style: TextStyle, on: String, off: String) {
-					if (style in pixel.textStyle) {
-						if (style !in lastPixel.textStyle) {
-							attributes += on
+				val textStyle = TextStyle(textStyles[index])
+				if (textStyle != lastTextStyle) {
+					fun maybeToggleStyle(style: TextStyle, on: String, off: String) {
+						if (style in textStyle) {
+							if (style !in lastTextStyle) {
+								attributes += on
+							}
+						} else if (style in lastTextStyle) {
+							attributes += off
 						}
-					} else if (style in lastPixel.textStyle) {
-						attributes += off
 					}
-				}
-				if (pixel.textStyle != lastPixel.textStyle) {
 					maybeToggleStyle(Bold, "1", "22")
 					maybeToggleStyle(Dim, "2", "22")
 					maybeToggleStyle(Italic, "3", "23")
 					maybeToggleStyle(Invert, "7", "27")
 					maybeToggleStyle(Strikethrough, "9", "29")
+					lastTextStyle = textStyle
 				}
-				if (pixel.underlineStyle != lastPixel.underlineStyle) {
-					attributes += when (pixel.underlineStyle) {
+				val underlineStyle = underlineStyles[index]
+				if (underlineStyle != lastUnderlineStyle) {
+					attributes += when (UnderlineStyle(underlineStyle)) {
 						UnderlineStyle.Unspecified, UnderlineStyle.None -> "24"
 						UnderlineStyle.Double if (supportsKittyUnderlines) -> "4:2"
 						UnderlineStyle.Curly if (supportsKittyUnderlines) -> "4:3"
@@ -225,20 +325,23 @@ internal class TextSurface(
 						UnderlineStyle.Dashed if (supportsKittyUnderlines) -> "4:5"
 						else -> "4"
 					}
+					lastUnderlineStyle = underlineStyle
 				}
-				if (pixel.underlineColor != lastPixel.underlineColor) {
+				val underlineColor = underlineColors[index]
+				if (underlineColor != lastUnderlineColor) {
 					attributes.addColor(
-						pixel.underlineColor,
+						Color(underlineColor),
 						ansiLevel,
 						ansiUnderlineColorSelector,
 						ansiUnderlineColorReset,
 						ansiUnderlineColorOffset,
 					)
+					lastUnderlineColor = underlineColor
 				}
 				if (attributes.isNotEmpty()) {
 					appendable.append(CSI)
-					attributes.forEachIndexed { index, element ->
-						if (index > 0) {
+					attributes.forEachIndexed { attributeIndex, element ->
+						if (attributeIndex > 0) {
 							appendable.append(ansiSeparator)
 						}
 						appendable.append(element)
@@ -246,16 +349,16 @@ internal class TextSurface(
 					appendable.append(ansiClosingCharacter)
 					attributes.clear() // This list is reused!
 				}
+
+				val link = links?.get(index)
+				if (link != openLink) {
+					appendable.appendHyperlink(link)
+					openLink = link
+				}
 			}
 
-			if (ansiLevel != AnsiLevel.NONE && pixel.link != openLink) {
-				appendable.appendHyperlink(pixel.link)
-				openLink = pixel.link
-			}
-
-			appendable.appendCodePoint(pixel.codePoint)
-			pixel.combining?.let(appendable::append)
-			lastPixel = pixel
+			appendable.appendCodePoint(codePoints[index])
+			combinings?.get(index)?.let(appendable::append)
 		}
 
 		if (openLink != null) {
@@ -265,11 +368,11 @@ internal class TextSurface(
 		if (
 			ansiLevel != AnsiLevel.NONE &&
 			(
-				lastPixel.background.isSpecifiedColor ||
-					lastPixel.foreground.isSpecifiedColor ||
-					lastPixel.textStyle.isNotEmptyTextStyle ||
-					lastPixel.underlineColor.isSpecifiedColor ||
-					lastPixel.underlineStyle.isSpecifiedUnderlineStyle
+				lastBackground != UnspecifiedColor ||
+					lastForeground != UnspecifiedColor ||
+					lastTextStyle.isNotEmptyTextStyle ||
+					lastUnderlineColor != UnspecifiedColor ||
+					lastUnderlineStyle != UnspecifiedUnderlineStyle
 				)
 		) {
 			appendable.append(ansiReset)
@@ -333,84 +436,6 @@ internal class TextSurface(
 			// Remove trailing newline.
 			setLength(length - 1)
 		}
-	}
-}
-
-internal class TextPixel(codePoint: Int) {
-	var codePoint: Int = codePoint
-		private set
-
-	/**
-	 * The number of columns [codePoint] occupies. Zero for the second half of a two column code
-	 * point, whose [codePoint] is not rendered.
-	 */
-	var columns: Int = 1
-		private set
-
-	/** Zero width code points, such as combining marks, rendered after [codePoint]. */
-	var combining: String? = null
-		private set
-
-	var background: Color = Color.Unspecified
-	var foreground: Color = Color.Unspecified
-	var textStyle: TextStyle = TextStyle.Empty
-	var underlineStyle: UnderlineStyle = UnderlineStyle.Unspecified
-	var underlineColor: Color = Color.Unspecified
-
-	/** The URL this pixel links to, if any. */
-	var link: String? = null
-
-	fun setCodePoint(codePoint: Int, columns: Int) {
-		this.codePoint = codePoint
-		this.columns = columns
-		combining = null
-		// Text drawn over a link is not part of it, unless its own style links it again.
-		link = null
-	}
-
-	fun reset() {
-		setCodePoint(SpaceCharCodePoint, columns = 1)
-		background = Color.Unspecified
-		foreground = Color.Unspecified
-		textStyle = TextStyle.Empty
-		underlineStyle = UnderlineStyle.Unspecified
-		underlineColor = Color.Unspecified
-	}
-
-	fun appendCombining(codePoint: Int) {
-		combining = buildString {
-			combining?.let(::append)
-			appendCodePoint(codePoint)
-		}
-	}
-
-	fun isEmpty(): Boolean {
-		return codePoint == SpaceCharCodePoint &&
-			columns == 1 &&
-			combining == null &&
-			link == null &&
-			background.isUnspecifiedColor &&
-			foreground.isUnspecifiedColor &&
-			textStyle.isEmptyTextStyle &&
-			underlineStyle.isUnspecifiedUnderlineStyle &&
-			underlineColor.isUnspecifiedColor
-	}
-
-	override fun toString() = buildString {
-		append("TextPixel(\"")
-		appendCodePoint(codePoint)
-		combining?.let(::append)
-		append("\"")
-		if (background.isSpecifiedColor) {
-			append(" bg=")
-			append(background)
-		}
-		if (foreground.isSpecifiedColor) {
-			append(" fg=")
-			append(foreground)
-		}
-		// TODO style
-		append(')')
 	}
 }
 

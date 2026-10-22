@@ -202,10 +202,14 @@ internal class AnsiRendering(
 	}
 
 	private val stringBuilder = StringBuilder(100)
-	private val rowBuilder = StringBuilder(100)
 
-	/** The rows of the last output, as they were written. */
-	private var lastRows = emptyList<String>()
+	/**
+	 * The surface of the last output, compared with the next one to only write rows which changed,
+	 * and which rows of it were shown.
+	 */
+	private var lastSurface: TextSurface? = null
+	private var lastFirstRow = 0
+	private var lastRowCount = 0
 	private var lastSize: Terminal.Size? = null
 
 	/**
@@ -258,12 +262,12 @@ internal class AnsiRendering(
 			}
 
 			val size = terminalSize()
-			var previousRows = lastRows
+			var previousRowCount = lastRowCount
 			val static = mosaic.static()
-			if (static != null || (size != lastSize && previousRows.isNotEmpty())) {
+			if (static != null || (size != lastSize && previousRowCount > 0)) {
 				// Static output goes above the output, and a resized terminal may have reflowed the
 				// previous output, so start over from the top.
-				if (previousRows.isNotEmpty()) {
+				if (previousRowCount > 0) {
 					moveTo(0)
 					append(clearDisplay)
 				}
@@ -271,7 +275,7 @@ internal class AnsiRendering(
 					append(static)
 					append("\r\n")
 				}
-				previousRows = emptyList()
+				previousRowCount = 0
 				current = 0
 			}
 
@@ -279,39 +283,47 @@ internal class AnsiRendering(
 			// cannot be taller than the terminal since the cursor could not move back up to its start.
 			val maxRows = size?.let { it.rows.coerceAtLeast(1) } ?: Int.MAX_VALUE
 			val firstRow = (surface.height - maxRows).coerceAtLeast(0)
-			val rows = List(surface.height - firstRow) { index ->
-				rowBuilder.setLength(0)
-				surface.appendRowTo(rowBuilder, firstRow + index, capabilities.ansiLevel, capabilities.kittyUnderline)
-				rowBuilder.toString()
-			}
+			val rowCount = surface.height - firstRow
+			val textSurface = surface as? TextSurface
+			val previousSurface = lastSurface
 
 			val graphics = (surface as? TextSurface)?.graphics.orEmpty().mapNotNull { graphic ->
 				if (graphic.y < firstRow) return@mapNotNull null
 				GraphicPlacement(graphic.x, graphic.y - firstRow, graphic.columns, graphic.rows, graphic.data)
 			}
 			// Rows of images which went away are written again, which erases their pixels.
-			val rewrite = BooleanArray(rows.size)
-			if (previousRows.isNotEmpty()) {
+			val rewrite = BooleanArray(rowCount)
+			if (previousRowCount > 0) {
 				for (graphic in lastGraphics) {
 					if (graphic in graphics) continue
-					for (row in graphic.y until minOf(graphic.y + graphic.rows, rows.size)) rewrite[row] = true
+					for (row in graphic.y until minOf(graphic.y + graphic.rows, rowCount)) rewrite[row] = true
 				}
 			}
 
-			for ((index, row) in rows.withIndex()) {
-				if (!rewrite[index] && index < previousRows.size && previousRows[index] == row) continue
+			for (index in 0 until rowCount) {
+				// Only rows which changed are written, without building the others.
+				if (
+					!rewrite[index] &&
+					index < previousRowCount &&
+					textSurface != null &&
+					previousSurface != null &&
+					textSurface.rowEquals(firstRow + index, previousSurface, lastFirstRow + index)
+				) {
+					continue
+				}
 				rewrite[index] = true
 				moveTo(index)
-				if (index < previousRows.size) {
+				if (index < previousRowCount) {
 					append(clearLine)
 				}
-				append(row)
-				atLineStart = row.isEmpty()
+				val start = length
+				surface.appendRowTo(this, firstRow + index, capabilities.ansiLevel, capabilities.kittyUnderline)
+				atLineStart = length == start
 			}
 
 			// Images go over the rows, again whenever one of their rows was written, which erases them.
 			for (graphic in graphics) {
-				val end = minOf(graphic.y + graphic.rows, rows.size)
+				val end = minOf(graphic.y + graphic.rows, rowCount)
 				if (graphic in lastGraphics && (graphic.y until end).none { rewrite[it] }) continue
 				moveTo(graphic.y)
 				if (graphic.x > 0) {
@@ -327,14 +339,14 @@ internal class AnsiRendering(
 			}
 			lastGraphics = graphics
 
-			if (rows.size < previousRows.size) {
+			if (rowCount < previousRowCount) {
 				// Clear the rows of the last output beyond the new one.
-				moveTo(rows.size)
+				moveTo(rowCount)
 				append(clearDisplay)
 			}
 			// Rest on the last row rather than below it, since a line feed after output as tall as the
 			// terminal would scroll its first row out of reach.
-			val lastRow = (rows.size - 1).coerceAtLeast(0)
+			val lastRow = (rowCount - 1).coerceAtLeast(0)
 			if (current != lastRow) moveTo(lastRow)
 
 			val cursor = (surface as? TextSurface)?.cursor?.takeIf { it.y >= firstRow }
@@ -357,7 +369,7 @@ internal class AnsiRendering(
 
 			// The output moves on the screen when it grows past the bottom of the screen, when static
 			// output is written above it, and when the terminal is resized.
-			if (mouse && (outputTop == null || rows.size != lastRows.size || static != null || size != lastSize)) {
+			if (mouse && (outputTop == null || rowCount != lastRowCount || static != null || size != lastSize)) {
 				append(cursorPositionRequest)
 				positionRequests.addLast(current to firstRow)
 			}
@@ -367,14 +379,16 @@ internal class AnsiRendering(
 			}
 
 			cursorRow = current
-			lastRows = rows
+			lastSurface = textSurface
+			lastFirstRow = firstRow
+			lastRowCount = rowCount
 			lastSize = size
 		}
 	}
 
 	override fun finish(): CharSequence = buildString {
 		// Move below the output so whatever is printed next does not overwrite it.
-		repeat(lastRows.size - cursorRow) { append("\r\n") }
+		repeat(lastRowCount - cursorRow) { append("\r\n") }
 		if (cursorShown) {
 			append(cursorHide)
 		}
@@ -393,13 +407,15 @@ internal class AlternateScreenRendering(
 	mouse: Boolean = false,
 ) : Rendering {
 	private val stringBuilder = StringBuilder(100)
-	private val rowBuilder = StringBuilder(100)
 	private val pendingStatic = StringBuilder()
 
 	private val commandWriter = TerminalCommandWriter(capabilities, mouse)
 
 	private var started = false
-	private var lastRows = emptyList<String>()
+
+	/** The surface of the last output, compared with the next one to only write rows which changed. */
+	private var lastSurface: TextSurface? = null
+	private var lastRowCount = 0
 	private var lastSize: Terminal.Size? = null
 	private var cursorShown = false
 	private var lastGraphics = emptyList<GraphicPlacement>()
@@ -428,36 +444,42 @@ internal class AlternateScreenRendering(
 			}
 
 			val size = terminalSize()
-			var previousRows = lastRows
+			var previousRowCount = lastRowCount
 			if (size != lastSize) {
 				append(CSI)
 				append("2J")
-				previousRows = emptyList()
+				previousRowCount = 0
 			}
 
 			val rowCount = size?.rows?.let { minOf(it, surface.height) } ?: surface.height
-			val rows = List(rowCount) { row ->
-				rowBuilder.setLength(0)
-				surface.appendRowTo(rowBuilder, row, capabilities.ansiLevel, capabilities.kittyUnderline)
-				rowBuilder.toString()
-			}
+			val textSurface = surface as? TextSurface
+			val previousSurface = lastSurface
 
-			val graphics = (surface as? TextSurface)?.graphics.orEmpty().filter { it.y + it.rows <= rows.size }
+			val graphics = (surface as? TextSurface)?.graphics.orEmpty().filter { it.y + it.rows <= rowCount }
 			// Rows of images which went away are written again, which erases their pixels.
-			val rewrite = BooleanArray(rows.size)
-			if (previousRows.isNotEmpty()) {
+			val rewrite = BooleanArray(rowCount)
+			if (previousRowCount > 0) {
 				for (graphic in lastGraphics) {
 					if (graphic in graphics) continue
-					for (row in graphic.y until minOf(graphic.y + graphic.rows, rows.size)) rewrite[row] = true
+					for (row in graphic.y until minOf(graphic.y + graphic.rows, rowCount)) rewrite[row] = true
 				}
 			}
 
-			for ((index, row) in rows.withIndex()) {
-				if (!rewrite[index] && index < previousRows.size && previousRows[index] == row) continue
+			for (index in 0 until rowCount) {
+				// Only rows which changed are written, without building the others.
+				if (
+					!rewrite[index] &&
+					index < previousRowCount &&
+					textSurface != null &&
+					previousSurface != null &&
+					textSurface.rowEquals(index, previousSurface, index)
+				) {
+					continue
+				}
 				rewrite[index] = true
 				appendCursorPosition(index, 0)
 				append(clearLine)
-				append(row)
+				surface.appendRowTo(this, index, capabilities.ansiLevel, capabilities.kittyUnderline)
 			}
 
 			// Images go over the rows, again whenever one of their rows was written, which erases them.
@@ -469,12 +491,12 @@ internal class AlternateScreenRendering(
 				append(cursorRestore)
 			}
 			lastGraphics = graphics
-			if (rows.size < previousRows.size) {
-				appendCursorPosition(rows.size, 0)
+			if (rowCount < previousRowCount) {
+				appendCursorPosition(rowCount, 0)
 				append(clearDisplay)
 			}
 
-			val cursor = (surface as? TextSurface)?.cursor?.takeIf { it.y < rows.size }
+			val cursor = (surface as? TextSurface)?.cursor?.takeIf { it.y < rowCount }
 			if (cursor != null) {
 				appendCursorPosition(cursor.y, cursor.x)
 				cursorShown = capabilities.cursorVisibility
@@ -489,7 +511,8 @@ internal class AlternateScreenRendering(
 				append(synchronizedOutputDisable)
 			}
 
-			lastRows = rows
+			lastSurface = textSurface
+			lastRowCount = rowCount
 			lastSize = size
 		}
 	}

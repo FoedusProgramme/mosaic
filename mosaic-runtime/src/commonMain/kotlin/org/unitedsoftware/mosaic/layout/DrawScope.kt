@@ -20,7 +20,6 @@ package org.unitedsoftware.mosaic.layout
 
 import kotlin.math.max
 import org.unitedsoftware.mosaic.SpaceCharCodePoint
-import org.unitedsoftware.mosaic.TextPixel
 import org.unitedsoftware.mosaic.TextSurface
 import org.unitedsoftware.mosaic.UnspecifiedCodePoint
 import org.unitedsoftware.mosaic.isSpecifiedCodePoint
@@ -237,14 +236,16 @@ internal open class TextCanvasDrawScope(
 			while (x < right) {
 				// A two column code point which does not fit in the rectangle becomes a space.
 				val columns = if (codePointColumns == 2 && x + 1 < right) 2 else 1
-				val pixel = if (codePoint.isUnspecifiedCodePoint) {
-					canvas.getOrNull(y, x)
+				val index = if (codePoint.isUnspecifiedCodePoint) {
+					canvas.indexOf(y, x)
 				} else if (columns < codePointColumns) {
 					canvas.setCodePoint(y, x, SpaceCharCodePoint, 1)
 				} else {
 					canvas.setCodePoint(y, x, codePoint, columns)
 				}
-				pixel?.updateStyle(foreground, background, textStyle, UnderlineStyle.Unspecified, Color.Unspecified)
+				if (index >= 0) {
+					canvas.updateStyle(index, foreground, background, textStyle, UnderlineStyle.Unspecified, Color.Unspecified)
+				}
 				x += columns
 			}
 		}
@@ -290,25 +291,26 @@ internal open class TextCanvasDrawScope(
 		spanStylesProvider: ((start: Int, end: Int) -> List<SpanStyle>)?,
 	) {
 		var characterColumn = column
-		var previous: TextPixel? = null
+		var previous = -1
 		text.forEachCodePointWithWidth { start, end, codePoint, columns ->
 			if (columns == 0) {
-				previous?.appendCombining(codePoint)
+				if (previous >= 0) canvas.appendCombining(previous, codePoint)
 				return@forEachCodePointWithWidth
 			}
 
-			val pixel = canvas.setCodePoint(row, characterColumn, codePoint, columns)
-			if (pixel != null) {
-				pixel.updateStyle(foreground, background, textStyle, underlineStyle, underlineColor)
+			val index = canvas.setCodePoint(row, characterColumn, codePoint, columns)
+			if (index >= 0) {
+				canvas.updateStyle(index, foreground, background, textStyle, underlineStyle, underlineColor)
 				spanStylesProvider?.invoke(start, end)?.forEach {
-					pixel.updateStyle(it.color, it.background, it.textStyle, it.underlineStyle, it.underlineColor)
-					if (it.link != null) {
-						pixel.link = it.link
+					canvas.updateStyle(index, it.color, it.background, it.textStyle, it.underlineStyle, it.underlineColor)
+					val link = it.link
+					if (link != null) {
+						canvas.setLink(index, link)
 					}
 				}
 			}
 
-			previous = pixel
+			previous = index
 			characterColumn += columns
 		}
 	}
@@ -327,29 +329,5 @@ internal open class TextCanvasDrawScope(
 		val left = canvas.translationX
 		val top = canvas.translationY
 		return canvas.withClip(left, top, left + width, top + height, block)
-	}
-
-	private fun TextPixel.updateStyle(
-		foreground: Color,
-		background: Color,
-		textStyle: TextStyle,
-		underlineStyle: UnderlineStyle,
-		underlineColor: Color,
-	) {
-		if (foreground.isSpecifiedColor) {
-			this.foreground = foreground
-		}
-		if (background.isSpecifiedColor) {
-			this.background = background
-		}
-		if (textStyle.isSpecifiedTextStyle) {
-			this.textStyle = textStyle
-		}
-		if (underlineStyle.isSpecifiedUnderlineStyle) {
-			this.underlineStyle = underlineStyle
-		}
-		if (underlineColor.isSpecifiedColor) {
-			this.underlineColor = underlineColor
-		}
 	}
 }
