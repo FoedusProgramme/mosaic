@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mosaic documentation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="latest/">
+<script>
+// The release documentation once there is a release, and the snapshot documentation until then.
+fetch("" + "0.x/index.html", { method: "HEAD" })
+  .then(function (response) { location.replace("" + (response.ok ? "0.x/" : "latest/")) })
+  .catch(function () { location.replace("" + "latest/") })
+</script>
+</head>
+<body>
+<p>Mosaic documentation: <a href=".x/">latest release</a> · <a href="latest/">snapshot of master</a></p>
+</body>
+</html>
