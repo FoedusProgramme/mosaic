@@ -43,6 +43,7 @@ import org.unitedsoftware.mosaic.terminal.Terminal
 import org.unitedsoftware.mosaic.ui.BoxMeasurePolicy
 import org.unitedsoftware.mosaic.ui.LocalPopupHost
 import org.unitedsoftware.mosaic.ui.LocalTerminalCapabilities
+import org.unitedsoftware.mosaic.ui.LocalTerminalCommands
 import org.unitedsoftware.mosaic.ui.PopupHost
 import org.unitedsoftware.mosaic.ui.unit.Constraints
 
@@ -197,6 +198,10 @@ internal class MosaicComposition(
 	private val pointerShapes = ComposedValues<PointerShape>()
 	private val commands = Channel<String>(UNLIMITED)
 	private val clipboard = CommandClipboard(commands) { needDraw = true }
+	private val terminalCommandSender: (String) -> Unit = { command ->
+		commands.trySend(command)
+		needDraw = true
+	}
 	private val notifier = CommandNotifier(terminal.capabilities.kittyNotifications, commands) { needDraw = true }
 	private val staticLogger = StaticLogger(staticLogs) { needDraw = true }
 
@@ -446,6 +451,7 @@ internal class MosaicComposition(
 				LocalFocusManager provides focusOwner,
 				LocalPopupHost provides popupHost,
 				LocalTerminalCapabilities provides terminal.capabilities,
+				LocalTerminalCommands provides terminalCommandSender,
 				content = content,
 			)
 		}

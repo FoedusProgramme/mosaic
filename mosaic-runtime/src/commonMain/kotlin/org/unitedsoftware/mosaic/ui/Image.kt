@@ -1,6 +1,7 @@
 package org.unitedsoftware.mosaic.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -14,6 +15,7 @@ import org.unitedsoftware.mosaic.layout.MeasureResult
 import org.unitedsoftware.mosaic.layout.MeasureScope
 import org.unitedsoftware.mosaic.layout.drawBehind
 import org.unitedsoftware.mosaic.modifier.Modifier
+import org.unitedsoftware.mosaic.terminal.AnsiLevel
 import org.unitedsoftware.mosaic.terminal.Terminal
 import org.unitedsoftware.mosaic.ui.unit.Constraints
 import org.unitedsoftware.mosaic.ui.unit.constrainHeight
@@ -54,11 +56,28 @@ public fun Image(
 ) {
 	val size = LocalTerminalState.current.size
 	val cell = size.cellSize()
+	val capabilities = LocalTerminalCapabilities.current
+	val send = LocalTerminalCommands.current
 	val blocks = remember(bitmap) { HalfBlockCache(bitmap) }
+	// Placeholder cells name their image by color, which needs all 24 bits.
+	val kitty = if (capabilities.kittyGraphics && capabilities.ansiLevel == AnsiLevel.TRUECOLOR) {
+		remember(bitmap, send) { KittyImage(bitmap, send) }
+	} else {
+		null
+	}
+	DisposableEffect(kitty) {
+		onDispose {
+			kitty?.delete()
+		}
+	}
 	Layout(
 		content = {},
 		modifier = modifier.drawBehind {
-			blocks.draw(this, width, height)
+			if (kitty != null && width <= kittyMaxCells && height <= kittyMaxCells) {
+				kitty.draw(this, width, height, cell)
+			} else {
+				blocks.draw(this, width, height)
+			}
 		},
 		debugInfo = { "Image(${contentDescription ?: bitmap})" },
 		measurePolicy = ImageMeasurePolicy(bitmap, cell),

@@ -183,6 +183,8 @@ internal class AnsiRendering(
 				// Avoid the cursor flickering across the screen while the frame is written.
 				append(cursorHide)
 			}
+			// Drawing first lets it request commands, like sending an image, for this frame.
+			val surface = mosaic.draw()
 			commandWriter.appendTo(this, mosaic)
 
 			var current = cursorRow
@@ -220,7 +222,6 @@ internal class AnsiRendering(
 				current = 0
 			}
 
-			val surface = mosaic.draw()
 			// Rows which do not fit are cut from the top so the latest output stays visible. The output
 			// cannot be taller than the terminal since the cursor could not move back up to its start.
 			// One line below the output is left for the cursor.
@@ -319,6 +320,8 @@ internal class AlternateScreenRendering(
 			if (cursorShown) {
 				append(cursorHide)
 			}
+			// Drawing first lets it request commands, like sending an image, for this frame.
+			val surface = mosaic.draw()
 			commandWriter.appendTo(this, mosaic)
 
 			mosaic.static()?.let { static ->
@@ -334,7 +337,6 @@ internal class AlternateScreenRendering(
 				previousRows = emptyList()
 			}
 
-			val surface = mosaic.draw()
 			val rowCount = size?.rows?.let { minOf(it, surface.height) } ?: surface.height
 			val rows = List(rowCount) { row ->
 				rowBuilder.setLength(0)
