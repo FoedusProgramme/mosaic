@@ -176,6 +176,22 @@ render in successive lines instead.
 
 Run your programs directly in a terminal emulator–no IDE and no Gradle.
 
+### Can startup be faster on the JVM, like with Android's baseline profiles?
+
+On JDK 25 and newer, an application can record an ahead-of-time cache during a training run. It
+holds the loaded and linked classes and the profiles of the methods which ran, so the next start
+skips that work and the JIT compiles hot code sooner. The cache depends on the exact JDK and class
+path, so the application creates it when it is packaged, rather than Mosaic shipping one:
+
+```
+$ JAVA_OPTS=-XX:AOTCacheOutput=app.aot ./app --some-representative-run
+$ JAVA_OPTS=-XX:AOTCache=app.aot ./app
+```
+
+The catalog sample has `--tour`, which shows every page and exits, for exactly this. With a cache it
+started and toured the pages in 1.73 seconds rather than 2.00, of which about one second is the
+pacing of the frames. Native binaries are compiled ahead of time already.
+
 ### "A restricted method in java.lang.System has been called" warning on JDK 24 and newer
 
 Mosaic loads a small native library to talk to the terminal, which recent JDKs warn about unless

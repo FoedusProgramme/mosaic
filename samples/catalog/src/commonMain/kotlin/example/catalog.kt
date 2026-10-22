@@ -8,7 +8,9 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import kotlinx.coroutines.awaitCancellation
 import org.unitedsoftware.mosaic.LocalTerminalState
 import org.unitedsoftware.mosaic.layout.KeyEvent
@@ -85,7 +87,8 @@ private val pages = listOf(
 
 /**
  * Runs the catalog on the alternate screen, or inline with `--inline`. `--page <title>` starts on
- * the page with that title instead of the first one.
+ * the page with that title instead of the first one. `--tour` shows every page for a moment and
+ * exits, which can be used to train an ahead-of-time cache of the JVM.
  */
 fun main(args: Array<String>) = runMosaicMain(alternateScreen = "--inline" !in args) {
 	val initialPage = args.indexOf("--page").takeIf { it != -1 }?.let { args.getOrNull(it + 1) }
@@ -98,7 +101,7 @@ fun main(args: Array<String>) = runMosaicMain(alternateScreen = "--inline" !in a
 			else -> DarkPalette
 		}
 		CompositionLocalProvider(LocalPalette provides palette) {
-			Catalog(initialPage, onExit = { exit = true })
+			Catalog(initialPage, tour = "--tour" in args, onExit = { exit = true })
 		}
 		LaunchedEffect(Unit) {
 			awaitCancellation()
@@ -107,9 +110,19 @@ fun main(args: Array<String>) = runMosaicMain(alternateScreen = "--inline" !in a
 }
 
 @Composable
-private fun Catalog(initialPage: Int, onExit: () -> Unit) {
+private fun Catalog(initialPage: Int, tour: Boolean, onExit: () -> Unit) {
 	val size = LocalTerminalState.current.size
 	var selected by remember { mutableIntStateOf(initialPage) }
+	if (tour) {
+		val currentOnExit by rememberUpdatedState(onExit)
+		LaunchedEffect(Unit) {
+			for (page in pages.indices) {
+				selected = page
+				repeat(TourFramesPerPage) { withFrameNanos {} }
+			}
+			currentOnExit()
+		}
+	}
 	val keys = Modifier.onKeyEvent { event ->
 		when (event) {
 			KeyEvent("ArrowUp") -> selected = (selected - 1 + pages.size) % pages.size
@@ -236,3 +249,5 @@ private fun Sidebar(
 		}
 	}
 }
+
+private const val TourFramesPerPage = 40
