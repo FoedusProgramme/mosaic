@@ -7,6 +7,9 @@ typedef struct MosaicTtyImpl {
 	int fd;
 	int interrupt_fd_reader;
 	int interrupt_fd_writer;
+	// Written to by the SIGWINCH handler, so the callback is invoked by the reading thread.
+	int resize_fd_reader;
+	int resize_fd_writer;
 	MosaicTtyCallback *callback;
 	bool sigwinch;
 	struct termios *saved;

@@ -24,6 +24,7 @@ Fixed:
 - Typing characters outside of ASCII, such as CJK text committed by an input method, no longer crashes. They are delivered as `KeyEvent`s whose `key` is the character.
 - Wide characters, such as CJK text and most emoji, are measured and drawn as two columns, so they no longer push the rest of the row out of place. Combining marks and emoji joined with zero width joiners stay in the column of the character they modify. Widths follow Unicode 18.
 - Drawing outside of the surface, for example while the terminal is being resized, is clipped instead of crashing.
+- Resizing terminals which do not report size changes in-band, such as tmux and Terminal.app, no longer crashes the JVM. The resize callback was invoked from the signal handler, on whichever thread received the signal, with the JNI environment of another thread.
 
 
 ## [0.18.0] - 2025-08-21

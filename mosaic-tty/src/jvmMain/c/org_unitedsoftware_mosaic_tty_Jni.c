@@ -416,7 +416,7 @@ Java_org_unitedsoftware_mosaic_tty_Jni_streamsFree(
 }
 
 typedef struct MosaicJniTtyCallback {
-	JNIEnv *env;
+	JavaVM *vm;
 	jobject instance;
 	jmethodID onFocus;
 	jmethodID onKey;
@@ -424,10 +424,27 @@ typedef struct MosaicJniTtyCallback {
 	jmethodID onResize;
 } MosaicJniTtyCallback;
 
+/**
+ * The environment of the calling thread, which callbacks must use instead of the one of the thread
+ * which created the callback. The thread is attached to the JVM if necessary.
+ */
+static JNIEnv *currentEnv(MosaicJniTtyCallback *callback) {
+	JNIEnv *env;
+	if ((*callback->vm)->GetEnv(callback->vm, (void **) &env, JNI_VERSION_1_6) == JNI_OK) {
+		return env;
+	}
+	if ((*callback->vm)->AttachCurrentThreadAsDaemon(callback->vm, (void **) &env, NULL) == JNI_OK) {
+		return env;
+	}
+	return NULL;
+}
+
 static void invokeOnFocusCallback(void *opaque, bool focused) {
 	MosaicJniTtyCallback *callback = (MosaicJniTtyCallback *) opaque;
-	(*callback->env)->CallVoidMethod(
-		callback->env,
+	JNIEnv *env = currentEnv(callback);
+	if (unlikely(env == NULL)) return;
+	(*env)->CallVoidMethod(
+		env,
 		callback->instance,
 		callback->onFocus,
 		focused
@@ -436,8 +453,10 @@ static void invokeOnFocusCallback(void *opaque, bool focused) {
 
 static void invokeOnKeyCallback(void *opaque) {
 	MosaicJniTtyCallback *callback = (MosaicJniTtyCallback *) opaque;
-	(*callback->env)->CallVoidMethod(
-		callback->env,
+	JNIEnv *env = currentEnv(callback);
+	if (unlikely(env == NULL)) return;
+	(*env)->CallVoidMethod(
+		env,
 		callback->instance,
 		callback->onKey
 	);
@@ -445,8 +464,10 @@ static void invokeOnKeyCallback(void *opaque) {
 
 static void invokeOnMouseCallback(void *opaque) {
 	MosaicJniTtyCallback *callback = (MosaicJniTtyCallback *) opaque;
-	(*callback->env)->CallVoidMethod(
-		callback->env,
+	JNIEnv *env = currentEnv(callback);
+	if (unlikely(env == NULL)) return;
+	(*env)->CallVoidMethod(
+		env,
 		callback->instance,
 		callback->onMouse
 	);
@@ -454,8 +475,10 @@ static void invokeOnMouseCallback(void *opaque) {
 
 static void invokeOnResizeCallback(void *opaque, int columns, int rows, int width, int height) {
 	MosaicJniTtyCallback *callback = (MosaicJniTtyCallback *) opaque;
-	(*callback->env)->CallVoidMethod(
-		callback->env,
+	JNIEnv *env = currentEnv(callback);
+	if (unlikely(env == NULL)) return;
+	(*env)->CallVoidMethod(
+		env,
 		callback->instance,
 		callback->onResize,
 		columns,
@@ -500,7 +523,10 @@ Java_org_unitedsoftware_mosaic_tty_Jni_ttyCallbackInit(
 	if (unlikely(!jniCallback)) {
 		return 0;
 	}
-	jniCallback->env = env;
+	if (unlikely((*env)->GetJavaVM(env, &jniCallback->vm) != JNI_OK)) {
+		free(jniCallback);
+		return 0;
+	}
 	jniCallback->instance = globalInstance;
 	jniCallback->onFocus = onFocus;
 	jniCallback->onKey = onKey;

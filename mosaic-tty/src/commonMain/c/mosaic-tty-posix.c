@@ -9,6 +9,7 @@
 #include <stdatomic.h>
 #include <stdlib.h>
 #include <sys/ioctl.h>
+#include <sys/select.h>
 #include <termios.h>
 #include <time.h>
 #include <unistd.h>
@@ -29,10 +30,22 @@ MosaicTtyInitResult mosaic_tty_init_with_fd(int fd) {
 		result.error = errno;
 		goto err;
 	}
+	int resizePipe[2];
+	if (unlikely(pipe(resizePipe)) != 0) {
+		result.error = errno;
+		close(interruptPipe[0]);
+		close(interruptPipe[1]);
+		goto err;
+	}
+	// Neither end may block: the writer is used from a signal handler, and the reader is drained.
+	fcntl(resizePipe[0], F_SETFL, fcntl(resizePipe[0], F_GETFL) | O_NONBLOCK);
+	fcntl(resizePipe[1], F_SETFL, fcntl(resizePipe[1], F_GETFL) | O_NONBLOCK);
 
 	tty->fd = fd;
 	tty->interrupt_fd_reader = interruptPipe[0];
 	tty->interrupt_fd_writer = interruptPipe[1];
+	tty->resize_fd_reader = resizePipe[0];
+	tty->resize_fd_writer = resizePipe[1];
 
 	result.tty = tty;
 
@@ -68,8 +81,79 @@ void mosaic_tty_set_callback(MosaicTty *tty, MosaicTtyCallback *callback) {
 	tty->callback = callback;
 }
 
+static void mosaic_tty_dispatch_resize(MosaicTty *tty) {
+	struct winsize size;
+	if (ioctl(tty->fd, TIOCGWINSZ, &size) != -1) {
+		MosaicTtyCallback *callback = tty->callback;
+		if (likely(callback)) {
+			callback->onResize(callback->opaque, size.ws_col, size.ws_row, size.ws_xpixel, size.ws_ypixel);
+		}
+	}
+}
+
+static MosaicIoResult mosaic_tty_read_internal(
+	MosaicTty *tty,
+	uint8_t *buffer,
+	int count,
+	struct timeval *timeout
+) {
+	MosaicIoResult result = {};
+
+	while (true) {
+		fd_set fds;
+		FD_ZERO(&fds);
+		FD_SET(tty->fd, &fds);
+		FD_SET(tty->interrupt_fd_reader, &fds);
+		FD_SET(tty->resize_fd_reader, &fds);
+
+		int nfds = tty->fd;
+		if (tty->interrupt_fd_reader > nfds) nfds = tty->interrupt_fd_reader;
+		if (tty->resize_fd_reader > nfds) nfds = tty->resize_fd_reader;
+
+		int ready = select(nfds + 1, &fds, NULL, NULL, timeout);
+		if (unlikely(ready < 0)) {
+			if (errno == EINTR) {
+				// Most likely SIGWINCH, whose notification is picked up on the next iteration.
+				continue;
+			}
+			result.error = errno;
+			return result;
+		}
+
+		if (unlikely(FD_ISSET(tty->resize_fd_reader, &fds) != 0)) {
+			// Coalesce all pending notifications into a single callback with the latest size.
+			uint8_t drain[16];
+			while (read(tty->resize_fd_reader, drain, sizeof(drain)) > 0) {}
+			mosaic_tty_dispatch_resize(tty);
+			if (FD_ISSET(tty->fd, &fds) == 0 && FD_ISSET(tty->interrupt_fd_reader, &fds) == 0) {
+				// Keep waiting for input rather than returning 0, which would signal an interrupt.
+				continue;
+			}
+		}
+
+		if (likely(FD_ISSET(tty->fd, &fds) != 0)) {
+			int c = read(tty->fd, buffer, count);
+			if (likely(c > 0)) {
+				result.count = c;
+			} else if (c == 0) {
+				result.count = -1; // EOF
+			} else {
+				result.error = errno;
+			}
+		} else if (unlikely(FD_ISSET(tty->interrupt_fd_reader, &fds) != 0)) {
+			// Consume the single notification byte to clear the ready state for the next call.
+			uint8_t space;
+			if (unlikely(read(tty->interrupt_fd_reader, &space, 1) < 0)) {
+				result.error = errno;
+			}
+		}
+		// Otherwise if the interrupt pipe was selected or we timed out, return a count of 0.
+		return result;
+	}
+}
+
 MosaicIoResult mosaic_tty_read(MosaicTty *tty, uint8_t *buffer, int count) {
-	return mosaic_utils_read(tty->fd, tty->interrupt_fd_reader, buffer, count, NULL);
+	return mosaic_tty_read_internal(tty, buffer, count, NULL);
 }
 
 MosaicIoResult mosaic_tty_read_with_timeout(
@@ -82,7 +166,7 @@ MosaicIoResult mosaic_tty_read_with_timeout(
 	timeout.tv_sec = 0;
 	timeout.tv_usec = timeoutMillis * 1000;
 
-	return mosaic_utils_read(tty->fd, tty->interrupt_fd_reader, buffer, count, &timeout);
+	return mosaic_tty_read_internal(tty, buffer, count, &timeout);
 }
 
 uint32_t mosaic_tty_interrupt_read(MosaicTty *tty) {
@@ -96,21 +180,16 @@ MosaicIoResult mosaic_tty_write(MosaicTty *tty, uint8_t *buffer, int count) {
 }
 
 static void mosaic_tty_sigwinch_handler(int value UNUSED) {
+	// Signal handlers may run on any thread and only call async-signal-safe functions, so only wake
+	// the reading thread which then queries the size and invokes the callback.
 	MosaicTty *tty = atomic_load(&globalTty);
 	if (likely(tty)) {
-		struct winsize size;
-		if (ioctl(tty->fd, TIOCGWINSZ, &size) != -1) {
-			MosaicTtyCallback *callback = tty->callback;
-			if (likely(callback)) {
-				callback->onResize(callback->opaque, size.ws_col, size.ws_row, size.ws_xpixel, size.ws_ypixel);
-			} else {
-				// TODO Send warning somewhere? Maybe once we get debug logs working.
-			}
-		} else {
-			// TODO Send errno somewhere? Maybe once we get debug logs working.
-		}
-	} else {
-		// TODO Send warning somewhere? Maybe once we get debug logs working.
+		int savedErrno = errno;
+		uint8_t notification = 1;
+		// A full pipe already has a pending notification, so a failed write can be ignored.
+		ssize_t ignored = write(tty->resize_fd_writer, &notification, 1);
+		(void) ignored;
+		errno = savedErrno;
 	}
 }
 
@@ -232,6 +311,12 @@ uint32_t mosaic_tty_free(MosaicTty *tty) {
 		result = errno;
 	}
 	if (unlikely(close(tty->interrupt_fd_writer) != 0 && result == 0)) {
+		result = errno;
+	}
+	if (unlikely(close(tty->resize_fd_reader) != 0 && result == 0)) {
+		result = errno;
+	}
+	if (unlikely(close(tty->resize_fd_writer) != 0 && result == 0)) {
 		result = errno;
 	}
 
