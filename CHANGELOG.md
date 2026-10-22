@@ -21,6 +21,7 @@ New:
 - `Popup` shows content on top of everything else, like a completion menu, without taking up space in the layout or being clipped by its ancestors. Its `alignment` lets it extend up from its position, for example above a text field at the bottom of the screen.
 - Writes to stdout and stderr by other means than Mosaic, like `println` or a logging library, are intercepted while `runMosaic` runs and shown as static output above the display, rather than corrupting it (#681).
 - `Text` takes `softWrap`, `maxLines`, and `overflow`. `TextOverflow.Ellipsis` ends text which does not fit with an ellipsis.
+- New `mosaic-markdown` library with `Markdown`, which renders Markdown with syntax highlighted code, diffs, tables, task lists, and OSC 8 links. It handles incomplete input, so responses of language models can be rendered while they stream in.
 
 Changed:
 - `TextField` is focusable and edits while focused, instead of taking a `focused` parameter.

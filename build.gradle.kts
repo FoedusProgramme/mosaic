@@ -26,6 +26,7 @@ plugins {
 
 dependencies {
 	dokka(projects.mosaicAnimation)
+	dokka(projects.mosaicMarkdown)
 	dokka(projects.mosaicRuntime)
 	dokka(projects.mosaicTerminal)
 	dokka(projects.mosaicTesting)

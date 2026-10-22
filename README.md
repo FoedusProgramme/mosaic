@@ -84,6 +84,9 @@ dependencies {
 Snapshot documentation is available at
 [foedusprogramme.github.io/mosaic/docs/latest/](https://foedusprogramme.github.io/mosaic/docs/latest/).
 
+`mosaic-animation` adds Compose's animation APIs, and `mosaic-markdown` renders Markdown, also
+while it streams in. See [its README](mosaic-markdown/README.md).
+
 Upstream releases up to 0.18.0 are available as `com.jakewharton.mosaic:mosaic-runtime`.
 
 

@@ -29,6 +29,7 @@ develocity {
 rootProject.name = "mosaic"
 
 include(":mosaic-animation")
+include(":mosaic-markdown")
 include(":mosaic-runtime")
 include(":mosaic-terminal")
 include(":mosaic-testing")

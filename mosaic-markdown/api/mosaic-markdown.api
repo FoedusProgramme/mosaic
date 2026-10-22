@@ -1,0 +1,57 @@
+public final class org/unitedsoftware/mosaic/markdown/MarkdownKt {
+	public static final fun Markdown (Ljava/lang/String;Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/markdown/MarkdownTheme;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class org/unitedsoftware/mosaic/markdown/MarkdownTheme {
+	public static final field $stable I
+	public static final field Companion Lorg/unitedsoftware/mosaic/markdown/MarkdownTheme$Companion;
+	public fun <init> ()V
+	public synthetic fun <init> (Ljava/util/List;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;ILorg/unitedsoftware/mosaic/text/SpanStyle;Ljava/util/List;Lorg/unitedsoftware/mosaic/text/SpanStyle;Ljava/lang/String;Ljava/lang/String;ILorg/unitedsoftware/mosaic/text/SpanStyle;ILorg/unitedsoftware/mosaic/markdown/SyntaxTheme;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/util/List;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;ILorg/unitedsoftware/mosaic/text/SpanStyle;Ljava/util/List;Lorg/unitedsoftware/mosaic/text/SpanStyle;Ljava/lang/String;Ljava/lang/String;ILorg/unitedsoftware/mosaic/text/SpanStyle;ILorg/unitedsoftware/mosaic/markdown/SyntaxTheme;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBullets ()Ljava/util/List;
+	public final fun getCheckedTask ()Ljava/lang/String;
+	public final fun getCode ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getEmphasis ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getHeadings ()Ljava/util/List;
+	public final fun getLink ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getListMarker ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getQuote ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getQuoteBar-tUi8tvw ()I
+	public final fun getStrikethrough ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getStrong ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getSyntax ()Lorg/unitedsoftware/mosaic/markdown/SyntaxTheme;
+	public final fun getTableBorder-tUi8tvw ()I
+	public final fun getTableHeader ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getThematicBreak-tUi8tvw ()I
+	public final fun getUncheckedTask ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/unitedsoftware/mosaic/markdown/MarkdownTheme$Companion {
+	public final fun getDefault ()Lorg/unitedsoftware/mosaic/markdown/MarkdownTheme;
+}
+
+public final class org/unitedsoftware/mosaic/markdown/SyntaxTheme {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;)V
+	public synthetic fun <init> (Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;Lorg/unitedsoftware/mosaic/text/SpanStyle;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnnotation ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getComment ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getDeleted ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getFunction ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getHunk ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getInserted ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getKeyword ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getMeta ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getNumber ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getPlain ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getString ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public final fun getType ()Lorg/unitedsoftware/mosaic/text/SpanStyle;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+

@@ -1,0 +1,93 @@
+// Klib ABI Dump
+// Targets: [linuxArm64, linuxX64, macosArm64, mingwX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <org.unitedsoftware.mosaic:mosaic-markdown>
+final class org.unitedsoftware.mosaic.markdown/MarkdownTheme { // org.unitedsoftware.mosaic.markdown/MarkdownTheme|null[0]
+    constructor <init>(kotlin.collections/List<org.unitedsoftware.mosaic.text/SpanStyle> = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., kotlin.collections/List<kotlin/String> = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., kotlin/String = ..., kotlin/String = ..., org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.markdown/SyntaxTheme = ...) // org.unitedsoftware.mosaic.markdown/MarkdownTheme.<init>|<init>(kotlin.collections.List<org.unitedsoftware.mosaic.text.SpanStyle>;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.text.SpanStyle;kotlin.collections.List<kotlin.String>;org.unitedsoftware.mosaic.text.SpanStyle;kotlin.String;kotlin.String;org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.markdown.SyntaxTheme){}[0]
+
+    final val bullets // org.unitedsoftware.mosaic.markdown/MarkdownTheme.bullets|{}bullets[0]
+        final fun <get-bullets>(): kotlin.collections/List<kotlin/String> // org.unitedsoftware.mosaic.markdown/MarkdownTheme.bullets.<get-bullets>|<get-bullets>(){}[0]
+    final val checkedTask // org.unitedsoftware.mosaic.markdown/MarkdownTheme.checkedTask|{}checkedTask[0]
+        final fun <get-checkedTask>(): kotlin/String // org.unitedsoftware.mosaic.markdown/MarkdownTheme.checkedTask.<get-checkedTask>|<get-checkedTask>(){}[0]
+    final val code // org.unitedsoftware.mosaic.markdown/MarkdownTheme.code|{}code[0]
+        final fun <get-code>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/MarkdownTheme.code.<get-code>|<get-code>(){}[0]
+    final val emphasis // org.unitedsoftware.mosaic.markdown/MarkdownTheme.emphasis|{}emphasis[0]
+        final fun <get-emphasis>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/MarkdownTheme.emphasis.<get-emphasis>|<get-emphasis>(){}[0]
+    final val headings // org.unitedsoftware.mosaic.markdown/MarkdownTheme.headings|{}headings[0]
+        final fun <get-headings>(): kotlin.collections/List<org.unitedsoftware.mosaic.text/SpanStyle> // org.unitedsoftware.mosaic.markdown/MarkdownTheme.headings.<get-headings>|<get-headings>(){}[0]
+    final val link // org.unitedsoftware.mosaic.markdown/MarkdownTheme.link|{}link[0]
+        final fun <get-link>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/MarkdownTheme.link.<get-link>|<get-link>(){}[0]
+    final val listMarker // org.unitedsoftware.mosaic.markdown/MarkdownTheme.listMarker|{}listMarker[0]
+        final fun <get-listMarker>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/MarkdownTheme.listMarker.<get-listMarker>|<get-listMarker>(){}[0]
+    final val quote // org.unitedsoftware.mosaic.markdown/MarkdownTheme.quote|{}quote[0]
+        final fun <get-quote>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/MarkdownTheme.quote.<get-quote>|<get-quote>(){}[0]
+    final val quoteBar // org.unitedsoftware.mosaic.markdown/MarkdownTheme.quoteBar|{}quoteBar[0]
+        final fun <get-quoteBar>(): org.unitedsoftware.mosaic.ui/Color // org.unitedsoftware.mosaic.markdown/MarkdownTheme.quoteBar.<get-quoteBar>|<get-quoteBar>(){}[0]
+    final val strikethrough // org.unitedsoftware.mosaic.markdown/MarkdownTheme.strikethrough|{}strikethrough[0]
+        final fun <get-strikethrough>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/MarkdownTheme.strikethrough.<get-strikethrough>|<get-strikethrough>(){}[0]
+    final val strong // org.unitedsoftware.mosaic.markdown/MarkdownTheme.strong|{}strong[0]
+        final fun <get-strong>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/MarkdownTheme.strong.<get-strong>|<get-strong>(){}[0]
+    final val syntax // org.unitedsoftware.mosaic.markdown/MarkdownTheme.syntax|{}syntax[0]
+        final fun <get-syntax>(): org.unitedsoftware.mosaic.markdown/SyntaxTheme // org.unitedsoftware.mosaic.markdown/MarkdownTheme.syntax.<get-syntax>|<get-syntax>(){}[0]
+    final val tableBorder // org.unitedsoftware.mosaic.markdown/MarkdownTheme.tableBorder|{}tableBorder[0]
+        final fun <get-tableBorder>(): org.unitedsoftware.mosaic.ui/Color // org.unitedsoftware.mosaic.markdown/MarkdownTheme.tableBorder.<get-tableBorder>|<get-tableBorder>(){}[0]
+    final val tableHeader // org.unitedsoftware.mosaic.markdown/MarkdownTheme.tableHeader|{}tableHeader[0]
+        final fun <get-tableHeader>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/MarkdownTheme.tableHeader.<get-tableHeader>|<get-tableHeader>(){}[0]
+    final val thematicBreak // org.unitedsoftware.mosaic.markdown/MarkdownTheme.thematicBreak|{}thematicBreak[0]
+        final fun <get-thematicBreak>(): org.unitedsoftware.mosaic.ui/Color // org.unitedsoftware.mosaic.markdown/MarkdownTheme.thematicBreak.<get-thematicBreak>|<get-thematicBreak>(){}[0]
+    final val uncheckedTask // org.unitedsoftware.mosaic.markdown/MarkdownTheme.uncheckedTask|{}uncheckedTask[0]
+        final fun <get-uncheckedTask>(): kotlin/String // org.unitedsoftware.mosaic.markdown/MarkdownTheme.uncheckedTask.<get-uncheckedTask>|<get-uncheckedTask>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // org.unitedsoftware.mosaic.markdown/MarkdownTheme.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // org.unitedsoftware.mosaic.markdown/MarkdownTheme.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // org.unitedsoftware.mosaic.markdown/MarkdownTheme.toString|toString(){}[0]
+
+    final object Companion { // org.unitedsoftware.mosaic.markdown/MarkdownTheme.Companion|null[0]
+        final val Default // org.unitedsoftware.mosaic.markdown/MarkdownTheme.Companion.Default|{}Default[0]
+            final fun <get-Default>(): org.unitedsoftware.mosaic.markdown/MarkdownTheme // org.unitedsoftware.mosaic.markdown/MarkdownTheme.Companion.Default.<get-Default>|<get-Default>(){}[0]
+    }
+}
+
+final class org.unitedsoftware.mosaic.markdown/SyntaxTheme { // org.unitedsoftware.mosaic.markdown/SyntaxTheme|null[0]
+    constructor <init>(org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ..., org.unitedsoftware.mosaic.text/SpanStyle = ...) // org.unitedsoftware.mosaic.markdown/SyntaxTheme.<init>|<init>(org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle;org.unitedsoftware.mosaic.text.SpanStyle){}[0]
+
+    final val annotation // org.unitedsoftware.mosaic.markdown/SyntaxTheme.annotation|{}annotation[0]
+        final fun <get-annotation>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.annotation.<get-annotation>|<get-annotation>(){}[0]
+    final val comment // org.unitedsoftware.mosaic.markdown/SyntaxTheme.comment|{}comment[0]
+        final fun <get-comment>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.comment.<get-comment>|<get-comment>(){}[0]
+    final val deleted // org.unitedsoftware.mosaic.markdown/SyntaxTheme.deleted|{}deleted[0]
+        final fun <get-deleted>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.deleted.<get-deleted>|<get-deleted>(){}[0]
+    final val function // org.unitedsoftware.mosaic.markdown/SyntaxTheme.function|{}function[0]
+        final fun <get-function>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.function.<get-function>|<get-function>(){}[0]
+    final val hunk // org.unitedsoftware.mosaic.markdown/SyntaxTheme.hunk|{}hunk[0]
+        final fun <get-hunk>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.hunk.<get-hunk>|<get-hunk>(){}[0]
+    final val inserted // org.unitedsoftware.mosaic.markdown/SyntaxTheme.inserted|{}inserted[0]
+        final fun <get-inserted>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.inserted.<get-inserted>|<get-inserted>(){}[0]
+    final val keyword // org.unitedsoftware.mosaic.markdown/SyntaxTheme.keyword|{}keyword[0]
+        final fun <get-keyword>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.keyword.<get-keyword>|<get-keyword>(){}[0]
+    final val meta // org.unitedsoftware.mosaic.markdown/SyntaxTheme.meta|{}meta[0]
+        final fun <get-meta>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.meta.<get-meta>|<get-meta>(){}[0]
+    final val number // org.unitedsoftware.mosaic.markdown/SyntaxTheme.number|{}number[0]
+        final fun <get-number>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.number.<get-number>|<get-number>(){}[0]
+    final val plain // org.unitedsoftware.mosaic.markdown/SyntaxTheme.plain|{}plain[0]
+        final fun <get-plain>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.plain.<get-plain>|<get-plain>(){}[0]
+    final val string // org.unitedsoftware.mosaic.markdown/SyntaxTheme.string|{}string[0]
+        final fun <get-string>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.string.<get-string>|<get-string>(){}[0]
+    final val type // org.unitedsoftware.mosaic.markdown/SyntaxTheme.type|{}type[0]
+        final fun <get-type>(): org.unitedsoftware.mosaic.text/SpanStyle // org.unitedsoftware.mosaic.markdown/SyntaxTheme.type.<get-type>|<get-type>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // org.unitedsoftware.mosaic.markdown/SyntaxTheme.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // org.unitedsoftware.mosaic.markdown/SyntaxTheme.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // org.unitedsoftware.mosaic.markdown/SyntaxTheme.toString|toString(){}[0]
+}
+
+final val org.unitedsoftware.mosaic.markdown/org_unitedsoftware_mosaic_markdown_MarkdownTheme$stableprop // org.unitedsoftware.mosaic.markdown/org_unitedsoftware_mosaic_markdown_MarkdownTheme$stableprop|#static{}org_unitedsoftware_mosaic_markdown_MarkdownTheme$stableprop[0]
+final val org.unitedsoftware.mosaic.markdown/org_unitedsoftware_mosaic_markdown_SyntaxTheme$stableprop // org.unitedsoftware.mosaic.markdown/org_unitedsoftware_mosaic_markdown_SyntaxTheme$stableprop|#static{}org_unitedsoftware_mosaic_markdown_SyntaxTheme$stableprop[0]
+
+final fun org.unitedsoftware.mosaic.markdown/Markdown(kotlin/String, org.unitedsoftware.mosaic.modifier/Modifier?, org.unitedsoftware.mosaic.markdown/MarkdownTheme?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // org.unitedsoftware.mosaic.markdown/Markdown|Markdown(kotlin.String;org.unitedsoftware.mosaic.modifier.Modifier?;org.unitedsoftware.mosaic.markdown.MarkdownTheme?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun org.unitedsoftware.mosaic.markdown/org_unitedsoftware_mosaic_markdown_MarkdownTheme$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.markdown/org_unitedsoftware_mosaic_markdown_MarkdownTheme$stableprop_getter|org_unitedsoftware_mosaic_markdown_MarkdownTheme$stableprop_getter(){}[0]
+final fun org.unitedsoftware.mosaic.markdown/org_unitedsoftware_mosaic_markdown_SyntaxTheme$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.markdown/org_unitedsoftware_mosaic_markdown_SyntaxTheme$stableprop_getter|org_unitedsoftware_mosaic_markdown_SyntaxTheme$stableprop_getter(){}[0]
