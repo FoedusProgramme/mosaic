@@ -1,0 +1,560 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>org.unitedsoftware.mosaic.terminal</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
+                    mosaic
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">0.19.0
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":mosaic-terminal/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":mosaic-terminal/commonMain" data-filter=":mosaic-terminal/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    mosaic
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="package" id="content" pageids="mosaic-terminal::org.unitedsoftware.mosaic.terminal////PointingToDeclaration//-1406523176">
+  <div class="breadcrumbs"><a href="../index.html">mosaic-terminal</a><span class="delimiter">/</span><span class="current">org.unitedsoftware.mosaic.terminal</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="-1671589735%2FClasslikes%2F-1406523176" anchor-label="AnsiLevel" id="-1671589735%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-ansi-level/index.html"><span>Ansi</span><wbr><span><span>Level</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1671589735%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-ansi-level/index.html">AnsiLevel</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-ansi-level/index.html">AnsiLevel</a><span class="token operator">&gt; </span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-492748404%2FClasslikes%2F-1406523176" anchor-label="BracketedPasteEvent" id="-492748404%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-bracketed-paste-event/index.html"><span>Bracketed</span><wbr><span>Paste</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-492748404%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-bracketed-paste-event/index.html">BracketedPasteEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>start<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1660506466%2FClasslikes%2F-1406523176" anchor-label="CapabilityQueryEvent" id="-1660506466%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-capability-query-event/index.html"><span>Capability</span><wbr><span>Query</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1660506466%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-capability-query-event/index.html">CapabilityQueryEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>success<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-796080801%2FClasslikes%2F-1406523176" anchor-label="CursorPositionEvent" id="-796080801%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-cursor-position-event/index.html"><span>Cursor</span><wbr><span>Position</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-796080801%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-cursor-position-event/index.html">CursorPositionEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>row<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>column<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1823622175%2FClasslikes%2F-1406523176" anchor-label="DebugEvent" id="-1823622175%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-debug-event/index.html"><span>Debug</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1823622175%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-debug-event/index.html">DebugEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>event<span class="token operator">: </span><a href="-event/index.html">Event</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>bytes<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-byte-array/index.html">ByteArray</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1372736103%2FClasslikes%2F-1406523176" anchor-label="DecModeReportEvent" id="1372736103%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-dec-mode-report-event/index.html"><span>Dec</span><wbr><span>Mode</span><wbr><span>Report</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1372736103%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-dec-mode-report-event/index.html">DecModeReportEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>mode<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>setting<span class="token operator">: </span><a href="-dec-mode-report-event/-setting/index.html">DecModeReportEvent.Setting</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1758047584%2FClasslikes%2F-1406523176" anchor-label="Event" id="-1758047584%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-event/index.html"><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1758047584%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">sealed </span><span class="token keyword">interface </span><a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1023280038%2FClasslikes%2F-1406523176" anchor-label="FocusEvent" id="1023280038%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-focus-event/index.html"><span>Focus</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1023280038%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-focus-event/index.html">FocusEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>focused<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="6744935%2FClasslikes%2F-1406523176" anchor-label="KeyboardEvent" id="6744935%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-keyboard-event/index.html"><span>Keyboard</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="6744935%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-keyboard-event/index.html">KeyboardEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>codepoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>shiftedCodepoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>baseLayoutCodepoint<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>modifiers<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>eventType<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>EventTypePress<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>text<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1926420180%2FClasslikes%2F-1406523176" anchor-label="KittyGraphicsEvent" id="1926420180%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-kitty-graphics-event/index.html"><span>Kitty</span><wbr><span>Graphics</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1926420180%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-kitty-graphics-event/index.html">KittyGraphicsEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>id<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>message<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="29890822%2FClasslikes%2F-1406523176" anchor-label="KittyKeyboardQueryEvent" id="29890822%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-kitty-keyboard-query-event/index.html"><span>Kitty</span><wbr><span>Keyboard</span><wbr><span>Query</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="29890822%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-kitty-keyboard-query-event/index.html">KittyKeyboardQueryEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>flags<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-412568524%2FClasslikes%2F-1406523176" anchor-label="KittyNotificationEvent" id="-412568524%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-kitty-notification-event/index.html"><span>Kitty</span><wbr><span>Notification</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-412568524%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-kitty-notification-event/index.html">KittyNotificationEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>raw<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1330535380%2FClasslikes%2F-1406523176" anchor-label="KittyPointerQueryEvent" id="1330535380%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-kitty-pointer-query-event/index.html"><span>Kitty</span><wbr><span>Pointer</span><wbr><span>Query</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1330535380%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">sealed </span><span class="token keyword">interface </span><a href="-kitty-pointer-query-event/index.html">KittyPointerQueryEvent</a> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="174184127%2FClasslikes%2F-1406523176" anchor-label="KittyPointerQueryNameEvent" id="174184127%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-kitty-pointer-query-name-event/index.html"><span>Kitty</span><wbr><span>Pointer</span><wbr><span>Query</span><wbr><span>Name</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="174184127%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-kitty-pointer-query-name-event/index.html">KittyPointerQueryNameEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="-kitty-pointer-query-event/index.html">KittyPointerQueryEvent</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1739144937%2FClasslikes%2F-1406523176" anchor-label="KittyPointerQuerySupportEvent" id="1739144937%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-kitty-pointer-query-support-event/index.html"><span>Kitty</span><wbr><span>Pointer</span><wbr><span>Query</span><wbr><span>Support</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1739144937%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-kitty-pointer-query-support-event/index.html">KittyPointerQuerySupportEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>values<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean-array/index.html">BooleanArray</a></span></span><span class="token punctuation">)</span> : <a href="-kitty-pointer-query-event/index.html">KittyPointerQueryEvent</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1325726029%2FClasslikes%2F-1406523176" anchor-label="MouseEvent" id="-1325726029%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mouse-event/index.html"><span>Mouse</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1325726029%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-mouse-event/index.html">MouseEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>x<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>y<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>type<span class="token operator">: </span><a href="-mouse-event/-type/index.html">MouseEvent.Type</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>button<span class="token operator">: </span><a href="-mouse-event/-button/index.html">MouseEvent.Button</a><span class="token operator"> = </span>Button.None<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>shift<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>alt<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>ctrl<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-326221822%2FClasslikes%2F-1406523176" anchor-label="OperatingStatusResponseEvent" id="-326221822%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-operating-status-response-event/index.html"><span>Operating</span><wbr><span>Status</span><wbr><span>Response</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-326221822%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-operating-status-response-event/index.html">OperatingStatusResponseEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>ok<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-735797016%2FClasslikes%2F-1406523176" anchor-label="PaletteColorEvent" id="-735797016%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-palette-color-event/index.html"><span>Palette</span><wbr><span>Color</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-735797016%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-palette-color-event/index.html">PaletteColorEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>color<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-143940803%2FClasslikes%2F-1406523176" anchor-label="PrimaryDeviceAttributesEvent" id="-143940803%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-primary-device-attributes-event/index.html"><span>Primary</span><wbr><span>Device</span><wbr><span>Attributes</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-143940803%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-primary-device-attributes-event/index.html">PrimaryDeviceAttributesEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>id<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-560919116%2FClasslikes%2F-1406523176" anchor-label="ResizeEvent" id="-560919116%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-resize-event/index.html"><span>Resize</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-560919116%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-resize-event/index.html">ResizeEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>columns<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>rows<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>width<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>height<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1657480559%2FClasslikes%2F-1406523176" anchor-label="SecondaryDeviceAttributesEvent" id="1657480559%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-secondary-device-attributes-event/index.html"><span>Secondary</span><wbr><span>Device</span><wbr><span>Attributes</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1657480559%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-secondary-device-attributes-event/index.html">SecondaryDeviceAttributesEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>type<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>firmwareVersion<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>registrationNumber<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-764880152%2FClasslikes%2F-1406523176" anchor-label="SystemThemeEvent" id="-764880152%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-system-theme-event/index.html"><span>System</span><wbr><span>Theme</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-764880152%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-system-theme-event/index.html">SystemThemeEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>isDark<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-841131828%2FClasslikes%2F-1406523176" anchor-label="Terminal" id="-841131828%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-terminal/index.html"><span><span>Terminal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-841131828%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-terminal/index.html">Terminal</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-auto-closeable/index.html">AutoCloseable</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1010292181%2FClasslikes%2F-1406523176" anchor-label="TerminalColorEvent" id="1010292181%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-terminal-color-event/index.html"><span>Terminal</span><wbr><span>Color</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1010292181%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-terminal-color-event/index.html">TerminalColorEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>color<span class="token operator">: </span><a href="-terminal-color-event/-color/index.html">TerminalColorEvent.Color</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-76659254%2FClasslikes%2F-1406523176" anchor-label="TerminalVersionEvent" id="-76659254%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-terminal-version-event/index.html"><span>Terminal</span><wbr><span>Version</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-76659254%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-terminal-version-event/index.html">TerminalVersionEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="640832575%2FClasslikes%2F-1406523176" anchor-label="TertiaryDeviceAttributesEvent" id="640832575%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-tertiary-device-attributes-event/index.html"><span>Tertiary</span><wbr><span>Device</span><wbr><span>Attributes</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="640832575%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-tertiary-device-attributes-event/index.html">TertiaryDeviceAttributesEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>manufacturingSite<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>terminalId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1895387688%2FClasslikes%2F-1406523176" anchor-label="UnknownEvent" id="-1895387688%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-unknown-event/index.html"><span>Unknown</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1895387688%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-unknown-event/index.html">UnknownEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>bytes<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-byte-array/index.html">ByteArray</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="277474374%2FClasslikes%2F-1406523176" anchor-label="XtermCharacterSizeEvent" id="277474374%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-xterm-character-size-event/index.html"><span>Xterm</span><wbr><span>Character</span><wbr><span>Size</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="277474374%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-xterm-character-size-event/index.html">XtermCharacterSizeEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>rows<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>columns<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-479742237%2FClasslikes%2F-1406523176" anchor-label="XtermPixelSizeEvent" id="-479742237%2FClasslikes%2F-1406523176" data-filterable-set=":mosaic-terminal/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-terminal/commonMain" data-filterable-set=":mosaic-terminal/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-xterm-pixel-size-event/index.html"><span>Xterm</span><wbr><span>Pixel</span><wbr><span>Size</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-479742237%2FClasslikes%2F-1406523176"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-terminal/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-xterm-pixel-size-event/index.html">XtermPixelSizeEvent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>height<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>width<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span> : <a href="-event/index.html">Event</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

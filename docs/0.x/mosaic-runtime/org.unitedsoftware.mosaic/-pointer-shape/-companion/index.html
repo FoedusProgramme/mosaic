@@ -1,0 +1,381 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Companion</title>
+<link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../../index.html" tabindex="1">
+                    mosaic
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">0.19.0
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":mosaic-runtime/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":mosaic-runtime/commonMain" data-filter=":mosaic-runtime/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    mosaic
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="mosaic-runtime::org.unitedsoftware.mosaic/PointerShape.Companion///PointingToDeclaration//19991456">
+  <div class="breadcrumbs"><a href="../../../index.html">mosaic-runtime</a><span class="delimiter">/</span><a href="../../index.html">org.unitedsoftware.mosaic</a><span class="delimiter">/</span><a href="../index.html">PointerShape</a><span class="delimiter">/</span><span class="current">Companion</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Companion</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="index.html">Companion</a></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="PROPERTY">
+        <h2 class="tableheader">Properties</h2>
+        <div class="table"><a data-name="-2074538567%2FProperties%2F19991456" anchor-label="Cell" id="-2074538567%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-cell.html"><span><span>Cell</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2074538567%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-cell.html">Cell</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1726400911%2FProperties%2F19991456" anchor-label="ColumnResize" id="-1726400911%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-column-resize.html"><span>Column</span><wbr><span><span>Resize</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1726400911%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-column-resize.html">ColumnResize</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1141344387%2FProperties%2F19991456" anchor-label="Crosshair" id="-1141344387%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-crosshair.html"><span><span>Crosshair</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1141344387%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-crosshair.html">Crosshair</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1513182530%2FProperties%2F19991456" anchor-label="Default" id="-1513182530%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-default.html"><span><span>Default</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1513182530%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-default.html">Default</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-616757233%2FProperties%2F19991456" anchor-label="Grab" id="-616757233%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-grab.html"><span><span>Grab</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-616757233%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-grab.html">Grab</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="470135503%2FProperties%2F19991456" anchor-label="Grabbing" id="470135503%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-grabbing.html"><span><span>Grabbing</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="470135503%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-grabbing.html">Grabbing</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1515049146%2FProperties%2F19991456" anchor-label="Help" id="1515049146%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-help.html"><span><span>Help</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1515049146%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-help.html">Help</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1176787414%2FProperties%2F19991456" anchor-label="Move" id="-1176787414%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-move.html"><span><span>Move</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1176787414%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-move.html">Move</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1988811610%2FProperties%2F19991456" anchor-label="NotAllowed" id="-1988811610%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-not-allowed.html"><span>Not</span><wbr><span><span>Allowed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1988811610%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-not-allowed.html">NotAllowed</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1854076482%2FProperties%2F19991456" anchor-label="Pointer" id="1854076482%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-pointer.html"><span><span>Pointer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1854076482%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-pointer.html">Pointer</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1221263282%2FProperties%2F19991456" anchor-label="Progress" id="-1221263282%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-progress.html"><span><span>Progress</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1221263282%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-progress.html">Progress</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1621917169%2FProperties%2F19991456" anchor-label="RowResize" id="1621917169%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-row-resize.html"><span>Row</span><wbr><span><span>Resize</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1621917169%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-row-resize.html">RowResize</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="20880462%2FProperties%2F19991456" anchor-label="Text" id="20880462%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-text.html"><span><span>Text</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="20880462%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-text.html">Text</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="35529336%2FProperties%2F19991456" anchor-label="VerticalText" id="35529336%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-vertical-text.html"><span>Vertical</span><wbr><span><span>Text</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="35529336%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-vertical-text.html">VerticalText</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1579823366%2FProperties%2F19991456" anchor-label="Wait" id="1579823366%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-wait.html"><span><span>Wait</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1579823366%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-wait.html">Wait</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1636787203%2FProperties%2F19991456" anchor-label="ZoomIn" id="1636787203%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-zoom-in.html"><span>Zoom</span><wbr><span><span>In</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1636787203%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-zoom-in.html">ZoomIn</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1705981892%2FProperties%2F19991456" anchor-label="ZoomOut" id="1705981892%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-zoom-out.html"><span>Zoom</span><wbr><span><span>Out</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1705981892%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-zoom-out.html">ZoomOut</a><span class="token operator">: </span><a href="../index.html">PointerShape</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
