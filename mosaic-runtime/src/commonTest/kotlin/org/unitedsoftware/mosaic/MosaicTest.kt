@@ -28,6 +28,7 @@ import org.unitedsoftware.mosaic.ui.Box
 import org.unitedsoftware.mosaic.ui.Filler
 import org.unitedsoftware.mosaic.ui.Spacer
 import org.unitedsoftware.mosaic.ui.Text
+import org.unitedsoftware.mosaic.ui.unit.Constraints
 import org.unitedsoftware.mosaic.ui.unit.IntOffset
 
 class MosaicTest {
@@ -109,6 +110,7 @@ class MosaicTest {
 		runMosaicComposition(
 			rendering = AnsiRendering(terminal.capabilities),
 			terminal = terminal,
+			rootConstraints = { Constraints() },
 		) {
 			LaunchedEffect(Unit) {
 				withFrameNanos { frameTimeNanos ->

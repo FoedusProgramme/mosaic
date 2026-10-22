@@ -72,20 +72,33 @@ internal class DebugRendering(
 	}
 }
 
+/**
+ * Renders frames inline, below whatever the terminal showed before, like most command line programs.
+ * Rows which did not change since the last frame are not written again.
+ */
 internal class AnsiRendering(
 	private val capabilities: Terminal.Capabilities,
+	/** The size of the terminal, which limits the height of the output, or null when unknown. */
+	private val terminalSize: () -> Terminal.Size? = { null },
 ) : Rendering {
 	private val stringBuilder = StringBuilder(100)
-	private var lastHeight = 0
+	private val rowBuilder = StringBuilder(100)
+
+	/** The rows of the last output, as they were written. */
+	private var lastRows = emptyList<String>()
+	private var lastSize: Terminal.Size? = null
 
 	/**
-	 * The row of the last output the cursor was left on, or [lastHeight] when it rests on the line
-	 * below the output.
+	 * The row of the last output the cursor was left on. The size of [lastRows] when it rests on the
+	 * line below the output.
 	 */
 	private var cursorRow = 0
 
 	/** Whether the cursor was shown at a position placed with [DrawScope.drawCursor]. */
 	private var cursorShown = false
+
+	/** Whether the cursor is in the first column. Output is assumed to start on a new line. */
+	private var atLineStart = true
 
 	override fun render(mosaic: Mosaic): CharSequence {
 		return stringBuilder.apply {
@@ -99,67 +112,84 @@ internal class AnsiRendering(
 				append(cursorHide)
 			}
 
-			var staleLines = lastHeight
-			if (cursorRow > 0) {
-				// Move to start of previous output.
-				append(CSI)
-				append(cursorRow)
-				append('F')
-			} else if (lastHeight > 0) {
-				append('\r')
+			var current = cursorRow
+			fun moveTo(row: Int) {
+				if (row < current) {
+					// Previous line, which also moves to the first column.
+					append(CSI)
+					append(current - row)
+					append('F')
+				} else if (row > current) {
+					// Line feeds also create the line when the output reaches the bottom of the screen.
+					repeat(row - current) { append("\r\n") }
+				} else if (!atLineStart) {
+					append('\r')
+				}
+				current = row
+				atLineStart = true
 			}
 
-			fun appendSurface(canvas: TextCanvas) {
-				for (row in 0 until canvas.height) {
-					if (staleLines-- > 0) {
-						// We have previously drawn on this line. Clear first to be safe. For terminals which
-						// do not support synchronized rendering, this may allow seeing a partial row render.
-						append(clearLine)
-					}
-					canvas.appendRowTo(this, row, capabilities.ansiLevel, capabilities.kittyUnderline)
+			val size = terminalSize()
+			var previousRows = lastRows
+			val static = mosaic.static()
+			if (static != null || (size != lastSize && previousRows.isNotEmpty())) {
+				// Static output goes above the output, and a resized terminal may have reflowed the
+				// previous output, so start over from the top.
+				if (previousRows.isNotEmpty()) {
+					moveTo(0)
+					append(clearDisplay)
+				}
+				if (static != null) {
+					append(static)
 					append("\r\n")
 				}
-			}
-
-			mosaic.static()?.let { static ->
-				// We don't know the width or height of static strings, and we don't want to waste time
-				// parsing them to get an accurate count of each to minimally clear only the lines it will
-				// write. Instead, just clear everything to ensure we neither leave old cells nor attempt
-				// a clear to end-of-line when the cursor is on the last column (thus clearing that cell).
-				if (staleLines > 0) {
-					append(clearDisplay)
-					staleLines = 0
-				}
-				append(static)
-				append("\r\n")
+				previousRows = emptyList()
+				current = 0
 			}
 
 			val surface = mosaic.draw()
-			appendSurface(surface)
+			// Rows which do not fit are cut from the top so the latest output stays visible. The output
+			// cannot be taller than the terminal since the cursor could not move back up to its start.
+			// One line below the output is left for the cursor.
+			val maxRows = size?.let { (it.rows - 1).coerceAtLeast(1) } ?: Int.MAX_VALUE
+			val firstRow = (surface.height - maxRows).coerceAtLeast(0)
+			val rows = List(surface.height - firstRow) { index ->
+				rowBuilder.setLength(0)
+				surface.appendRowTo(rowBuilder, firstRow + index, capabilities.ansiLevel, capabilities.kittyUnderline)
+				rowBuilder.toString()
+			}
 
-			// If the new output contains fewer lines than the last output, clear those old lines.
-			if (staleLines > 0) {
+			for ((index, row) in rows.withIndex()) {
+				if (index < previousRows.size && previousRows[index] == row) continue
+				moveTo(index)
+				if (index < previousRows.size) {
+					append(clearLine)
+				}
+				append(row)
+				atLineStart = row.isEmpty()
+			}
+
+			moveTo(rows.size)
+			if (rows.size < previousRows.size) {
+				// Clear the rows of the last output beyond the new one.
 				append(clearDisplay)
 			}
 
-			val cursor = (surface as? TextSurface)?.cursor
+			val cursor = (surface as? TextSurface)?.cursor?.takeIf { it.y >= firstRow }
 			if (cursor != null) {
-				append(CSI)
-				append(surface.height - cursor.y)
-				append('F')
+				moveTo(cursor.y - firstRow)
 				if (cursor.x > 0) {
 					append(CSI)
 					append(cursor.x + 1)
 					append('G')
+					atLineStart = false
 				}
-				cursorRow = cursor.y
 				// When the terminal cannot hide its cursor, it is visible anyway.
 				cursorShown = capabilities.cursorVisibility
 				if (cursorShown) {
 					append(cursorShow)
 				}
 			} else {
-				cursorRow = surface.height
 				cursorShown = false
 			}
 
@@ -167,19 +197,120 @@ internal class AnsiRendering(
 				append(synchronizedOutputDisable)
 			}
 
-			lastHeight = surface.height
+			cursorRow = current
+			lastRows = rows
+			lastSize = size
 		}
 	}
 
 	override fun finish(): CharSequence = buildString {
-		if (cursorRow < lastHeight) {
-			// Move below the output so whatever is printed next does not overwrite it.
-			append(CSI)
-			append(lastHeight - cursorRow)
-			append('E')
-		}
+		// Move below the output so whatever is printed next does not overwrite it.
+		repeat(lastRows.size - cursorRow) { append("\r\n") }
 		if (cursorShown) {
 			append(cursorHide)
 		}
+	}
+}
+
+/**
+ * Renders frames on the terminal's alternate screen, which is restored to what it showed before
+ * when finished. Static output is written to the regular screen once finished.
+ */
+internal class AlternateScreenRendering(
+	private val capabilities: Terminal.Capabilities,
+	private val terminalSize: () -> Terminal.Size?,
+) : Rendering {
+	private val stringBuilder = StringBuilder(100)
+	private val rowBuilder = StringBuilder(100)
+	private val pendingStatic = StringBuilder()
+
+	private var started = false
+	private var lastRows = emptyList<String>()
+	private var lastSize: Terminal.Size? = null
+	private var cursorShown = false
+
+	override fun render(mosaic: Mosaic): CharSequence {
+		return stringBuilder.apply {
+			clear()
+
+			if (capabilities.synchronizedOutput) {
+				append(synchronizedOutputEnable)
+			}
+			if (!started) {
+				append(alternateScreenEnable)
+				started = true
+			}
+			if (cursorShown) {
+				append(cursorHide)
+			}
+
+			mosaic.static()?.let { static ->
+				pendingStatic.append(static)
+				pendingStatic.append("\r\n")
+			}
+
+			val size = terminalSize()
+			var previousRows = lastRows
+			if (size != lastSize) {
+				append(CSI)
+				append("2J")
+				previousRows = emptyList()
+			}
+
+			val surface = mosaic.draw()
+			val rowCount = size?.rows?.let { minOf(it, surface.height) } ?: surface.height
+			val rows = List(rowCount) { row ->
+				rowBuilder.setLength(0)
+				surface.appendRowTo(rowBuilder, row, capabilities.ansiLevel, capabilities.kittyUnderline)
+				rowBuilder.toString()
+			}
+
+			for ((index, row) in rows.withIndex()) {
+				if (index < previousRows.size && previousRows[index] == row) continue
+				appendCursorPosition(index, 0)
+				append(clearLine)
+				append(row)
+			}
+			if (rows.size < previousRows.size) {
+				appendCursorPosition(rows.size, 0)
+				append(clearDisplay)
+			}
+
+			val cursor = (surface as? TextSurface)?.cursor?.takeIf { it.y < rows.size }
+			if (cursor != null) {
+				appendCursorPosition(cursor.y, cursor.x)
+				cursorShown = capabilities.cursorVisibility
+				if (cursorShown) {
+					append(cursorShow)
+				}
+			} else {
+				cursorShown = false
+			}
+
+			if (capabilities.synchronizedOutput) {
+				append(synchronizedOutputDisable)
+			}
+
+			lastRows = rows
+			lastSize = size
+		}
+	}
+
+	private fun StringBuilder.appendCursorPosition(row: Int, column: Int) {
+		append(CSI)
+		append(row + 1)
+		append(';')
+		append(column + 1)
+		append('H')
+	}
+
+	override fun finish(): CharSequence = buildString {
+		if (cursorShown) {
+			append(cursorHide)
+		}
+		if (started) {
+			append(alternateScreenDisable)
+		}
+		append(pendingStatic)
 	}
 }

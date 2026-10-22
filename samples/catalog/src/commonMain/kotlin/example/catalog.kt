@@ -75,7 +75,7 @@ private val pages = listOf(
 	Page("Gaps", "Limitations", "What Mosaic cannot do yet.") { LimitationsPage() },
 )
 
-fun main() = runMosaicMain {
+fun main(args: Array<String>) = runMosaicMain(alternateScreen = "--fullscreen" in args) {
 	var exit by remember { mutableStateOf(false) }
 	if (!exit) {
 		val palette = when (LocalTerminalState.current.theme) {

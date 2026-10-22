@@ -10,8 +10,12 @@ New:
 - `TestMosaic.sendEvent` sends any terminal event, such as the `BracketedPasteEvent`s around pasted text.
 - `DrawScope.drawCursor` places and shows the terminal's cursor once the frame is rendered, so that input methods show their composition at the caret of text input.
 - `TextField` and `TextFieldState` for editing text. Text wraps to the field's width, `maxLines` limits its height, and the terminal's cursor marks the caret. With `onSubmit`, Enter submits and Shift+Enter or Alt+Enter break lines. Pastes are inserted as a whole, and Ctrl+A, Ctrl+E, Ctrl+U, Ctrl+K, and Ctrl+W work like in a shell.
+- `runMosaic`, `runMosaicBlocking`, and `runMosaicMain` take `alternateScreen`, which renders full screen on the terminal's alternate screen and restores what it showed before when done. Static output is written once done.
 
 Changed:
+- Only rows which changed since the last frame are written to the terminal again.
+- Output taller than the terminal shows its bottom instead of corrupting the screen, since the cursor cannot move above the top of the screen to redraw it.
+- Content is measured with the width of the terminal as its maximum width. With `alternateScreen`, it is measured to exactly the size of the terminal.
 - Use the AndroidX versions of the Compose runtime and lifecycle dependencies which are now fully multiplatform. Dependency constraints to the corresponding JetBrains artifacts (which are now empty) are present to prevent symbol duplication.
 - Remove support for x86 macOS targets. These have been deprecated for a bit, but support has been removed from the Compose runtime so we have no choice but to match.
 

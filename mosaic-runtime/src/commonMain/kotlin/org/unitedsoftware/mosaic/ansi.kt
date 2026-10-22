@@ -15,6 +15,8 @@ internal const val clearLine = "${CSI}K"
 internal const val clearDisplay = "${CSI}J"
 internal const val cursorShow = "$CSI?25h"
 internal const val cursorHide = "$CSI?25l"
+internal const val alternateScreenEnable = "$CSI?1049h"
+internal const val alternateScreenDisable = "$CSI?1049l"
 
 internal const val ansiSeparator = ";"
 internal const val ansiClosingCharacter = "m"

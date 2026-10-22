@@ -38,38 +38,59 @@ import org.unitedsoftware.mosaic.terminal.BracketedPasteEvent
 import org.unitedsoftware.mosaic.terminal.KeyboardEvent
 import org.unitedsoftware.mosaic.terminal.Terminal
 import org.unitedsoftware.mosaic.ui.BoxMeasurePolicy
+import org.unitedsoftware.mosaic.ui.unit.Constraints
 
+/**
+ * Run [content] until it completes, for use in `main`.
+ *
+ * @param alternateScreen When true, render full screen on the terminal's alternate screen, which is
+ *   restored once [content] completes. The content is then measured to exactly the size of the
+ *   terminal. Otherwise, render below the previous output, as wide as the terminal and at most as
+ *   tall as it.
+ */
 public fun runMosaicMain(
+	alternateScreen: Boolean = false,
 	content: @Composable () -> Unit,
 ) {
-	runMosaicBlocking(content = content)
+	runMosaicBlocking(alternateScreen = alternateScreen, content = content)
 }
 
+/** @see runMosaicMain */
 public fun runMosaicBlocking(
 	onNonInteractive: NonInteractivePolicy = Exit,
+	alternateScreen: Boolean = false,
 	content: @Composable () -> Unit,
 ): Boolean {
 	return runBlocking {
-		runMosaic(onNonInteractive, content)
+		runMosaic(onNonInteractive, alternateScreen, content)
 	}
 }
 
+/** @see runMosaicMain */
 public suspend fun runMosaic(
 	onNonInteractive: NonInteractivePolicy = Exit,
+	alternateScreen: Boolean = false,
 	content: @Composable () -> Unit,
 ): Boolean = withTerminal(onNonInteractive) { terminal ->
-	val rendering = if (env("MOSAIC_DEBUG_RENDERING") == "true") {
-		DebugRendering(terminal.capabilities)
+	val terminalSize = { terminal.state.size.value }
+	val rendering = when {
+		env("MOSAIC_DEBUG_RENDERING") == "true" -> DebugRendering(terminal.capabilities)
+		alternateScreen -> AlternateScreenRendering(terminal.capabilities, terminalSize)
+		else -> AnsiRendering(terminal.capabilities, terminalSize)
+	}
+	val rootConstraints: (Terminal.Size) -> Constraints = if (alternateScreen) {
+		{ Constraints.fixed(it.columns, it.rows) }
 	} else {
-		AnsiRendering(terminal.capabilities)
+		{ Constraints(maxWidth = it.columns) }
 	}
 
-	runMosaicComposition(terminal, rendering, content)
+	runMosaicComposition(terminal, rendering, rootConstraints, content)
 }
 
 internal suspend fun runMosaicComposition(
 	terminal: Terminal,
 	rendering: Rendering,
+	rootConstraints: (Terminal.Size) -> Constraints,
 	content: @Composable () -> Unit,
 ) {
 	val clock = BroadcastFrameClock()
@@ -79,6 +100,7 @@ internal suspend fun runMosaicComposition(
 			print(rendering.render(rootNode).toString())
 		},
 		terminal = terminal,
+		rootConstraints = rootConstraints,
 	)
 
 	mosaicComposition.setContent(content)
@@ -125,6 +147,8 @@ internal class MosaicComposition(
 	coroutineContext: CoroutineContext,
 	private val onDraw: (Mosaic) -> Unit,
 	private val terminal: Terminal,
+	/** The constraints of the root node for the size of the terminal. */
+	private val rootConstraints: (Terminal.Size) -> Constraints = { Constraints() },
 ) : Mosaic,
 	LifecycleOwner {
 	private val externalClock = checkNotNull(coroutineContext[MonotonicFrameClock]) {
@@ -200,7 +224,7 @@ internal class MosaicComposition(
 
 		readStatesOnLayout.clear()
 		Snapshot.observe(readObserver = readStatesOnLayoutObserver) {
-			rootNode.measureAndPlace()
+			rootNode.measureAndPlace(rootConstraints(terminalState.value.size))
 		}
 
 		performDraw()

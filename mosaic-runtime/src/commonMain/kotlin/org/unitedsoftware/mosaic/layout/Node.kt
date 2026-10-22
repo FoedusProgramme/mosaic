@@ -137,8 +137,8 @@ internal class MosaicNode(
 	val x: Int get() = topLayer.x
 	val y: Int get() = topLayer.y
 
-	fun measureAndPlace() {
-		val placeable = measure(Constraints())
+	fun measureAndPlace(constraints: Constraints = Constraints()) {
+		val placeable = measure(constraints)
 		topLayer.run { placeable.place(0, 0) }
 	}
 

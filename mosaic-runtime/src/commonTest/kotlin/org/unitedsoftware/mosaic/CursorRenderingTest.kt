@@ -31,7 +31,7 @@ class CursorRenderingTest {
 		}
 
 		// On exit, the cursor moves below the output and is hidden again.
-		assertThat(rendering.finish().toString()).isEqualTo("${CSI}1E$cursorHide")
+		assertThat(rendering.finish().toString()).isEqualTo("\r\n$cursorHide")
 	}
 
 	@Test fun nextFrameStartsFromTheCursorRow() = runTest {
@@ -48,8 +48,8 @@ class CursorRenderingTest {
 
 			text = "ef"
 			assertThat(awaitSnapshot()).isEqualTo(
-				"$cursorHide${CSI}1F${clearLine}ab\r\n${clearLine}ef\r\n${CSI}1F$cursorShow"
-					.wrapWithAnsiSynchronizedUpdate(),
+				// Only the changed row is written again.
+				"$cursorHide${clearLine}ef\r\n${CSI}1F$cursorShow".wrapWithAnsiSynchronizedUpdate(),
 			)
 		}
 	}
@@ -75,6 +75,6 @@ class CursorRenderingTest {
 
 			assertThat(awaitSnapshot()).isEqualTo("ab\r\n${CSI}1F${CSI}2G".wrapWithAnsiSynchronizedUpdate())
 		}
-		assertThat(rendering.finish().toString()).isEqualTo("${CSI}1E")
+		assertThat(rendering.finish().toString()).isEqualTo("\r\n")
 	}
 }

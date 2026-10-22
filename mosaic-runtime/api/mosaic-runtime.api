@@ -9,11 +9,12 @@ public abstract interface class org/unitedsoftware/mosaic/Mosaic {
 
 public final class org/unitedsoftware/mosaic/MosaicKt {
 	public static final fun Mosaic (Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function1;Lorg/unitedsoftware/mosaic/terminal/Terminal;)Lorg/unitedsoftware/mosaic/Mosaic;
-	public static final fun runMosaic (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun runMosaic$default (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static final fun runMosaicBlocking (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;)Z
-	public static synthetic fun runMosaicBlocking$default (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Z
-	public static final fun runMosaicMain (Lkotlin/jvm/functions/Function2;)V
+	public static final fun runMosaic (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun runMosaic$default (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun runMosaicBlocking (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZLkotlin/jvm/functions/Function2;)Z
+	public static synthetic fun runMosaicBlocking$default (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Z
+	public static final fun runMosaicMain (ZLkotlin/jvm/functions/Function2;)V
+	public static synthetic fun runMosaicMain$default (ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
 }
 
 public final class org/unitedsoftware/mosaic/NonInteractivePolicy : java/lang/Enum {
