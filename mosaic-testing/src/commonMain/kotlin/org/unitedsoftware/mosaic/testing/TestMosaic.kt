@@ -118,6 +118,8 @@ private class RealTestMosaic<T>(
 	override fun static() = mosaic.static()
 	override fun dumpNodes() = mosaic.dumpNodes()
 	override fun title() = mosaic.title()
+
+	override fun pointerShape() = mosaic.pointerShape()
 	override fun terminalCommands() = mosaic.terminalCommands()
 
 	override suspend fun awaitComplete() = mosaic.awaitComplete()

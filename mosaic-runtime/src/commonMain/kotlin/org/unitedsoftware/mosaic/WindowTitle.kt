@@ -22,12 +22,21 @@ import androidx.compose.runtime.staticCompositionLocalOf
  */
 @Composable
 public fun WindowTitle(title: String) {
-	val manager = LocalWindowTitleManager.current
-	val entry = remember(manager) {
-		manager.register(title)
+	ComposedValue(LocalWindowTitles.current, title)
+}
+
+internal val LocalWindowTitles = staticCompositionLocalOf<ComposedValues<String>> {
+	throw IllegalStateException("No window titles provided")
+}
+
+/** Puts [value] into [values] while this is in the composition. */
+@Composable
+internal fun <T : Any> ComposedValue(values: ComposedValues<T>, value: T) {
+	val entry = remember(values) {
+		values.register(value)
 	}
 	SideEffect {
-		entry.title = title
+		entry.value = value
 	}
 	DisposableEffect(entry) {
 		onDispose {
@@ -36,21 +45,18 @@ public fun WindowTitle(title: String) {
 	}
 }
 
-internal val LocalWindowTitleManager = staticCompositionLocalOf<WindowTitleManager> {
-	throw IllegalStateException("No WindowTitleManager provided")
-}
-
-internal class WindowTitleManager {
+/** Values set by composables, of which the one composed last applies. */
+internal class ComposedValues<T : Any> {
 	private val entries = mutableStateListOf<Entry>()
 
-	val title: String? get() = entries.lastOrNull()?.title
+	val current: T? get() = entries.lastOrNull()?.value
 
-	fun register(title: String): Entry {
-		return Entry(title).also(entries::add)
+	fun register(value: T): Entry {
+		return Entry(value).also(entries::add)
 	}
 
-	inner class Entry(initialTitle: String) {
-		var title by mutableStateOf(initialTitle)
+	inner class Entry(initialValue: T) {
+		var value by mutableStateOf(initialValue)
 
 		fun dispose() {
 			entries.remove(this)

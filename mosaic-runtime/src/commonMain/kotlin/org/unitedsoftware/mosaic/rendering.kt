@@ -46,6 +46,11 @@ internal class DebugRendering(
 				append(title)
 				append("\r\n")
 			}
+			mosaic.pointerShape()?.let { shape ->
+				append("POINTER: ")
+				append(shape)
+				append("\r\n")
+			}
 
 			append("NODES:\r\n")
 			append(mosaic.dumpNodes().replace("\n", "\r\n"))
@@ -79,9 +84,11 @@ internal class DebugRendering(
 }
 
 /** Writes the window title and other terminal commands ahead of frames. */
-internal class TerminalCommandWriter {
+internal class TerminalCommandWriter(private val capabilities: Terminal.Capabilities) {
 	private var lastTitle: String? = null
 	private var titlePushed = false
+	private var lastPointerShape: String? = null
+	private var pointerShapePushed = false
 
 	fun appendTo(builder: StringBuilder, mosaic: Mosaic) {
 		val title = mosaic.title()
@@ -102,12 +109,35 @@ internal class TerminalCommandWriter {
 			}
 			lastTitle = title
 		}
+
+		val pointerShape = mosaic.pointerShape()
+		if (pointerShape != lastPointerShape && capabilities.kittyPointerShape) {
+			when {
+				// Restore the shape from before the first one was set.
+				pointerShape == null -> {
+					builder.append(pointerShapePop)
+					pointerShapePushed = false
+				}
+
+				pointerShapePushed -> builder.append("${OSC}22;=$pointerShape$ST")
+
+				else -> {
+					builder.append("${OSC}22;>$pointerShape$ST")
+					pointerShapePushed = true
+				}
+			}
+			lastPointerShape = pointerShape
+		}
+
 		mosaic.terminalCommands()?.let(builder::append)
 	}
 
 	fun appendFinishTo(builder: StringBuilder) {
 		if (titlePushed) {
 			builder.append(windowTitlePop)
+		}
+		if (pointerShapePushed) {
+			builder.append(pointerShapePop)
 		}
 	}
 }
@@ -140,7 +170,7 @@ internal class AnsiRendering(
 	/** Whether the cursor is in the first column. Output is assumed to start on a new line. */
 	private var atLineStart = true
 
-	private val commandWriter = TerminalCommandWriter()
+	private val commandWriter = TerminalCommandWriter(capabilities)
 
 	override fun render(mosaic: Mosaic): CharSequence {
 		return stringBuilder.apply {
@@ -268,7 +298,7 @@ internal class AlternateScreenRendering(
 	private val rowBuilder = StringBuilder(100)
 	private val pendingStatic = StringBuilder()
 
-	private val commandWriter = TerminalCommandWriter()
+	private val commandWriter = TerminalCommandWriter(capabilities)
 
 	private var started = false
 	private var lastRows = emptyList<String>()

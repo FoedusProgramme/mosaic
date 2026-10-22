@@ -144,6 +144,9 @@ public interface Mosaic {
 	/** The title for the terminal window set with [WindowTitle], or null when none is. */
 	public fun title(): String?
 
+	/** The name of the pointer shape set with [WindowPointerShape], or null when none is. */
+	public fun pointerShape(): String?
+
 	/**
 	 * Escape sequences requested since the last call which do not draw anything, such as copying to
 	 * the clipboard or showing a notification, or null when there are none.
@@ -189,7 +192,8 @@ internal class MosaicComposition(
 
 	private val staticLogs = Channel<Any>(UNLIMITED)
 
-	private val windowTitleManager = WindowTitleManager()
+	private val windowTitles = ComposedValues<String>()
+	private val pointerShapes = ComposedValues<PointerShape>()
 	private val commands = Channel<String>(UNLIMITED)
 	private val clipboard = CommandClipboard(commands) { needDraw = true }
 	private val notifier = CommandNotifier(terminal.capabilities.kittyNotifications, commands) { needDraw = true }
@@ -308,7 +312,9 @@ internal class MosaicComposition(
 		}
 	}
 
-	override fun title(): String? = windowTitleManager.title
+	override fun title(): String? = windowTitles.current
+
+	override fun pointerShape(): String? = pointerShapes.current?.name
 
 	override fun terminalCommands(): String? {
 		var command = commands.tryReceive().getOrNull() ?: return null
@@ -430,7 +436,8 @@ internal class MosaicComposition(
 			CompositionLocalProvider(
 				LocalTerminalState provides terminalState.value,
 				LocalStaticLogger provides staticLogger,
-				LocalWindowTitleManager provides windowTitleManager,
+				LocalWindowTitles provides windowTitles,
+				LocalPointerShapes provides pointerShapes,
 				LocalClipboard provides clipboard,
 				LocalNotifier provides notifier,
 				LocalLifecycleOwner provides this,

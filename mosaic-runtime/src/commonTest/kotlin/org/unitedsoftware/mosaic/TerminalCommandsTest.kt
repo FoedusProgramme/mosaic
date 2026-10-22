@@ -41,6 +41,46 @@ class TerminalCommandsTest {
 		assertThat(rendering.finish().toString()).isEqualTo(windowTitlePop)
 	}
 
+	@Test fun pointerShapeIsPushedChangedAndPopped() = runTest {
+		val rendering = AnsiRendering(TestTerminal.Capabilities())
+		var shape by mutableStateOf<PointerShape?>(PointerShape.Wait)
+		var count by mutableIntStateOf(0)
+		runMosaicTest(RenderingSnapshots(rendering)) {
+			setContent {
+				shape?.let { WindowPointerShape(it) }
+				Text("count $count")
+			}
+			assertThat(awaitSnapshot()).isEqualTo(
+				"${OSC}22;>wait${ST}count 0\r\n".wrapWithAnsiSynchronizedUpdate(),
+			)
+
+			shape = PointerShape.Text
+			count = 1
+			assertThat(awaitSnapshot()).isEqualTo(
+				"${OSC}22;=text$ST${CSI}1F${clearLine}count 1\r\n".wrapWithAnsiSynchronizedUpdate(),
+			)
+
+			shape = null
+			count = 2
+			assertThat(awaitSnapshot()).isEqualTo(
+				"$pointerShapePop${CSI}1F${clearLine}count 2\r\n".wrapWithAnsiSynchronizedUpdate(),
+			)
+		}
+		assertThat(rendering.finish().toString()).isEqualTo("")
+	}
+
+	@Test fun pointerShapeNeedsSupport() = runTest {
+		val rendering = AnsiRendering(TestTerminal.Capabilities(kittyPointerShape = false))
+		runMosaicTest(RenderingSnapshots(rendering)) {
+			setContent {
+				WindowPointerShape(PointerShape.Wait)
+				Text("hi")
+			}
+			assertThat(awaitSnapshot()).isEqualTo("hi\r\n".wrapWithAnsiSynchronizedUpdate())
+		}
+		assertThat(rendering.finish().toString()).isEqualTo("")
+	}
+
 	@Test fun innermostWindowTitleWins() = runTest {
 		@Composable
 		fun Nested() {

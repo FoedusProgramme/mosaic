@@ -7,6 +7,7 @@ public abstract interface class org/unitedsoftware/mosaic/Mosaic {
 	public abstract fun cancel ()V
 	public abstract fun draw ()Lorg/unitedsoftware/mosaic/TextCanvas;
 	public abstract fun dumpNodes ()Ljava/lang/String;
+	public abstract fun pointerShape ()Ljava/lang/String;
 	public abstract fun setContent (Lkotlin/jvm/functions/Function2;)V
 	public abstract fun static ()Ljava/lang/String;
 	public abstract fun terminalCommands ()Ljava/lang/String;
@@ -37,6 +38,45 @@ public final class org/unitedsoftware/mosaic/NonInteractivePolicy : java/lang/En
 public abstract interface class org/unitedsoftware/mosaic/Notifier {
 	public abstract fun notify (Ljava/lang/String;Ljava/lang/String;)V
 	public static synthetic fun notify$default (Lorg/unitedsoftware/mosaic/Notifier;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+}
+
+public final class org/unitedsoftware/mosaic/PointerShape {
+	public static final field Companion Lorg/unitedsoftware/mosaic/PointerShape$Companion;
+	public static final synthetic fun box-impl (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/PointerShape;
+	public static fun constructor-impl (Ljava/lang/String;)Ljava/lang/String;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/lang/String;)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Ljava/lang/String;
+}
+
+public final class org/unitedsoftware/mosaic/PointerShape$Companion {
+	public final fun getCell-KXBuT8E ()Ljava/lang/String;
+	public final fun getColumnResize-KXBuT8E ()Ljava/lang/String;
+	public final fun getCrosshair-KXBuT8E ()Ljava/lang/String;
+	public final fun getDefault-KXBuT8E ()Ljava/lang/String;
+	public final fun getGrab-KXBuT8E ()Ljava/lang/String;
+	public final fun getGrabbing-KXBuT8E ()Ljava/lang/String;
+	public final fun getHelp-KXBuT8E ()Ljava/lang/String;
+	public final fun getMove-KXBuT8E ()Ljava/lang/String;
+	public final fun getNotAllowed-KXBuT8E ()Ljava/lang/String;
+	public final fun getPointer-KXBuT8E ()Ljava/lang/String;
+	public final fun getProgress-KXBuT8E ()Ljava/lang/String;
+	public final fun getRowResize-KXBuT8E ()Ljava/lang/String;
+	public final fun getText-KXBuT8E ()Ljava/lang/String;
+	public final fun getVerticalText-KXBuT8E ()Ljava/lang/String;
+	public final fun getWait-KXBuT8E ()Ljava/lang/String;
+	public final fun getZoomIn-KXBuT8E ()Ljava/lang/String;
+	public final fun getZoomOut-KXBuT8E ()Ljava/lang/String;
+}
+
+public final class org/unitedsoftware/mosaic/PointerShapeKt {
+	public static final fun WindowPointerShape-AYVDaIE (Ljava/lang/String;Landroidx/compose/runtime/Composer;I)V
 }
 
 public final class org/unitedsoftware/mosaic/Static {
