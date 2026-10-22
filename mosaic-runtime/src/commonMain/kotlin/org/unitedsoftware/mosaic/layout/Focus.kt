@@ -43,8 +43,13 @@ public fun Modifier.focusRequester(focusRequester: FocusRequester): Modifier = t
  */
 @Suppress("ktlint:compose:modifier-composed-check") // Mosaic has no Modifier.Node to keep state.
 public fun Modifier.onFocusChanged(onFocusChanged: (FocusState) -> Unit): Modifier = composed {
+	val owner = LocalFocusManager.current as FocusOwner
 	val observer = remember { FocusObserver() }
 	observer.onFocusChanged = onFocusChanged
+	DisposableEffect(owner) {
+		owner.observerCount++
+		onDispose { owner.observerCount-- }
+	}
 	FocusObserverElement(observer)
 }
 
@@ -109,7 +114,9 @@ internal fun rememberFocusTarget(): FocusTarget {
 	val owner = LocalFocusManager.current as FocusOwner
 	val target = remember(owner) { FocusTarget(owner) }
 	DisposableEffect(target) {
+		owner.targetCount++
 		onDispose {
+			owner.targetCount--
 			target.detach()
 		}
 	}
@@ -193,6 +200,10 @@ internal class FocusOwner(private val roots: () -> List<MosaicNode>) : FocusMana
 
 	private val path = ArrayList<MosaicNode>()
 
+	/** The focus targets and observers in the composition, without which layouts need no work. */
+	var targetCount = 0
+	var observerCount = 0
+
 	fun focus(target: FocusTarget): Boolean {
 		if (!target.canFocus) return false
 		cleared = false
@@ -235,8 +246,13 @@ internal class FocusOwner(private val roots: () -> List<MosaicNode>) : FocusMana
 		}
 	}
 
-	/** Moves the focus to the first node when there is none, and tells observers about changes. */
-	fun onLayout() {
+	/**
+	 * Moves the focus to the first node when there is none, and tells observers about changes.
+	 * Returns whether the focus changed.
+	 */
+	fun onLayout(): Boolean {
+		if (targetCount == 0 && observerCount == 0 && focused == null) return false
+		val before = this.focused
 		val focused = focused
 		if (focused != null && roots().none { it.pathTo(focused, ArrayList()) != null }) {
 			// The node of the target was removed while the target itself is still composed.
@@ -246,10 +262,11 @@ internal class FocusOwner(private val roots: () -> List<MosaicNode>) : FocusMana
 			val target = roots().firstNotNullOfOrNull { it.firstFocusTarget() }
 			if (target != null) {
 				focus(target)
-				return
+				return true
 			}
 		}
 		notifyObservers()
+		return this.focused !== before
 	}
 
 	/**

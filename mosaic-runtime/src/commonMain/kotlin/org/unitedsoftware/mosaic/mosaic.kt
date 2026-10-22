@@ -286,9 +286,10 @@ internal class MosaicComposition(
 			rootNode.measureAndPlace(constraints)
 			popupHost.layout(rootNode, constraints)
 		}
-		focusOwner.onLayout()
-		// Send the focus changes now, which this frame draws, rather than scheduling another frame.
-		Snapshot.sendApplyNotifications()
+		if (focusOwner.onLayout()) {
+			// Send the focus changes now, which this frame draws, rather than scheduling another frame.
+			Snapshot.sendApplyNotifications()
+		}
 
 		performDraw()
 	}
