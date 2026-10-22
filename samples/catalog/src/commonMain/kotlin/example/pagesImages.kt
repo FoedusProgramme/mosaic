@@ -61,8 +61,8 @@ fun ImagesPage() {
 		Spacer(Modifier.height(1))
 		Image(stripes, modifier = Modifier.width(48), contentDescription = "stripes")
 		Spacer(Modifier.height(1))
-		Text("Kitty graphics uses Unicode placeholders, so images move", color = palette.muted)
-		Text("with the text. Sixel is used where reported, otherwise", color = palette.muted)
-		Text("half blocks show two pixels per cell.", color = palette.muted)
+		Text("kitty and Ghostty show images with Unicode placeholders, so", color = palette.muted)
+		Text("they move with the text. iTerm2 and WezTerm use inline images,", color = palette.muted)
+		Text("other terminals Sixel where reported, or else half blocks.", color = palette.muted)
 	}
 }

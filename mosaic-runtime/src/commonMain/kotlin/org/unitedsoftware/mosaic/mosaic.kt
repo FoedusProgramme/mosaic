@@ -44,6 +44,7 @@ import org.unitedsoftware.mosaic.ui.BoxMeasurePolicy
 import org.unitedsoftware.mosaic.ui.LocalPopupHost
 import org.unitedsoftware.mosaic.ui.LocalTerminalCapabilities
 import org.unitedsoftware.mosaic.ui.LocalTerminalCommands
+import org.unitedsoftware.mosaic.ui.LocalTerminalName
 import org.unitedsoftware.mosaic.ui.PopupHost
 import org.unitedsoftware.mosaic.ui.unit.Constraints
 
@@ -451,6 +452,7 @@ internal class MosaicComposition(
 				LocalFocusManager provides focusOwner,
 				LocalPopupHost provides popupHost,
 				LocalTerminalCapabilities provides terminal.capabilities,
+				LocalTerminalName provides terminal.name,
 				LocalTerminalCommands provides terminalCommandSender,
 				content = content,
 			)

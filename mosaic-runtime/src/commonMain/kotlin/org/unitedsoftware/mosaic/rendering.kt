@@ -170,8 +170,8 @@ internal class AnsiRendering(
 	/** Whether the cursor is in the first column. Output is assumed to start on a new line. */
 	private var atLineStart = true
 
-	/** The Sixel images of the last output, in its rows. */
-	private var lastSixels = emptyList<SixelPlacement>()
+	/** The graphics of the last output, in its rows. */
+	private var lastGraphics = emptyList<GraphicPlacement>()
 
 	private val commandWriter = TerminalCommandWriter(capabilities)
 
@@ -236,16 +236,16 @@ internal class AnsiRendering(
 				rowBuilder.toString()
 			}
 
-			val sixels = (surface as? TextSurface)?.sixels.orEmpty().mapNotNull { sixel ->
-				if (sixel.y < firstRow) return@mapNotNull null
-				SixelPlacement(sixel.x, sixel.y - firstRow, sixel.columns, sixel.rows, sixel.data)
+			val graphics = (surface as? TextSurface)?.graphics.orEmpty().mapNotNull { graphic ->
+				if (graphic.y < firstRow) return@mapNotNull null
+				GraphicPlacement(graphic.x, graphic.y - firstRow, graphic.columns, graphic.rows, graphic.data)
 			}
 			// Rows of images which went away are written again, which erases their pixels.
 			val rewrite = BooleanArray(rows.size)
 			if (previousRows.isNotEmpty()) {
-				for (sixel in lastSixels) {
-					if (sixel in sixels) continue
-					for (row in sixel.y until minOf(sixel.y + sixel.rows, rows.size)) rewrite[row] = true
+				for (graphic in lastGraphics) {
+					if (graphic in graphics) continue
+					for (row in graphic.y until minOf(graphic.y + graphic.rows, rows.size)) rewrite[row] = true
 				}
 			}
 
@@ -261,22 +261,22 @@ internal class AnsiRendering(
 			}
 
 			// Images go over the rows, again whenever one of their rows was written, which erases them.
-			for (sixel in sixels) {
-				val end = minOf(sixel.y + sixel.rows, rows.size)
-				if (sixel in lastSixels && (sixel.y until end).none { rewrite[it] }) continue
-				moveTo(sixel.y)
-				if (sixel.x > 0) {
+			for (graphic in graphics) {
+				val end = minOf(graphic.y + graphic.rows, rows.size)
+				if (graphic in lastGraphics && (graphic.y until end).none { rewrite[it] }) continue
+				moveTo(graphic.y)
+				if (graphic.x > 0) {
 					append(CSI)
-					append(sixel.x + 1)
+					append(graphic.x + 1)
 					append('G')
 				}
 				// Where the cursor ends up after an image differs between terminals.
 				append(cursorSave)
-				append(sixel.data)
+				append(graphic.data)
 				append(cursorRestore)
-				atLineStart = sixel.x == 0
+				atLineStart = graphic.x == 0
 			}
-			lastSixels = sixels
+			lastGraphics = graphics
 
 			moveTo(rows.size)
 			if (rows.size < previousRows.size) {
@@ -340,7 +340,7 @@ internal class AlternateScreenRendering(
 	private var lastRows = emptyList<String>()
 	private var lastSize: Terminal.Size? = null
 	private var cursorShown = false
-	private var lastSixels = emptyList<SixelPlacement>()
+	private var lastGraphics = emptyList<GraphicPlacement>()
 
 	override fun render(mosaic: Mosaic): CharSequence {
 		return stringBuilder.apply {
@@ -380,13 +380,13 @@ internal class AlternateScreenRendering(
 				rowBuilder.toString()
 			}
 
-			val sixels = (surface as? TextSurface)?.sixels.orEmpty().filter { it.y + it.rows <= rows.size }
+			val graphics = (surface as? TextSurface)?.graphics.orEmpty().filter { it.y + it.rows <= rows.size }
 			// Rows of images which went away are written again, which erases their pixels.
 			val rewrite = BooleanArray(rows.size)
 			if (previousRows.isNotEmpty()) {
-				for (sixel in lastSixels) {
-					if (sixel in sixels) continue
-					for (row in sixel.y until minOf(sixel.y + sixel.rows, rows.size)) rewrite[row] = true
+				for (graphic in lastGraphics) {
+					if (graphic in graphics) continue
+					for (row in graphic.y until minOf(graphic.y + graphic.rows, rows.size)) rewrite[row] = true
 				}
 			}
 
@@ -399,14 +399,14 @@ internal class AlternateScreenRendering(
 			}
 
 			// Images go over the rows, again whenever one of their rows was written, which erases them.
-			for (sixel in sixels) {
-				if (sixel in lastSixels && (sixel.y until sixel.y + sixel.rows).none { rewrite[it] }) continue
-				appendCursorPosition(sixel.y, sixel.x)
+			for (graphic in graphics) {
+				if (graphic in lastGraphics && (graphic.y until graphic.y + graphic.rows).none { rewrite[it] }) continue
+				appendCursorPosition(graphic.y, graphic.x)
 				append(cursorSave)
-				append(sixel.data)
+				append(graphic.data)
 				append(cursorRestore)
 			}
-			lastSixels = sixels
+			lastGraphics = graphics
 			if (rows.size < previousRows.size) {
 				appendCursorPosition(rows.size, 0)
 				append(clearDisplay)

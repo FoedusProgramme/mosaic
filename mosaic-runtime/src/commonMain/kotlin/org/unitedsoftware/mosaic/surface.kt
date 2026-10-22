@@ -66,18 +66,19 @@ internal class TextSurface(
 
 	private fun isClipped(x: Int, y: Int) = x !in clipLeft until clipRight || y !in clipTop until clipBottom
 
-	/** Sixel images to write over the cells they cover once the rows are written. */
-	val sixels = ArrayList<SixelPlacement>(0)
+	/** Images to write over the cells they cover once the rows are written, like Sixel. */
+	val graphics = ArrayList<GraphicPlacement>(0)
 
 	/**
-	 * Places a Sixel image covering [columns] by [rows] cells at [row] and [column]. Images which do
-	 * not entirely fit within the clip are left out, since they cannot be cut.
+	 * Places an image, as the escape sequence [data] which draws it at the cursor, covering [columns]
+	 * by [rows] cells at [row] and [column]. Images which do not entirely fit within the clip are
+	 * left out, since they cannot be cut.
 	 */
-	fun addSixel(row: Int, column: Int, columns: Int, rows: Int, data: String) {
+	fun addGraphic(row: Int, column: Int, columns: Int, rows: Int, data: String) {
 		val x = translationX + column
 		val y = translationY + row
 		if (x < clipLeft || y < clipTop || x + columns > clipRight || y + rows > clipBottom) return
-		sixels += SixelPlacement(x, y, columns, rows, data)
+		graphics += GraphicPlacement(x, y, columns, rows, data)
 	}
 
 	/** Where the terminal's cursor should be placed after rendering, if anywhere. */
@@ -134,7 +135,7 @@ internal class TextSurface(
 	/** Resets the pixels in the rectangle, in surface coordinates, to unstyled spaces. */
 	fun clear(left: Int, top: Int, right: Int, bottom: Int) {
 		// Images cannot be partly cleared, so ones which overlap are removed.
-		sixels.removeAll { it.x < right && it.x + it.columns > left && it.y < bottom && it.y + it.rows > top }
+		graphics.removeAll { it.x < right && it.x + it.columns > left && it.y < bottom && it.y + it.rows > top }
 		for (y in maxOf(top, clipTop) until minOf(bottom, clipBottom)) {
 			for (x in maxOf(left, clipLeft) until minOf(right, clipRight)) {
 				val index = y * width + x
@@ -413,9 +414,9 @@ internal class TextPixel(codePoint: Int) {
 	}
 }
 
-/** A Sixel image over the cells from [x] and [y], in surface coordinates. */
-internal class SixelPlacement(val x: Int, val y: Int, val columns: Int, val rows: Int, val data: String) {
-	override fun equals(other: Any?) = other is SixelPlacement &&
+/** An image drawn by [data] over the cells from [x] and [y], in surface coordinates. */
+internal class GraphicPlacement(val x: Int, val y: Int, val columns: Int, val rows: Int, val data: String) {
+	override fun equals(other: Any?) = other is GraphicPlacement &&
 		x == other.x && y == other.y && columns == other.columns && rows == other.rows &&
 		// The data is the same instance as long as the image is unchanged, which is cheaper to check.
 		data === other.data

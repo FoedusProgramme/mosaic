@@ -1,5 +1,6 @@
 package org.unitedsoftware.mosaic.ui
 
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +8,8 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
+import assertk.assertions.isFalse
+import assertk.assertions.isTrue
 import kotlin.io.encoding.Base64
 import kotlin.test.Test
 import kotlinx.coroutines.test.runTest
@@ -60,7 +63,9 @@ class ImageTest {
 		var show by mutableStateOf(true)
 		runMosaicTest(RenderingSnapshots(rendering)) {
 			setContent {
-				if (show) Image(bitmap, modifier = Modifier.size(2, 1))
+				CompositionLocalProvider(LocalTerminalName provides "kitty(0.43.1)") {
+					if (show) Image(bitmap, modifier = Modifier.size(2, 1))
+				}
 			}
 			val frame = awaitSnapshot()
 			val id = Regex("""a=t,q=2,f=32,s=2,v=2,i=(\d+),m=0;""").find(frame)!!.groupValues[1].toInt()
@@ -85,5 +90,13 @@ class ImageTest {
 			}
 			assertThat(awaitSnapshot()).isEqualTo("▀")
 		}
+	}
+
+	@Test fun placeholdersOnlyInTerminalsKnownToSupportThem() {
+		assertThat(supportsKittyPlaceholders("kitty(0.43.1)")).isTrue()
+		assertThat(supportsKittyPlaceholders("ghostty 1.2.0")).isTrue()
+		// It supports the Kitty graphics protocol, but places images at the cursor instead.
+		assertThat(supportsKittyPlaceholders("iTerm2 3.7.3")).isFalse()
+		assertThat(supportsKittyPlaceholders(null)).isFalse()
 	}
 }

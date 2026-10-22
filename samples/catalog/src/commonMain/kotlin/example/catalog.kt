@@ -63,7 +63,7 @@ private val pages = listOf(
 	Page("Layout", "Custom layout", "A FlowRow written with Layout + MeasurePolicy.", listOf("←→" to "resize")) { CustomLayoutPage() },
 	Page("Drawing", "Spacer & Filler", "Empty space and character fills.") { SpacerFillerPage() },
 	Page("Drawing", "DrawScope", "drawBehind with drawRect and drawText.") { DrawScopePage() },
-	Page("Drawing", "Images", "Image with Kitty graphics, Sixel, or half blocks.") { ImagesPage() },
+	Page("Drawing", "Images", "Image with Kitty graphics, inline images, Sixel, or half blocks.") { ImagesPage() },
 	Page("Input", "Keyboard", "Raw KeyEvents as delivered to onPreviewKeyEvent.") { KeyboardPage() },
 	Page("Input", "Text input", "Recipe: focus handling and editable text fields.", listOf("tab" to "focus", "enter" to "submit")) { TextInputPage() },
 	Page("Input", "Completion popup", "A Popup above a TextField, like slash commands.", listOf("/" to "commands", "↑↓" to "choose", "tab" to "complete")) { CompletionPage() },
@@ -78,7 +78,14 @@ private val pages = listOf(
 	Page("Gaps", "Limitations", "What Mosaic cannot do yet.") { LimitationsPage() },
 )
 
+/**
+ * Runs the catalog. `--fullscreen` uses the alternate screen, and `--page <title>` starts on the
+ * page with that title instead of the first one.
+ */
 fun main(args: Array<String>) = runMosaicMain(alternateScreen = "--fullscreen" in args) {
+	val initialPage = args.indexOf("--page").takeIf { it != -1 }?.let { args.getOrNull(it + 1) }
+		?.let { title -> pages.indexOfFirst { it.title.equals(title, ignoreCase = true) } }
+		?.coerceAtLeast(0) ?: 0
 	var exit by remember { mutableStateOf(false) }
 	if (!exit) {
 		val palette = when (LocalTerminalState.current.theme) {
@@ -86,7 +93,7 @@ fun main(args: Array<String>) = runMosaicMain(alternateScreen = "--fullscreen" i
 			else -> DarkPalette
 		}
 		CompositionLocalProvider(LocalPalette provides palette) {
-			Catalog(onExit = { exit = true })
+			Catalog(initialPage, onExit = { exit = true })
 		}
 		LaunchedEffect(Unit) {
 			awaitCancellation()
@@ -95,9 +102,9 @@ fun main(args: Array<String>) = runMosaicMain(alternateScreen = "--fullscreen" i
 }
 
 @Composable
-private fun Catalog(onExit: () -> Unit) {
+private fun Catalog(initialPage: Int, onExit: () -> Unit) {
 	val size = LocalTerminalState.current.size
-	var selected by remember { mutableIntStateOf(0) }
+	var selected by remember { mutableIntStateOf(initialPage) }
 	val keys = Modifier.onKeyEvent { event ->
 		when (event) {
 			KeyEvent("ArrowUp") -> selected = (selected - 1 + pages.size) % pages.size

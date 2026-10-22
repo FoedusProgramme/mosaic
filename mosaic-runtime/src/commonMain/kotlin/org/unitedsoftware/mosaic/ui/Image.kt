@@ -44,8 +44,9 @@ public class ImageBitmap(
  * Shows [bitmap], scaled to fit the incoming constraints while keeping its aspect ratio, and at
  * most as large as its pixels on the terminal when its cell size is known.
  *
- * Terminals which support the Kitty graphics protocol or Sixel show the image itself. Others show
- * it with half block characters, two pixels per cell, in the colors of the image.
+ * Terminals which support the Kitty graphics protocol with Unicode placeholders, the inline images
+ * of iTerm2, or Sixel show the image itself. Others show it with half block characters, two pixels
+ * per cell, in the colors of the image.
  *
  * @param contentDescription What the image shows, for debug output.
  */
@@ -61,12 +62,22 @@ public fun Image(
 	val send = LocalTerminalCommands.current
 	val blocks = remember(bitmap) { HalfBlockCache(bitmap) }
 	// Placeholder cells name their image by color, which needs all 24 bits.
-	val kitty = if (capabilities.kittyGraphics && capabilities.ansiLevel == AnsiLevel.TRUECOLOR) {
+	val kitty = if (
+		capabilities.kittyGraphics &&
+		capabilities.ansiLevel == AnsiLevel.TRUECOLOR &&
+		supportsKittyPlaceholders(LocalTerminalName.current)
+	) {
 		remember(bitmap, send) { KittyImage(bitmap, send) }
 	} else {
 		null
 	}
-	val sixel = if (kitty == null && capabilities.sixelGraphics) remember(bitmap) { SixelCache(bitmap) } else null
+	val name = LocalTerminalName.current
+	val overlay = when {
+		kitty != null -> null
+		supportsInlineImages(name) -> remember(bitmap) { OverlayCache(bitmap, ::encodeInlineImage) }
+		capabilities.sixelGraphics -> remember(bitmap) { OverlayCache(bitmap) { pixels, width, height, _, _ -> encodeSixel(pixels, width, height) } }
+		else -> null
+	}
 	DisposableEffect(kitty) {
 		onDispose {
 			kitty?.delete()
@@ -77,8 +88,8 @@ public fun Image(
 		modifier = modifier.drawBehind {
 			if (kitty != null && width <= kittyMaxCells && height <= kittyMaxCells) {
 				kitty.draw(this, width, height, cell)
-			} else if (sixel != null) {
-				(this as TextCanvasDrawScope).drawSixel(0, 0, width, height, sixel.encode(width, height, cell))
+			} else if (overlay != null) {
+				(this as TextCanvasDrawScope).drawGraphic(0, 0, width, height, overlay.encode(width, height, cell))
 			} else {
 				blocks.draw(this, width, height)
 			}
@@ -126,8 +137,14 @@ internal fun fit(bitmap: ImageBitmap, cell: Pair<Double, Double>, constraints: C
 	return width to height
 }
 
-/** The Sixel encoding of an image, kept for the last size it was drawn at. */
-private class SixelCache(private val bitmap: ImageBitmap) {
+/**
+ * The escape sequence which draws an image over its cells at the cursor, like Sixel, kept for the
+ * last size it was drawn at.
+ */
+private class OverlayCache(
+	private val bitmap: ImageBitmap,
+	private val encode: (pixels: IntArray, width: Int, height: Int, columns: Int, rows: Int) -> String,
+) {
 	private var columns = -1
 	private var rows = -1
 	private var data = ""
@@ -138,7 +155,7 @@ private class SixelCache(private val bitmap: ImageBitmap) {
 			val scale = minOf(columns * cell.first / bitmap.width, rows * cell.second / bitmap.height)
 			val width = (bitmap.width * scale).toInt().coerceAtLeast(1)
 			val height = (bitmap.height * scale).toInt().coerceAtLeast(1)
-			data = encodeSixel(bitmap.resample(width, height), width, height)
+			data = encode(bitmap.resample(width, height), width, height, columns, rows)
 			this.columns = columns
 			this.rows = rows
 		}
@@ -217,6 +234,20 @@ internal fun ImageBitmap.resample(width: Int, height: Int): IntArray {
 		}
 	}
 	return result
+}
+
+/** The name and version the terminal reported, if any. */
+internal val LocalTerminalName = staticCompositionLocalOf<String?> { null }
+
+/**
+ * Whether the terminal named [name] supports the Unicode placeholders of the Kitty graphics
+ * protocol. Terminals like iTerm2 and WezTerm support the protocol but not placeholders, and there
+ * is no way to query for them, so only terminals known to support them use them.
+ */
+internal fun supportsKittyPlaceholders(name: String?): Boolean {
+	if (name == null) return false
+	val lowercase = name.lowercase()
+	return lowercase.startsWith("kitty") || lowercase.startsWith("ghostty")
 }
 
 internal val LocalTerminalCapabilities = staticCompositionLocalOf<Terminal.Capabilities> {
