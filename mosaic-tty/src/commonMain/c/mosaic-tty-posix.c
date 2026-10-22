@@ -274,6 +274,14 @@ MosaicTtyTerminalSizeResult mosaic_tty_current_terminal_size(MosaicTty *tty) {
 	return result;
 }
 
+uint32_t mosaic_tty_suspend_process(MosaicTty *tty UNUSED) {
+	// Like the shell does for Ctrl+Z, stop the whole job. This returns once it is continued.
+	if (unlikely(kill(0, SIGTSTP) != 0)) {
+		return errno;
+	}
+	return 0;
+}
+
 uint32_t mosaic_tty_reset(MosaicTty *tty) {
 	uint32_t result = 0;
 

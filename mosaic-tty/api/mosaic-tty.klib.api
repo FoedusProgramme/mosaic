@@ -66,6 +66,9 @@ final class org.unitedsoftware.mosaic.tty/TestTerminal : kotlin/AutoCloseable { 
 }
 
 final class org.unitedsoftware.mosaic.tty/Tty : kotlin/AutoCloseable { // org.unitedsoftware.mosaic.tty/Tty|null[0]
+    final val canSuspendProcess // org.unitedsoftware.mosaic.tty/Tty.canSuspendProcess|{}canSuspendProcess[0]
+        final fun <get-canSuspendProcess>(): kotlin/Boolean // org.unitedsoftware.mosaic.tty/Tty.canSuspendProcess.<get-canSuspendProcess>|<get-canSuspendProcess>(){}[0]
+
     final fun close() // org.unitedsoftware.mosaic.tty/Tty.close|close(){}[0]
     final fun currentSize(): kotlin/IntArray // org.unitedsoftware.mosaic.tty/Tty.currentSize|currentSize(){}[0]
     final fun enableRawMode() // org.unitedsoftware.mosaic.tty/Tty.enableRawMode|enableRawMode(){}[0]
@@ -75,6 +78,7 @@ final class org.unitedsoftware.mosaic.tty/Tty : kotlin/AutoCloseable { // org.un
     final fun readWithTimeout(kotlin/ByteArray, kotlin/Int, kotlin/Int, kotlin/Int): kotlin/Int // org.unitedsoftware.mosaic.tty/Tty.readWithTimeout|readWithTimeout(kotlin.ByteArray;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
     final fun reset() // org.unitedsoftware.mosaic.tty/Tty.reset|reset(){}[0]
     final fun setCallback(org.unitedsoftware.mosaic.tty/Tty.Callback?) // org.unitedsoftware.mosaic.tty/Tty.setCallback|setCallback(org.unitedsoftware.mosaic.tty.Tty.Callback?){}[0]
+    final fun suspendProcess() // org.unitedsoftware.mosaic.tty/Tty.suspendProcess|suspendProcess(){}[0]
     final fun write(kotlin/ByteArray, kotlin/Int, kotlin/Int): kotlin/Int // org.unitedsoftware.mosaic.tty/Tty.write|write(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
 
     abstract interface Callback { // org.unitedsoftware.mosaic.tty/Tty.Callback|null[0]

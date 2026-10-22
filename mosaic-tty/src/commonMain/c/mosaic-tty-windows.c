@@ -274,6 +274,11 @@ MOSAIC_EXPORT MosaicTtyTerminalSizeResult mosaic_tty_current_terminal_size(Mosai
 	return result;
 }
 
+MOSAIC_EXPORT uint32_t mosaic_tty_suspend_process(MosaicTty *tty UNUSED) {
+	// There is no job control on Windows.
+	return ERROR_NOT_SUPPORTED;
+}
+
 MOSAIC_EXPORT uint32_t mosaic_tty_reset(MosaicTty *tty) {
 	uint32_t result = 0;
 

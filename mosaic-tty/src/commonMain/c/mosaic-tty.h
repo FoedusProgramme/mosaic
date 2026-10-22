@@ -50,6 +50,8 @@ MOSAIC_EXPORT uint32_t mosaic_tty_enable_raw_mode(MosaicTty *tty);
 MOSAIC_EXPORT uint32_t mosaic_tty_enable_window_resize_events(MosaicTty *tty);
 MOSAIC_EXPORT MosaicTtyTerminalSizeResult mosaic_tty_current_terminal_size(MosaicTty *tty);
 
+MOSAIC_EXPORT uint32_t mosaic_tty_suspend_process(MosaicTty *tty);
+
 MOSAIC_EXPORT uint32_t mosaic_tty_reset(MosaicTty *tty);
 MOSAIC_EXPORT uint32_t mosaic_tty_free(MosaicTty *tty);
 

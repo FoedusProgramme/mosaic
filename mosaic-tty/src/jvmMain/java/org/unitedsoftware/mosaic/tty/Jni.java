@@ -125,6 +125,8 @@ final class Jni {
 	 */
 	static native int[] ttyCurrentSize(long ttyPtr);
 
+	static native void ttySuspendProcess(long ttyPtr);
+
 	static native void ttyReset(long ttyPtr);
 
 	static native void ttyFree(long ttyPtr);

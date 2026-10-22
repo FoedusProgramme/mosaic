@@ -15,6 +15,14 @@ internal interface Rendering {
 
 	/** Output which restores the terminal after the last [render], such as moving the cursor below. */
 	fun finish(): CharSequence = ""
+
+	/**
+	 * Output which hands the terminal over to other programs, like [finish] does, after which
+	 * [reacquire] starts over since the screen shows whatever those programs left.
+	 */
+	fun release(): CharSequence = finish()
+
+	fun reacquire() {}
 }
 
 internal class DebugRendering(
@@ -153,6 +161,20 @@ internal class TerminalCommandWriter(
 		}
 
 		mosaic.terminalCommands()?.let(builder::append)
+	}
+
+	/** Disables what other programs should not get while the terminal is released, until the next frame. */
+	fun appendReleaseTo(builder: StringBuilder) {
+		if (mouseEnabled) {
+			builder.append(mouseTrackingDisable)
+			mouseEnabled = false
+		}
+	}
+
+	/** Sends the title and pointer shape again, which other programs may have changed. */
+	fun reacquire() {
+		lastTitle = null
+		lastPointerShape = null
 	}
 
 	fun appendFinishTo(builder: StringBuilder) {
@@ -394,6 +416,25 @@ internal class AnsiRendering(
 		}
 		commandWriter.appendFinishTo(this)
 	}
+
+	override fun release(): CharSequence = buildString {
+		// Other programs write below the output.
+		repeat(lastRowCount - cursorRow) { append("\r\n") }
+		commandWriter.appendReleaseTo(this)
+	}
+
+	override fun reacquire() {
+		commandWriter.reacquire()
+		// The output starts over below whatever the other programs printed.
+		lastSurface = null
+		lastRowCount = 0
+		lastGraphics = emptyList()
+		cursorRow = 0
+		cursorShown = false
+		atLineStart = true
+		outputTop = null
+		positionRequests.clear()
+	}
 }
 
 /**
@@ -534,5 +575,24 @@ internal class AlternateScreenRendering(
 		}
 		commandWriter.appendFinishTo(this)
 		append(pendingStatic)
+	}
+
+	override fun release(): CharSequence = buildString {
+		// Other programs get the regular screen.
+		if (started) {
+			append(alternateScreenDisable)
+		}
+		commandWriter.appendReleaseTo(this)
+	}
+
+	override fun reacquire() {
+		commandWriter.reacquire()
+		// The next frame enters the alternate screen again and draws everything.
+		started = false
+		lastSurface = null
+		lastRowCount = 0
+		lastSize = null
+		lastGraphics = emptyList()
+		cursorShown = false
 	}
 }

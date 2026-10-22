@@ -15,6 +15,7 @@ import org.unitedsoftware.mosaic.tty.Libmosaic.mosaic_tty_read
 import org.unitedsoftware.mosaic.tty.Libmosaic.mosaic_tty_read_with_timeout
 import org.unitedsoftware.mosaic.tty.Libmosaic.mosaic_tty_reset
 import org.unitedsoftware.mosaic.tty.Libmosaic.mosaic_tty_set_callback
+import org.unitedsoftware.mosaic.tty.Libmosaic.mosaic_tty_suspend_process
 import org.unitedsoftware.mosaic.tty.Libmosaic.mosaic_tty_write
 
 public class Tty internal constructor(
@@ -176,6 +177,16 @@ public class Tty internal constructor(
 			}
 			throwIoe(error)
 		}
+	}
+
+	public val canSuspendProcess: Boolean =
+		!System.getProperty("os.name").orEmpty().startsWith("Windows")
+
+	@Throws(IOException::class)
+	public fun suspendProcess() {
+		val error = mosaic_tty_suspend_process(ptr)
+		if (error == 0) return
+		throwIoe(error)
 	}
 
 	@Throws(IOException::class)

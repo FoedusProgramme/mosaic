@@ -283,6 +283,14 @@ abstract interface org.unitedsoftware.mosaic/Notifier { // org.unitedsoftware.mo
     abstract fun notify(kotlin/String, kotlin/String = ...) // org.unitedsoftware.mosaic/Notifier.notify|notify(kotlin.String;kotlin.String){}[0]
 }
 
+abstract interface org.unitedsoftware.mosaic/TerminalControl { // org.unitedsoftware.mosaic/TerminalControl|null[0]
+    abstract val canSuspendProcess // org.unitedsoftware.mosaic/TerminalControl.canSuspendProcess|{}canSuspendProcess[0]
+        abstract fun <get-canSuspendProcess>(): kotlin/Boolean // org.unitedsoftware.mosaic/TerminalControl.canSuspendProcess.<get-canSuspendProcess>|<get-canSuspendProcess>(){}[0]
+
+    abstract suspend fun <#A1: kotlin/Any?> release(kotlin.coroutines/SuspendFunction0<#A1>): #A1 // org.unitedsoftware.mosaic/TerminalControl.release|release(kotlin.coroutines.SuspendFunction0<0:0>){0§<kotlin.Any?>}[0]
+    abstract suspend fun suspendProcess(): kotlin/Boolean // org.unitedsoftware.mosaic/TerminalControl.suspendProcess|suspendProcess(){}[0]
+}
+
 abstract interface org.unitedsoftware.mosaic/TextCanvas { // org.unitedsoftware.mosaic/TextCanvas|null[0]
     abstract val height // org.unitedsoftware.mosaic/TextCanvas.height|{}height[0]
         abstract fun <get-height>(): kotlin/Int // org.unitedsoftware.mosaic/TextCanvas.height.<get-height>|<get-height>(){}[0]
@@ -1009,6 +1017,8 @@ final val org.unitedsoftware.mosaic/LocalNotifier // org.unitedsoftware.mosaic/L
     final fun <get-LocalNotifier>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/Notifier> // org.unitedsoftware.mosaic/LocalNotifier.<get-LocalNotifier>|<get-LocalNotifier>(){}[0]
 final val org.unitedsoftware.mosaic/LocalStaticLogger // org.unitedsoftware.mosaic/LocalStaticLogger|{}LocalStaticLogger[0]
     final fun <get-LocalStaticLogger>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/StaticLogger> // org.unitedsoftware.mosaic/LocalStaticLogger.<get-LocalStaticLogger>|<get-LocalStaticLogger>(){}[0]
+final val org.unitedsoftware.mosaic/LocalTerminalControl // org.unitedsoftware.mosaic/LocalTerminalControl|{}LocalTerminalControl[0]
+    final fun <get-LocalTerminalControl>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/TerminalControl> // org.unitedsoftware.mosaic/LocalTerminalControl.<get-LocalTerminalControl>|<get-LocalTerminalControl>(){}[0]
 final val org.unitedsoftware.mosaic/LocalTerminalState // org.unitedsoftware.mosaic/LocalTerminalState|{}LocalTerminalState[0]
     final fun <get-LocalTerminalState>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/TerminalState> // org.unitedsoftware.mosaic/LocalTerminalState.<get-LocalTerminalState>|<get-LocalTerminalState>(){}[0]
 final val org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop|#static{}org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop[0]

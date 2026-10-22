@@ -1,5 +1,6 @@
 package org.unitedsoftware.mosaic.tty
 
+import kotlin.experimental.ExperimentalNativeApi
 import kotlinx.cinterop.COpaquePointer
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.NativePlacement
@@ -110,6 +111,15 @@ public actual class Tty internal constructor(
 			}
 			throwIoe(error)
 		}
+	}
+
+	@OptIn(ExperimentalNativeApi::class)
+	public actual val canSuspendProcess: Boolean = Platform.osFamily != OsFamily.WINDOWS
+
+	public actual fun suspendProcess() {
+		val error = mosaic_tty_suspend_process(ptr)
+		if (error == 0U) return
+		throwIoe(error)
 	}
 
 	public actual fun reset() {

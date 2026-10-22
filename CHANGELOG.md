@@ -3,6 +3,11 @@
 ## [Unreleased]
 [Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.19.0...HEAD
 
+New:
+- `LocalTerminalControl` hands the terminal over to other programs with `release`, like an editor or an interactive command, and takes it over again afterwards, drawing everything anew. Meanwhile, nothing is drawn, input is left to those programs, and stdout and stderr are no longer intercepted.
+- Ctrl+Z suspends the program when no key handler consumes it, like it does in a shell, and `fg` resumes it. `TerminalControl.suspendProcess` does the same. Neither is supported on Windows.
+- `Terminal.released`, `Terminal.suspendProcess`, and `Tty.suspendProcess` are what these are built on.
+
 
 ## [0.19.0] - 2026-10-22
 [0.19.0]: https://github.com/FoedusProgramme/mosaic/releases/tag/0.19.0

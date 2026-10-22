@@ -23,6 +23,11 @@ internal interface Output {
 
 	/** Stops intercepting, and writes what was left of the intercepted output. */
 	suspend fun stop() {}
+
+	/** Stops intercepting while other programs use the terminal, until [resume]. */
+	suspend fun pause() {}
+
+	fun resume() {}
 }
 
 internal object PrintOutput : Output {
@@ -38,8 +43,10 @@ internal object PrintOutput : Output {
  */
 internal class InterceptingOutput private constructor(
 	private val streams: StandardStreams,
-	private val intercepted: InterceptedStreams,
+	private var intercepted: InterceptedStreams?,
 ) : Output {
+	private var onLine: (String) -> Unit = {}
+
 	private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
 	/** Each reader returns the output which was left once [stop] interrupted it. */
@@ -62,6 +69,9 @@ internal class InterceptingOutput private constructor(
 	}
 
 	override fun startIntercepting(onLine: (String) -> Unit) {
+		this.onLine = onLine
+		val intercepted = intercepted ?: return
+		stopping = false
 		readers += scope.async {
 			readLines(intercepted::readOutput, intercepted::readOutputWithTimeout, onLine)
 		}
@@ -97,14 +107,24 @@ internal class InterceptingOutput private constructor(
 	}
 
 	override suspend fun stop() {
+		try {
+			pause()
+		} finally {
+			streams.close()
+		}
+	}
+
+	override suspend fun pause() {
+		val intercepted = intercepted ?: return
+		this.intercepted = null
 		stopping = true
 		intercepted.interruptOutputRead()
 		intercepted.interruptErrorRead()
 		val leftovers = try {
 			readers.awaitAll()
 		} finally {
+			readers.clear()
 			intercepted.close()
-			streams.close()
 		}
 
 		// The display is done, so the rest can go below it. The terminal is still in raw mode.
@@ -113,6 +133,15 @@ internal class InterceptingOutput private constructor(
 				print(rest.replace("\n", "\r\n"))
 			}
 		}
+	}
+
+	override fun resume() {
+		intercepted = try {
+			streams.interceptOtherWrites()
+		} catch (_: Exception) {
+			null
+		}
+		startIntercepting(onLine)
 	}
 
 	companion object {

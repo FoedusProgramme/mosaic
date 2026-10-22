@@ -19,18 +19,24 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import kotlin.concurrent.Volatile
 import kotlin.concurrent.atomics.AtomicBoolean
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
+import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
 import kotlinx.coroutines.Dispatchers.Unconfined
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 import org.unitedsoftware.mosaic.NonInteractivePolicy.Exit
 import org.unitedsoftware.mosaic.layout.FocusOwner
 import org.unitedsoftware.mosaic.layout.KeyEvent
@@ -128,6 +134,14 @@ internal suspend fun runMosaicComposition(
 		terminal = terminal,
 		rootConstraints = rootConstraints,
 		pointerMapping = pointerMapping,
+		onRelease = {
+			output.write(rendering.release().toString())
+			output.pause()
+		},
+		onReacquire = {
+			output.resume()
+			rendering.reacquire()
+		},
 	)
 
 	try {
@@ -193,6 +207,10 @@ internal class MosaicComposition(
 	private val rootConstraints: (Terminal.Size) -> Constraints = { Constraints() },
 	/** Maps the rows of mouse events to rows of the output. */
 	private val pointerMapping: PointerMapping = PointerMapping.Identity,
+	/** Called before the terminal is released for other programs, see [TerminalControl.release]. */
+	private val onRelease: suspend () -> Unit = {},
+	/** Called once the terminal is taken over again, before the next frame. */
+	private val onReacquire: () -> Unit = {},
 ) : Mosaic,
 	LifecycleOwner {
 	private val externalClock = checkNotNull(coroutineContext[MonotonicFrameClock]) {
@@ -225,6 +243,37 @@ internal class MosaicComposition(
 	}
 	private val notifier = CommandNotifier(terminal.capabilities.kittyNotifications, commands) { needDraw = true }
 	private val staticLogger = StaticLogger(staticLogs) { needDraw = true }
+
+	/** Runs the bookkeeping of releasing the terminal where frames are drawn, not concurrently. */
+	private val frameContext = coroutineContext[ContinuationInterceptor] ?: EmptyCoroutineContext
+
+	private val terminalControl = object : TerminalControl {
+		private val mutex = Mutex()
+
+		override suspend fun <T> release(block: suspend () -> T): T = mutex.withLock {
+			withContext(frameContext) {
+				released = true
+				onRelease()
+			}
+			try {
+				terminal.released(block)
+			} finally {
+				withContext(frameContext + NonCancellable) {
+					onReacquire()
+					released = false
+					needLayout = true
+				}
+			}
+		}
+
+		override val canSuspendProcess get() = terminal.canSuspendProcess
+
+		override suspend fun suspendProcess(): Boolean {
+			if (!terminal.canSuspendProcess) return false
+			release { terminal.suspendProcess() }
+			return true
+		}
+	}
 
 	override val lifecycle = LifecycleRegistry.createUnsafe(this)
 
@@ -269,6 +318,10 @@ internal class MosaicComposition(
 
 	@Volatile
 	private var needDraw = false
+
+	/** While true, the terminal belongs to other programs, so nothing is drawn. */
+	@Volatile
+	private var released = false
 
 	init {
 		GlobalSnapshotManager().ensureStarted(scope)
@@ -400,6 +453,7 @@ internal class MosaicComposition(
 	private fun startFrameListener() {
 		scope.launch(start = UNDISPATCHED) {
 			val ctrlC = KeyEvent("c", ctrl = true)
+			val ctrlZ = KeyEvent("z", ctrl = true)
 			// Key events received since the start of a bracketed paste, or null when not pasting.
 			var pasted: MutableList<KeyboardEvent>? = null
 
@@ -411,6 +465,10 @@ internal class MosaicComposition(
 				if (!keyHandled && keyEvent == ctrlC) {
 					job.cancel()
 					return false
+				}
+				if (!keyHandled && keyEvent == ctrlZ && terminal.canSuspendProcess) {
+					// Like in a shell, which sends SIGTSTP for it unless the terminal is in raw mode.
+					scope.launch { terminalControl.suspendProcess() }
 				}
 				return true
 			}
@@ -453,7 +511,9 @@ internal class MosaicComposition(
 
 					internalClock.sendFrame(nanos)
 
-					if (needLayout) {
+					if (released) {
+						// Drawn once the terminal is taken over again.
+					} else if (needLayout) {
 						performLayout()
 					} else if (needDraw) {
 						performDraw()
@@ -505,6 +565,7 @@ internal class MosaicComposition(
 				LocalTerminalCapabilities provides terminal.capabilities,
 				LocalTerminalName provides terminal.name,
 				LocalTerminalCommands provides terminalCommandSender,
+				LocalTerminalControl provides terminalControl,
 				content = content,
 			)
 		}

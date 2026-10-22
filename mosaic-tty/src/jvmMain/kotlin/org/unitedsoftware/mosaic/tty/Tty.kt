@@ -81,6 +81,14 @@ public actual class Tty internal constructor(
 		return Jni.ttyCurrentSize(ptr)
 	}
 
+	public actual val canSuspendProcess: Boolean =
+		!System.getProperty("os.name").orEmpty().startsWith("Windows")
+
+	@Throws(IOException::class)
+	public actual fun suspendProcess() {
+		Jni.ttySuspendProcess(ptr)
+	}
+
 	@Throws(IOException::class)
 	public actual fun reset() {
 		Jni.ttyReset(ptr)

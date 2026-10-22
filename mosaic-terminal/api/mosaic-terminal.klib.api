@@ -30,6 +30,11 @@ abstract interface org.unitedsoftware.mosaic.terminal/Terminal : kotlin/AutoClos
         abstract fun <get-name>(): kotlin/String? // org.unitedsoftware.mosaic.terminal/Terminal.name.<get-name>|<get-name>(){}[0]
     abstract val state // org.unitedsoftware.mosaic.terminal/Terminal.state|{}state[0]
         abstract fun <get-state>(): org.unitedsoftware.mosaic.terminal/Terminal.State // org.unitedsoftware.mosaic.terminal/Terminal.state.<get-state>|<get-state>(){}[0]
+    open val canSuspendProcess // org.unitedsoftware.mosaic.terminal/Terminal.canSuspendProcess|{}canSuspendProcess[0]
+        open fun <get-canSuspendProcess>(): kotlin/Boolean // org.unitedsoftware.mosaic.terminal/Terminal.canSuspendProcess.<get-canSuspendProcess>|<get-canSuspendProcess>(){}[0]
+
+    open fun suspendProcess() // org.unitedsoftware.mosaic.terminal/Terminal.suspendProcess|suspendProcess(){}[0]
+    open suspend fun <#A1: kotlin/Any?> released(kotlin.coroutines/SuspendFunction0<#A1>): #A1 // org.unitedsoftware.mosaic.terminal/Terminal.released|released(kotlin.coroutines.SuspendFunction0<0:0>){0§<kotlin.Any?>}[0]
 
     final enum class Theme : kotlin/Enum<org.unitedsoftware.mosaic.terminal/Terminal.Theme> { // org.unitedsoftware.mosaic.terminal/Terminal.Theme|null[0]
         enum entry Dark // org.unitedsoftware.mosaic.terminal/Terminal.Theme.Dark|null[0]

@@ -17,6 +17,7 @@ kotlin {
 				implementation(projects.mosaicRuntime)
 				implementation(projects.mosaicAnimation)
 				implementation(projects.mosaicMarkdown)
+				implementation(libs.kotlinx.io.core)
 			}
 		}
 	}

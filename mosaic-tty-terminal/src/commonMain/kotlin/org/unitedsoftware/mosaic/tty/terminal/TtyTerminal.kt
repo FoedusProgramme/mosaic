@@ -16,6 +16,8 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
 import org.unitedsoftware.mosaic.terminal.AnsiLevel
 import org.unitedsoftware.mosaic.terminal.CapabilityQueryEvent
@@ -43,9 +45,16 @@ private class TtyTerminal(
 	override val capabilities: Terminal.Capabilities,
 	override val events: ReceiveChannel<Event>,
 	private val closeJob: Job,
+	private val releaser: Releaser,
 ) : Terminal {
 	override val interactive get() = true
 	override fun close() = closeJob.cancel()
+
+	override suspend fun <T> released(block: suspend () -> T): T = releaser.released(block)
+
+	override val canSuspendProcess get() = releaser.tty.canSuspendProcess
+
+	override fun suspendProcess() = releaser.tty.suspendProcess()
 
 	class State(
 		override val focused: StateFlow<Boolean>,
@@ -150,11 +159,17 @@ public suspend fun Tty.asTerminalIn(
 	var terminalName: String? = null
 	var themeEvents = false
 
+	val releaser = Releaser(this)
 	val bootstrapDone = CompletableDeferred<Unit>()
 	scope.launch(Dispatchers.IO) {
 		val parser = EventParser(this@asTerminalIn)
 		while (true) {
-			val event = parser.next() ?: break
+			val event = parser.next()
+			if (event == null) {
+				// Interrupted, which is either to close or for releasing the terminal for a while.
+				if (!releaser.awaitReacquired()) break
+				continue
+			}
 			if (stage != StageNormalOperation && debugBootstrap) {
 				write("$event\r\n")
 			}
@@ -410,7 +425,69 @@ public suspend fun Tty.asTerminalIn(
 		),
 		events = events,
 		closeJob = interruptJob,
+		releaser = releaser.apply {
+			onRelease = {
+				if (toggleKittyKeyboard) write(kittyKeyboardPop)
+				if (toggleBracketedPaste) write(bracketedPasteDisable)
+				if (toggleSystemTheme) write(systemThemeDisable)
+				if (toggleInBandResize) write(inBandResizeDisable)
+				if (toggleFocus) write(focusDisable)
+				if (toggleCursor) write(cursorEnable)
+				reset()
+			}
+			onReacquire = {
+				enableRawMode()
+				if (toggleCursor) write(cursorDisable)
+				if (toggleFocus) write(focusEnable)
+				if (toggleInBandResize) write(inBandResizeEnable)
+				if (toggleSystemTheme) write(systemThemeEnable)
+				if (toggleBracketedPaste) write(bracketedPasteEnable)
+				if (toggleKittyKeyboard) write(kittyKeyboardPushDisambiguate)
+				// The window may have been resized meanwhile, without events being read.
+				currentSize().let { (columns, rows, width, height) ->
+					size.value = Terminal.Size(columns, rows, width, height)
+				}
+			}
+		},
 	)
+}
+
+/** Pauses reading events while the terminal is released, see [Terminal.released]. */
+private class Releaser(val tty: Tty) {
+	lateinit var onRelease: () -> Unit
+	lateinit var onReacquire: () -> Unit
+
+	private val mutex = Mutex()
+
+	/** Set while released: completed by the reader once it paused, and when reading can resume. */
+	private var paused: CompletableDeferred<Unit>? = null
+	private var reacquired: CompletableDeferred<Unit>? = null
+
+	suspend fun <T> released(block: suspend () -> T): T = mutex.withLock {
+		val paused = CompletableDeferred<Unit>()
+		val reacquired = CompletableDeferred<Unit>()
+		this.paused = paused
+		this.reacquired = reacquired
+		tty.interruptRead()
+		paused.await()
+		onRelease()
+		try {
+			block()
+		} finally {
+			onReacquire()
+			this.paused = null
+			this.reacquired = null
+			reacquired.complete(Unit)
+		}
+	}
+
+	/** Called by the reader when interrupted. Returns false when it should stop instead. */
+	suspend fun awaitReacquired(): Boolean {
+		val reacquired = reacquired ?: return false
+		paused?.complete(Unit)
+		reacquired.await()
+		return true
+	}
 }
 
 private fun Tty.write(s: String) {

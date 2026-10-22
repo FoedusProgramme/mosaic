@@ -97,6 +97,16 @@ public final class org/unitedsoftware/mosaic/TerminalCommandsKt {
 	public static final fun getLocalNotifier ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
+public abstract interface class org/unitedsoftware/mosaic/TerminalControl {
+	public abstract fun getCanSuspendProcess ()Z
+	public abstract fun release (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun suspendProcess (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class org/unitedsoftware/mosaic/TerminalControlKt {
+	public static final fun getLocalTerminalControl ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
 public final class org/unitedsoftware/mosaic/TerminalState {
 	public static final field $stable I
 	public fun <init> (ZLorg/unitedsoftware/mosaic/terminal/Terminal$Theme;Lorg/unitedsoftware/mosaic/terminal/Terminal$Size;)V

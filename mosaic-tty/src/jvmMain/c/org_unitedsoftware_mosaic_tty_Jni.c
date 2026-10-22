@@ -752,6 +752,19 @@ Java_org_unitedsoftware_mosaic_tty_Jni_ttyCurrentSize(
 }
 
 JNIEXPORT void JNICALL
+Java_org_unitedsoftware_mosaic_tty_Jni_ttySuspendProcess(
+	JNIEnv *env,
+	jclass type UNUSED,
+	jlong ttyOpaque
+) {
+	MosaicTty *tty = (MosaicTty *) ttyOpaque;
+	uint32_t error = mosaic_tty_suspend_process(tty);
+	if (unlikely(error)) {
+		throwIoe(env, error);
+	}
+}
+
+JNIEXPORT void JNICALL
 Java_org_unitedsoftware_mosaic_tty_Jni_ttyReset(
 	JNIEnv *env,
 	jclass type UNUSED,

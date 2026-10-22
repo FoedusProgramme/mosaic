@@ -80,19 +80,18 @@ class TerminalTester(
 					testTerminal.interruptTtyRead()
 					readJob.cancelAndJoin()
 
-					try {
-						// Print the events parsed during setup.
-						while (true) {
-							println(terminal.events.tryReceive().getOrNull() ?: break)
-						}
-						val setup = buffer.readByteString()
-
-						assertThat(expects).isEmpty()
-
-						terminal.block(setup)
-					} finally {
-						readJob = launch(Dispatchers.IO) { readUntilInterrupted() }
+					// Print the events parsed during setup.
+					while (true) {
+						println(terminal.events.tryReceive().getOrNull() ?: break)
 					}
+					val setup = buffer.readByteString()
+
+					assertThat(expects).isEmpty()
+
+					// Keep reading, as the terminal would, since some writes wait for it, like the
+					// TCSAFLUSH when restoring the TTY.
+					readJob = launch(Dispatchers.IO) { readUntilInterrupted() }
+					terminal.block(setup)
 				}
 			} finally {
 				testTerminal.interruptTtyRead()

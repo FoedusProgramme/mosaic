@@ -64,11 +64,13 @@ public final class org/unitedsoftware/mosaic/tty/Tty : java/lang/AutoCloseable {
 	public final fun currentSize ()[I
 	public final fun enableRawMode ()V
 	public final fun enableWindowResizeEvents ()V
+	public final fun getCanSuspendProcess ()Z
 	public final fun interruptRead ()V
 	public final fun read ([BII)I
 	public final fun readWithTimeout ([BIII)I
 	public final fun reset ()V
 	public final fun setCallback (Lorg/unitedsoftware/mosaic/tty/Tty$Callback;)V
+	public final fun suspendProcess ()V
 	public static final fun tryBind ()Lorg/unitedsoftware/mosaic/tty/Tty;
 	public final fun write ([BII)I
 }

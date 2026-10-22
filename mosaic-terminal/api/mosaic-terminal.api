@@ -280,11 +280,14 @@ public final class org/unitedsoftware/mosaic/terminal/SystemThemeEvent : org/uni
 }
 
 public abstract interface class org/unitedsoftware/mosaic/terminal/Terminal : java/lang/AutoCloseable {
+	public fun getCanSuspendProcess ()Z
 	public abstract fun getCapabilities ()Lorg/unitedsoftware/mosaic/terminal/Terminal$Capabilities;
 	public abstract fun getEvents ()Lkotlinx/coroutines/channels/ReceiveChannel;
 	public abstract fun getInteractive ()Z
 	public abstract fun getName ()Ljava/lang/String;
 	public abstract fun getState ()Lorg/unitedsoftware/mosaic/terminal/Terminal$State;
+	public fun released (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun suspendProcess ()V
 }
 
 public abstract interface class org/unitedsoftware/mosaic/terminal/Terminal$Capabilities {

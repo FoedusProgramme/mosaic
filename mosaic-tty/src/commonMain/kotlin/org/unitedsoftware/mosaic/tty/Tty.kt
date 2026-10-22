@@ -98,6 +98,17 @@ public expect class Tty : AutoCloseable {
 	/** @return Array of `[columns, rows, width, height]` */
 	public fun currentSize(): IntArray
 
+	/** Whether [suspendProcess] is supported, which needs job control. It is not on Windows. */
+	public val canSuspendProcess: Boolean
+
+	/**
+	 * Stops the process, like Ctrl+Z normally does in a shell, and returns once the shell continues
+	 * it, like with `fg`. Call [reset] first, so the shell gets the terminal as it was.
+	 *
+	 * On Linux and macOS this sends `SIGTSTP` to the process group. It throws on Windows.
+	 */
+	public fun suspendProcess()
+
 	/** Reset TTY state. */
 	public fun reset()
 

@@ -76,6 +76,7 @@ private val pages = listOf(
 	Page("Input", "Completion popup", "A Popup above a TextField, like slash commands, with keys or the mouse.", listOf("/" to "commands", "↑↓" to "choose", "tab" to "complete")) { CompletionPage() },
 	Page("Animation", "Animation", "Infinite transitions, easings, and springs.", listOf("space" to "spring")) { AnimationPage() },
 	Page("Terminal", "Terminal state", "LocalTerminalState, the focus lifecycle, and pointer shapes.", listOf("p" to "pointer")) { TerminalStatePage() },
+	Page("Terminal", "Handing over", "TerminalControl.release to run an editor or a shell, and Ctrl+Z.", listOf("e" to "edit", "s" to "shell", "z" to "suspend")) { HandingOverPage() },
 	Page("Terminal", "Static output", "Lines written once above the live region.", listOf("enter" to "log a line", "p" to "println")) { StaticOutputPage() },
 	Page("Recipes", "Panels", "Modifier.border with each BorderStyle and a title.") { PanelsPage() },
 	Page("Recipes", "Progress", "Progress bars and spinners.") { ProgressPage() },
