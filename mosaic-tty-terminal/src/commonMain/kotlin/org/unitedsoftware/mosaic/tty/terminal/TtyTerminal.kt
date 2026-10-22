@@ -135,6 +135,7 @@ public suspend fun Tty.asTerminalIn(
 	var cursorVisibility = false
 	var focusEvents = false
 	var inBandResizeEvents = false
+	var sizeReported = false
 	var kittyGraphics = false
 	var sixelGraphics = false
 	var kittyKeyboard = false
@@ -322,6 +323,7 @@ public suspend fun Tty.asTerminalIn(
 
 				is ResizeEvent -> {
 					if (inBandResizeEvents) {
+						sizeReported = true
 						size.value = Terminal.Size(event.columns, event.rows, event.width, event.height)
 					} else {
 						// TODO Report unsolicited resize events... somewhere.
@@ -369,10 +371,15 @@ public suspend fun Tty.asTerminalIn(
 		write("\r\n")
 	}
 
-	if (!inBandResizeEvents) {
-		currentSize().let { (columns, rows) ->
-			size.value = Terminal.Size(columns, rows)
+	// Not all terminals report their size when in-band resize events are enabled, like iTerm2, so
+	// without a report the initial size comes from the TTY. Changes after enabling them arrive as
+	// events.
+	if (!sizeReported) {
+		currentSize().let { (columns, rows, width, height) ->
+			size.value = Terminal.Size(columns, rows, width, height)
 		}
+	}
+	if (!inBandResizeEvents) {
 		enableWindowResizeEvents()
 	}
 

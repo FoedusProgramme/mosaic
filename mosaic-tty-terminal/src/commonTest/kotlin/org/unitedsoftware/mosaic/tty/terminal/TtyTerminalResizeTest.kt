@@ -73,6 +73,21 @@ class TtyTerminalResizeTest {
 		}
 	}
 
+	@Test fun replyResetWithoutInitialReportUsesTtySize() = terminalTest {
+		// Like iTerm2, which supports in-band resize events but does not report its size when they
+		// are enabled.
+		testTerminal.resize(108, 27, 2376, 1296)
+		expect("${CSI}0c", reply = "$CSI?62;22c")
+		expect("$CSI?2048\$p", reply = "$CSI?2048;2\$y")
+		expect("${CSI}5n", reply = "${CSI}0n")
+		expect("${CSI}5n", reply = "${CSI}0n")
+
+		withTerminal {
+			assertThat(capabilities.inBandResizeEvents).isTrue()
+			assertThat(state.size.value).isEqualTo(Terminal.Size(108, 27, 2376, 1296))
+		}
+	}
+
 	@Test fun replyResetNoInitialValue() = terminalTest {
 		expect("${CSI}0c", reply = "$CSI?62;22c")
 		// Resize events are reset (i.e, not enabled).
