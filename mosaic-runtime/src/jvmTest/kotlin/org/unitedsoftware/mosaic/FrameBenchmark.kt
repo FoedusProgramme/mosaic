@@ -164,6 +164,7 @@ class FrameBenchmark {
 		}
 
 		repeat(warmup) { frame() }
+		val windowStart = System.currentTimeMillis()
 		bytes = 0
 		renderNanos = 0
 		val times = LongArray(count)
@@ -173,6 +174,9 @@ class FrameBenchmark {
 			times[index] = System.nanoTime() - start
 		}
 		mosaic.cancel()
+		System.getenv("MOSAIC_BENCHMARK_WINDOWS")?.let {
+			File(it).appendText("${scenario.name}\t$windowStart\t${System.currentTimeMillis()}\n")
+		}
 
 		times.sort()
 		fun micros(nanos: Long) = "%.1f".format(nanos / 1000.0)
