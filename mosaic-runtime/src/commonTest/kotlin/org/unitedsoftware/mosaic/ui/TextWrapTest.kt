@@ -115,4 +115,16 @@ class TextWrapTest {
 			assertThat(awaitSnapshot()).isEqualTo("one\nthree\none three")
 		}
 	}
+
+	@Test fun spacesAtWrapsAreNotDrawn() = runTest {
+		runMosaicTest {
+			setContent {
+				Box(modifier = Modifier.width(7)) {
+					Text("hello   world", underlineStyle = UnderlineStyle.Straight)
+				}
+			}
+			// Underlined spaces would show, and the snapshot would keep them.
+			assertThat(awaitSnapshot()).isEqualTo("hello\nworld")
+		}
+	}
 }

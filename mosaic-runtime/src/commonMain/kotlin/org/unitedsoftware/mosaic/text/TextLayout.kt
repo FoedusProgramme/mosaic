@@ -72,10 +72,15 @@ internal abstract class TextLayout<T : CharSequence>(initialValue: T) {
 		val lines = ArrayList<T>(visible)
 		for (index in 0 until visible) {
 			val row = rows[index]
-			var line = value.slice(row.start, row.end)
+			var end = row.end
+			// Spaces where a line was wrapped are not part of either row.
+			if (row.end < value.length && value[row.end] != '\n') {
+				while (end > row.start && value[end - 1] == ' ') end--
+			}
+			var line = value.slice(row.start, end)
 			if (overflow == TextOverflow.Ellipsis) {
 				val truncated = index == visible - 1 && visible < rows.size
-				if (truncated || (bounded && row.columns > maxWidth)) {
+				if (truncated || (bounded && line.columnWidth() > maxWidth)) {
 					line = line.ellipsized(if (bounded) maxWidth else Int.MAX_VALUE)
 				}
 			}
