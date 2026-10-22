@@ -93,7 +93,7 @@
   <div class="breadcrumbs"><a href="../../index.html">mosaic-runtime</a><span class="delimiter">/</span><a href="../index.html">org.unitedsoftware.mosaic.ui</a><span class="delimiter">/</span><span class="current">TextFieldState</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Text</span><wbr><span>Field</span><wbr><span><span>State</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="androidx.compose.runtime/Stable///PointingToDeclaration/"><span class="token annotation builtin">Stable</span></span></div></div><span class="token keyword">class </span><a href="index.html">TextFieldState</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">initialText<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span><span class="token string">""</span></span></span><span class="token punctuation">)</span></div><p class="paragraph">The editable text of a <a href="../-text-field.html">TextField</a> and the position of its cursor.</p><p class="paragraph">The cursor is an index into <a href="text.html">text</a> between two characters, where 0 is before the first one and the length of <a href="text.html">text</a> is after the last one.</p></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="androidx.compose.runtime/Stable///PointingToDeclaration/"><span class="token annotation builtin">Stable</span></span></div></div><span class="token keyword">class </span><a href="index.html">TextFieldState</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">initialText<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span><span class="token string">""</span></span></span><span class="token punctuation">)</span></div><p class="paragraph">The editable text of a <a href="../-text-field.html">TextField</a>, the position of its cursor, and its selection.</p><p class="paragraph">The cursor is an index into <a href="text.html">text</a> between two characters, where 0 is before the first one and the length of <a href="text.html">text</a> is after the last one. The selection reaches from where it started, its anchor, to the cursor. Without a selection, the anchor is at the cursor.</p><p class="paragraph">Edits are recorded so that <a href="undo.html">undo</a> and <a href="redo.html">redo</a> can step through them, with typed characters grouped by word.</p></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
@@ -119,7 +119,37 @@
       </div>
       <div data-togglable="PROPERTY">
         <h2 class="tableheader">Properties</h2>
-        <div class="table"><a data-name="636338445%2FProperties%2F19991456" anchor-label="cursor" id="636338445%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+        <div class="table"><a data-name="1794653801%2FProperties%2F19991456" anchor-label="canRedo" id="1794653801%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="can-redo.html"><span>can</span><wbr><span><span>Redo</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1794653801%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="can-redo.html">canRedo</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1581329987%2FProperties%2F19991456" anchor-label="canUndo" id="1581329987%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="can-undo.html"><span>can</span><wbr><span><span>Undo</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1581329987%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="can-undo.html">canUndo</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="636338445%2FProperties%2F19991456" anchor-label="cursor" id="636338445%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
           <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
@@ -129,7 +159,67 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">var </span><a href="cursor.html">cursor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Setting the cursor moves it to the closest character boundary within the text.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">var </span><a href="cursor.html">cursor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Setting the cursor moves it to the closest character boundary within the text, and removes the selection.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1960021841%2FProperties%2F19991456" anchor-label="hasSelection" id="1960021841%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="has-selection.html"><span>has</span><wbr><span><span>Selection</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1960021841%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="has-selection.html">hasSelection</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="42279355%2FProperties%2F19991456" anchor-label="selectedText" id="42279355%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="selected-text.html"><span>selected</span><wbr><span><span>Text</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="42279355%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="selected-text.html">selectedText</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="449843796%2FProperties%2F19991456" anchor-label="selectionEnd" id="449843796%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="selection-end.html"><span>selection</span><wbr><span><span>End</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="449843796%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="selection-end.html">selectionEnd</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The end of the selection. Without a selection, the cursor.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1239388205%2FProperties%2F19991456" anchor-label="selectionStart" id="1239388205%2FProperties%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="selection-start.html"><span>selection</span><wbr><span><span>Start</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1239388205%2FProperties%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="selection-start.html">selectionStart</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The start of the selection, at most <a href="selection-end.html">selectionEnd</a>. Without a selection, the cursor.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -144,7 +234,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">var </span><a href="text.html">text</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Setting the text moves the cursor to its end.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">var </span><a href="text.html">text</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Setting the text moves the cursor to its end, and is recorded like other edits.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -178,7 +268,67 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="insert.html"><span class="token function">insert</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">text<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Replaces any text by <a href="insert.html">text</a> at the cursor, and moves the cursor after it.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="insert.html"><span class="token function">insert</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">text<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Replaces the selection by <a href="insert.html">text</a>, or inserts it at the cursor, and moves the cursor after it.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="60524773%2FFunctions%2F19991456" anchor-label="redo" id="60524773%2FFunctions%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="redo.html"><span><span>redo</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="60524773%2FFunctions%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="redo.html"><span class="token function">redo</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Repeats the last edit which was undone, and returns false when there is none.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1389403448%2FFunctions%2F19991456" anchor-label="select" id="1389403448%2FFunctions%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="select.html"><span><span>select</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1389403448%2FFunctions%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="select.html"><span class="token function">select</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">anchor<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">cursor<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Selects from <a href="select.html">anchor</a> to <a href="select.html">cursor</a>, where the cursor is placed.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="796234418%2FFunctions%2F19991456" anchor-label="selectAll" id="796234418%2FFunctions%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="select-all.html"><span>select</span><wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="796234418%2FFunctions%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="select-all.html"><span class="token function">selectAll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-152799041%2FFunctions%2F19991456" anchor-label="undo" id="-152799041%2FFunctions%2F19991456" data-filterable-set=":mosaic-runtime/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":mosaic-runtime/commonMain" data-filterable-set=":mosaic-runtime/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="undo.html"><span><span>undo</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-152799041%2FFunctions%2F19991456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":mosaic-runtime/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="undo.html"><span class="token function">undo</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Reverts the last edit, and returns false when there is none.</p></div></div></div>
                 </div>
               </div>
             </div>
