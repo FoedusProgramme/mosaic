@@ -46,15 +46,28 @@ public fun rememberScrollState(initial: Int = 0): ScrollState = remember { Scrol
 
 /**
  * Lets the content be taller than this node, showing the part [state] is scrolled to and clipping
- * the rest. Scroll by changing [state], for example in response to key events.
+ * the rest. Scroll by changing [state], for example in response to key events. The mouse wheel
+ * scrolls it too, when mouse events are enabled.
  */
-public fun Modifier.verticalScroll(state: ScrollState): Modifier = clipToBounds() then ScrollModifier(state, vertical = true)
+public fun Modifier.verticalScroll(state: ScrollState): Modifier = clipToBounds() then ScrollModifier(state, vertical = true) then wheelScrolling(state, vertical = true)
 
 /**
  * Lets the content be wider than this node, showing the part [state] is scrolled to and clipping
- * the rest. Scroll by changing [state], for example in response to key events.
+ * the rest. Scroll by changing [state], for example in response to key events. The mouse wheel
+ * scrolls it with Shift held, when mouse events are enabled.
  */
-public fun Modifier.horizontalScroll(state: ScrollState): Modifier = clipToBounds() then ScrollModifier(state, vertical = false)
+public fun Modifier.horizontalScroll(state: ScrollState): Modifier = clipToBounds() then ScrollModifier(state, vertical = false) then wheelScrolling(state, vertical = false)
+
+/** Rows or columns scrolled by each step of the mouse wheel. */
+internal const val WheelScrollStep = 3
+
+private fun wheelScrolling(state: ScrollState, vertical: Boolean) = PointerModifierElement { event ->
+	if (event.type != PointerEventType.Scroll || event.shift == vertical) return@PointerModifierElement false
+	val before = state.value
+	state.scrollBy(event.scrollDelta * WheelScrollStep)
+	// Leave the event to scrolling containers outside of this one once the end is reached.
+	state.value != before
+}
 
 private class ScrollModifier(
 	private val state: ScrollState,

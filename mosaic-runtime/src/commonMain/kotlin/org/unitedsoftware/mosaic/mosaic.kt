@@ -37,8 +37,13 @@ import org.unitedsoftware.mosaic.layout.KeyEvent
 import org.unitedsoftware.mosaic.layout.LocalFocusManager
 import org.unitedsoftware.mosaic.layout.MosaicNode
 import org.unitedsoftware.mosaic.layout.PasteEvent
+import org.unitedsoftware.mosaic.layout.PointerButton
+import org.unitedsoftware.mosaic.layout.PointerDispatcher
+import org.unitedsoftware.mosaic.layout.PointerEventType
 import org.unitedsoftware.mosaic.terminal.BracketedPasteEvent
+import org.unitedsoftware.mosaic.terminal.CursorPositionEvent
 import org.unitedsoftware.mosaic.terminal.KeyboardEvent
+import org.unitedsoftware.mosaic.terminal.MouseEvent
 import org.unitedsoftware.mosaic.terminal.Terminal
 import org.unitedsoftware.mosaic.ui.BoxMeasurePolicy
 import org.unitedsoftware.mosaic.ui.LocalPopupHost
@@ -55,22 +60,28 @@ import org.unitedsoftware.mosaic.ui.unit.Constraints
  *   restored once [content] completes. The content is then measured to exactly the size of the
  *   terminal. Otherwise, render below the previous output, as wide as the terminal and at most as
  *   tall as it.
+ * @param mouse Whether to report mouse events to modifiers like `onPointerEvent` and `onClick`,
+ *   and scroll with the wheel. This takes over the mouse, so the terminal's own text selection and
+ *   scrolling only work with a modifier key held, like Shift or Option, depending on the terminal.
+ *   It is enabled on the alternate screen by default.
  */
 public fun runMosaicMain(
 	alternateScreen: Boolean = false,
+	mouse: Boolean = alternateScreen,
 	content: @Composable () -> Unit,
 ) {
-	runMosaicBlocking(alternateScreen = alternateScreen, content = content)
+	runMosaicBlocking(alternateScreen = alternateScreen, mouse = mouse, content = content)
 }
 
 /** @see runMosaicMain */
 public fun runMosaicBlocking(
 	onNonInteractive: NonInteractivePolicy = Exit,
 	alternateScreen: Boolean = false,
+	mouse: Boolean = alternateScreen,
 	content: @Composable () -> Unit,
 ): Boolean {
 	return runBlocking {
-		runMosaic(onNonInteractive, alternateScreen, content)
+		runMosaic(onNonInteractive, alternateScreen, mouse, content)
 	}
 }
 
@@ -78,13 +89,16 @@ public fun runMosaicBlocking(
 public suspend fun runMosaic(
 	onNonInteractive: NonInteractivePolicy = Exit,
 	alternateScreen: Boolean = false,
+	mouse: Boolean = alternateScreen,
 	content: @Composable () -> Unit,
 ): Boolean = withTerminal(onNonInteractive) { terminal ->
 	val terminalSize = { terminal.state.size.value }
+	// Without a terminal, there are no mouse events.
+	val mouse = mouse && terminal.interactive
 	val rendering = when {
 		env("MOSAIC_DEBUG_RENDERING") == "true" -> DebugRendering(terminal.capabilities)
-		alternateScreen -> AlternateScreenRendering(terminal.capabilities, terminalSize)
-		else -> AnsiRendering(terminal.capabilities, terminalSize)
+		alternateScreen -> AlternateScreenRendering(terminal.capabilities, terminalSize, mouse)
+		else -> AnsiRendering(terminal.capabilities, terminalSize, mouse)
 	}
 	val rootConstraints: (Terminal.Size) -> Constraints = if (alternateScreen) {
 		{ Constraints.fixed(it.columns, it.rows) }
@@ -93,7 +107,8 @@ public suspend fun runMosaic(
 	}
 
 	val output = if (terminal.interactive) InterceptingOutput.tryStart() ?: PrintOutput else PrintOutput
-	runMosaicComposition(terminal, rendering, rootConstraints, output, content)
+	val pointerMapping = rendering as? PointerMapping ?: PointerMapping.Identity
+	runMosaicComposition(terminal, rendering, rootConstraints, output, pointerMapping, content)
 }
 
 internal suspend fun runMosaicComposition(
@@ -101,6 +116,7 @@ internal suspend fun runMosaicComposition(
 	rendering: Rendering,
 	rootConstraints: (Terminal.Size) -> Constraints,
 	output: Output,
+	pointerMapping: PointerMapping = PointerMapping.Identity,
 	content: @Composable () -> Unit,
 ) {
 	val clock = BroadcastFrameClock()
@@ -111,6 +127,7 @@ internal suspend fun runMosaicComposition(
 		},
 		terminal = terminal,
 		rootConstraints = rootConstraints,
+		pointerMapping = pointerMapping,
 	)
 
 	try {
@@ -174,6 +191,8 @@ internal class MosaicComposition(
 	private val terminal: Terminal,
 	/** The constraints of the root node for the size of the terminal. */
 	private val rootConstraints: (Terminal.Size) -> Constraints = { Constraints() },
+	/** Maps the rows of mouse events to rows of the output. */
+	private val pointerMapping: PointerMapping = PointerMapping.Identity,
 ) : Mosaic,
 	LifecycleOwner {
 	private val externalClock = checkNotNull(coroutineContext[MonotonicFrameClock]) {
@@ -190,6 +209,7 @@ internal class MosaicComposition(
 	val rootNode = applier.root
 	private val popupHost = PopupHost()
 	private val focusOwner = FocusOwner { listOf(rootNode) + popupHost.popups.map { it.root } }
+	private val pointerDispatcher = PointerDispatcher({ listOf(rootNode) + popupHost.popups.map { it.root } }, focusOwner)
 	private val recomposer = Recomposer(composeContext)
 	private val composition = Composition(applier, recomposer)
 
@@ -422,6 +442,10 @@ internal class MosaicComposition(
 								}
 							}
 
+							is MouseEvent -> sendMouseEvent(event)
+
+							is CursorPositionEvent -> pointerMapping.onCursorPosition(event.row, event.column)
+
 							else -> {}
 						}
 					}
@@ -436,6 +460,32 @@ internal class MosaicComposition(
 				}
 			} while (job.isActive)
 		}
+	}
+
+	private fun sendMouseEvent(event: MouseEvent) {
+		val row = pointerMapping.surfaceRow(event.y) ?: return
+		val button = when (event.button) {
+			MouseEvent.Button.Left -> PointerButton.Left
+			MouseEvent.Button.Middle -> PointerButton.Middle
+			MouseEvent.Button.Right -> PointerButton.Right
+			else -> PointerButton.None
+		}
+		val wheel = when (event.button) {
+			MouseEvent.Button.WheelUp -> -1
+			MouseEvent.Button.WheelDown -> 1
+			else -> 0
+		}
+		val type = when {
+			wheel != 0 -> if (event.type == MouseEvent.Type.Press) PointerEventType.Scroll else return
+
+			else -> when (event.type) {
+				MouseEvent.Type.Press -> PointerEventType.Press
+				MouseEvent.Type.Release -> PointerEventType.Release
+				MouseEvent.Type.Drag -> PointerEventType.Drag
+				MouseEvent.Type.Motion -> PointerEventType.Move
+			}
+		}
+		pointerDispatcher.dispatch(type, event.x, row, button, wheel, event.shift, event.alt, event.ctrl)
 	}
 
 	override fun setContent(content: @Composable () -> Unit) {

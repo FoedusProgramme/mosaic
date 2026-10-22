@@ -9,7 +9,7 @@ import org.unitedsoftware.mosaic.modifier.Modifier
  */
 public fun Modifier.clipToBounds(): Modifier = this then ClipToBoundsModifier
 
-private object ClipToBoundsModifier : DrawModifier {
+internal object ClipToBoundsModifier : DrawModifier {
 	override fun ContentDrawScope.draw() {
 		(this as TextCanvasDrawScope).clipToBounds {
 			drawContent()

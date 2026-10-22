@@ -24,6 +24,7 @@ New:
 - `Image` shows an `ImageBitmap`, scaled to fit. kitty and Ghostty show the image itself with the Kitty graphics protocol, using Unicode placeholders so that it moves with the text. iTerm2 and WezTerm use their inline images, which keep transparency, terminals which report Sixel support Sixel graphics, and others half block characters.
 - `Terminal.Capabilities.sixelGraphics` is true when the terminal reports Sixel support in its primary device attributes.
 - `WindowPointerShape` sets the shape of the mouse pointer with the Kitty pointer shape protocol while it is in the composition, restoring the previous shape afterwards.
+- Mouse input: `Modifier.onPointerEvent`, `onClick`, and `onHover`. Events go to the innermost node under the pointer first, then to its ancestors, and drags and releases go to the nodes the press went to. Clicks focus focusable nodes and place the cursor of `TextField`s, and the wheel scrolls `verticalScroll`, `horizontalScroll` (with Shift), and `LazyColumn`. `runMosaic` takes `mouse`, which is enabled on the alternate screen by default. Inline, the output is located on the screen with cursor position requests.
 - `Modifier.border` draws a box of a `BorderStyle` around the content, with an optional title.
 - New `mosaic-markdown` library with `Markdown`, which renders Markdown with syntax highlighted code, diffs, tables, task lists, and OSC 8 links. It handles incomplete input, so responses of language models can be rendered while they stream in.
 

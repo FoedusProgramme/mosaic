@@ -83,14 +83,37 @@ internal class DebugRendering(
 	}
 }
 
+/** Maps rows of the screen to rows of the drawn surface, for mouse events. */
+internal interface PointerMapping {
+	/** The row of the surface shown in the 0-based row [screenRow] of the screen, or null if unknown. */
+	fun surfaceRow(screenRow: Int): Int?
+
+	/** Receives the answer to a cursor position request, with 1-based [row] and [column]. */
+	fun onCursorPosition(row: Int, column: Int) {}
+
+	/** The surface fills the screen from its top, like on the alternate screen. */
+	object Identity : PointerMapping {
+		override fun surfaceRow(screenRow: Int) = screenRow
+	}
+}
+
 /** Writes the window title and other terminal commands ahead of frames. */
-internal class TerminalCommandWriter(private val capabilities: Terminal.Capabilities) {
+internal class TerminalCommandWriter(
+	private val capabilities: Terminal.Capabilities,
+	/** Whether to enable mouse tracking with the first frame, and disable it when done. */
+	private val mouse: Boolean = false,
+) {
+	private var mouseEnabled = false
 	private var lastTitle: String? = null
 	private var titlePushed = false
 	private var lastPointerShape: String? = null
 	private var pointerShapePushed = false
 
 	fun appendTo(builder: StringBuilder, mosaic: Mosaic) {
+		if (mouse && !mouseEnabled) {
+			builder.append(mouseTrackingEnable)
+			mouseEnabled = true
+		}
 		val title = mosaic.title()
 		if (title != lastTitle) {
 			if (title == null) {
@@ -133,6 +156,9 @@ internal class TerminalCommandWriter(private val capabilities: Terminal.Capabili
 	}
 
 	fun appendFinishTo(builder: StringBuilder) {
+		if (mouseEnabled) {
+			builder.append(mouseTrackingDisable)
+		}
 		if (titlePushed) {
 			builder.append(windowTitlePop)
 		}
@@ -150,7 +176,31 @@ internal class AnsiRendering(
 	private val capabilities: Terminal.Capabilities,
 	/** The size of the terminal, which limits the height of the output, or null when unknown. */
 	private val terminalSize: () -> Terminal.Size? = { null },
-) : Rendering {
+	/**
+	 * Whether to report mouse events. The output can start anywhere on the screen, so its position
+	 * is asked for with a cursor position request whenever it may have moved.
+	 */
+	private val mouse: Boolean = false,
+) : Rendering,
+	PointerMapping {
+	/** The row of the output the cursor was on, and the first row of the surface shown, per request. */
+	private val positionRequests = ArrayDeque<Pair<Int, Int>>()
+
+	/** The screen row of the first row of the output, once known. */
+	private var outputTop: Int? = null
+	private var outputFirstRow = 0
+
+	override fun surfaceRow(screenRow: Int): Int? {
+		val top = outputTop ?: return null
+		return screenRow - top + outputFirstRow
+	}
+
+	override fun onCursorPosition(row: Int, column: Int) {
+		val (cursorRow, firstRow) = positionRequests.removeFirstOrNull() ?: return
+		outputTop = row - 1 - cursorRow
+		outputFirstRow = firstRow
+	}
+
 	private val stringBuilder = StringBuilder(100)
 	private val rowBuilder = StringBuilder(100)
 
@@ -173,7 +223,7 @@ internal class AnsiRendering(
 	/** The graphics of the last output, in its rows. */
 	private var lastGraphics = emptyList<GraphicPlacement>()
 
-	private val commandWriter = TerminalCommandWriter(capabilities)
+	private val commandWriter = TerminalCommandWriter(capabilities, mouse)
 
 	override fun render(mosaic: Mosaic): CharSequence {
 		return stringBuilder.apply {
@@ -305,6 +355,13 @@ internal class AnsiRendering(
 				cursorShown = false
 			}
 
+			// The output moves on the screen when it grows past the bottom of the screen, when static
+			// output is written above it, and when the terminal is resized.
+			if (mouse && (outputTop == null || rows.size != lastRows.size || static != null || size != lastSize)) {
+				append(cursorPositionRequest)
+				positionRequests.addLast(current to firstRow)
+			}
+
 			if (capabilities.synchronizedOutput) {
 				append(synchronizedOutputDisable)
 			}
@@ -332,12 +389,14 @@ internal class AnsiRendering(
 internal class AlternateScreenRendering(
 	private val capabilities: Terminal.Capabilities,
 	private val terminalSize: () -> Terminal.Size?,
+	/** Whether to report mouse events. */
+	mouse: Boolean = false,
 ) : Rendering {
 	private val stringBuilder = StringBuilder(100)
 	private val rowBuilder = StringBuilder(100)
 	private val pendingStatic = StringBuilder()
 
-	private val commandWriter = TerminalCommandWriter(capabilities)
+	private val commandWriter = TerminalCommandWriter(capabilities, mouse)
 
 	private var started = false
 	private var lastRows = emptyList<String>()

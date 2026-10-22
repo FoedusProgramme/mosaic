@@ -7,10 +7,13 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.PointerButton
+import org.unitedsoftware.mosaic.layout.PointerEventType
 import org.unitedsoftware.mosaic.layout.drawBehind
 import org.unitedsoftware.mosaic.layout.focusTarget
 import org.unitedsoftware.mosaic.layout.onKeyEvent
 import org.unitedsoftware.mosaic.layout.onPasteEvent
+import org.unitedsoftware.mosaic.layout.onPointerEvent
 import org.unitedsoftware.mosaic.layout.rememberFocusTarget
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.text.TextRow
@@ -149,6 +152,13 @@ public fun TextField(
 		content = {},
 		modifier = modifier
 			.focusTarget(focus)
+			.onPointerEvent { event ->
+				// A click focuses the field, and moves the cursor to where it was.
+				if (event.type != PointerEventType.Press || event.button != PointerButton.Left) return@onPointerEvent false
+				val row = firstRow + event.y
+				if (row in rows.indices) state.cursor = rows.indexAt(row, event.x, text)
+				true
+			}
 			.onKeyEvent { focus.isFocused && state.onKeyEvent(it, singleLine, onSubmit) }
 			.onPasteEvent {
 				if (!focus.isFocused) return@onPasteEvent false
@@ -237,6 +247,18 @@ private fun TextFieldState.onKeyEvent(
 		else -> insert(key)
 	}
 	return true
+}
+
+/** The index in [text] of the cursor at [row] and [column], or the end of the row past it. */
+internal fun List<TextRow>.indexAt(row: Int, column: Int, text: String): Int {
+	val line = this[row]
+	var columns = 0
+	text.subSequence(line.start, line.end).forEachCodePointWithWidth { start, _, _, width ->
+		// Clicks on the right half of a wide character go after it.
+		if (width > 0 && columns + (width + 1) / 2 > column) return line.start + start
+		columns += width
+	}
+	return line.end
 }
 
 /** The row and column of the cursor at [index] of [text]. */

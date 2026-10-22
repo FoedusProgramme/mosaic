@@ -27,6 +27,13 @@ internal const val windowTitlePush = "${CSI}22;0t"
 internal const val windowTitlePop = "${CSI}23;0t"
 
 internal const val cursorSave = "${ESC}7"
+
+/** Reports presses, releases, motion, and the wheel, with SGR encoded coordinates. */
+internal const val mouseTrackingEnable = "$CSI?1003h$CSI?1006h"
+internal const val mouseTrackingDisable = "$CSI?1006l$CSI?1003l"
+
+/** Asks for the cursor position, which the terminal answers with `CSI row ; column R`. */
+internal const val cursorPositionRequest = "${CSI}6n"
 internal const val cursorRestore = "${ESC}8"
 
 /** Restores the pointer shape from before the last one pushed with Kitty's pointer shape protocol. */

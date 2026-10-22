@@ -26,6 +26,9 @@ import org.unitedsoftware.mosaic.layout.MeasureResult
 import org.unitedsoftware.mosaic.layout.MeasureScope
 import org.unitedsoftware.mosaic.layout.MosaicNode
 import org.unitedsoftware.mosaic.layout.Placeable
+import org.unitedsoftware.mosaic.layout.PointerEventType
+import org.unitedsoftware.mosaic.layout.PointerModifierElement
+import org.unitedsoftware.mosaic.layout.WheelScrollStep
 import org.unitedsoftware.mosaic.layout.clipToBounds
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.modifier.materialize
@@ -195,7 +198,16 @@ public fun LazyColumn(
 		}
 	}
 
-	val materializedModifier = currentComposer.materialize(modifier.clipToBounds())
+	val wheel = remember(state) {
+		PointerModifierElement { event ->
+			if (event.type != PointerEventType.Scroll || event.shift) return@PointerModifierElement false
+			// Leave the event to scrolling containers outside of this one once the end is reached.
+			val canScroll = if (event.scrollDelta > 0) state.canScrollForward else state.canScrollBackward
+			if (canScroll) state.scrollBy(event.scrollDelta * WheelScrollStep)
+			canScroll
+		}
+	}
+	val materializedModifier = currentComposer.materialize(modifier.clipToBounds().then(wheel))
 	ComposeNode<MosaicNode, Applier<Any>>(
 		factory = NodeFactory,
 		update = {

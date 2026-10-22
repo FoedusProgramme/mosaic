@@ -109,6 +109,11 @@ internal class MosaicNode(
 		private set
 
 	val focusTargets = ArrayList<FocusTarget>(0)
+	val pointerHandlers = ArrayList<(PointerEvent) -> Boolean>(0)
+
+	/** Whether children are clipped to the bounds of this node, and so cannot be hit outside of it. */
+	var clipsChildren = false
+		private set
 	val focusObservers = ArrayList<FocusObserver>(0)
 
 	/** Whether this node is or contains the focused node, as of the last event dispatch. */
@@ -117,6 +122,8 @@ internal class MosaicNode(
 	fun setModifier(modifier: Modifier) {
 		focusTargets.clear()
 		focusObservers.clear()
+		pointerHandlers.clear()
+		clipsChildren = false
 		topLayer = modifier.foldOut(bottomLayer) { element, nextLayer ->
 			var nextLayer = nextLayer
 			// The Modifier class can inherit from several key Modifier types
@@ -132,6 +139,14 @@ internal class MosaicNode(
 			}
 			if (element is PasteModifier) {
 				nextLayer = PasteLayer(this, element, nextLayer)
+			}
+			if (element is PointerModifierElement) {
+				// Folding out starts at the last, innermost element, which handles events first like
+				// children do before their parents.
+				pointerHandlers += element.onPointerEvent
+			}
+			if (element === ClipToBoundsModifier) {
+				clipsChildren = true
 			}
 			if (element is FocusTargetElement) {
 				focusTargets += element.target

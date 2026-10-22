@@ -36,6 +36,35 @@ final enum class org.unitedsoftware.mosaic.layout/IntrinsicSize : kotlin/Enum<or
     final fun values(): kotlin/Array<org.unitedsoftware.mosaic.layout/IntrinsicSize> // org.unitedsoftware.mosaic.layout/IntrinsicSize.values|values#static(){}[0]
 }
 
+final enum class org.unitedsoftware.mosaic.layout/PointerButton : kotlin/Enum<org.unitedsoftware.mosaic.layout/PointerButton> { // org.unitedsoftware.mosaic.layout/PointerButton|null[0]
+    enum entry Left // org.unitedsoftware.mosaic.layout/PointerButton.Left|null[0]
+    enum entry Middle // org.unitedsoftware.mosaic.layout/PointerButton.Middle|null[0]
+    enum entry None // org.unitedsoftware.mosaic.layout/PointerButton.None|null[0]
+    enum entry Right // org.unitedsoftware.mosaic.layout/PointerButton.Right|null[0]
+
+    final val entries // org.unitedsoftware.mosaic.layout/PointerButton.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<org.unitedsoftware.mosaic.layout/PointerButton> // org.unitedsoftware.mosaic.layout/PointerButton.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): org.unitedsoftware.mosaic.layout/PointerButton // org.unitedsoftware.mosaic.layout/PointerButton.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<org.unitedsoftware.mosaic.layout/PointerButton> // org.unitedsoftware.mosaic.layout/PointerButton.values|values#static(){}[0]
+}
+
+final enum class org.unitedsoftware.mosaic.layout/PointerEventType : kotlin/Enum<org.unitedsoftware.mosaic.layout/PointerEventType> { // org.unitedsoftware.mosaic.layout/PointerEventType|null[0]
+    enum entry Drag // org.unitedsoftware.mosaic.layout/PointerEventType.Drag|null[0]
+    enum entry Enter // org.unitedsoftware.mosaic.layout/PointerEventType.Enter|null[0]
+    enum entry Exit // org.unitedsoftware.mosaic.layout/PointerEventType.Exit|null[0]
+    enum entry Move // org.unitedsoftware.mosaic.layout/PointerEventType.Move|null[0]
+    enum entry Press // org.unitedsoftware.mosaic.layout/PointerEventType.Press|null[0]
+    enum entry Release // org.unitedsoftware.mosaic.layout/PointerEventType.Release|null[0]
+    enum entry Scroll // org.unitedsoftware.mosaic.layout/PointerEventType.Scroll|null[0]
+
+    final val entries // org.unitedsoftware.mosaic.layout/PointerEventType.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<org.unitedsoftware.mosaic.layout/PointerEventType> // org.unitedsoftware.mosaic.layout/PointerEventType.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): org.unitedsoftware.mosaic.layout/PointerEventType // org.unitedsoftware.mosaic.layout/PointerEventType.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<org.unitedsoftware.mosaic.layout/PointerEventType> // org.unitedsoftware.mosaic.layout/PointerEventType.values|values#static(){}[0]
+}
+
 final enum class org.unitedsoftware.mosaic.ui/TextOverflow : kotlin/Enum<org.unitedsoftware.mosaic.ui/TextOverflow> { // org.unitedsoftware.mosaic.ui/TextOverflow|null[0]
     enum entry Clip // org.unitedsoftware.mosaic.ui/TextOverflow.Clip|null[0]
     enum entry Ellipsis // org.unitedsoftware.mosaic.ui/TextOverflow.Ellipsis|null[0]
@@ -380,6 +409,33 @@ final class org.unitedsoftware.mosaic.layout/PasteEvent { // org.unitedsoftware.
     final fun equals(kotlin/Any?): kotlin/Boolean // org.unitedsoftware.mosaic.layout/PasteEvent.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // org.unitedsoftware.mosaic.layout/PasteEvent.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // org.unitedsoftware.mosaic.layout/PasteEvent.toString|toString(){}[0]
+}
+
+final class org.unitedsoftware.mosaic.layout/PointerEvent { // org.unitedsoftware.mosaic.layout/PointerEvent|null[0]
+    constructor <init>(org.unitedsoftware.mosaic.layout/PointerEventType, kotlin/Int, kotlin/Int, org.unitedsoftware.mosaic.layout/PointerButton = ..., kotlin/Int = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // org.unitedsoftware.mosaic.layout/PointerEvent.<init>|<init>(org.unitedsoftware.mosaic.layout.PointerEventType;kotlin.Int;kotlin.Int;org.unitedsoftware.mosaic.layout.PointerButton;kotlin.Int;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+
+    final val alt // org.unitedsoftware.mosaic.layout/PointerEvent.alt|{}alt[0]
+        final fun <get-alt>(): kotlin/Boolean // org.unitedsoftware.mosaic.layout/PointerEvent.alt.<get-alt>|<get-alt>(){}[0]
+    final val button // org.unitedsoftware.mosaic.layout/PointerEvent.button|{}button[0]
+        final fun <get-button>(): org.unitedsoftware.mosaic.layout/PointerButton // org.unitedsoftware.mosaic.layout/PointerEvent.button.<get-button>|<get-button>(){}[0]
+    final val ctrl // org.unitedsoftware.mosaic.layout/PointerEvent.ctrl|{}ctrl[0]
+        final fun <get-ctrl>(): kotlin/Boolean // org.unitedsoftware.mosaic.layout/PointerEvent.ctrl.<get-ctrl>|<get-ctrl>(){}[0]
+    final val isWithinBounds // org.unitedsoftware.mosaic.layout/PointerEvent.isWithinBounds|{}isWithinBounds[0]
+        final fun <get-isWithinBounds>(): kotlin/Boolean // org.unitedsoftware.mosaic.layout/PointerEvent.isWithinBounds.<get-isWithinBounds>|<get-isWithinBounds>(){}[0]
+    final val scrollDelta // org.unitedsoftware.mosaic.layout/PointerEvent.scrollDelta|{}scrollDelta[0]
+        final fun <get-scrollDelta>(): kotlin/Int // org.unitedsoftware.mosaic.layout/PointerEvent.scrollDelta.<get-scrollDelta>|<get-scrollDelta>(){}[0]
+    final val shift // org.unitedsoftware.mosaic.layout/PointerEvent.shift|{}shift[0]
+        final fun <get-shift>(): kotlin/Boolean // org.unitedsoftware.mosaic.layout/PointerEvent.shift.<get-shift>|<get-shift>(){}[0]
+    final val type // org.unitedsoftware.mosaic.layout/PointerEvent.type|{}type[0]
+        final fun <get-type>(): org.unitedsoftware.mosaic.layout/PointerEventType // org.unitedsoftware.mosaic.layout/PointerEvent.type.<get-type>|<get-type>(){}[0]
+    final val x // org.unitedsoftware.mosaic.layout/PointerEvent.x|{}x[0]
+        final fun <get-x>(): kotlin/Int // org.unitedsoftware.mosaic.layout/PointerEvent.x.<get-x>|<get-x>(){}[0]
+    final val y // org.unitedsoftware.mosaic.layout/PointerEvent.y|{}y[0]
+        final fun <get-y>(): kotlin/Int // org.unitedsoftware.mosaic.layout/PointerEvent.y.<get-y>|<get-y>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // org.unitedsoftware.mosaic.layout/PointerEvent.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // org.unitedsoftware.mosaic.layout/PointerEvent.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // org.unitedsoftware.mosaic.layout/PointerEvent.toString|toString(){}[0]
 }
 
 final class org.unitedsoftware.mosaic.layout/ScrollState { // org.unitedsoftware.mosaic.layout/ScrollState|null[0]
@@ -916,6 +972,7 @@ final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_Focu
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_KeyEvent$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_KeyEvent$stableprop|#static{}org_unitedsoftware_mosaic_layout_KeyEvent$stableprop[0]
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PasteEvent$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PasteEvent$stableprop|#static{}org_unitedsoftware_mosaic_layout_PasteEvent$stableprop[0]
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_Placeable$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_Placeable$stableprop|#static{}org_unitedsoftware_mosaic_layout_Placeable$stableprop[0]
+final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PointerEvent$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PointerEvent$stableprop|#static{}org_unitedsoftware_mosaic_layout_PointerEvent$stableprop[0]
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_ScrollState$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_ScrollState$stableprop|#static{}org_unitedsoftware_mosaic_layout_ScrollState$stableprop[0]
 final val org.unitedsoftware.mosaic.modifier/org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop // org.unitedsoftware.mosaic.modifier/org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop|#static{}org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop[0]
 final val org.unitedsoftware.mosaic.text/org_unitedsoftware_mosaic_text_AnnotatedString$stableprop // org.unitedsoftware.mosaic.text/org_unitedsoftware_mosaic_text_AnnotatedString$stableprop|#static{}org_unitedsoftware_mosaic_text_AnnotatedString$stableprop[0]
@@ -954,6 +1011,7 @@ final val org.unitedsoftware.mosaic/LocalStaticLogger // org.unitedsoftware.mosa
     final fun <get-LocalStaticLogger>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/StaticLogger> // org.unitedsoftware.mosaic/LocalStaticLogger.<get-LocalStaticLogger>|<get-LocalStaticLogger>(){}[0]
 final val org.unitedsoftware.mosaic/LocalTerminalState // org.unitedsoftware.mosaic/LocalTerminalState|{}LocalTerminalState[0]
     final fun <get-LocalTerminalState>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/TerminalState> // org.unitedsoftware.mosaic/LocalTerminalState.<get-LocalTerminalState>|<get-LocalTerminalState>(){}[0]
+final val org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop|#static{}org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop[0]
 final val org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_StaticLogger$stableprop // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_StaticLogger$stableprop|#static{}org_unitedsoftware_mosaic_StaticLogger$stableprop[0]
 final val org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stableprop // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stableprop|#static{}org_unitedsoftware_mosaic_TerminalState$stableprop[0]
 
@@ -977,9 +1035,12 @@ final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosai
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/layoutId(kotlin/Any): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/layoutId|layoutId@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Any){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/offset(kotlin/Function0<org.unitedsoftware.mosaic.ui.unit/IntOffset>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/offset|offset@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function0<org.unitedsoftware.mosaic.ui.unit.IntOffset>){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/offset(kotlin/Int = ..., kotlin/Int = ...): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/offset|offset@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Int;kotlin.Int){}[0]
+final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/onClick(kotlin/Function0<kotlin/Unit>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/onClick|onClick@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function0<kotlin.Unit>){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/onFocusChanged(kotlin/Function1<org.unitedsoftware.mosaic.layout/FocusState, kotlin/Unit>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/onFocusChanged|onFocusChanged@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function1<org.unitedsoftware.mosaic.layout.FocusState,kotlin.Unit>){}[0]
+final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/onHover(kotlin/Function1<kotlin/Boolean, kotlin/Unit>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/onHover|onHover@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function1<kotlin.Boolean,kotlin.Unit>){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/onKeyEvent(kotlin/Function1<org.unitedsoftware.mosaic.layout/KeyEvent, kotlin/Boolean>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/onKeyEvent|onKeyEvent@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function1<org.unitedsoftware.mosaic.layout.KeyEvent,kotlin.Boolean>){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/onPasteEvent(kotlin/Function1<org.unitedsoftware.mosaic.layout/PasteEvent, kotlin/Boolean>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/onPasteEvent|onPasteEvent@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function1<org.unitedsoftware.mosaic.layout.PasteEvent,kotlin.Boolean>){}[0]
+final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/onPointerEvent(kotlin/Function1<org.unitedsoftware.mosaic.layout/PointerEvent, kotlin/Boolean>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/onPointerEvent|onPointerEvent@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function1<org.unitedsoftware.mosaic.layout.PointerEvent,kotlin.Boolean>){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/onPreviewKeyEvent(kotlin/Function1<org.unitedsoftware.mosaic.layout/KeyEvent, kotlin/Boolean>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/onPreviewKeyEvent|onPreviewKeyEvent@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function1<org.unitedsoftware.mosaic.layout.KeyEvent,kotlin.Boolean>){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/padding(kotlin/Int = ..., kotlin/Int = ...): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/padding|padding@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Int;kotlin.Int){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/padding(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ...): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/padding|padding@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
@@ -1024,6 +1085,7 @@ final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_Focu
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_KeyEvent$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_KeyEvent$stableprop_getter|org_unitedsoftware_mosaic_layout_KeyEvent$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PasteEvent$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PasteEvent$stableprop_getter|org_unitedsoftware_mosaic_layout_PasteEvent$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_Placeable$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_Placeable$stableprop_getter|org_unitedsoftware_mosaic_layout_Placeable$stableprop_getter(){}[0]
+final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PointerEvent$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_PointerEvent$stableprop_getter|org_unitedsoftware_mosaic_layout_PointerEvent$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_ScrollState$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_ScrollState$stableprop_getter|org_unitedsoftware_mosaic_layout_ScrollState$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.layout/rememberScrollState(kotlin/Int, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): org.unitedsoftware.mosaic.layout/ScrollState // org.unitedsoftware.mosaic.layout/rememberScrollState|rememberScrollState(kotlin.Int;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun org.unitedsoftware.mosaic.modifier/org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.modifier/org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop_getter|org_unitedsoftware_mosaic_modifier_CombinedModifier$stableprop_getter(){}[0]
@@ -1070,10 +1132,11 @@ final fun org.unitedsoftware.mosaic/Mosaic(kotlin.coroutines/CoroutineContext, k
 final fun org.unitedsoftware.mosaic/StaticEffect(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // org.unitedsoftware.mosaic/StaticEffect|StaticEffect(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun org.unitedsoftware.mosaic/WindowPointerShape(org.unitedsoftware.mosaic/PointerShape, androidx.compose.runtime/Composer?, kotlin/Int) // org.unitedsoftware.mosaic/WindowPointerShape|WindowPointerShape(org.unitedsoftware.mosaic.PointerShape;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun org.unitedsoftware.mosaic/WindowTitle(kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int) // org.unitedsoftware.mosaic/WindowTitle|WindowTitle(kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop_getter|org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_StaticLogger$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_StaticLogger$stableprop_getter|org_unitedsoftware_mosaic_StaticLogger$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stableprop_getter|org_unitedsoftware_mosaic_TerminalState$stableprop_getter(){}[0]
-final fun org.unitedsoftware.mosaic/runMosaicBlocking(org.unitedsoftware.mosaic/NonInteractivePolicy = ..., kotlin/Boolean = ..., kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>): kotlin/Boolean // org.unitedsoftware.mosaic/runMosaicBlocking|runMosaicBlocking(org.unitedsoftware.mosaic.NonInteractivePolicy;kotlin.Boolean;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
-final fun org.unitedsoftware.mosaic/runMosaicMain(kotlin/Boolean = ..., kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>) // org.unitedsoftware.mosaic/runMosaicMain|runMosaicMain(kotlin.Boolean;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
+final fun org.unitedsoftware.mosaic/runMosaicBlocking(org.unitedsoftware.mosaic/NonInteractivePolicy = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>): kotlin/Boolean // org.unitedsoftware.mosaic/runMosaicBlocking|runMosaicBlocking(org.unitedsoftware.mosaic.NonInteractivePolicy;kotlin.Boolean;kotlin.Boolean;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
+final fun org.unitedsoftware.mosaic/runMosaicMain(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>) // org.unitedsoftware.mosaic/runMosaicMain|runMosaicMain(kotlin.Boolean;kotlin.Boolean;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
 final inline fun (org.unitedsoftware.mosaic.ui/Color).org.unitedsoftware.mosaic.ui/takeOrElse(kotlin/Function0<org.unitedsoftware.mosaic.ui/Color>): org.unitedsoftware.mosaic.ui/Color // org.unitedsoftware.mosaic.ui/takeOrElse|takeOrElse@org.unitedsoftware.mosaic.ui.Color(kotlin.Function0<org.unitedsoftware.mosaic.ui.Color>){}[0]
 final inline fun (org.unitedsoftware.mosaic.ui/TextStyle).org.unitedsoftware.mosaic.ui/takeOrElse(kotlin/Function0<org.unitedsoftware.mosaic.ui/TextStyle>): org.unitedsoftware.mosaic.ui/TextStyle // org.unitedsoftware.mosaic.ui/takeOrElse|takeOrElse@org.unitedsoftware.mosaic.ui.TextStyle(kotlin.Function0<org.unitedsoftware.mosaic.ui.TextStyle>){}[0]
 final inline fun (org.unitedsoftware.mosaic.ui/UnderlineStyle).org.unitedsoftware.mosaic.ui/takeOrElse(kotlin/Function0<org.unitedsoftware.mosaic.ui/UnderlineStyle>): org.unitedsoftware.mosaic.ui/UnderlineStyle // org.unitedsoftware.mosaic.ui/takeOrElse|takeOrElse@org.unitedsoftware.mosaic.ui.UnderlineStyle(kotlin.Function0<org.unitedsoftware.mosaic.ui.UnderlineStyle>){}[0]
@@ -1082,4 +1145,4 @@ final inline fun <#A: kotlin/Any> (org.unitedsoftware.mosaic.text/AnnotatedStrin
 final inline fun <#A: kotlin/Any?> (org.unitedsoftware.mosaic.ui/LazyListScope).org.unitedsoftware.mosaic.ui/items(kotlin.collections/List<#A>, noinline kotlin/Function1<#A, kotlin/Any>? = ..., crossinline kotlin/Function3<#A, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>) // org.unitedsoftware.mosaic.ui/items|items@org.unitedsoftware.mosaic.ui.LazyListScope(kotlin.collections.List<0:0>;kotlin.Function1<0:0,kotlin.Any>?;kotlin.Function3<0:0,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){0§<kotlin.Any?>}[0]
 final inline fun <#A: kotlin/Any?> (org.unitedsoftware.mosaic.ui/LazyListScope).org.unitedsoftware.mosaic.ui/itemsIndexed(kotlin.collections/List<#A>, noinline kotlin/Function2<kotlin/Int, #A, kotlin/Any>? = ..., crossinline kotlin/Function4<kotlin/Int, #A, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>) // org.unitedsoftware.mosaic.ui/itemsIndexed|itemsIndexed@org.unitedsoftware.mosaic.ui.LazyListScope(kotlin.collections.List<0:0>;kotlin.Function2<kotlin.Int,0:0,kotlin.Any>?;kotlin.Function4<kotlin.Int,0:0,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){0§<kotlin.Any?>}[0]
 final inline fun org.unitedsoftware.mosaic.text/buildAnnotatedString(kotlin/Function1<org.unitedsoftware.mosaic.text/AnnotatedString.Builder, kotlin/Unit>): org.unitedsoftware.mosaic.text/AnnotatedString // org.unitedsoftware.mosaic.text/buildAnnotatedString|buildAnnotatedString(kotlin.Function1<org.unitedsoftware.mosaic.text.AnnotatedString.Builder,kotlin.Unit>){}[0]
-final suspend fun org.unitedsoftware.mosaic/runMosaic(org.unitedsoftware.mosaic/NonInteractivePolicy = ..., kotlin/Boolean = ..., kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>): kotlin/Boolean // org.unitedsoftware.mosaic/runMosaic|runMosaic(org.unitedsoftware.mosaic.NonInteractivePolicy;kotlin.Boolean;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]
+final suspend fun org.unitedsoftware.mosaic/runMosaic(org.unitedsoftware.mosaic/NonInteractivePolicy = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>): kotlin/Boolean // org.unitedsoftware.mosaic/runMosaic|runMosaic(org.unitedsoftware.mosaic.NonInteractivePolicy;kotlin.Boolean;kotlin.Boolean;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>){}[0]

@@ -16,12 +16,12 @@ public abstract interface class org/unitedsoftware/mosaic/Mosaic {
 
 public final class org/unitedsoftware/mosaic/MosaicKt {
 	public static final fun Mosaic (Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function1;Lorg/unitedsoftware/mosaic/terminal/Terminal;)Lorg/unitedsoftware/mosaic/Mosaic;
-	public static final fun runMosaic (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun runMosaic$default (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static final fun runMosaicBlocking (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZLkotlin/jvm/functions/Function2;)Z
-	public static synthetic fun runMosaicBlocking$default (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Z
-	public static final fun runMosaicMain (ZLkotlin/jvm/functions/Function2;)V
-	public static synthetic fun runMosaicMain$default (ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static final fun runMosaic (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun runMosaic$default (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZZLkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun runMosaicBlocking (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZZLkotlin/jvm/functions/Function2;)Z
+	public static synthetic fun runMosaicBlocking$default (Lorg/unitedsoftware/mosaic/NonInteractivePolicy;ZZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Z
+	public static final fun runMosaicMain (ZZLkotlin/jvm/functions/Function2;)V
+	public static synthetic fun runMosaicMain$default (ZZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
 }
 
 public final class org/unitedsoftware/mosaic/NonInteractivePolicy : java/lang/Enum {
@@ -383,6 +383,53 @@ public abstract interface class org/unitedsoftware/mosaic/layout/Placeable$Place
 	public abstract fun getY ()I
 	public fun place (Lorg/unitedsoftware/mosaic/layout/Placeable;II)V
 	public fun place-_kBr-tg (Lorg/unitedsoftware/mosaic/layout/Placeable;J)V
+}
+
+public final class org/unitedsoftware/mosaic/layout/PointerButton : java/lang/Enum {
+	public static final field Left Lorg/unitedsoftware/mosaic/layout/PointerButton;
+	public static final field Middle Lorg/unitedsoftware/mosaic/layout/PointerButton;
+	public static final field None Lorg/unitedsoftware/mosaic/layout/PointerButton;
+	public static final field Right Lorg/unitedsoftware/mosaic/layout/PointerButton;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/layout/PointerButton;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/layout/PointerButton;
+}
+
+public final class org/unitedsoftware/mosaic/layout/PointerEvent {
+	public static final field $stable I
+	public fun <init> (Lorg/unitedsoftware/mosaic/layout/PointerEventType;IILorg/unitedsoftware/mosaic/layout/PointerButton;IZZZZ)V
+	public synthetic fun <init> (Lorg/unitedsoftware/mosaic/layout/PointerEventType;IILorg/unitedsoftware/mosaic/layout/PointerButton;IZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAlt ()Z
+	public final fun getButton ()Lorg/unitedsoftware/mosaic/layout/PointerButton;
+	public final fun getCtrl ()Z
+	public final fun getScrollDelta ()I
+	public final fun getShift ()Z
+	public final fun getType ()Lorg/unitedsoftware/mosaic/layout/PointerEventType;
+	public final fun getX ()I
+	public final fun getY ()I
+	public fun hashCode ()I
+	public final fun isWithinBounds ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/unitedsoftware/mosaic/layout/PointerEventType : java/lang/Enum {
+	public static final field Drag Lorg/unitedsoftware/mosaic/layout/PointerEventType;
+	public static final field Enter Lorg/unitedsoftware/mosaic/layout/PointerEventType;
+	public static final field Exit Lorg/unitedsoftware/mosaic/layout/PointerEventType;
+	public static final field Move Lorg/unitedsoftware/mosaic/layout/PointerEventType;
+	public static final field Press Lorg/unitedsoftware/mosaic/layout/PointerEventType;
+	public static final field Release Lorg/unitedsoftware/mosaic/layout/PointerEventType;
+	public static final field Scroll Lorg/unitedsoftware/mosaic/layout/PointerEventType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/layout/PointerEventType;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/layout/PointerEventType;
+}
+
+public final class org/unitedsoftware/mosaic/layout/PointerInputKt {
+	public static final fun onClick (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function0;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun onHover (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun onPointerEvent (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
 public final class org/unitedsoftware/mosaic/layout/ScrollKt {
