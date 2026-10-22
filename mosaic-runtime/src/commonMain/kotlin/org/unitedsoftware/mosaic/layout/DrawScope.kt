@@ -317,6 +317,13 @@ internal open class TextCanvasDrawScope(
 		canvas.setCursor(row, column)
 	}
 
+	/** Runs [block] with drawing limited to the bounds of this scope. */
+	fun <R> clipToBounds(block: () -> R): R {
+		val left = canvas.translationX
+		val top = canvas.translationY
+		return canvas.withClip(left, top, left + width, top + height, block)
+	}
+
 	private fun TextPixel.updateStyle(
 		foreground: Color,
 		background: Color,

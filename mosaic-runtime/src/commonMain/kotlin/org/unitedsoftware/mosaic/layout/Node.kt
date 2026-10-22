@@ -260,12 +260,27 @@ private class DrawLayer(
 	private val element: DrawModifier,
 	override val next: MosaicNodeLayer,
 ) : MosaicNodeLayer() {
+	private var constraints = Constraints()
+
+	override fun doMeasure(constraints: Constraints): MeasureResult {
+		this.constraints = constraints
+		return super.doMeasure(constraints)
+	}
+
 	override fun drawTo(canvas: TextSurface) {
 		val oldX = canvas.translationX
 		val oldY = canvas.translationY
 		canvas.translationX = x
 		canvas.translationY = y
-		val scope = object : TextCanvasDrawScope(canvas, width, height), ContentDrawScope {
+		// Content like text can be larger than its constraints, but drawing, and especially
+		// clipping, should stay within the bounds the parent allowed.
+		val scope = object :
+			TextCanvasDrawScope(
+				canvas,
+				width.coerceIn(constraints.minWidth, constraints.maxWidth),
+				height.coerceIn(constraints.minHeight, constraints.maxHeight),
+			),
+			ContentDrawScope {
 			override fun drawContent() {
 				next.drawTo(canvas)
 			}

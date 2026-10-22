@@ -92,6 +92,10 @@ public final class org/unitedsoftware/mosaic/layout/BackgroundKt {
 	public static final fun background-hx1xPZo (Lorg/unitedsoftware/mosaic/modifier/Modifier;I)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
+public final class org/unitedsoftware/mosaic/layout/ClipKt {
+	public static final fun clipToBounds (Lorg/unitedsoftware/mosaic/modifier/Modifier;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+}
+
 public abstract interface class org/unitedsoftware/mosaic/layout/ContentDrawScope : org/unitedsoftware/mosaic/layout/DrawScope {
 	public abstract fun drawContent ()V
 }
@@ -274,6 +278,27 @@ public abstract interface class org/unitedsoftware/mosaic/layout/Placeable$Place
 	public abstract fun getY ()I
 	public fun place (Lorg/unitedsoftware/mosaic/layout/Placeable;II)V
 	public fun place-_kBr-tg (Lorg/unitedsoftware/mosaic/layout/Placeable;J)V
+}
+
+public final class org/unitedsoftware/mosaic/layout/ScrollKt {
+	public static final fun horizontalScroll (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/ScrollState;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun rememberScrollState (ILandroidx/compose/runtime/Composer;II)Lorg/unitedsoftware/mosaic/layout/ScrollState;
+	public static final fun verticalScroll (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/ScrollState;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+}
+
+public final class org/unitedsoftware/mosaic/layout/ScrollState {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getCanScrollBackward ()Z
+	public final fun getCanScrollForward ()Z
+	public final fun getMaxValue ()I
+	public final fun getValue ()I
+	public final fun getViewportSize ()I
+	public final fun scrollBy (I)V
+	public final fun scrollTo (I)V
+	public final fun scrollToEnd ()V
 }
 
 public final class org/unitedsoftware/mosaic/layout/SizeKt {

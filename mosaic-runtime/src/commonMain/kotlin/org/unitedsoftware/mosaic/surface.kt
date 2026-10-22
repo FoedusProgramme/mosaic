@@ -38,6 +38,34 @@ internal class TextSurface(
 
 	private val cells = Array(width * height) { TextPixel(SpaceCharCodePoint) }
 
+	// Writes outside of this rectangle, in surface coordinates, are dropped.
+	private var clipLeft = 0
+	private var clipTop = 0
+	private var clipRight = width
+	private var clipBottom = height
+
+	/** Runs [block] with writes limited to the intersection of the current clip and the rectangle. */
+	fun <R> withClip(left: Int, top: Int, right: Int, bottom: Int, block: () -> R): R {
+		val oldLeft = clipLeft
+		val oldTop = clipTop
+		val oldRight = clipRight
+		val oldBottom = clipBottom
+		clipLeft = maxOf(oldLeft, left)
+		clipTop = maxOf(oldTop, top)
+		clipRight = minOf(oldRight, right)
+		clipBottom = minOf(oldBottom, bottom)
+		try {
+			return block()
+		} finally {
+			clipLeft = oldLeft
+			clipTop = oldTop
+			clipRight = oldRight
+			clipBottom = oldBottom
+		}
+	}
+
+	private fun isClipped(x: Int, y: Int) = x !in clipLeft until clipRight || y !in clipTop until clipBottom
+
 	/** Where the terminal's cursor should be placed after rendering, if anywhere. */
 	var cursor: IntOffset? = null
 		private set
@@ -45,7 +73,7 @@ internal class TextSurface(
 	fun setCursor(row: Int, column: Int) {
 		val x = translationX + column
 		val y = row + translationY
-		if (x in 0 until width && y in 0 until height) {
+		if (!isClipped(x, y)) {
 			cursor = IntOffset(x, y)
 		}
 	}
@@ -54,7 +82,7 @@ internal class TextSurface(
 	fun getOrNull(row: Int, column: Int): TextPixel? {
 		val x = translationX + column
 		val y = row + translationY
-		if (x !in 0 until width || y !in 0 until height) {
+		if (isClipped(x, y)) {
 			return null
 		}
 		return cells[y * width + x]
@@ -71,14 +99,14 @@ internal class TextSurface(
 	fun setCodePoint(row: Int, column: Int, codePoint: Int, columns: Int): TextPixel? {
 		val x = translationX + column
 		val y = row + translationY
-		if (x !in 0 until width || y !in 0 until height) {
+		if (isClipped(x, y)) {
 			return null
 		}
 		val index = y * width + x
 		val pixel = cells[index]
 		pixel.unlinkWide(index)
 
-		if (columns == 2 && x + 1 < width) {
+		if (columns == 2 && x + 1 < clipRight) {
 			val next = cells[index + 1]
 			next.unlinkWide(index + 1)
 			next.setCodePoint(SpaceCharCodePoint, columns = 0)
