@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <title>Mosaic documentation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Dark from the first frame in dark mode, so the redirect does not flash white. -->
+<meta name="color-scheme" content="light dark">
+<style>
+  html { background: #ffffff; color: #19191c; }
+  @media (prefers-color-scheme: dark) { html { background: #19191c; color: #e8e8ea; } }
+  body { font: 16px system-ui, sans-serif; margin: 2rem; visibility: hidden; }
+  a { color: inherit; }
+</style>
 <link rel="canonical" href="docs/latest/">
 <script>
 // The release documentation once there is a release, and the snapshot documentation until then.
@@ -11,6 +19,7 @@ fetch("docs/" + "0.x/index.html", { method: "HEAD" })
   .then(function (response) { location.replace("docs/" + (response.ok ? "0.x/" : "latest/")) })
   .catch(function () { location.replace("docs/" + "latest/") })
 </script>
+<noscript><style>body { visibility: visible; }</style></noscript>
 </head>
 <body>
 <p>Mosaic documentation: <a href=".x/">latest release</a> · <a href="docs/latest/">snapshot of master</a></p>
