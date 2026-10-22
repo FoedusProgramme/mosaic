@@ -23,6 +23,9 @@ import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.coroutineContext
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.TimeMark
+import kotlin.time.TimeSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
 import kotlinx.coroutines.Dispatchers.Unconfined
@@ -69,7 +72,9 @@ import org.unitedsoftware.mosaic.ui.unit.Constraints
  * @param mouse Whether to report mouse events to modifiers like `onPointerEvent` and `onClick`,
  *   and scroll with the wheel. This takes over the mouse, so the terminal's own text selection and
  *   scrolling only work with a modifier key held, like Shift or Option, depending on the terminal.
- *   It is enabled on the alternate screen by default.
+ *   Instead, dragging where no pointer handler takes the press selects text, double clicks select
+ *   words and triple clicks rows, and the selection is copied to the clipboard with OSC 52 once
+ *   released. It is enabled on the alternate screen by default.
  */
 public fun runMosaicMain(
 	alternateScreen: Boolean = false,
@@ -354,8 +359,79 @@ internal class MosaicComposition(
 
 	override fun draw(): TextCanvas {
 		readStatesOnDraw.clear()
-		return Snapshot.observe(readObserver = readStatesOnDrawObserver) {
+		val canvas = Snapshot.observe(readObserver = readStatesOnDrawObserver) {
 			popupHost.draw(rootNode, rootConstraints(terminalState.value.size))
+		}
+		val surface = canvas as? TextSurface ?: return canvas
+		lastSurface = surface
+		selection?.range(surface)?.let { (start, end) -> surface.invert(start, end) }
+		return canvas
+	}
+
+	/** The surface drawn last, which text is selected from. */
+	private var lastSurface: TextSurface? = null
+
+	/** Text selected with the mouse, where no pointer handler took the press. */
+	private var selection: ScreenSelection? = null
+
+	/** Whether the left button was pressed where no pointer handler took it, and still is. */
+	private var selecting = false
+	private var selectionAnchorX = 0
+	private var selectionAnchorY = 0
+	private var lastClick: TimeMark? = null
+	private var lastClickX = 0
+	private var lastClickY = 0
+	private var clicks = 0
+
+	private fun clearSelection() {
+		if (selection != null) {
+			selection = null
+			needDraw = true
+		}
+	}
+
+	/**
+	 * Selects text when dragging where no pointer handler took the press, like the terminal itself
+	 * would without mouse tracking, and copies it to the clipboard once released. Double clicks
+	 * select words, and triple clicks rows.
+	 */
+	private fun updateSelection(type: PointerEventType, x: Int, y: Int, button: PointerButton, handled: Boolean) {
+		when (type) {
+			PointerEventType.Press -> {
+				clearSelection()
+				selecting = false
+				if (handled || button != PointerButton.Left) return
+				val repeated = lastClick.let { it != null && it.elapsedNow() < MultiClickInterval } &&
+					x == lastClickX && y == lastClickY
+				clicks = if (repeated) clicks % 3 + 1 else 1
+				lastClick = TimeSource.Monotonic.markNow()
+				lastClickX = x
+				lastClickY = y
+				selecting = true
+				selectionAnchorX = x
+				selectionAnchorY = y
+				if (clicks > 1) {
+					val unit = if (clicks == 2) ScreenSelection.Unit.Words else ScreenSelection.Unit.Rows
+					selection = ScreenSelection(x, y, x, y, unit)
+					needDraw = true
+				}
+			}
+
+			PointerEventType.Drag -> if (selecting) {
+				val unit = selection?.unit ?: ScreenSelection.Unit.Cells
+				selection = ScreenSelection(selectionAnchorX, selectionAnchorY, x, y, unit)
+				needDraw = true
+			}
+
+			PointerEventType.Release -> if (selecting) {
+				selecting = false
+				val surface = lastSurface ?: return
+				val (start, end) = selection?.range(surface) ?: return
+				val text = surface.textBetween(start, end)
+				if (text.isNotEmpty()) clipboard.setText(text)
+			}
+
+			else -> {}
 		}
 	}
 
@@ -460,6 +536,7 @@ internal class MosaicComposition(
 			/** Returns false when the key was an unhandled Ctrl+C which cancelled the program. */
 			fun sendKeyEvent(event: KeyboardEvent): Boolean {
 				val keyEvent = event.toKeyEventOrNull() ?: return true
+				clearSelection()
 				val keyHandled = focusOwner.dispatch { root, phase -> root.sendKeyEvent(keyEvent, phase) } ||
 					focusOwner.onUnhandledKeyEvent(keyEvent)
 				if (!keyHandled && keyEvent == ctrlC) {
@@ -546,7 +623,8 @@ internal class MosaicComposition(
 				MouseEvent.Type.Motion -> PointerEventType.Move
 			}
 		}
-		pointerDispatcher.dispatch(type, event.x, row, button, wheel, event.shift, event.alt, event.ctrl)
+		val handled = pointerDispatcher.dispatch(type, event.x, row, button, wheel, event.shift, event.alt, event.ctrl)
+		updateSelection(type, event.x, row, button, handled)
 	}
 
 	override fun setContent(content: @Composable () -> Unit) {
@@ -598,6 +676,35 @@ internal class MosaicComposition(
 		applyObserverHandle.dispose()
 		recomposer.cancel()
 		job.cancel()
+	}
+}
+
+/** How soon another click at the same position counts towards a double or triple click. */
+private val MultiClickInterval = 500.milliseconds
+
+/** Text selected with the mouse from where it was pressed to where it is now, in surface coordinates. */
+private class ScreenSelection(
+	val anchorX: Int,
+	val anchorY: Int,
+	val x: Int,
+	val y: Int,
+	val unit: Unit,
+) {
+	enum class Unit { Cells, Words, Rows }
+
+	/** The selected pixels in reading order, as the start and exclusive end, or null when none. */
+	fun range(surface: TextSurface): Pair<Int, Int>? {
+		if (surface.width == 0 || surface.height == 0) return null
+		fun index(x: Int, y: Int) = y.coerceIn(0, surface.height - 1) * surface.width + x.coerceIn(0, surface.width - 1)
+		val anchor = index(anchorX, anchorY)
+		val current = index(x, y)
+		val first = minOf(anchor, current)
+		val last = maxOf(anchor, current)
+		return when (unit) {
+			Unit.Cells -> surface.characterRange(first, last)
+			Unit.Words -> surface.wordAt(first).first to surface.wordAt(last).second
+			Unit.Rows -> first / surface.width * surface.width to (last / surface.width + 1) * surface.width
+		}
 	}
 }
 

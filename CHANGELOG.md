@@ -13,6 +13,7 @@ New:
 - Text deleted with Ctrl+U, Ctrl+K, Ctrl+W, Alt+Backspace, and Alt+D is inserted again with Ctrl+Y, like in a shell.
 - `TextField` takes `minLines`.
 - `Modifier.onPreviewPasteEvent` receives pastes before the focused node, like a text field, so that ancestors can intercept them, for example to insert a placeholder for a large paste.
+- With the mouse enabled, dragging where no pointer handler takes the press selects text, like the terminal does without mouse tracking, and copies it to the clipboard once released. Double clicks select words, and triple clicks rows.
 
 Changed:
 - Ctrl+\, Ctrl+], Ctrl+^, and Ctrl+_ are reported as those keys with Ctrl in terminals without the Kitty keyboard protocol, rather than as control characters which were dropped.

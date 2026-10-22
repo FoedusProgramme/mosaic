@@ -257,6 +257,61 @@ internal class TextSurface(
 		}
 	}
 
+	/**
+	 * The range of pixels from [start] to [end] in reading order, both inclusive, extended to whole
+	 * two column code points. Returns the start and the exclusive end.
+	 */
+	fun characterRange(start: Int, end: Int): Pair<Int, Int> {
+		val first = if (columnCounts[start] == 0.toByte()) start - 1 else start
+		val last = if (columnCounts[end] == 2.toByte()) end + 1 else end
+		return first to last + 1
+	}
+
+	/** Toggles inverting the pixels from [start] until [end] in reading order, like a selection. */
+	fun invert(start: Int, end: Int) {
+		for (index in start until end) {
+			val bits = textStyles[index].let { if (it == EmptyTextStyle) 0 else it } xor Invert.bits
+			textStyles[index] = if (bits == 0) EmptyTextStyle else bits
+		}
+	}
+
+	/**
+	 * The text of the pixels from [start] until [end] in reading order, with a line break between
+	 * rows, and without the spaces which end them.
+	 */
+	fun textBetween(start: Int, end: Int): String = buildString {
+		var index = start
+		while (index < end) {
+			val rowEnd = minOf(end, (index / width + 1) * width)
+			val rowStart = length
+			while (index < rowEnd) {
+				// The second half of a two column code point is part of the first.
+				if (columnCounts[index] != 0.toByte()) {
+					appendCodePoint(codePoints[index])
+					combiningAt(index)?.let(::append)
+				}
+				index++
+			}
+			while (length > rowStart && this[length - 1] == ' ') setLength(length - 1)
+			if (index < end) append('\n')
+		}
+	}
+
+	/** The start and exclusive end of the word at [index] in its row, or of its run of spaces. */
+	fun wordAt(index: Int): Pair<Int, Int> {
+		val rowStart = index / width * width
+		val rowEnd = rowStart + width
+		val space = isSpace(index)
+		var start = index
+		while (start > rowStart && isSpace(start - 1) == space) start--
+		var end = index + 1
+		while (end < rowEnd && isSpace(end) == space) end++
+		return start to end
+	}
+
+	/** The second half of a two column code point is a space too, but not a blank one. */
+	private fun isSpace(index: Int) = codePoints[index] == SpaceCharCodePoint && columnCounts[index] != 0.toByte()
+
 	/** Resets the pixels in the rectangle, in surface coordinates, to unstyled spaces. */
 	fun clear(left: Int, top: Int, right: Int, bottom: Int) {
 		// Images cannot be partly cleared, so ones which overlap are removed.

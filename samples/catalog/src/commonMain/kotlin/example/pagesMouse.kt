@@ -96,6 +96,7 @@ fun MousePage() {
 		Spacer(Modifier.height(1))
 		Text(last, color = palette.accent)
 		Text("Mouse events are on by default on the alternate screen.", color = palette.muted)
-		Text("Hold Shift or Option to select text with the terminal.", color = palette.muted)
+		Text("Drag over other text to select and copy it, or double", color = palette.muted)
+		Text("and triple click for words and rows.", color = palette.muted)
 	}
 }
