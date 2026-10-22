@@ -144,6 +144,43 @@ public final class org/unitedsoftware/mosaic/layout/DrawStyle$Stroke : org/unite
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class org/unitedsoftware/mosaic/layout/FocusDirection : java/lang/Enum {
+	public static final field Next Lorg/unitedsoftware/mosaic/layout/FocusDirection;
+	public static final field Previous Lorg/unitedsoftware/mosaic/layout/FocusDirection;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lorg/unitedsoftware/mosaic/layout/FocusDirection;
+	public static fun values ()[Lorg/unitedsoftware/mosaic/layout/FocusDirection;
+}
+
+public final class org/unitedsoftware/mosaic/layout/FocusKt {
+	public static final fun focusRequester (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/FocusRequester;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun focusable (Lorg/unitedsoftware/mosaic/modifier/Modifier;Z)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun focusable$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;ZILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static final fun getLocalFocusManager ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+	public static final fun onFocusChanged (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lkotlin/jvm/functions/Function1;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+}
+
+public abstract interface class org/unitedsoftware/mosaic/layout/FocusManager {
+	public abstract fun clearFocus ()V
+	public abstract fun moveFocus (Lorg/unitedsoftware/mosaic/layout/FocusDirection;)Z
+}
+
+public final class org/unitedsoftware/mosaic/layout/FocusRequester {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun requestFocus ()V
+}
+
+public final class org/unitedsoftware/mosaic/layout/FocusState {
+	public static final field $stable I
+	public fun <init> (ZZ)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHasFocus ()Z
+	public fun hashCode ()I
+	public final fun isFocused ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class org/unitedsoftware/mosaic/layout/IntrinsicKt {
 	public static final fun height (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/IntrinsicSize;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 	public static final fun requiredHeight (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/IntrinsicSize;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
@@ -655,7 +692,7 @@ public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$SpacerKt {
 public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$TextFieldKt {
 	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$TextFieldKt;
 	public fun <init> ()V
-	public final fun getLambda$-70105931$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$1982145425$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class org/unitedsoftware/mosaic/ui/FillerKt {
@@ -727,7 +764,7 @@ public final class org/unitedsoftware/mosaic/ui/Text {
 }
 
 public final class org/unitedsoftware/mosaic/ui/TextFieldKt {
-	public static final fun TextField-CCrYOx0 (Lorg/unitedsoftware/mosaic/ui/TextFieldState;Lorg/unitedsoftware/mosaic/modifier/Modifier;ZZILjava/lang/String;IIILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun TextField--NNhATQ (Lorg/unitedsoftware/mosaic/ui/TextFieldState;Lorg/unitedsoftware/mosaic/modifier/Modifier;ZILjava/lang/String;IIILkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class org/unitedsoftware/mosaic/ui/TextFieldState {

@@ -55,12 +55,12 @@ internal abstract class MosaicNodeLayer :
 		next?.drawTo(canvas)
 	}
 
-	open fun sendKeyEvent(keyEvent: KeyEvent): Boolean {
-		return next?.sendKeyEvent(keyEvent) ?: false
+	open fun sendKeyEvent(keyEvent: KeyEvent, phase: DispatchPhase): Boolean {
+		return next?.sendKeyEvent(keyEvent, phase) ?: false
 	}
 
-	open fun sendPasteEvent(pasteEvent: PasteEvent): Boolean {
-		return next?.sendPasteEvent(pasteEvent) ?: false
+	open fun sendPasteEvent(pasteEvent: PasteEvent, phase: DispatchPhase): Boolean {
+		return next?.sendPasteEvent(pasteEvent, phase) ?: false
 	}
 
 	override fun minIntrinsicWidth(height: Int): Int {
@@ -103,7 +103,15 @@ internal class MosaicNode(
 	var testTag: String? = null
 		private set
 
+	val focusTargets = ArrayList<FocusTarget>(0)
+	val focusObservers = ArrayList<FocusObserver>(0)
+
+	/** Whether this node is or contains the focused node, as of the last event dispatch. */
+	var containsFocus = false
+
 	fun setModifier(modifier: Modifier) {
+		focusTargets.clear()
+		focusObservers.clear()
 		topLayer = modifier.foldOut(bottomLayer) { element, nextLayer ->
 			var nextLayer = nextLayer
 			// The Modifier class can inherit from several key Modifier types
@@ -115,10 +123,19 @@ internal class MosaicNode(
 				nextLayer = DrawLayer(element, nextLayer)
 			}
 			if (element is KeyModifier) {
-				nextLayer = KeyLayer(element, nextLayer)
+				nextLayer = KeyLayer(this, element, nextLayer)
 			}
 			if (element is PasteModifier) {
-				nextLayer = PasteLayer(element, nextLayer)
+				nextLayer = PasteLayer(this, element, nextLayer)
+			}
+			if (element is FocusTargetElement) {
+				focusTargets += element.target
+			}
+			if (element is FocusObserverElement) {
+				focusObservers += element.observer
+			}
+			if (element is FocusRequesterElement) {
+				element.requester.attach(this)
 			}
 			if (element is ParentDataModifier) {
 				parentData = element.modifyParentData(parentData)
@@ -152,12 +169,12 @@ internal class MosaicNode(
 		return surface
 	}
 
-	fun sendKeyEvent(keyEvent: KeyEvent): Boolean {
-		return topLayer.sendKeyEvent(keyEvent)
+	fun sendKeyEvent(keyEvent: KeyEvent, phase: DispatchPhase = DispatchPhase.All): Boolean {
+		return topLayer.sendKeyEvent(keyEvent, phase)
 	}
 
-	fun sendPasteEvent(pasteEvent: PasteEvent): Boolean {
-		return topLayer.sendPasteEvent(pasteEvent)
+	fun sendPasteEvent(pasteEvent: PasteEvent, phase: DispatchPhase = DispatchPhase.All): Boolean {
+		return topLayer.sendPasteEvent(pasteEvent, phase)
 	}
 
 	override fun minIntrinsicWidth(height: Int): Int {
@@ -196,18 +213,28 @@ private class BottomLayer(
 		}
 	}
 
-	override fun sendKeyEvent(keyEvent: KeyEvent): Boolean {
-		for (child in node.children) {
-			if (child.sendKeyEvent(keyEvent)) {
-				return true
-			}
-		}
-		return false
+	override fun sendKeyEvent(keyEvent: KeyEvent, phase: DispatchPhase): Boolean {
+		return sendToChildren(phase) { child, childPhase -> child.sendKeyEvent(keyEvent, childPhase) }
 	}
 
-	override fun sendPasteEvent(pasteEvent: PasteEvent): Boolean {
+	override fun sendPasteEvent(pasteEvent: PasteEvent, phase: DispatchPhase): Boolean {
+		return sendToChildren(phase) { child, childPhase -> child.sendPasteEvent(pasteEvent, childPhase) }
+	}
+
+	private inline fun sendToChildren(
+		phase: DispatchPhase,
+		send: (child: MosaicNode, phase: DispatchPhase) -> Boolean,
+	): Boolean {
 		for (child in node.children) {
-			if (child.sendPasteEvent(pasteEvent)) {
+			val childPhase = when (phase) {
+				DispatchPhase.All -> DispatchPhase.All
+
+				DispatchPhase.FocusedPath -> if (child.containsFocus) phase else continue
+
+				// Children off the focused path did not get the event yet, so they get all of it.
+				DispatchPhase.Rest -> if (child.containsFocus) phase else DispatchPhase.All
+			}
+			if (send(child, childPhase)) {
 				return true
 			}
 		}
@@ -292,18 +319,30 @@ private class DrawLayer(
 }
 
 private class PasteLayer(
+	private val node: MosaicNode,
 	private val element: PasteModifier,
 	override val next: MosaicNodeLayer,
 ) : MosaicNodeLayer() {
-	override fun sendPasteEvent(pasteEvent: PasteEvent) = next.sendPasteEvent(pasteEvent) ||
-		element.onPasteEvent(pasteEvent)
+	override fun sendPasteEvent(pasteEvent: PasteEvent, phase: DispatchPhase): Boolean {
+		// Nodes on the focused path already got the event, and only pass it on now.
+		val skip = phase == DispatchPhase.Rest && node.containsFocus
+		return next.sendPasteEvent(pasteEvent, phase) ||
+			(!skip && element.onPasteEvent(pasteEvent))
+	}
 }
 
 private class KeyLayer(
+	private val node: MosaicNode,
 	private val element: KeyModifier,
 	override val next: MosaicNodeLayer,
 ) : MosaicNodeLayer() {
-	override fun sendKeyEvent(keyEvent: KeyEvent) = element.onPreKeyEvent(keyEvent) ||
-		next.sendKeyEvent(keyEvent) ||
-		element.onKeyEvent(keyEvent)
+	override fun sendKeyEvent(keyEvent: KeyEvent, phase: DispatchPhase): Boolean {
+		// Nodes on the focused path already got the event, and only pass it on now.
+		if (phase == DispatchPhase.Rest && node.containsFocus) {
+			return next.sendKeyEvent(keyEvent, phase)
+		}
+		return element.onPreKeyEvent(keyEvent) ||
+			next.sendKeyEvent(keyEvent, phase) ||
+			element.onKeyEvent(keyEvent)
+	}
 }

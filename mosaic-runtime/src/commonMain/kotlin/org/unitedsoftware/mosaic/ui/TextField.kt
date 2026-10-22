@@ -8,8 +8,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import org.unitedsoftware.mosaic.layout.KeyEvent
 import org.unitedsoftware.mosaic.layout.drawBehind
+import org.unitedsoftware.mosaic.layout.focusTarget
 import org.unitedsoftware.mosaic.layout.onKeyEvent
 import org.unitedsoftware.mosaic.layout.onPasteEvent
+import org.unitedsoftware.mosaic.layout.rememberFocusTarget
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.text.columnWidth
 import org.unitedsoftware.mosaic.text.forEachCodePointWithWidth
@@ -104,8 +106,9 @@ public class TextFieldState(initialText: String = "") {
 /**
  * An editable text field.
  *
- * While [focused], key presses and pastes edit [state], and the terminal's cursor is placed at its
- * cursor so that input methods show their composition there. Text is wrapped to the width of the
+ * The field is [focusable]. While focused, key presses and pastes edit [state], and the terminal's
+ * cursor is placed at its cursor so that input methods show their composition there. Use
+ * [focusRequester] to focus it when there are several focusable nodes. Text is wrapped to the width of the
  * field, at spaces where possible, and at most [maxLines] lines are shown, scrolled to keep the
  * cursor visible.
  *
@@ -120,7 +123,6 @@ public class TextFieldState(initialText: String = "") {
 public fun TextField(
 	state: TextFieldState,
 	modifier: Modifier = Modifier,
-	focused: Boolean = true,
 	singleLine: Boolean = false,
 	maxLines: Int = Int.MAX_VALUE,
 	placeholder: String = "",
@@ -139,13 +141,15 @@ public fun TextField(
 	var firstRow = 0
 	var cursorRow = 0
 	var cursorColumn = 0
+	val focus = rememberFocusTarget()
 
 	Layout(
 		content = {},
 		modifier = modifier
-			.onKeyEvent { focused && state.onKeyEvent(it, singleLine, onSubmit) }
+			.focusTarget(focus)
+			.onKeyEvent { focus.isFocused && state.onKeyEvent(it, singleLine, onSubmit) }
 			.onPasteEvent {
-				if (!focused) return@onPasteEvent false
+				if (!focus.isFocused) return@onPasteEvent false
 				state.insert(if (singleLine) it.text.replace('\n', ' ') else it.text)
 				true
 			}
@@ -157,7 +161,7 @@ public fun TextField(
 					val line = rows[row]
 					drawText(row - firstRow, 0, text.substring(line.start, line.end), color, textStyle = textStyle)
 				}
-				if (focused) {
+				if (focus.isFocused) {
 					drawCursor(cursorRow - firstRow, cursorColumn)
 				}
 			},

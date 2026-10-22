@@ -182,7 +182,28 @@ class TextFieldTest {
 		}
 	}
 
-	@Test fun unfocusedIgnoresKeys() = runTest {
+	@Test fun onlyTheFocusedFieldEdits() = runTest {
+		val first = TextFieldState("x")
+		val second = TextFieldState("y")
+		runMosaicTest {
+			setContent {
+				Column {
+					TextField(first, modifier = Modifier.width(5))
+					TextField(second, modifier = Modifier.width(5))
+				}
+			}
+			awaitSnapshot()
+			// The first field is focused, since nothing else was.
+			type("1")
+			assertThat(awaitSnapshot()).isEqualTo("x1\ny")
+
+			sendKeyEvent(KeyboardEvent(0x09))
+			type("2")
+			assertThat(awaitSnapshot()).isEqualTo("x1\ny2")
+		}
+	}
+
+	@Test fun unhandledKeysReachParent() = runTest {
 		val state = TextFieldState("x")
 		runMosaicTest {
 			setContent {
@@ -193,14 +214,14 @@ class TextFieldTest {
 						true
 					},
 				) {
-					TextField(state, modifier = Modifier.width(5), focused = false)
+					TextField(state, modifier = Modifier.width(5))
 					Text("keys:$keys")
 				}
 			}
 			awaitSnapshot()
-			type("y")
-			// The key went past the field to its parent.
-			assertThat(awaitSnapshot()).isEqualTo("x\nkeys:y")
+			sendKeyEvent(KeyboardEvent(57364))
+			// The field does not use F1, so it went to its parent.
+			assertThat(awaitSnapshot()).isEqualTo("x\nkeys:F1")
 		}
 	}
 

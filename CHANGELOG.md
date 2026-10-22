@@ -17,8 +17,10 @@ New:
 - `Modifier.clipToBounds` keeps the content of a node, including its children, within its bounds.
 - `Modifier.verticalScroll` and `Modifier.horizontalScroll` with `ScrollState` show part of content which is larger than the node. `ScrollState.scrollToEnd` keeps following the end as the content grows.
 - `LazyColumn` with `LazyListState` only composes the items which are visible, so it can hold long lists like the messages of a conversation. Keyed items keep their position when items are added before them, and `scrollToEnd` scrolls to the latest item.
+- A focus system: `Modifier.focusable`, `Modifier.focusRequester`, `Modifier.onFocusChanged`, and `LocalFocusManager`. Key and paste events go to the focused node and its ancestors first, and to the other nodes only when those do not handle them. Tab and Shift+Tab move the focus, and the first focusable node is focused when nothing else is.
 
 Changed:
+- `TextField` is focusable and edits while focused, instead of taking a `focused` parameter.
 - Only rows which changed since the last frame are written to the terminal again.
 - Output taller than the terminal shows its bottom instead of corrupting the screen, since the cursor cannot move above the top of the screen to redraw it.
 - Content is measured with the width of the terminal as its maximum width. With `alternateScreen`, it is measured to exactly the size of the terminal.

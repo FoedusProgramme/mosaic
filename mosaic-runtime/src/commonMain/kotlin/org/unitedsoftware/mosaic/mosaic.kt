@@ -32,7 +32,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.unitedsoftware.mosaic.NonInteractivePolicy.Exit
+import org.unitedsoftware.mosaic.layout.FocusOwner
 import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.LocalFocusManager
 import org.unitedsoftware.mosaic.layout.MosaicNode
 import org.unitedsoftware.mosaic.layout.PasteEvent
 import org.unitedsoftware.mosaic.terminal.BracketedPasteEvent
@@ -173,6 +175,7 @@ internal class MosaicComposition(
 	private val applier = MosaicNodeApplier { needLayout = true }
 	private val layoutInvalidator = { needLayout = true }
 	val rootNode = applier.root
+	private val focusOwner = FocusOwner(rootNode)
 	private val recomposer = Recomposer(composeContext)
 	private val composition = Composition(applier, recomposer)
 
@@ -242,6 +245,9 @@ internal class MosaicComposition(
 		Snapshot.observe(readObserver = readStatesOnLayoutObserver) {
 			rootNode.measureAndPlace(rootConstraints(terminalState.value.size))
 		}
+		focusOwner.onLayout()
+		// Send the focus changes now, which this frame draws, rather than scheduling another frame.
+		Snapshot.sendApplyNotifications()
 
 		performDraw()
 	}
@@ -344,7 +350,8 @@ internal class MosaicComposition(
 			/** Returns false when the key was an unhandled Ctrl+C which cancelled the program. */
 			fun sendKeyEvent(event: KeyboardEvent): Boolean {
 				val keyEvent = event.toKeyEventOrNull() ?: return true
-				val keyHandled = rootNode.sendKeyEvent(keyEvent)
+				val keyHandled = focusOwner.dispatch { rootNode.sendKeyEvent(keyEvent, it) } ||
+					focusOwner.onUnhandledKeyEvent(keyEvent)
 				if (!keyHandled && keyEvent == ctrlC) {
 					job.cancel()
 					return false
@@ -362,7 +369,8 @@ internal class MosaicComposition(
 							} else {
 								val events = pasted ?: continue
 								pasted = null
-								if (!rootNode.sendPasteEvent(PasteEvent(events.toPastedText()))) {
+								val pasteEvent = PasteEvent(events.toPastedText())
+								if (!focusOwner.dispatch { rootNode.sendPasteEvent(pasteEvent, it) }) {
 									// Nothing handled the paste, so fall back to delivering it as key presses.
 									for (keyboardEvent in events) {
 										if (!sendKeyEvent(keyboardEvent)) return@withFrameNanos
@@ -405,6 +413,7 @@ internal class MosaicComposition(
 				LocalNotifier provides notifier,
 				LocalLifecycleOwner provides this,
 				LocalLayoutInvalidator provides layoutInvalidator,
+				LocalFocusManager provides focusOwner,
 				content = content,
 			)
 		}

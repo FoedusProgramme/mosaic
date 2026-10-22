@@ -6,7 +6,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import org.unitedsoftware.mosaic.layout.FocusDirection
 import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.LocalFocusManager
 import org.unitedsoftware.mosaic.layout.background
 import org.unitedsoftware.mosaic.layout.height
 import org.unitedsoftware.mosaic.layout.onKeyEvent
@@ -89,18 +91,13 @@ fun TextInputPage() {
 	val palette = LocalPalette.current
 	val name = remember { TextFieldState() }
 	val message = remember { TextFieldState() }
-	// 0 = name, 1 = message. Mosaic has no focus system, so the page tracks it.
-	var focus by remember { mutableIntStateOf(0) }
+	val focusManager = LocalFocusManager.current
 	var sent by remember { mutableStateOf(emptyList<String>()) }
 	Column(
+		// Tab moves the focus between the fields. The single line name field does not handle Enter,
+		// so it reaches the column, which moves on to the message.
 		Modifier.onKeyEvent { event ->
-			when (event.key) {
-				// The single line name field does not handle Enter, so it moves on to the message.
-				"Tab", "Enter" -> focus = 1 - focus
-
-				else -> return@onKeyEvent false
-			}
-			true
+			event.key == "Enter" && focusManager.moveFocus(FocusDirection.Next)
 		},
 	) {
 		Text("TextField wraps, scrolls, takes pastes and CJK input,", color = palette.muted)
@@ -110,7 +107,6 @@ fun TextInputPage() {
 			TextField(
 				name,
 				modifier = Modifier.width(30).background(palette.surface),
-				focused = focus == 0,
 				singleLine = true,
 				placeholder = "Ada Lovelace",
 			)
@@ -120,7 +116,6 @@ fun TextInputPage() {
 			TextField(
 				message,
 				modifier = Modifier.width(40).background(palette.surface),
-				focused = focus == 1,
 				maxLines = 3,
 				placeholder = "Say something",
 				onSubmit = {
