@@ -3,6 +3,8 @@ $dokka.linkExtension:html
 
 module:mosaic-animation
 org.unitedsoftware.mosaic.animation
+module:mosaic-markdown
+org.unitedsoftware.mosaic.markdown
 module:mosaic-runtime
 org.unitedsoftware.mosaic
 org.unitedsoftware.mosaic.layout
