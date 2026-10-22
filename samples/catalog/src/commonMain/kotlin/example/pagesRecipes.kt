@@ -15,6 +15,7 @@ import org.unitedsoftware.mosaic.animation.animateFloat
 import org.unitedsoftware.mosaic.animation.infiniteRepeatable
 import org.unitedsoftware.mosaic.animation.rememberInfiniteTransition
 import org.unitedsoftware.mosaic.animation.tween
+import org.unitedsoftware.mosaic.layout.BorderStyle
 import org.unitedsoftware.mosaic.layout.KeyEvent
 import org.unitedsoftware.mosaic.layout.background
 import org.unitedsoftware.mosaic.layout.drawBehind
@@ -35,15 +36,23 @@ import org.unitedsoftware.mosaic.ui.rememberLazyListState
 import org.unitedsoftware.mosaic.ui.unit.IntOffset
 import org.unitedsoftware.mosaic.ui.unit.IntSize
 
+private val borderStyles = listOf(
+	"Single" to BorderStyle.Single,
+	"Rounded" to BorderStyle.Rounded,
+	"Double" to BorderStyle.Double,
+	"Heavy" to BorderStyle.Heavy,
+	"Ascii" to BorderStyle.Ascii,
+)
+
 @Composable
 fun PanelsPage() {
 	val palette = LocalPalette.current
 	Column {
-		for (pair in BorderStyle.entries.chunked(2)) {
+		for (pair in borderStyles.chunked(2)) {
 			Row {
-				for (style in pair) {
-					Panel(modifier = Modifier.size(24, 5), title = style.name, style = style) {
-						Text("BorderStyle.${style.name}", color = palette.muted)
+				for ((name, style) in pair) {
+					Panel(modifier = Modifier.size(24, 5), title = name, style = style) {
+						Text("BorderStyle.$name", color = palette.muted)
 					}
 					Spacer(Modifier.width(2))
 				}

@@ -300,6 +300,40 @@ abstract class org.unitedsoftware.mosaic.layout/Placeable { // org.unitedsoftwar
     }
 }
 
+final class org.unitedsoftware.mosaic.layout/BorderStyle { // org.unitedsoftware.mosaic.layout/BorderStyle|null[0]
+    constructor <init>(kotlin/Char, kotlin/Char, kotlin/Char, kotlin/Char, kotlin/Char, kotlin/Char) // org.unitedsoftware.mosaic.layout/BorderStyle.<init>|<init>(kotlin.Char;kotlin.Char;kotlin.Char;kotlin.Char;kotlin.Char;kotlin.Char){}[0]
+
+    final val bottomLeft // org.unitedsoftware.mosaic.layout/BorderStyle.bottomLeft|{}bottomLeft[0]
+        final fun <get-bottomLeft>(): kotlin/Char // org.unitedsoftware.mosaic.layout/BorderStyle.bottomLeft.<get-bottomLeft>|<get-bottomLeft>(){}[0]
+    final val bottomRight // org.unitedsoftware.mosaic.layout/BorderStyle.bottomRight|{}bottomRight[0]
+        final fun <get-bottomRight>(): kotlin/Char // org.unitedsoftware.mosaic.layout/BorderStyle.bottomRight.<get-bottomRight>|<get-bottomRight>(){}[0]
+    final val horizontal // org.unitedsoftware.mosaic.layout/BorderStyle.horizontal|{}horizontal[0]
+        final fun <get-horizontal>(): kotlin/Char // org.unitedsoftware.mosaic.layout/BorderStyle.horizontal.<get-horizontal>|<get-horizontal>(){}[0]
+    final val topLeft // org.unitedsoftware.mosaic.layout/BorderStyle.topLeft|{}topLeft[0]
+        final fun <get-topLeft>(): kotlin/Char // org.unitedsoftware.mosaic.layout/BorderStyle.topLeft.<get-topLeft>|<get-topLeft>(){}[0]
+    final val topRight // org.unitedsoftware.mosaic.layout/BorderStyle.topRight|{}topRight[0]
+        final fun <get-topRight>(): kotlin/Char // org.unitedsoftware.mosaic.layout/BorderStyle.topRight.<get-topRight>|<get-topRight>(){}[0]
+    final val vertical // org.unitedsoftware.mosaic.layout/BorderStyle.vertical|{}vertical[0]
+        final fun <get-vertical>(): kotlin/Char // org.unitedsoftware.mosaic.layout/BorderStyle.vertical.<get-vertical>|<get-vertical>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // org.unitedsoftware.mosaic.layout/BorderStyle.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // org.unitedsoftware.mosaic.layout/BorderStyle.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // org.unitedsoftware.mosaic.layout/BorderStyle.toString|toString(){}[0]
+
+    final object Companion { // org.unitedsoftware.mosaic.layout/BorderStyle.Companion|null[0]
+        final val Ascii // org.unitedsoftware.mosaic.layout/BorderStyle.Companion.Ascii|{}Ascii[0]
+            final fun <get-Ascii>(): org.unitedsoftware.mosaic.layout/BorderStyle // org.unitedsoftware.mosaic.layout/BorderStyle.Companion.Ascii.<get-Ascii>|<get-Ascii>(){}[0]
+        final val Double // org.unitedsoftware.mosaic.layout/BorderStyle.Companion.Double|{}Double[0]
+            final fun <get-Double>(): org.unitedsoftware.mosaic.layout/BorderStyle // org.unitedsoftware.mosaic.layout/BorderStyle.Companion.Double.<get-Double>|<get-Double>(){}[0]
+        final val Heavy // org.unitedsoftware.mosaic.layout/BorderStyle.Companion.Heavy|{}Heavy[0]
+            final fun <get-Heavy>(): org.unitedsoftware.mosaic.layout/BorderStyle // org.unitedsoftware.mosaic.layout/BorderStyle.Companion.Heavy.<get-Heavy>|<get-Heavy>(){}[0]
+        final val Rounded // org.unitedsoftware.mosaic.layout/BorderStyle.Companion.Rounded|{}Rounded[0]
+            final fun <get-Rounded>(): org.unitedsoftware.mosaic.layout/BorderStyle // org.unitedsoftware.mosaic.layout/BorderStyle.Companion.Rounded.<get-Rounded>|<get-Rounded>(){}[0]
+        final val Single // org.unitedsoftware.mosaic.layout/BorderStyle.Companion.Single|{}Single[0]
+            final fun <get-Single>(): org.unitedsoftware.mosaic.layout/BorderStyle // org.unitedsoftware.mosaic.layout/BorderStyle.Companion.Single.<get-Single>|<get-Single>(){}[0]
+    }
+}
+
 final class org.unitedsoftware.mosaic.layout/FocusRequester { // org.unitedsoftware.mosaic.layout/FocusRequester|null[0]
     constructor <init>() // org.unitedsoftware.mosaic.layout/FocusRequester.<init>|<init>(){}[0]
 
@@ -812,6 +846,7 @@ final val org.unitedsoftware.mosaic.layout/LocalFocusManager // org.unitedsoftwa
     final fun <get-LocalFocusManager>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic.layout/FocusManager> // org.unitedsoftware.mosaic.layout/LocalFocusManager.<get-LocalFocusManager>|<get-LocalFocusManager>(){}[0]
 final val org.unitedsoftware.mosaic.layout/layoutId // org.unitedsoftware.mosaic.layout/layoutId|@org.unitedsoftware.mosaic.layout.Measurable{}layoutId[0]
     final fun (org.unitedsoftware.mosaic.layout/Measurable).<get-layoutId>(): kotlin/Any? // org.unitedsoftware.mosaic.layout/layoutId.<get-layoutId>|<get-layoutId>@org.unitedsoftware.mosaic.layout.Measurable(){}[0]
+final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_BorderStyle$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_BorderStyle$stableprop|#static{}org_unitedsoftware_mosaic_layout_BorderStyle$stableprop[0]
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop|#static{}org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop[0]
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop|#static{}org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop[0]
 final val org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_FocusRequester$stableprop // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_FocusRequester$stableprop|#static{}org_unitedsoftware_mosaic_layout_FocusRequester$stableprop[0]
@@ -862,6 +897,7 @@ final val org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stab
 final fun (androidx.compose.runtime/Composer).org.unitedsoftware.mosaic.modifier/materialize(org.unitedsoftware.mosaic.modifier/Modifier): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.modifier/materialize|materialize@androidx.compose.runtime.Composer(org.unitedsoftware.mosaic.modifier.Modifier){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/aspectRatio(kotlin/Float, kotlin/Boolean = ...): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/aspectRatio|aspectRatio@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Float;kotlin.Boolean){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/background(org.unitedsoftware.mosaic.ui/Color): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/background|background@org.unitedsoftware.mosaic.modifier.Modifier(org.unitedsoftware.mosaic.ui.Color){}[0]
+final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/border(org.unitedsoftware.mosaic.layout/BorderStyle = ..., org.unitedsoftware.mosaic.ui/Color = ..., kotlin/String? = ..., org.unitedsoftware.mosaic.ui/Color = ..., org.unitedsoftware.mosaic.ui/TextStyle = ...): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/border|border@org.unitedsoftware.mosaic.modifier.Modifier(org.unitedsoftware.mosaic.layout.BorderStyle;org.unitedsoftware.mosaic.ui.Color;kotlin.String?;org.unitedsoftware.mosaic.ui.Color;org.unitedsoftware.mosaic.ui.TextStyle){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/clipToBounds(): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/clipToBounds|clipToBounds@org.unitedsoftware.mosaic.modifier.Modifier(){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/defaultMinSize(kotlin/Int = ..., kotlin/Int = ...): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/defaultMinSize|defaultMinSize@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Int;kotlin.Int){}[0]
 final fun (org.unitedsoftware.mosaic.modifier/Modifier).org.unitedsoftware.mosaic.layout/drawBehind(kotlin/Function1<org.unitedsoftware.mosaic.layout/DrawScope, kotlin/Unit>): org.unitedsoftware.mosaic.modifier/Modifier // org.unitedsoftware.mosaic.layout/drawBehind|drawBehind@org.unitedsoftware.mosaic.modifier.Modifier(kotlin.Function1<org.unitedsoftware.mosaic.layout.DrawScope,kotlin.Unit>){}[0]
@@ -917,6 +953,7 @@ final fun (org.unitedsoftware.mosaic.ui.unit/Constraints).org.unitedsoftware.mos
 final fun (org.unitedsoftware.mosaic.ui.unit/Constraints).org.unitedsoftware.mosaic.ui.unit/constrainWidth(kotlin/Int): kotlin/Int // org.unitedsoftware.mosaic.ui.unit/constrainWidth|constrainWidth@org.unitedsoftware.mosaic.ui.unit.Constraints(kotlin.Int){}[0]
 final fun (org.unitedsoftware.mosaic.ui.unit/Constraints).org.unitedsoftware.mosaic.ui.unit/isSatisfiedBy(org.unitedsoftware.mosaic.ui.unit/IntSize): kotlin/Boolean // org.unitedsoftware.mosaic.ui.unit/isSatisfiedBy|isSatisfiedBy@org.unitedsoftware.mosaic.ui.unit.Constraints(org.unitedsoftware.mosaic.ui.unit.IntSize){}[0]
 final fun (org.unitedsoftware.mosaic.ui.unit/Constraints).org.unitedsoftware.mosaic.ui.unit/offset(kotlin/Int = ..., kotlin/Int = ...): org.unitedsoftware.mosaic.ui.unit/Constraints // org.unitedsoftware.mosaic.ui.unit/offset|offset@org.unitedsoftware.mosaic.ui.unit.Constraints(kotlin.Int;kotlin.Int){}[0]
+final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_BorderStyle$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_BorderStyle$stableprop_getter|org_unitedsoftware_mosaic_layout_BorderStyle$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop_getter|org_unitedsoftware_mosaic_layout_DrawStyle_Fill$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop_getter|org_unitedsoftware_mosaic_layout_DrawStyle_Stroke$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_FocusRequester$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic.layout/org_unitedsoftware_mosaic_layout_FocusRequester$stableprop_getter|org_unitedsoftware_mosaic_layout_FocusRequester$stableprop_getter(){}[0]

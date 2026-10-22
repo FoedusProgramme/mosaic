@@ -9,6 +9,7 @@ import org.unitedsoftware.mosaic.layout.IntrinsicSize
 import org.unitedsoftware.mosaic.layout.KeyEvent
 import org.unitedsoftware.mosaic.layout.aspectRatio
 import org.unitedsoftware.mosaic.layout.background
+import org.unitedsoftware.mosaic.layout.border
 import org.unitedsoftware.mosaic.layout.fillMaxHeight
 import org.unitedsoftware.mosaic.layout.fillMaxSize
 import org.unitedsoftware.mosaic.layout.fillMaxWidth

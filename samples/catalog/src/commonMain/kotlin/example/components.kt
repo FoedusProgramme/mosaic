@@ -9,7 +9,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import kotlin.math.roundToInt
 import kotlinx.coroutines.delay
+import org.unitedsoftware.mosaic.layout.BorderStyle
 import org.unitedsoftware.mosaic.layout.background
+import org.unitedsoftware.mosaic.layout.border
 import org.unitedsoftware.mosaic.layout.drawBehind
 import org.unitedsoftware.mosaic.layout.padding
 import org.unitedsoftware.mosaic.layout.width
@@ -61,44 +63,6 @@ val LightPalette = Palette(
 
 val LocalPalette = staticCompositionLocalOf { DarkPalette }
 
-enum class BorderStyle(
-	val topLeft: Char,
-	val topRight: Char,
-	val bottomLeft: Char,
-	val bottomRight: Char,
-	val horizontal: Char,
-	val vertical: Char,
-) {
-	Single('┌', '┐', '└', '┘', '─', '│'),
-	Rounded('╭', '╮', '╰', '╯', '─', '│'),
-	Double('╔', '╗', '╚', '╝', '═', '║'),
-	Heavy('┏', '┓', '┗', '┛', '━', '┃'),
-	Ascii('+', '+', '+', '+', '-', '|'),
-}
-
-/**
- * Draws a one-cell box around the content and insets the content by one cell on each side.
- * The [title], if any, is drawn into the top edge and truncated to fit.
- */
-fun Modifier.border(
-	style: BorderStyle = BorderStyle.Rounded,
-	color: Color = Color.Unspecified,
-	title: String? = null,
-	titleColor: Color = color,
-): Modifier = drawBehind {
-	if (width < 2 || height < 2) return@drawBehind
-	val horizontal = style.horizontal.toString().repeat(width - 2)
-	drawText(0, 0, "${style.topLeft}$horizontal${style.topRight}", foreground = color)
-	for (row in 1 until height - 1) {
-		drawText(row, 0, style.vertical.toString(), foreground = color)
-		drawText(row, width - 1, style.vertical.toString(), foreground = color)
-	}
-	drawText(height - 1, 0, "${style.bottomLeft}$horizontal${style.bottomRight}", foreground = color)
-	if (title != null && width > 4) {
-		drawText(0, 1, " ${title.take(width - 4)} ", foreground = titleColor, textStyle = TextStyle.Bold)
-	}
-}.padding(1)
-
 @Composable
 fun Panel(
 	modifier: Modifier = Modifier,
@@ -122,7 +86,6 @@ fun Labeled(
 	content: @Composable () -> Unit,
 ) {
 	Row(modifier) {
-		// Text ignores incoming constraints, so size a Box around it instead.
 		Box(Modifier.width(labelWidth)) {
 			Text(label, color = LocalPalette.current.muted)
 		}

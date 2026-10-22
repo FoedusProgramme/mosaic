@@ -92,6 +92,34 @@ public final class org/unitedsoftware/mosaic/layout/BackgroundKt {
 	public static final fun background-hx1xPZo (Lorg/unitedsoftware/mosaic/modifier/Modifier;I)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
 
+public final class org/unitedsoftware/mosaic/layout/BorderKt {
+	public static final fun border-qmPCll8 (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/BorderStyle;ILjava/lang/String;II)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+	public static synthetic fun border-qmPCll8$default (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/layout/BorderStyle;ILjava/lang/String;IIILjava/lang/Object;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
+}
+
+public final class org/unitedsoftware/mosaic/layout/BorderStyle {
+	public static final field $stable I
+	public static final field Companion Lorg/unitedsoftware/mosaic/layout/BorderStyle$Companion;
+	public fun <init> (CCCCCC)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBottomLeft ()C
+	public final fun getBottomRight ()C
+	public final fun getHorizontal ()C
+	public final fun getTopLeft ()C
+	public final fun getTopRight ()C
+	public final fun getVertical ()C
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/unitedsoftware/mosaic/layout/BorderStyle$Companion {
+	public final fun getAscii ()Lorg/unitedsoftware/mosaic/layout/BorderStyle;
+	public final fun getDouble ()Lorg/unitedsoftware/mosaic/layout/BorderStyle;
+	public final fun getHeavy ()Lorg/unitedsoftware/mosaic/layout/BorderStyle;
+	public final fun getRounded ()Lorg/unitedsoftware/mosaic/layout/BorderStyle;
+	public final fun getSingle ()Lorg/unitedsoftware/mosaic/layout/BorderStyle;
+}
+
 public final class org/unitedsoftware/mosaic/layout/ClipKt {
 	public static final fun clipToBounds (Lorg/unitedsoftware/mosaic/modifier/Modifier;)Lorg/unitedsoftware/mosaic/modifier/Modifier;
 }
