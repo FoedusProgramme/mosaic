@@ -235,7 +235,7 @@ class TextFieldTest {
 				TextField(state, modifier = Modifier.width(6))
 			}
 			assertThat(awaitSnapshot()).isEqualTo(
-				"中文\r\n${CSI}1F${CSI}5G$cursorShow".wrapWithAnsiSynchronizedUpdate(),
+				"中文\r${CSI}5G$cursorShow".wrapWithAnsiSynchronizedUpdate(),
 			)
 		}
 	}

@@ -159,8 +159,8 @@ internal class AnsiRendering(
 	private var lastSize: Terminal.Size? = null
 
 	/**
-	 * The row of the last output the cursor was left on. The size of [lastRows] when it rests on the
-	 * line below the output.
+	 * The row of the last output the cursor was left on, which is its last row unless it was placed
+	 * with [DrawScope.drawCursor].
 	 */
 	private var cursorRow = 0
 
@@ -227,8 +227,7 @@ internal class AnsiRendering(
 
 			// Rows which do not fit are cut from the top so the latest output stays visible. The output
 			// cannot be taller than the terminal since the cursor could not move back up to its start.
-			// One line below the output is left for the cursor.
-			val maxRows = size?.let { (it.rows - 1).coerceAtLeast(1) } ?: Int.MAX_VALUE
+			val maxRows = size?.let { it.rows.coerceAtLeast(1) } ?: Int.MAX_VALUE
 			val firstRow = (surface.height - maxRows).coerceAtLeast(0)
 			val rows = List(surface.height - firstRow) { index ->
 				rowBuilder.setLength(0)
@@ -278,11 +277,15 @@ internal class AnsiRendering(
 			}
 			lastGraphics = graphics
 
-			moveTo(rows.size)
 			if (rows.size < previousRows.size) {
 				// Clear the rows of the last output beyond the new one.
+				moveTo(rows.size)
 				append(clearDisplay)
 			}
+			// Rest on the last row rather than below it, since a line feed after output as tall as the
+			// terminal would scroll its first row out of reach.
+			val lastRow = (rows.size - 1).coerceAtLeast(0)
+			if (current != lastRow) moveTo(lastRow)
 
 			val cursor = (surface as? TextSurface)?.cursor?.takeIf { it.y >= firstRow }
 			if (cursor != null) {

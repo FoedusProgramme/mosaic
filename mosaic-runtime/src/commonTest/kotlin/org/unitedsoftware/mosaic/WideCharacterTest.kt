@@ -69,7 +69,6 @@ class WideCharacterTest {
 				"""
 				|ABC
 				|A中B
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}

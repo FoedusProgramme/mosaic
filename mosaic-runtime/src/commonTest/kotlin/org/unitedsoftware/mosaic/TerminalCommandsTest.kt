@@ -29,16 +29,16 @@ class TerminalCommandsTest {
 				Text("count $count")
 			}
 			assertThat(awaitSnapshot()).isEqualTo(
-				"$windowTitlePush${OSC}2;Title${ST}count 0\r\n".wrapWithAnsiSynchronizedUpdate(),
+				"$windowTitlePush${OSC}2;Title${ST}count 0".wrapWithAnsiSynchronizedUpdate(),
 			)
 
 			count = 1
 			// The unchanged title is not written again.
 			assertThat(awaitSnapshot()).isEqualTo(
-				"${CSI}1F${clearLine}count 1\r\n".wrapWithAnsiSynchronizedUpdate(),
+				"\r${clearLine}count 1".wrapWithAnsiSynchronizedUpdate(),
 			)
 		}
-		assertThat(rendering.finish().toString()).isEqualTo(windowTitlePop)
+		assertThat(rendering.finish().toString()).isEqualTo("\r\n$windowTitlePop")
 	}
 
 	@Test fun pointerShapeIsPushedChangedAndPopped() = runTest {
@@ -51,22 +51,22 @@ class TerminalCommandsTest {
 				Text("count $count")
 			}
 			assertThat(awaitSnapshot()).isEqualTo(
-				"${OSC}22;>wait${ST}count 0\r\n".wrapWithAnsiSynchronizedUpdate(),
+				"${OSC}22;>wait${ST}count 0".wrapWithAnsiSynchronizedUpdate(),
 			)
 
 			shape = PointerShape.Text
 			count = 1
 			assertThat(awaitSnapshot()).isEqualTo(
-				"${OSC}22;=text$ST${CSI}1F${clearLine}count 1\r\n".wrapWithAnsiSynchronizedUpdate(),
+				"${OSC}22;=text$ST\r${clearLine}count 1".wrapWithAnsiSynchronizedUpdate(),
 			)
 
 			shape = null
 			count = 2
 			assertThat(awaitSnapshot()).isEqualTo(
-				"$pointerShapePop${CSI}1F${clearLine}count 2\r\n".wrapWithAnsiSynchronizedUpdate(),
+				"$pointerShapePop\r${clearLine}count 2".wrapWithAnsiSynchronizedUpdate(),
 			)
 		}
-		assertThat(rendering.finish().toString()).isEqualTo("")
+		assertThat(rendering.finish().toString()).isEqualTo("\r\n")
 	}
 
 	@Test fun pointerShapeNeedsSupport() = runTest {
@@ -76,9 +76,9 @@ class TerminalCommandsTest {
 				WindowPointerShape(PointerShape.Wait)
 				Text("hi")
 			}
-			assertThat(awaitSnapshot()).isEqualTo("hi\r\n".wrapWithAnsiSynchronizedUpdate())
+			assertThat(awaitSnapshot()).isEqualTo("hi".wrapWithAnsiSynchronizedUpdate())
 		}
-		assertThat(rendering.finish().toString()).isEqualTo("")
+		assertThat(rendering.finish().toString()).isEqualTo("\r\n")
 	}
 
 	@Test fun innermostWindowTitleWins() = runTest {
@@ -98,7 +98,7 @@ class TerminalCommandsTest {
 				}
 			}
 			assertThat(awaitSnapshot()).isEqualTo(
-				"$windowTitlePush${OSC}2;Inner${ST}hi\r\n".wrapWithAnsiSynchronizedUpdate(),
+				"$windowTitlePush${OSC}2;Inner${ST}hi".wrapWithAnsiSynchronizedUpdate(),
 			)
 
 			showInner = false
@@ -184,7 +184,7 @@ class TerminalCommandsTest {
 				)
 			}
 			assertThat(awaitSnapshot()).isEqualTo(
-				"see ${OSC}8;;https://example.com${ST}docs${OSC}8;;$ST!\r\n".wrapWithAnsiSynchronizedUpdate(),
+				"see ${OSC}8;;https://example.com${ST}docs${OSC}8;;$ST!".wrapWithAnsiSynchronizedUpdate(),
 			)
 		}
 	}

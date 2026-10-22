@@ -125,13 +125,12 @@ private fun Catalog(initialPage: Int, onExit: () -> Unit) {
 	}
 
 	val page = pages[selected]
-	// Leave the last terminal row free since every rendered row ends with a newline.
-	Column(modifier = keys.size(size.columns, size.rows - 1)) {
+	Column(modifier = keys.size(size.columns, size.rows)) {
 		Header(page)
 		Row(modifier = Modifier.weight(1f)) {
 			Sidebar(
 				selected = selected,
-				height = size.rows - 3,
+				height = size.rows - 2,
 				modifier = Modifier.width(SidebarWidth).fillMaxHeight(),
 			)
 			Filler('│', modifier = Modifier.width(1).fillMaxHeight(), foreground = LocalPalette.current.muted)

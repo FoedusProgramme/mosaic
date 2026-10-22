@@ -33,7 +33,7 @@ fun RrtopApp(rrtopViewModel: RrtopViewModel, colorsPalette: RrtopColorsPalette) 
 		Box(
 			modifier = Modifier
 				.width(terminal.size.columns)
-				.height(terminal.size.rows - 1) // subtraction of one is necessary, because there is a line with a cursor at the bottom, which moves up all the content
+				.height(terminal.size.rows)
 				.background(LocalRrtopColorsPalette.current.mainBg)
 				.onKeyEvent {
 					when (it) {

@@ -45,6 +45,8 @@ Fixed:
 - Typing characters outside of ASCII, such as CJK text committed by an input method, no longer crashes. They are delivered as `KeyEvent`s whose `key` is the character.
 - Wide characters, such as CJK text and most emoji, are measured and drawn as two columns, so they no longer push the rest of the row out of place. Combining marks and emoji joined with zero width joiners stay in the column of the character they modify. Widths follow Unicode 18.
 - Drawing outside of the surface, for example while the terminal is being resized, is clipped instead of crashing.
+- The initial size comes from the TTY in terminals which support in-band resize events but do not report their size when they are enabled, like iTerm2. Previously the size stayed at 80 by 24 until the window was resized.
+- Inline output can be as tall as the terminal. The cursor rests at the end of the last row rather than on a line below the output, which kept the last row of the terminal empty.
 - Resizing terminals which do not report size changes in-band, such as tmux and Terminal.app, no longer crashes the JVM. The resize callback was invoked from the signal handler, on whichever thread received the signal, with the JNI environment of another thread.
 
 

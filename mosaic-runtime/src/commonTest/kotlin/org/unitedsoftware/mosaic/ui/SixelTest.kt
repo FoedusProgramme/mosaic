@@ -68,13 +68,13 @@ class SixelTest {
 
 			label = "b"
 			// Writing the row again erased the image, so it is drawn again.
-			assertThat(awaitSnapshot()).contains("${CSI}1F${clearLine}b\r${CSI}2G$cursorSave")
+			assertThat(awaitSnapshot()).contains("\r${clearLine}b\r${CSI}2G$cursorSave")
 
 			show = false
 			val removed = awaitSnapshot()
 			assertThat(removed).doesNotContain(cursorSave)
 			// The row is written again to erase the image.
-			assertThat(removed).contains("${CSI}1F${clearLine}b\r\n")
+			assertThat(removed).contains("\r${clearLine}b")
 		}
 	}
 }

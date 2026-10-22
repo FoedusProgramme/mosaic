@@ -30,7 +30,6 @@ class AnsiRenderingTest {
 				"""
 				|Hello
 				|World!
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}
@@ -49,7 +48,6 @@ class AnsiRenderingTest {
 				"""
 				|Hello
 				|World!
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 
@@ -64,11 +62,10 @@ class AnsiRenderingTest {
 
 			assertThat(awaitSnapshot()).isEqualTo(
 				"""
-				|${cursorUp(2)}${clearLine}Hel
+				|${cursorUp(1)}${clearLine}Hel
 				|${clearLine}lo
 				|Wor
 				|ld!
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}
@@ -91,7 +88,6 @@ class AnsiRenderingTest {
 				|lo
 				|Wor
 				|ld!
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 
@@ -104,9 +100,9 @@ class AnsiRenderingTest {
 
 			assertThat(awaitSnapshot()).isEqualTo(
 				"""
-				|${cursorUp(4)}${clearLine}Hello
+				|${cursorUp(3)}${clearLine}Hello
 				|${clearLine}World!
-				|$clearDisplay
+				|$clearDisplay${cursorUp(1)}
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}
@@ -125,7 +121,6 @@ class AnsiRenderingTest {
 				"""
 				|World!
 				|Hello
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}
@@ -144,7 +139,6 @@ class AnsiRenderingTest {
 				"""
 				|One
 				|Two
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 
@@ -156,11 +150,7 @@ class AnsiRenderingTest {
 			}
 
 			assertThat(awaitSnapshot()).isEqualTo(
-				"""
-				|${cursorUp(1)}${clearDisplay}Three
-				|Four
-				|
-				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
+				"\r${clearDisplay}Three\r\nFour".wrapWithAnsiSynchronizedUpdate(),
 			)
 		}
 	}
@@ -198,7 +188,6 @@ class AnsiRenderingTest {
 				|Four
 				|Five
 				|Sup
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}
@@ -223,7 +212,6 @@ class AnsiRenderingTest {
 				|Static
 				|TopTopTop
 				|LeftLeft
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}
@@ -238,7 +226,6 @@ class AnsiRenderingTest {
 			assertThat(snapshot).isEqualTo(
 				"""
 				|OneTwoThree
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}
@@ -257,7 +244,6 @@ class AnsiRenderingTest {
 				"""
 				|OneTwoThree
 				|OneTwoThreeFour
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}
@@ -279,7 +265,6 @@ class AnsiRenderingTest {
 				"""
 				|OneTwoThree
 				|OneTwoThreeFour
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}
@@ -299,7 +284,6 @@ class AnsiRenderingTest {
 				"""
 				|${red}OneTwoThree    $ansiReset$ansiClosingCharacter
 				|${red}OneTwoThreeFour$ansiReset$ansiClosingCharacter
-				|
 				""".trimMargin().wrapWithAnsiSynchronizedUpdate().replaceLineEndingsWithCRLF(),
 			)
 		}

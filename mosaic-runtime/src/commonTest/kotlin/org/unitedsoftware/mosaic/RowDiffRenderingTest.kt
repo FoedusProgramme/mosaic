@@ -25,11 +25,11 @@ class RowDiffRenderingTest {
 					Text("three")
 				}
 			}
-			assertThat(awaitSnapshot()).isEqualTo("one\r\ntwo\r\nthree\r\n".wrapWithAnsiSynchronizedUpdate())
+			assertThat(awaitSnapshot()).isEqualTo("one\r\ntwo\r\nthree".wrapWithAnsiSynchronizedUpdate())
 
 			middle = "TWO"
 			assertThat(awaitSnapshot()).isEqualTo(
-				"${CSI}2F${clearLine}TWO\r\n\r\n".wrapWithAnsiSynchronizedUpdate(),
+				"${CSI}1F${clearLine}TWO\r\n".wrapWithAnsiSynchronizedUpdate(),
 			)
 		}
 	}
@@ -46,8 +46,8 @@ class RowDiffRenderingTest {
 					Text("4")
 				}
 			}
-			// Two rows fit above the line the cursor rests on.
-			assertThat(awaitSnapshot()).isEqualTo("3\r\n4\r\n".wrapWithAnsiSynchronizedUpdate())
+			// All three rows fit, with the cursor resting at the end of the last one.
+			assertThat(awaitSnapshot()).isEqualTo("2\r\n3\r\n4".wrapWithAnsiSynchronizedUpdate())
 		}
 	}
 

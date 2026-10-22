@@ -26,7 +26,7 @@ class CursorRenderingTest {
 			}
 
 			assertThat(awaitSnapshot()).isEqualTo(
-				"ab\r\ncd\r\n${CSI}1F${CSI}2G$cursorShow".wrapWithAnsiSynchronizedUpdate(),
+				"ab\r\ncd\r${CSI}2G$cursorShow".wrapWithAnsiSynchronizedUpdate(),
 			)
 		}
 
@@ -49,21 +49,22 @@ class CursorRenderingTest {
 			text = "ef"
 			assertThat(awaitSnapshot()).isEqualTo(
 				// Only the changed row is written again.
-				"$cursorHide${clearLine}ef\r\n${CSI}1F$cursorShow".wrapWithAnsiSynchronizedUpdate(),
+				"$cursorHide${clearLine}ef\r$cursorShow".wrapWithAnsiSynchronizedUpdate(),
 			)
 		}
 	}
 
-	@Test fun withoutCursorItStaysBelowTheOutput() = runTest {
+	@Test fun withoutCursorItRestsOnTheLastRow() = runTest {
 		val rendering = AnsiRendering(TestTerminal.Capabilities())
 		runMosaicTest(RenderingSnapshots(rendering)) {
 			setContent {
 				Text("ab")
 			}
 
-			assertThat(awaitSnapshot()).isEqualTo("ab\r\n".wrapWithAnsiSynchronizedUpdate())
+			assertThat(awaitSnapshot()).isEqualTo("ab".wrapWithAnsiSynchronizedUpdate())
 		}
-		assertThat(rendering.finish().toString()).isEqualTo("")
+		// On exit, the cursor moves below the output.
+		assertThat(rendering.finish().toString()).isEqualTo("\r\n")
 	}
 
 	@Test fun cursorIsOnlyPositionedWhenItCannotBeHidden() = runTest {
@@ -73,7 +74,7 @@ class CursorRenderingTest {
 				Text("ab", modifier = Modifier.drawBehind { drawCursor(0, 1) })
 			}
 
-			assertThat(awaitSnapshot()).isEqualTo("ab\r\n${CSI}1F${CSI}2G".wrapWithAnsiSynchronizedUpdate())
+			assertThat(awaitSnapshot()).isEqualTo("ab\r${CSI}2G".wrapWithAnsiSynchronizedUpdate())
 		}
 		assertThat(rendering.finish().toString()).isEqualTo("\r\n")
 	}
