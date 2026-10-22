@@ -212,7 +212,7 @@ internal class MosaicComposition(
 	private val rootConstraints: (Terminal.Size) -> Constraints = { Constraints() },
 	/** Maps the rows of mouse events to rows of the output. */
 	private val pointerMapping: PointerMapping = PointerMapping.Identity,
-	/** Called before the terminal is released for other programs, see [TerminalControl.release]. */
+	/** Called before the terminal is released for other programs, see [TerminalControl.released]. */
 	private val onRelease: suspend () -> Unit = {},
 	/** Called once the terminal is taken over again, before the next frame. */
 	private val onReacquire: () -> Unit = {},
@@ -255,28 +255,31 @@ internal class MosaicComposition(
 	private val terminalControl = object : TerminalControl {
 		private val mutex = Mutex()
 
-		override suspend fun <T> release(block: suspend () -> T): T = mutex.withLock {
-			withContext(frameContext) {
-				released = true
-				onRelease()
-			}
-			try {
-				terminal.released(block)
-			} finally {
-				withContext(frameContext + NonCancellable) {
-					onReacquire()
-					released = false
-					needLayout = true
-				}
-			}
-		}
+		override suspend fun <T> released(block: suspend () -> T): T = handOver { terminal.released(block) }
 
 		override val canSuspendProcess get() = terminal.canSuspendProcess
 
 		override suspend fun suspendProcess(): Boolean {
+			// Checked first, so that nothing is handed over in vain.
 			if (!terminal.canSuspendProcess) return false
-			release { terminal.suspendProcess() }
-			return true
+			return handOver { terminal.suspendProcess() }
+		}
+
+		/** Stops rendering and intercepting output while [block] hands the terminal to others. */
+		private suspend fun <T> handOver(block: suspend () -> T): T = mutex.withLock {
+			withContext(frameContext) {
+				handedOver = true
+				onRelease()
+			}
+			try {
+				block()
+			} finally {
+				withContext(frameContext + NonCancellable) {
+					onReacquire()
+					handedOver = false
+					needLayout = true
+				}
+			}
 		}
 	}
 
@@ -326,7 +329,7 @@ internal class MosaicComposition(
 
 	/** While true, the terminal belongs to other programs, so nothing is drawn. */
 	@Volatile
-	private var released = false
+	private var handedOver = false
 
 	init {
 		GlobalSnapshotManager().ensureStarted(scope)
@@ -588,7 +591,7 @@ internal class MosaicComposition(
 
 					internalClock.sendFrame(nanos)
 
-					if (released) {
+					if (handedOver) {
 						// Drawn once the terminal is taken over again.
 					} else if (needLayout) {
 						performLayout()

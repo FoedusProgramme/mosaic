@@ -33,8 +33,8 @@ abstract interface org.unitedsoftware.mosaic.terminal/Terminal : kotlin/AutoClos
     open val canSuspendProcess // org.unitedsoftware.mosaic.terminal/Terminal.canSuspendProcess|{}canSuspendProcess[0]
         open fun <get-canSuspendProcess>(): kotlin/Boolean // org.unitedsoftware.mosaic.terminal/Terminal.canSuspendProcess.<get-canSuspendProcess>|<get-canSuspendProcess>(){}[0]
 
-    open fun suspendProcess() // org.unitedsoftware.mosaic.terminal/Terminal.suspendProcess|suspendProcess(){}[0]
     open suspend fun <#A1: kotlin/Any?> released(kotlin.coroutines/SuspendFunction0<#A1>): #A1 // org.unitedsoftware.mosaic.terminal/Terminal.released|released(kotlin.coroutines.SuspendFunction0<0:0>){0§<kotlin.Any?>}[0]
+    open suspend fun suspendProcess(): kotlin/Boolean // org.unitedsoftware.mosaic.terminal/Terminal.suspendProcess|suspendProcess(){}[0]
 
     final enum class Theme : kotlin/Enum<org.unitedsoftware.mosaic.terminal/Terminal.Theme> { // org.unitedsoftware.mosaic.terminal/Terminal.Theme|null[0]
         enum entry Dark // org.unitedsoftware.mosaic.terminal/Terminal.Theme.Dark|null[0]

@@ -9,20 +9,27 @@ public interface Terminal : AutoCloseable {
 	 * Restores the terminal to how it was before this took it over while [block] runs, so that other
 	 * programs can use it, like an editor or an interactive command, and takes it over again
 	 * afterwards. No events are read meanwhile, so they go to those programs instead.
+	 *
+	 * This only concerns the terminal. While Mosaic renders to it, use `LocalTerminalControl`
+	 * instead, which also stops rendering and intercepting output meanwhile.
 	 */
 	public suspend fun <T> released(block: suspend () -> T): T = block()
 
-	/** Whether [suspendProcess] is supported, which needs job control. It is not on Windows. */
+	/**
+	 * Whether [suspendProcess] is supported. It needs job control, which Windows does not have, and
+	 * only applies to the terminal the process was started in, not, for example, a remote one.
+	 */
 	public val canSuspendProcess: Boolean get() = false
 
 	/**
-	 * Stops the process, like Ctrl+Z normally does in a shell, and returns once the shell continues
-	 * it, like with `fg`. Only call this in the block of [released], so the shell gets the terminal
-	 * as it was.
+	 * Stops the process like Ctrl+Z normally does in a shell, with the terminal [released], and
+	 * returns once the shell continues it, like with `fg`. Returns false right away when
+	 * [canSuspendProcess] is false.
+	 *
+	 * Like [released], this only concerns the terminal. While Mosaic renders to it, use
+	 * `LocalTerminalControl` instead.
 	 */
-	public fun suspendProcess() {
-		throw UnsupportedOperationException("Suspending the process is not supported")
-	}
+	public suspend fun suspendProcess(): Boolean = false
 
 	public val name: String?
 	public val interactive: Boolean

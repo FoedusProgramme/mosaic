@@ -54,7 +54,11 @@ private class TtyTerminal(
 
 	override val canSuspendProcess get() = releaser.tty.canSuspendProcess
 
-	override fun suspendProcess() = releaser.tty.suspendProcess()
+	override suspend fun suspendProcess(): Boolean {
+		if (!canSuspendProcess) return false
+		released { releaser.tty.suspendProcess() }
+		return true
+	}
 
 	class State(
 		override val focused: StateFlow<Boolean>,

@@ -15,14 +15,17 @@ public interface TerminalControl {
 	 *
 	 * Concurrent calls run one after another.
 	 */
-	public suspend fun <T> release(block: suspend () -> T): T
+	public suspend fun <T> released(block: suspend () -> T): T
 
-	/** Whether [suspendProcess] is supported, which needs job control. It is not on Windows. */
+	/**
+	 * Whether [suspendProcess] is supported. It needs job control, which Windows does not have, and
+	 * the terminal the process was started in.
+	 */
 	public val canSuspendProcess: Boolean
 
 	/**
-	 * Stops the process like Ctrl+Z normally does in a shell, with the terminal released, and returns
-	 * once the shell continues it, like with `fg`. Returns false right away when [canSuspendProcess]
+	 * Stops the process like Ctrl+Z normally does in a shell, with the terminal [released], and
+	 * returns once the shell continues it, like with `fg`. Returns false right away when [canSuspendProcess]
 	 * is false.
 	 *
 	 * Ctrl+Z does this already when no key handler consumes it.

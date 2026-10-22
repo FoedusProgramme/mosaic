@@ -35,9 +35,10 @@ class TerminalControlTest {
 
 		override val canSuspendProcess get() = true
 
-		override fun suspendProcess() {
+		override suspend fun suspendProcess(): Boolean = released {
 			log += "suspended"
 			suspended.complete(Unit)
+			true
 		}
 	}
 
@@ -62,7 +63,7 @@ class TerminalControlTest {
 			Text("count $count")
 			LaunchedEffect(Unit) {
 				delay(10.milliseconds)
-				control.release {
+				control.released {
 					log += "block"
 					count = 1
 					Snapshot.sendApplyNotifications()

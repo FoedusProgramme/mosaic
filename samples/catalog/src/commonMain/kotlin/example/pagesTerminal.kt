@@ -48,7 +48,7 @@ fun HandingOverPage() {
 
 	fun run(name: String, command: String) {
 		scope.launch {
-			val exit = control.release {
+			val exit = control.released {
 				// Blocking until the other program exits, away from the frame loop.
 				withContext(Dispatchers.IO) { runInTerminal(command) }
 			}
@@ -83,7 +83,7 @@ fun HandingOverPage() {
 			}
 		},
 	) {
-		Text("TerminalControl.release gives the terminal back to run other")
+		Text("TerminalControl.released gives the terminal back to run other")
 		Text("programs, like an editor or a shell, and takes it over again")
 		Text("afterwards, drawing everything anew.")
 		Spacer(Modifier.height(1))

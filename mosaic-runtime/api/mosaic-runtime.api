@@ -99,7 +99,7 @@ public final class org/unitedsoftware/mosaic/TerminalCommandsKt {
 
 public abstract interface class org/unitedsoftware/mosaic/TerminalControl {
 	public abstract fun getCanSuspendProcess ()Z
-	public abstract fun release (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun released (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun suspendProcess (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

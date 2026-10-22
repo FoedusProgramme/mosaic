@@ -288,7 +288,7 @@ abstract interface org.unitedsoftware.mosaic/TerminalControl { // org.unitedsoft
     abstract val canSuspendProcess // org.unitedsoftware.mosaic/TerminalControl.canSuspendProcess|{}canSuspendProcess[0]
         abstract fun <get-canSuspendProcess>(): kotlin/Boolean // org.unitedsoftware.mosaic/TerminalControl.canSuspendProcess.<get-canSuspendProcess>|<get-canSuspendProcess>(){}[0]
 
-    abstract suspend fun <#A1: kotlin/Any?> release(kotlin.coroutines/SuspendFunction0<#A1>): #A1 // org.unitedsoftware.mosaic/TerminalControl.release|release(kotlin.coroutines.SuspendFunction0<0:0>){0§<kotlin.Any?>}[0]
+    abstract suspend fun <#A1: kotlin/Any?> released(kotlin.coroutines/SuspendFunction0<#A1>): #A1 // org.unitedsoftware.mosaic/TerminalControl.released|released(kotlin.coroutines.SuspendFunction0<0:0>){0§<kotlin.Any?>}[0]
     abstract suspend fun suspendProcess(): kotlin/Boolean // org.unitedsoftware.mosaic/TerminalControl.suspendProcess|suspendProcess(){}[0]
 }
 
