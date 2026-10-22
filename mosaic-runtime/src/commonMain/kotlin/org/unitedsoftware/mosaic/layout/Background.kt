@@ -1,6 +1,7 @@
 package org.unitedsoftware.mosaic.layout
 
 import androidx.compose.runtime.Stable
+import dev.drewhamilton.poko.Poko
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.ui.Color
 
@@ -13,6 +14,7 @@ public fun Modifier.background(
 	),
 )
 
+@Poko
 private class BackgroundModifier(
 	private val color: Color,
 ) : DrawModifier {

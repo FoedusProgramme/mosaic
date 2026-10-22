@@ -155,14 +155,17 @@ internal class FocusObserver {
 	}
 }
 
+@Poko
 internal class FocusTargetElement(val target: FocusTarget) : Modifier.Element {
 	override fun toString() = "FocusTarget"
 }
 
+@Poko
 internal class FocusRequesterElement(val requester: FocusRequester) : Modifier.Element {
 	override fun toString() = "FocusRequester"
 }
 
+@Poko
 internal class FocusObserverElement(val observer: FocusObserver) : Modifier.Element {
 	override fun toString() = "OnFocusChanged"
 }

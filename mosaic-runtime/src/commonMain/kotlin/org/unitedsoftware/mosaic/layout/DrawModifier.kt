@@ -16,6 +16,7 @@
 
 package org.unitedsoftware.mosaic.layout
 
+import dev.drewhamilton.poko.Poko
 import org.unitedsoftware.mosaic.modifier.Modifier
 
 public interface DrawModifier : Modifier.Element {
@@ -29,6 +30,7 @@ public fun Modifier.drawBehind(
 	onDraw: DrawScope.() -> Unit,
 ): Modifier = this then DrawBehindElement(onDraw)
 
+@Poko
 private class DrawBehindElement(
 	val onDraw: DrawScope.() -> Unit,
 ) : DrawModifier {

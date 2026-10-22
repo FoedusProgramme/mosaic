@@ -56,6 +56,7 @@ public fun Modifier.onKeyEvent(
 	onKeyEvent: (event: KeyEvent) -> Boolean,
 ): Modifier = this then KeyModifierElement(null, onKeyEvent)
 
+@Poko
 private class KeyModifierElement(
 	val onPreEvent: ((KeyEvent) -> Boolean)?,
 	val onEvent: ((KeyEvent) -> Boolean)?,

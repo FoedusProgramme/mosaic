@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import dev.drewhamilton.poko.Poko
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.ui.unit.Constraints
 
@@ -69,6 +70,7 @@ private fun wheelScrolling(state: ScrollState, vertical: Boolean) = PointerModif
 	state.value != before
 }
 
+@Poko
 private class ScrollModifier(
 	private val state: ScrollState,
 	private val vertical: Boolean,

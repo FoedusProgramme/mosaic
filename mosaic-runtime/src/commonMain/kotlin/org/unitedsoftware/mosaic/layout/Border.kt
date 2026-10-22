@@ -44,6 +44,7 @@ public fun Modifier.border(
 	titleStyle: TextStyle = TextStyle.Bold,
 ): Modifier = this then BorderModifier(style, color, title, titleColor, titleStyle)
 
+@Poko
 private class BorderModifier(
 	private val style: BorderStyle,
 	private val color: Color,

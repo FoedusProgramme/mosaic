@@ -1,6 +1,7 @@
 package org.unitedsoftware.mosaic.layout
 
 import androidx.compose.runtime.Stable
+import dev.drewhamilton.poko.Poko
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.ui.unit.Constraints
 import org.unitedsoftware.mosaic.ui.unit.IntOffset
@@ -64,6 +65,7 @@ public enum class IntrinsicSize {
 	Max,
 }
 
+@Poko
 private class IntrinsicWidthModifier(
 	private val width: IntrinsicSize,
 	override val enforceIncoming: Boolean,
@@ -107,6 +109,7 @@ private class IntrinsicWidthModifier(
 	}
 }
 
+@Poko
 private class IntrinsicHeightModifier(
 	private val height: IntrinsicSize,
 	override val enforceIncoming: Boolean,

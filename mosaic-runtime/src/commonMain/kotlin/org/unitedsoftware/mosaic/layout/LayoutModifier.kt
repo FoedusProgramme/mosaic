@@ -16,6 +16,7 @@
 
 package org.unitedsoftware.mosaic.layout
 
+import dev.drewhamilton.poko.Poko
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.ui.IntrinsicsMeasureScope
 import org.unitedsoftware.mosaic.ui.unit.Constraints
@@ -222,6 +223,7 @@ public fun Modifier.layout(
 	measure: MeasureScope.(Measurable, Constraints) -> MeasureResult,
 ): Modifier = this then LayoutModifierElement(measure)
 
+@Poko
 private class LayoutModifierElement(
 	var measureBlock: MeasureScope.(Measurable, Constraints) -> MeasureResult,
 ) : LayoutModifier {

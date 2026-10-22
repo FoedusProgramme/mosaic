@@ -38,6 +38,7 @@ public fun Modifier.onPasteEvent(
 	onPasteEvent: (event: PasteEvent) -> Boolean,
 ): Modifier = this then PasteModifierElement(onPasteEvent)
 
+@Poko
 private class PasteModifierElement(
 	val onEvent: (PasteEvent) -> Boolean,
 ) : PasteModifier {

@@ -104,6 +104,7 @@ private class ClickState {
 	}
 }
 
+@Poko
 internal class PointerModifierElement(
 	val onPointerEvent: (PointerEvent) -> Boolean,
 ) : Modifier.Element {

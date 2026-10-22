@@ -1,6 +1,7 @@
 package org.unitedsoftware.mosaic.layout
 
 import androidx.compose.runtime.Stable
+import dev.drewhamilton.poko.Poko
 import kotlin.math.roundToInt
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.ui.unit.Constraints
@@ -33,6 +34,7 @@ public fun Modifier.aspectRatio(
 	),
 )
 
+@Poko
 private class AspectRatioModifier(
 	private val aspectRatio: Float,
 	private val matchHeightConstraintsFirst: Boolean,

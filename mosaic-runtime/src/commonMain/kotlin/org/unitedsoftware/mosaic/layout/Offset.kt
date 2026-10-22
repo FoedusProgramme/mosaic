@@ -1,6 +1,7 @@
 package org.unitedsoftware.mosaic.layout
 
 import androidx.compose.runtime.Stable
+import dev.drewhamilton.poko.Poko
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.ui.unit.Constraints
 import org.unitedsoftware.mosaic.ui.unit.IntOffset
@@ -30,6 +31,7 @@ public fun Modifier.offset(x: Int = 0, y: Int = 0): Modifier = this then
 public fun Modifier.offset(offset: () -> IntOffset): Modifier = this then
 	ChangeableOffsetModifier(offset = offset)
 
+@Poko
 private class OffsetModifier(
 	private val x: Int,
 	private val y: Int,
@@ -47,6 +49,7 @@ private class OffsetModifier(
 	override fun toString(): String = "Offset(x=$x, y=$y)"
 }
 
+@Poko
 private class ChangeableOffsetModifier(
 	private val offset: () -> IntOffset,
 ) : LayoutModifier {

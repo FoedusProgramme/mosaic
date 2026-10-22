@@ -1,6 +1,7 @@
 package org.unitedsoftware.mosaic.layout
 
 import androidx.compose.runtime.Stable
+import dev.drewhamilton.poko.Poko
 import org.unitedsoftware.mosaic.modifier.Modifier
 
 /**
@@ -16,6 +17,7 @@ public fun Modifier.layoutId(layoutId: Any): Modifier {
  * will act as parent data, and can be used for example by parent layouts to associate composable
  * children to [Measurable]s when doing layout, as shown below.
  */
+@Poko
 private class LayoutIdModifier(
 	override val layoutId: Any,
 ) : ParentDataModifier,
