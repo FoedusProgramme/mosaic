@@ -7,8 +7,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import org.unitedsoftware.mosaic.layout.KeyEvent
+import org.unitedsoftware.mosaic.layout.PointerEventType
 import org.unitedsoftware.mosaic.layout.background
 import org.unitedsoftware.mosaic.layout.height
+import org.unitedsoftware.mosaic.layout.onClick
+import org.unitedsoftware.mosaic.layout.onHover
+import org.unitedsoftware.mosaic.layout.onPointerEvent
 import org.unitedsoftware.mosaic.layout.onPreviewKeyEvent
 import org.unitedsoftware.mosaic.layout.width
 import org.unitedsoftware.mosaic.modifier.Modifier
@@ -69,10 +73,21 @@ fun CompletionPage() {
 		Spacer(Modifier.height(1))
 		if (matches.isNotEmpty()) {
 			Popup(alignment = Alignment.BottomStart) {
-				Column(Modifier.background(palette.surface)) {
+				Column(
+					// The wheel moves the selection like the arrow keys.
+					Modifier.background(palette.surface).onPointerEvent {
+						if (it.type != PointerEventType.Scroll) return@onPointerEvent false
+						selected = (selected + it.scrollDelta).coerceIn(0, matches.lastIndex)
+						true
+					},
+				) {
 					matches.forEachIndexed { index, (name, description) ->
 						val isSelected = index == selected
-						Row(if (isSelected) Modifier.background(palette.accentContainer) else Modifier) {
+						// Hovering selects a command, and clicking completes it like Tab.
+						val row = Modifier
+							.onHover { if (it) selected = index }
+							.onClick { input.text = "$name " }
+						Row(if (isSelected) row.background(palette.accentContainer) else row) {
 							Text(
 								name.padEnd(10),
 								color = if (isSelected) palette.accent else palette.text,

@@ -71,7 +71,7 @@ private val pages = listOf(
 	Page("Input", "Keyboard", "Raw KeyEvents as delivered to onPreviewKeyEvent.") { KeyboardPage() },
 	Page("Input", "Text input", "Recipe: focus handling and editable text fields.", listOf("tab" to "focus", "enter" to "submit")) { TextInputPage() },
 	Page("Input", "Mouse", "Clicks, hover, drags, and the wheel with onPointerEvent.") { MousePage() },
-	Page("Input", "Completion popup", "A Popup above a TextField, like slash commands.", listOf("/" to "commands", "↑↓" to "choose", "tab" to "complete")) { CompletionPage() },
+	Page("Input", "Completion popup", "A Popup above a TextField, like slash commands, with keys or the mouse.", listOf("/" to "commands", "↑↓" to "choose", "tab" to "complete")) { CompletionPage() },
 	Page("Animation", "Animation", "Infinite transitions, easings, and springs.", listOf("space" to "spring")) { AnimationPage() },
 	Page("Terminal", "Terminal state", "LocalTerminalState, the focus lifecycle, and pointer shapes.", listOf("p" to "pointer")) { TerminalStatePage() },
 	Page("Terminal", "Static output", "Lines written once above the live region.", listOf("enter" to "log a line", "p" to "println")) { StaticOutputPage() },
