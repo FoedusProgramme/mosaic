@@ -1,7 +1,11 @@
 # Change log
 
 ## [Unreleased]
-[Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.20.0...HEAD
+[Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.21.0...HEAD
+
+
+## [0.21.0] - 2026-10-24
+[0.21.0]: https://github.com/FoedusProgramme/mosaic/releases/tag/0.21.0
 
 New:
 - `ProgressBar` fills from the left to an eighth of a cell as its progress goes from 0 to 1, in a color of its own over a track color for the part still to fill. It is one row high and `DefaultProgressBarWidth` cells wide unless its modifier sizes it.
