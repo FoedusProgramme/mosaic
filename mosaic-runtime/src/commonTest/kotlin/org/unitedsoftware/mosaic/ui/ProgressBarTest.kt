@@ -67,6 +67,18 @@ class ProgressBarTest {
 		}
 	}
 
+	@Test fun coversWhatIsBelowIt() = runTest {
+		runMosaicTest {
+			setContent {
+				Box {
+					Text("----------")
+					ProgressBar(0.5f, Modifier.width(6))
+				}
+			}
+			assertThat(awaitSnapshot()).isEqualTo("███   ----")
+		}
+	}
+
 	@Test fun trackShowsThePartStillToFill() = runTest {
 		runMosaicTest(RenderingSnapshots(AnsiRendering(TestTerminal.Capabilities()))) {
 			val snapshot = setContentAndSnapshot {

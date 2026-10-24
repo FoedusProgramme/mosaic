@@ -22,7 +22,8 @@ public const val DefaultProgressBarWidth: Int = 20
  *
  * It is one row high and [DefaultProgressBarWidth] cells wide unless [modifier] sizes it, for
  * example with `Modifier.width` or `Modifier.fillMaxWidth`. The filled part is drawn in [color],
- * and the whole bar has the background [trackColor], so that the part still to fill shows too.
+ * and the whole bar has the background [trackColor], so that the part still to fill shows too. The
+ * bar covers whatever is below it, such as a border it is drawn over.
  * A [progress] outside of 0 to 1 shows as the nearest end, and one which is not a number as empty.
  */
 @Composable
@@ -37,7 +38,8 @@ public fun ProgressBar(
 		measurePolicy = ProgressBarMeasurePolicy,
 		debugInfo = { "ProgressBar($progress)" },
 		modifier = modifier.drawBehind {
-			if (trackColor.isSpecifiedColor) drawRect(background = trackColor)
+			// The bar's cells are its own, also where it is drawn over other content.
+			drawRect(' ', background = trackColor)
 			val filled = if (progress.isNaN()) 0f else progress.coerceIn(0f, 1f)
 			val eighths = (filled * width * 8).roundToInt()
 			val full = eighths / 8

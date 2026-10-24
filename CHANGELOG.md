@@ -7,6 +7,7 @@ New:
 - `Clipboard.lastCopy` is what was put on the clipboard last, with `setText` or by selecting text on the screen, so that a program can say that something was copied. Each copy is a value of its own.
 
 Fixed:
+- `ProgressBar` covers what is below it, also where it has no track color, rather than letting it show through the part still to fill.
 - Keys which arrive at once, like the text an input method commits or a paste in a terminal without bracketed paste, all reach the program. Past 64 keys the earliest were dropped.
 
 
