@@ -1,7 +1,7 @@
 # Example: catalog
 
-An interactive tour of everything Mosaic can render, plus recipes for common components Mosaic
-does not ship yet (borders, progress bars, spinners, tabs, tables, and scrolling lists).
+An interactive tour of everything Mosaic can render, including its `ProgressBar` and `Spinner`, plus
+recipes for common components Mosaic does not ship yet (borders, tabs, tables, and scrolling lists).
 
 ```
 ./gradlew :samples:catalog:installJvmDist

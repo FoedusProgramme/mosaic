@@ -3,6 +3,10 @@
 ## [Unreleased]
 [Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.20.0...HEAD
 
+New:
+- `ProgressBar` fills from the left to an eighth of a cell as its progress goes from 0 to 1, in a color of its own over a track color for the part still to fill. It is one row high and `DefaultProgressBarWidth` cells wide unless its modifier sizes it.
+- `Spinner` shows the frames of a `SpinnerStyle` in turn while it is composed, as wide as the widest frame. `SpinnerStyle` has `Dots`, `Line`, and `Pulse`, and takes frames and an interval of one's own.
+
 Fixed:
 - A program which fails leaves the terminal as one which completes does, with the cursor shown. The terminal was restored before the program's last output, which hid the cursor again.
 - The `runMosaic*` family of functions closes the TTY only once the terminal stopped reading it. Quitting could fail with `IOException: 9` (EBADF) from a read of the closed TTY.

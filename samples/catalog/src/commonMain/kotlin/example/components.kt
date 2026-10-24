@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 import org.unitedsoftware.mosaic.layout.BorderStyle
 import org.unitedsoftware.mosaic.layout.background
@@ -23,6 +24,7 @@ import org.unitedsoftware.mosaic.ui.Box
 import org.unitedsoftware.mosaic.ui.Color
 import org.unitedsoftware.mosaic.ui.Column
 import org.unitedsoftware.mosaic.ui.Row
+import org.unitedsoftware.mosaic.ui.SpinnerStyle
 import org.unitedsoftware.mosaic.ui.Text
 import org.unitedsoftware.mosaic.ui.TextStyle
 
@@ -108,51 +110,14 @@ fun Chip(
 	)
 }
 
-private const val PartialBlocks = " ▏▎▍▌▋▊▉"
-
-/** A determinate progress bar with 1/8th-cell precision. */
-@Composable
-fun ProgressBar(
-	progress: Float,
-	width: Int,
-	modifier: Modifier = Modifier,
-	color: Color = LocalPalette.current.accent,
-	trackColor: Color = LocalPalette.current.surface,
-) {
-	val eighths = (progress.coerceIn(0f, 1f) * width * 8).roundToInt()
-	val full = eighths / 8
-	val remainder = eighths % 8
-	val bar = buildString {
-		repeat(full) { append('█') }
-		if (remainder > 0) append(PartialBlocks[remainder])
-		while (length < width) append(' ')
-	}
-	Text(bar, modifier = modifier, color = color, background = trackColor)
-}
-
-enum class SpinnerStyle(val frames: List<String>, val intervalMillis: Long) {
-	Dots(listOf("⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"), 80),
-	Line(listOf("-", "\\", "|", "/"), 120),
-	Pulse(listOf("·", "•", "●", "•"), 150),
-	Quadrant(listOf("▖", "▘", "▝", "▗"), 120),
-	Arrows(listOf("←", "↖", "↑", "↗", "→", "↘", "↓", "↙"), 100),
-}
-
-@Composable
-fun Spinner(
-	style: SpinnerStyle,
-	modifier: Modifier = Modifier,
-	color: Color = LocalPalette.current.accent,
-) {
-	var frame by remember(style) { mutableIntStateOf(0) }
-	LaunchedEffect(style) {
-		while (true) {
-			delay(style.intervalMillis)
-			frame = (frame + 1) % style.frames.size
-		}
-	}
-	Text(style.frames[frame], modifier = modifier, color = color)
-}
+/** The spinner styles the catalog shows: Mosaic's own, and two made from frames of their own. */
+val SpinnerStyles: List<Pair<String, SpinnerStyle>> = listOf(
+	"Dots" to SpinnerStyle.Dots,
+	"Line" to SpinnerStyle.Line,
+	"Pulse" to SpinnerStyle.Pulse,
+	"Quadrant" to SpinnerStyle(listOf("▖", "▘", "▝", "▗"), 120.milliseconds),
+	"Arrows" to SpinnerStyle(listOf("←", "↖", "↑", "↗", "→", "↘", "↓", "↙"), 100.milliseconds),
+)
 
 @Composable
 fun TabBar(

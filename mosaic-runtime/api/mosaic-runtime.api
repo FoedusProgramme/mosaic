@@ -816,6 +816,12 @@ public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$ImageKt {
 	public final fun getLambda$1279303423$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$ProgressBarKt {
+	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$ProgressBarKt;
+	public fun <init> ()V
+	public final fun getLambda$-985727126$org_unitedsoftware_mosaic_mosaic_runtime ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class org/unitedsoftware/mosaic/ui/ComposableSingletons$SpacerKt {
 	public static final field INSTANCE Lorg/unitedsoftware/mosaic/ui/ComposableSingletons$SpacerKt;
 	public fun <init> ()V
@@ -894,6 +900,11 @@ public final class org/unitedsoftware/mosaic/ui/PopupKt {
 	public static final fun Popup-IxzCevg (Lorg/unitedsoftware/mosaic/ui/Alignment;JLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class org/unitedsoftware/mosaic/ui/ProgressBarKt {
+	public static final field DefaultProgressBarWidth I
+	public static final fun ProgressBar-EY817sw (FLorg/unitedsoftware/mosaic/modifier/Modifier;IILandroidx/compose/runtime/Composer;II)V
+}
+
 public final class org/unitedsoftware/mosaic/ui/Row {
 	public static final fun Row (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/Arrangement$Horizontal;Lorg/unitedsoftware/mosaic/ui/Alignment$Vertical;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
 }
@@ -906,6 +917,27 @@ public abstract interface class org/unitedsoftware/mosaic/ui/RowScope {
 
 public final class org/unitedsoftware/mosaic/ui/SpacerKt {
 	public static final fun Spacer (Lorg/unitedsoftware/mosaic/modifier/Modifier;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class org/unitedsoftware/mosaic/ui/SpinnerKt {
+	public static final fun Spinner-d4pTjBQ (Lorg/unitedsoftware/mosaic/modifier/Modifier;Lorg/unitedsoftware/mosaic/ui/SpinnerStyle;IILandroidx/compose/runtime/Composer;II)V
+}
+
+public final class org/unitedsoftware/mosaic/ui/SpinnerStyle {
+	public static final field $stable I
+	public static final field Companion Lorg/unitedsoftware/mosaic/ui/SpinnerStyle$Companion;
+	public synthetic fun <init> (Ljava/util/List;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFrames ()Ljava/util/List;
+	public final fun getInterval-UwyO8pc ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class org/unitedsoftware/mosaic/ui/SpinnerStyle$Companion {
+	public final fun getDots ()Lorg/unitedsoftware/mosaic/ui/SpinnerStyle;
+	public final fun getLine ()Lorg/unitedsoftware/mosaic/ui/SpinnerStyle;
+	public final fun getPulse ()Lorg/unitedsoftware/mosaic/ui/SpinnerStyle;
 }
 
 public final class org/unitedsoftware/mosaic/ui/Text {

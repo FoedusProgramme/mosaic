@@ -28,8 +28,11 @@ import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.ui.Box
 import org.unitedsoftware.mosaic.ui.Column
 import org.unitedsoftware.mosaic.ui.LazyColumn
+import org.unitedsoftware.mosaic.ui.ProgressBar
 import org.unitedsoftware.mosaic.ui.Row
 import org.unitedsoftware.mosaic.ui.Spacer
+import org.unitedsoftware.mosaic.ui.Spinner
+import org.unitedsoftware.mosaic.ui.SpinnerStyle
 import org.unitedsoftware.mosaic.ui.Text
 import org.unitedsoftware.mosaic.ui.TextStyle
 import org.unitedsoftware.mosaic.ui.rememberLazyListState
@@ -89,15 +92,15 @@ fun ProgressPage() {
 	Column {
 		Text("Determinate, with 1/8-cell precision", textStyle = TextStyle.Bold)
 		Row {
-			ProgressBar(progress, width = 40)
+			ProgressBar(progress, Modifier.width(40), color = palette.accent, trackColor = palette.surface)
 			Text("${(progress * 100).roundToInt()}%".padStart(5))
 		}
 		Row {
-			ProgressBar(0.333f, width = 40, color = palette.good)
+			ProgressBar(0.333f, Modifier.width(40), color = palette.good, trackColor = palette.surface)
 			Text("33%".padStart(5))
 		}
 		Row {
-			ProgressBar(0.9f, width = 40, color = palette.warn)
+			ProgressBar(0.9f, Modifier.width(40), color = palette.warn, trackColor = palette.surface)
 			Text("90%".padStart(5))
 		}
 		Spacer(Modifier.height(1))
@@ -110,17 +113,17 @@ fun ProgressPage() {
 		)
 		Spacer(Modifier.height(1))
 		Text("Spinners", textStyle = TextStyle.Bold)
-		for (style in SpinnerStyle.entries) {
+		for ((name, style) in SpinnerStyles) {
 			Row {
-				Spinner(style)
-				Text(" ${style.name}", color = palette.muted)
+				Spinner(style = style, color = palette.accent)
+				Text(" $name", color = palette.muted)
 			}
 		}
 		Spacer(Modifier.height(1))
 		Row {
-			Spinner(SpinnerStyle.Dots, color = palette.good)
+			Spinner(style = SpinnerStyle.Dots, color = palette.good)
 			Text(" Compiling catalog ")
-			ProgressBar(progress, width = 20, color = palette.good)
+			ProgressBar(progress, Modifier.width(20), color = palette.good, trackColor = palette.surface)
 		}
 	}
 }
@@ -139,9 +142,9 @@ fun TabsPage() {
 					Labeled("uptime") { Text("12d 04:11:52") }
 					Labeled("load") { Text("0.42  0.38  0.35") }
 					Spacer(Modifier.height(1))
-					Labeled("cpu") { ProgressBar(0.42f, width = 24) }
-					Labeled("memory") { ProgressBar(0.71f, width = 24, color = palette.warn) }
-					Labeled("disk") { ProgressBar(0.93f, width = 24, color = palette.bad) }
+					Labeled("cpu") { ProgressBar(0.42f, Modifier.width(24), color = palette.accent, trackColor = palette.surface) }
+					Labeled("memory") { ProgressBar(0.71f, Modifier.width(24), color = palette.warn, trackColor = palette.surface) }
+					Labeled("disk") { ProgressBar(0.93f, Modifier.width(24), color = palette.bad, trackColor = palette.surface) }
 				}
 
 				1 -> ProcessTable(sortColumn = 2, limit = 8)

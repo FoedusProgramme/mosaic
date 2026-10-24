@@ -40,6 +40,7 @@ import org.unitedsoftware.mosaic.layout.width
 import org.unitedsoftware.mosaic.modifier.Modifier
 import org.unitedsoftware.mosaic.ui.Box
 import org.unitedsoftware.mosaic.ui.Column
+import org.unitedsoftware.mosaic.ui.ProgressBar
 import org.unitedsoftware.mosaic.ui.Row
 import org.unitedsoftware.mosaic.ui.Spacer
 import org.unitedsoftware.mosaic.ui.Text
@@ -92,7 +93,7 @@ fun AnimationPage() {
 			)
 			Row {
 				Box(Modifier.width(20)) { Text(name, color = palette.muted) }
-				ProgressBar(progress, width = 30)
+				ProgressBar(progress, Modifier.width(30), color = palette.accent, trackColor = palette.surface)
 			}
 		}
 		Spacer(Modifier.height(1))
