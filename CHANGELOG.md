@@ -1,7 +1,11 @@
 # Change log
 
 ## [Unreleased]
-[Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.21.0...HEAD
+[Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.22.0...HEAD
+
+
+## [0.22.0] - 2026-10-25
+[0.22.0]: https://github.com/FoedusProgramme/mosaic/releases/tag/0.22.0
 
 New:
 - `Clipboard.lastCopy` is what was put on the clipboard last, with `setText` or by selecting text on the screen, so that a program can say that something was copied. Each copy is a value of its own.

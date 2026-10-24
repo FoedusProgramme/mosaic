@@ -70,7 +70,7 @@ Mosaic itself can then be added like any other dependency.
 
 ```kotlin
 dependencies {
-  implementation("org.unitedsoftware.mosaic:mosaic-runtime:0.21.0")
+  implementation("org.unitedsoftware.mosaic:mosaic-runtime:0.22.0")
 }
 ```
 
@@ -88,7 +88,7 @@ repositories {
   maven("https://central.sonatype.com/repository/maven-snapshots/")
 }
 dependencies {
-  implementation("org.unitedsoftware.mosaic:mosaic-runtime:0.22.0-SNAPSHOT")
+  implementation("org.unitedsoftware.mosaic:mosaic-runtime:0.23.0-SNAPSHOT")
 }
 ```
 
