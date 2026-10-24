@@ -19,13 +19,13 @@ import org.unitedsoftware.mosaic.tty.terminal.asTerminalIn
 internal suspend fun withTerminal(
 	onNonInteractive: NonInteractivePolicy,
 	block: suspend (Terminal) -> Unit,
-): Boolean = coroutineScope {
+): Boolean {
 	val tty = if (onNonInteractive != AssumeAndIgnore) {
 		Tty.tryBind()
 			?: when (onNonInteractive) {
 				Exit -> nonInteractiveExit()
 				Throw -> throw IllegalStateException(NonInteractiveMessage)
-				Return -> return@coroutineScope false
+				Return -> return false
 				Ignore -> null
 				AssumeAndIgnore -> throw AssertionError()
 			}
@@ -33,12 +33,16 @@ internal suspend fun withTerminal(
 		null
 	}
 
+	// The terminal reads the TTY in a coroutine of this scope until it is closed, so the TTY is only
+	// closed once the scope has waited for that coroutine to end.
 	tty.use {
-		val terminal = tty?.asTerminalIn(this) ?: NonInteractiveTerminal
-		terminal.use { block(it) }
+		coroutineScope {
+			val terminal = tty?.asTerminalIn(this) ?: NonInteractiveTerminal
+			terminal.use { block(it) }
+		}
 	}
 
-	true
+	return true
 }
 
 /** Behaviors when there is no interactive TTY. */
