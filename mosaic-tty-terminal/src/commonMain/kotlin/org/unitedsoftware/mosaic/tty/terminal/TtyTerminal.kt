@@ -559,7 +559,6 @@ private val Setting.canBeChanged get() = when (this) {
 }
 
 /** Whether the terminal of this XTVERSION name supports xterm's modifyOtherKeys. */
-private fun String?.supportsModifyOtherKeys(): Boolean =
-	this != null && modifyOtherKeysTerminals.any { startsWith(it) }
+private fun String?.supportsModifyOtherKeys(): Boolean = this != null && modifyOtherKeysTerminals.any { startsWith(it) }
 
 private val modifyOtherKeysTerminals = listOf("iTerm2", "XTerm", "tmux")
