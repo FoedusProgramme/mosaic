@@ -79,6 +79,8 @@ class TestTtyTest {
 	}
 
 	@Test fun readTtyOnceTheTtyClosedEndsOrFails() {
+		// The Windows test terminal is the console, whose reads go on waiting once the TTY is closed.
+		if (isWindows()) return
 		tty.close()
 
 		// The end of the input is -1 where the platform reports one, such as macOS, and an
