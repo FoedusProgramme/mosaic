@@ -23,13 +23,14 @@ class TtyTerminalInputTest {
 			// Let the terminal read every key before the program takes any.
 			delay(500.milliseconds)
 
-			val received = buildString {
+			// Every character of the text is one code point, which is one key.
+			val received = buildList {
 				while (true) {
 					val event = withTimeoutOrNull(1.seconds) { events.receive() } ?: break
-					appendCodePoint((event as KeyboardEvent).codepoint)
+					add((event as KeyboardEvent).codepoint)
 				}
 			}
-			assertThat(received).isEqualTo(text)
+			assertThat(received).isEqualTo(text.map { it.code })
 		}
 	}
 }
