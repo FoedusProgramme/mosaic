@@ -3,6 +3,9 @@
 ## [Unreleased]
 [Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.20.0...HEAD
 
+Fixed:
+- On JDK 22 and newer, reads which reach the end of the input return -1, as they do on older JDKs, rather than throwing `IndexOutOfBoundsException`. This covers `Tty`, `TestTerminal`, and `StandardStreams`.
+
 
 ## [0.20.0] - 2026-10-22
 [0.20.0]: https://github.com/FoedusProgramme/mosaic/releases/tag/0.20.0

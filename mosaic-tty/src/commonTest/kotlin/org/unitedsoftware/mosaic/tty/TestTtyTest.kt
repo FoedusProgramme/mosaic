@@ -3,6 +3,7 @@ package org.unitedsoftware.mosaic.tty
 import assertk.assertFailure
 import assertk.assertThat
 import assertk.assertions.hasMessage
+import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
 import assertk.assertions.isInstanceOf
 import assertk.assertions.isTrue
@@ -75,5 +76,17 @@ class TestTtyTest {
 	@Test fun stdinErrTtySettingFalse() {
 		testTerminal = TestTerminal.bind(stderrIsTty = true)
 		assertThat(testTerminal.streams.isErrorTty()).isTrue()
+	}
+
+	@Test fun readTtyOnceTheTtyClosedEndsOrFails() {
+		tty.close()
+
+		// The end of the input is -1 where the platform reports one, such as macOS, and an
+		// IOException where it fails the read instead, such as Linux.
+		val buffer = ByteArray(16)
+		try {
+			assertThat(testTerminal.readTty(buffer, 0, buffer.size)).isEqualTo(-1)
+		} catch (_: IOException) {
+		}
 	}
 }

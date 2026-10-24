@@ -84,7 +84,8 @@ public class StandardStreams internal constructor(
 			val error = MosaicIoResult.error(result)
 			if (error == 0) {
 				val read = MosaicIoResult.count(result)
-				MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
+				// A count of -1 is the end of the input.
+				if (read > 0) MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
 				return read
 			}
 			throwIoe(error)
@@ -99,7 +100,8 @@ public class StandardStreams internal constructor(
 			val error = MosaicIoResult.error(result)
 			if (error == 0) {
 				val read = MosaicIoResult.count(result)
-				MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
+				// A count of -1 is the end of the input.
+				if (read > 0) MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
 				return read
 			}
 			throwIoe(error)
@@ -180,7 +182,8 @@ public class StandardStreams internal constructor(
 				val error = MosaicIoResult.error(result)
 				if (error == 0) {
 					val read = MosaicIoResult.count(result)
-					MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
+					// A count of -1 is the end of the input.
+					if (read > 0) MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
 					return read
 				}
 				throwIoe(error)
@@ -195,7 +198,8 @@ public class StandardStreams internal constructor(
 				val error = MosaicIoResult.error(result)
 				if (error == 0) {
 					val read = MosaicIoResult.count(result)
-					MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
+					// A count of -1 is the end of the input.
+					if (read > 0) MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
 					return read
 				}
 				throwIoe(error)
@@ -217,7 +221,8 @@ public class StandardStreams internal constructor(
 				val error = MosaicIoResult.error(result)
 				if (error == 0) {
 					val read = MosaicIoResult.count(result)
-					MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
+					// A count of -1 is the end of the input.
+					if (read > 0) MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
 					return read
 				}
 				throwIoe(error)
@@ -232,7 +237,8 @@ public class StandardStreams internal constructor(
 				val error = MosaicIoResult.error(result)
 				if (error == 0) {
 					val read = MosaicIoResult.count(result)
-					MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
+					// A count of -1 is the end of the input.
+					if (read > 0) MemorySegment.copy(segment, ValueLayout.JAVA_BYTE, 0L, buffer, offset, read)
 					return read
 				}
 				throwIoe(error)
