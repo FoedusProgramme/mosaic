@@ -21,6 +21,34 @@ class TtyTerminalKittyKeyboardTest {
 		assertThat(teardown).doesNotContain("$CSI<u")
 	}
 
+	@Test fun modifyOtherKeysWithoutKittyKeyboard() = terminalTest {
+		expect("${CSI}0c", reply = "$CSI?62;22c")
+		expect("$CSI>0q", reply = "${ESC}P>|iTerm2 3.7.3$ESC\\")
+		expect("${CSI}5n", reply = "${CSI}0n")
+
+		val teardown = withTerminal { setup ->
+			assertThat(capabilities.kittyKeyboard).isFalse()
+			assertThat(setup).contains("$CSI>4;1m")
+
+			// Shift+Enter is distinguishable from Enter all the same.
+			ptyWrite("${CSI}27;2;13~")
+			assertThat(events.receive()).isEqualTo(KeyboardEvent(0x0D, modifiers = ModifierShift))
+		}
+
+		assertThat(teardown).contains("$CSI>4m")
+	}
+
+	@Test fun noModifyOtherKeysForUnknownTerminals() = terminalTest {
+		expect("${CSI}0c", reply = "$CSI?62;22c")
+		expect("${CSI}5n", reply = "${CSI}0n")
+
+		val teardown = withTerminal { setup ->
+			assertThat(setup).doesNotContain("$CSI>4;1m")
+		}
+
+		assertThat(teardown).doesNotContain("$CSI>4m")
+	}
+
 	@Test fun reply() = terminalTest {
 		expect("${CSI}0c", reply = "$CSI?62;22c")
 		expect("$CSI?u", reply = "$CSI?0u")

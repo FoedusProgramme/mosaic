@@ -34,3 +34,10 @@ internal const val bracketedPasteDisable = "$CSI?${bracketedPasteMode}l"
 /** Push the Kitty keyboard protocol flag which disambiguates escape codes, such as Shift+Enter. */
 internal const val kittyKeyboardPushDisambiguate = "$CSI>1u"
 internal const val kittyKeyboardPop = "$CSI<u"
+
+/**
+ * Set xterm's modifyOtherKeys to 1, which reports keys that are otherwise ambiguous, such as Shift+Enter, as
+ * `CSI 27 ; modifier ; codepoint ~`, and leaves keys with well-known meanings as they are.
+ */
+internal const val modifyOtherKeysEnable = "$CSI>4;1m"
+internal const val modifyOtherKeysReset = "$CSI>4m"

@@ -9,6 +9,7 @@ New:
 Fixed:
 - `ProgressBar` covers what is below it, also where it has no track color, rather than letting it show through the part still to fill.
 - Keys which arrive at once, like the text an input method commits or a paste in a terminal without bracketed paste, all reach the program. Past 64 keys the earliest were dropped.
+- Shift+Enter, and other keys which otherwise arrive as plain ones, are told apart in iTerm2, xterm, and tmux, which lack the Kitty keyboard protocol, through xterm's modifyOtherKeys. Shift+Enter arrived as Enter, so a `TextField` with `onSubmit` submitted instead of breaking the line.
 
 
 ## [0.21.0] - 2026-10-24

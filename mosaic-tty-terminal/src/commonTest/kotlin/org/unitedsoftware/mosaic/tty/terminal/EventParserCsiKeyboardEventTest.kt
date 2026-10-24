@@ -22,6 +22,16 @@ import org.unitedsoftware.mosaic.terminal.KeyboardEvent.Companion.Up
 import org.unitedsoftware.mosaic.terminal.UnknownEvent
 
 class EventParserCsiKeyboardEventTest : BaseEventParserTest() {
+	@Test fun modifyOtherKeysShiftEnter() {
+		testTerminal.write("${CSI}27;2;13~")
+		assertThat(parser.next()).isEqualTo(KeyboardEvent(0x0D, modifiers = ModifierShift))
+	}
+
+	@Test fun modifyOtherKeysCtrlShiftLetter() {
+		testTerminal.write("${CSI}27;6;65~")
+		assertThat(parser.next()).isEqualTo(KeyboardEvent('A'.code, modifiers = ModifierCtrl or ModifierShift))
+	}
+
 	@Test fun up() {
 		testTerminal.write("${CSI}A")
 		assertThat(parser.next()).isEqualTo(KeyboardEvent(Up))

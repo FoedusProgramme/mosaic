@@ -291,6 +291,13 @@ public class EventParser(
 					val delimiter =
 						buffer.indexOfOrDefault(';'.code.toByte(), b3Index, finalIndex, finalIndex)
 					val number = buffer.parseIntDigits(b3Index, delimiter, orElse = { break@error })
+					if (number == 27) {
+						// CSI 27 ; modifier ; codepoint ~ of xterm's modifyOtherKeys
+						val codepointDelimiter = buffer.indexOfOrElse(';'.code.toByte(), delimiter + 1, finalIndex, orElse = { break@error })
+						val modifiers = buffer.parseIntDigits(delimiter + 1, codepointDelimiter, orElse = { break@error }) - 1
+						val codepoint = buffer.parseIntDigits(codepointDelimiter + 1, finalIndex, orElse = { break@error })
+						return KeyboardEvent(codepoint, modifiers = modifiers)
+					}
 					val codepoint = when (number) {
 						2 -> KeyboardEvent.Insert
 						3 -> KeyboardEvent.Delete

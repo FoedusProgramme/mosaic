@@ -117,6 +117,7 @@ public suspend fun Tty.asTerminalIn(
 	var toggleFocus = false
 	var toggleInBandResize = false
 	var toggleKittyKeyboard = false
+	var toggleModifyOtherKeys = false
 	var toggleSystemTheme = false
 
 	// TODO The design of finalization hook fights us here. We don't need suspension.
@@ -125,6 +126,7 @@ public suspend fun Tty.asTerminalIn(
 			hook = {
 				setCallback(null)
 				if (toggleKittyKeyboard) write(kittyKeyboardPop)
+				if (toggleModifyOtherKeys) write(modifyOtherKeysReset)
 				if (toggleBracketedPaste) write(bracketedPasteDisable)
 				if (toggleSystemTheme) write(systemThemeDisable)
 				if (toggleInBandResize) write(inBandResizeDisable)
@@ -388,6 +390,13 @@ public suspend fun Tty.asTerminalIn(
 		write(bracketedPasteEnable)
 	}
 
+	// Without the Kitty keyboard protocol, xterm's modifyOtherKeys still tells keys like Shift+Enter
+	// from Enter. Only for terminals known to support it, since others may take its sequence for SGR.
+	if (!kittyKeyboard && terminalName.supportsModifyOtherKeys()) {
+		toggleModifyOtherKeys = true
+		write(modifyOtherKeysEnable)
+	}
+
 	if (debugBootstrap) {
 		write("\r\n")
 	}
@@ -434,6 +443,7 @@ public suspend fun Tty.asTerminalIn(
 		releaser = releaser.apply {
 			onRelease = {
 				if (toggleKittyKeyboard) write(kittyKeyboardPop)
+				if (toggleModifyOtherKeys) write(modifyOtherKeysReset)
 				if (toggleBracketedPaste) write(bracketedPasteDisable)
 				if (toggleSystemTheme) write(systemThemeDisable)
 				if (toggleInBandResize) write(inBandResizeDisable)
@@ -449,6 +459,7 @@ public suspend fun Tty.asTerminalIn(
 				if (toggleSystemTheme) write(systemThemeEnable)
 				if (toggleBracketedPaste) write(bracketedPasteEnable)
 				if (toggleKittyKeyboard) write(kittyKeyboardPushDisambiguate)
+				if (toggleModifyOtherKeys) write(modifyOtherKeysEnable)
 				// The window may have been resized meanwhile, without events being read.
 				currentSize().let { (columns, rows, width, height) ->
 					size.value = Terminal.Size(columns, rows, width, height)
@@ -546,3 +557,9 @@ private val Setting.canBeChanged get() = when (this) {
 	Setting.PermanentlySet -> false
 	Setting.PermanentlyReset -> false
 }
+
+/** Whether the terminal of this XTVERSION name supports xterm's modifyOtherKeys. */
+private fun String?.supportsModifyOtherKeys(): Boolean =
+	this != null && modifyOtherKeysTerminals.any { startsWith(it) }
+
+private val modifyOtherKeysTerminals = listOf("iTerm2", "XTerm", "tmux")
