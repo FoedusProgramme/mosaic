@@ -3,6 +3,9 @@
 ## [Unreleased]
 [Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.21.0...HEAD
 
+Fixed:
+- Keys which arrive at once, like the text an input method commits or a paste in a terminal without bracketed paste, all reach the program. Past 64 keys the earliest were dropped.
+
 
 ## [0.21.0] - 2026-10-24
 [0.21.0]: https://github.com/FoedusProgramme/mosaic/releases/tag/0.21.0
