@@ -391,8 +391,9 @@ public suspend fun Tty.asTerminalIn(
 	}
 
 	// Without the Kitty keyboard protocol, xterm's modifyOtherKeys still tells keys like Shift+Enter
-	// from Enter. Only for terminals known to support it, since others may take its sequence for SGR.
-	if (!kittyKeyboard && terminalName.supportsModifyOtherKeys()) {
+	// from Enter. Only for terminals known to support it, by the name they reply to XTVERSION with,
+	// else by TERM_PROGRAM, since others may take its sequence for SGR.
+	if (deviceAttributesReported && !kittyKeyboard && (terminalName ?: env("TERM_PROGRAM")).supportsModifyOtherKeys()) {
 		toggleModifyOtherKeys = true
 		write(modifyOtherKeysEnable)
 	}
@@ -558,7 +559,7 @@ private val Setting.canBeChanged get() = when (this) {
 	Setting.PermanentlyReset -> false
 }
 
-/** Whether the terminal of this XTVERSION name supports xterm's modifyOtherKeys. */
+/** Whether the terminal of this XTVERSION name or `TERM_PROGRAM` supports xterm's modifyOtherKeys. */
 private fun String?.supportsModifyOtherKeys(): Boolean = this != null && modifyOtherKeysTerminals.any { startsWith(it) }
 
-private val modifyOtherKeysTerminals = listOf("iTerm2", "XTerm", "tmux")
+private val modifyOtherKeysTerminals = listOf("iTerm2", "iTerm.app", "XTerm", "tmux")

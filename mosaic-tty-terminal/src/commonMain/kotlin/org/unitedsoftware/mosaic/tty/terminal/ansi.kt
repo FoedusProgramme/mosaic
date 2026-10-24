@@ -36,8 +36,8 @@ internal const val kittyKeyboardPushDisambiguate = "$CSI>1u"
 internal const val kittyKeyboardPop = "$CSI<u"
 
 /**
- * Set xterm's modifyOtherKeys to 1, which reports keys that are otherwise ambiguous, such as Shift+Enter, as
- * `CSI 27 ; modifier ; codepoint ~`, and leaves keys with well-known meanings as they are.
+ * Set xterm's modifyOtherKeys to 2, which reports keys with modifiers, such as Shift+Enter or Ctrl+C, as
+ * `CSI 27 ; modifier ; codepoint ~`. Level 1 leaves Shift+Enter as Enter in iTerm2.
  */
-internal const val modifyOtherKeysEnable = "$CSI>4;1m"
+internal const val modifyOtherKeysEnable = "$CSI>4;2m"
 internal const val modifyOtherKeysReset = "$CSI>4m"

@@ -3,6 +3,9 @@
 ## [Unreleased]
 [Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.22.0...HEAD
 
+Fixed:
+- Shift+Enter is told from Enter in iTerm2, which needs xterm's modifyOtherKeys at level 2 rather than 1. iTerm2 is also known by `TERM_PROGRAM` where it does not reply to XTVERSION.
+
 
 ## [0.22.0] - 2026-10-25
 [0.22.0]: https://github.com/FoedusProgramme/mosaic/releases/tag/0.22.0
