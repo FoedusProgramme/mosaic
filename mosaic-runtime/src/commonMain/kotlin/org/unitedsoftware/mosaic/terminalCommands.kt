@@ -1,6 +1,10 @@
 package org.unitedsoftware.mosaic
 
 import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import kotlin.io.encoding.Base64
 import kotlinx.coroutines.channels.SendChannel
@@ -12,6 +16,19 @@ public interface Clipboard {
 	 * rendered. Terminals may ignore it, or ask the user for permission first.
 	 */
 	public fun setText(text: String)
+
+	/**
+	 * What was put on the clipboard last, with [setText] or by selecting text on the screen, or
+	 * null before anything was. Each copy is a value of its own, also of the same text, so that a
+	 * composition which reads it is recomposed once more is copied, for example to say so.
+	 */
+	public val lastCopy: ClipboardCopy? get() = null
+}
+
+/** A copy of [text] to the clipboard. */
+@Stable
+public class ClipboardCopy(public val text: String) {
+	override fun toString(): String = "ClipboardCopy(${text.length} characters)"
 }
 
 public val LocalClipboard: ProvidableCompositionLocal<Clipboard> = staticCompositionLocalOf {
@@ -37,8 +54,12 @@ internal class CommandClipboard(
 	private val commands: SendChannel<String>,
 	private val onCommand: () -> Unit,
 ) : Clipboard {
+	override var lastCopy: ClipboardCopy? by mutableStateOf(null)
+		private set
+
 	override fun setText(text: String) {
 		commands.trySend("${OSC}52;c;${Base64.encode(text.encodeToByteArray())}$ST")
+		lastCopy = ClipboardCopy(text)
 		onCommand()
 	}
 }

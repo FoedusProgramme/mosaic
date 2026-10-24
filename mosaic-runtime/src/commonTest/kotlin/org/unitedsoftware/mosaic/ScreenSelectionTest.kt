@@ -1,5 +1,10 @@
 package org.unitedsoftware.mosaic
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.doesNotContain
@@ -46,6 +51,45 @@ class ScreenSelectionTest {
 			drag(4, 1, 6, 0)
 			awaitSnapshot()
 			assertThat(terminalCommands()).isEqualTo(copied("d29ybGQKc2Vjb24="))
+		}
+	}
+
+	/** The next snapshot which [predicate] accepts, of the few frames that follow. */
+	private suspend fun TestMosaic<String>.awaitSnapshot(predicate: (String) -> Boolean): String {
+		repeat(4) {
+			val snapshot = awaitSnapshot()
+			if (predicate(snapshot)) return snapshot
+		}
+		return awaitSnapshot()
+	}
+
+	@Test fun aCopyOfASelectionCanBeRead() = runTest {
+		runMosaicTest {
+			setContent {
+				Column {
+					Text("hello world")
+					Text(LocalClipboard.current.lastCopy?.text ?: "nothing copied")
+				}
+			}
+			assertThat(awaitSnapshot()).isEqualTo("hello world\nnothing copied")
+			drag(6, 0, 10, 0)
+			assertThat(awaitSnapshot { "nothing" !in it }).isEqualTo("hello world\nworld")
+		}
+	}
+
+	@Test fun eachCopyIsAValueOfItsOwn() = runTest {
+		runMosaicTest {
+			setContent {
+				val copy = LocalClipboard.current.lastCopy
+				var copies by remember { mutableIntStateOf(0) }
+				LaunchedEffect(copy) { if (copy != null) copies++ }
+				Text("hello world, copied $copies times")
+			}
+			awaitSnapshot()
+			drag(6, 0, 10, 0)
+			assertThat(awaitSnapshot { "1 times" in it }).isEqualTo("hello world, copied 1 times")
+			drag(6, 0, 10, 0)
+			assertThat(awaitSnapshot { "2 times" in it }).isEqualTo("hello world, copied 2 times")
 		}
 	}
 

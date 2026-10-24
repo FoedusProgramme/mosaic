@@ -265,6 +265,9 @@ abstract interface org.unitedsoftware.mosaic.ui/RowScope { // org.unitedsoftware
 }
 
 abstract interface org.unitedsoftware.mosaic/Clipboard { // org.unitedsoftware.mosaic/Clipboard|null[0]
+    open val lastCopy // org.unitedsoftware.mosaic/Clipboard.lastCopy|{}lastCopy[0]
+        open fun <get-lastCopy>(): org.unitedsoftware.mosaic/ClipboardCopy? // org.unitedsoftware.mosaic/Clipboard.lastCopy.<get-lastCopy>|<get-lastCopy>(){}[0]
+
     abstract fun setText(kotlin/String) // org.unitedsoftware.mosaic/Clipboard.setText|setText(kotlin.String){}[0]
 }
 
@@ -682,6 +685,15 @@ final class org.unitedsoftware.mosaic.ui/TextFieldState { // org.unitedsoftware.
     final fun undo(): kotlin/Boolean // org.unitedsoftware.mosaic.ui/TextFieldState.undo|undo(){}[0]
 }
 
+final class org.unitedsoftware.mosaic/ClipboardCopy { // org.unitedsoftware.mosaic/ClipboardCopy|null[0]
+    constructor <init>(kotlin/String) // org.unitedsoftware.mosaic/ClipboardCopy.<init>|<init>(kotlin.String){}[0]
+
+    final val text // org.unitedsoftware.mosaic/ClipboardCopy.text|{}text[0]
+        final fun <get-text>(): kotlin/String // org.unitedsoftware.mosaic/ClipboardCopy.text.<get-text>|<get-text>(){}[0]
+
+    final fun toString(): kotlin/String // org.unitedsoftware.mosaic/ClipboardCopy.toString|toString(){}[0]
+}
+
 final class org.unitedsoftware.mosaic/StaticLogger { // org.unitedsoftware.mosaic/StaticLogger|null[0]
     final fun log(kotlin/String) // org.unitedsoftware.mosaic/StaticLogger.log|log(kotlin.String){}[0]
     final fun log(org.unitedsoftware.mosaic/TextCanvas) // org.unitedsoftware.mosaic/StaticLogger.log|log(org.unitedsoftware.mosaic.TextCanvas){}[0]
@@ -1064,6 +1076,7 @@ final val org.unitedsoftware.mosaic/LocalTerminalControl // org.unitedsoftware.m
     final fun <get-LocalTerminalControl>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/TerminalControl> // org.unitedsoftware.mosaic/LocalTerminalControl.<get-LocalTerminalControl>|<get-LocalTerminalControl>(){}[0]
 final val org.unitedsoftware.mosaic/LocalTerminalState // org.unitedsoftware.mosaic/LocalTerminalState|{}LocalTerminalState[0]
     final fun <get-LocalTerminalState>(): androidx.compose.runtime/ProvidableCompositionLocal<org.unitedsoftware.mosaic/TerminalState> // org.unitedsoftware.mosaic/LocalTerminalState.<get-LocalTerminalState>|<get-LocalTerminalState>(){}[0]
+final val org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_ClipboardCopy$stableprop // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_ClipboardCopy$stableprop|#static{}org_unitedsoftware_mosaic_ClipboardCopy$stableprop[0]
 final val org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop|#static{}org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop[0]
 final val org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_StaticLogger$stableprop // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_StaticLogger$stableprop|#static{}org_unitedsoftware_mosaic_StaticLogger$stableprop[0]
 final val org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stableprop // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stableprop|#static{}org_unitedsoftware_mosaic_TerminalState$stableprop[0]
@@ -1191,6 +1204,7 @@ final fun org.unitedsoftware.mosaic/Mosaic(kotlin.coroutines/CoroutineContext, k
 final fun org.unitedsoftware.mosaic/StaticEffect(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // org.unitedsoftware.mosaic/StaticEffect|StaticEffect(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun org.unitedsoftware.mosaic/WindowPointerShape(org.unitedsoftware.mosaic/PointerShape, androidx.compose.runtime/Composer?, kotlin/Int) // org.unitedsoftware.mosaic/WindowPointerShape|WindowPointerShape(org.unitedsoftware.mosaic.PointerShape;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun org.unitedsoftware.mosaic/WindowTitle(kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int) // org.unitedsoftware.mosaic/WindowTitle|WindowTitle(kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_ClipboardCopy$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_ClipboardCopy$stableprop_getter|org_unitedsoftware_mosaic_ClipboardCopy$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop_getter|org_unitedsoftware_mosaic_PointerMapping_Identity$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_StaticLogger$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_StaticLogger$stableprop_getter|org_unitedsoftware_mosaic_StaticLogger$stableprop_getter(){}[0]
 final fun org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stableprop_getter(): kotlin/Int // org.unitedsoftware.mosaic/org_unitedsoftware_mosaic_TerminalState$stableprop_getter|org_unitedsoftware_mosaic_TerminalState$stableprop_getter(){}[0]

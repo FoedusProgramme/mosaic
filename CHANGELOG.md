@@ -3,6 +3,9 @@
 ## [Unreleased]
 [Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.21.0...HEAD
 
+New:
+- `Clipboard.lastCopy` is what was put on the clipboard last, with `setText` or by selecting text on the screen, so that a program can say that something was copied. Each copy is a value of its own.
+
 Fixed:
 - Keys which arrive at once, like the text an input method commits or a paste in a terminal without bracketed paste, all reach the program. Past 64 keys the earliest were dropped.
 

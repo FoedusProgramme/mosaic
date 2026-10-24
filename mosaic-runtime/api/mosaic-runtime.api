@@ -1,5 +1,13 @@
 public abstract interface class org/unitedsoftware/mosaic/Clipboard {
+	public fun getLastCopy ()Lorg/unitedsoftware/mosaic/ClipboardCopy;
 	public abstract fun setText (Ljava/lang/String;)V
+}
+
+public final class org/unitedsoftware/mosaic/ClipboardCopy {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getText ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class org/unitedsoftware/mosaic/Mosaic {
