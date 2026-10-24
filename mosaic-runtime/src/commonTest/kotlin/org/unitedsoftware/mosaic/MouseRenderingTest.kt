@@ -27,6 +27,27 @@ class MouseRenderingTest {
 		assertThat(rendering.finish().toString()).contains(mouseTrackingDisable)
 	}
 
+	@Test fun keyboardFlagsArePushedOnTheAlternateScreenAndPoppedBeforeLeavingIt() = runTest {
+		val size = Terminal.Size(10, 5)
+		val rendering = AlternateScreenRendering(TestTerminal.Capabilities(kittyKeyboard = true), { size })
+		runMosaicTest(RenderingSnapshots(rendering)) {
+			setContent { Text("hi") }
+			// The alternate screen's stack of keyboard flags is its own, so Shift+Enter needs them pushed there too.
+			assertThat(awaitSnapshot()).contains(alternateScreenEnable + kittyKeyboardPushDisambiguate)
+		}
+		assertThat(rendering.finish().toString()).contains(kittyKeyboardPop + alternateScreenDisable)
+	}
+
+	@Test fun noKeyboardFlagsWithoutTheKittyKeyboardProtocol() = runTest {
+		val size = Terminal.Size(10, 5)
+		val rendering = AlternateScreenRendering(TestTerminal.Capabilities(kittyKeyboard = false), { size })
+		runMosaicTest(RenderingSnapshots(rendering)) {
+			setContent { Text("hi") }
+			assertThat(awaitSnapshot()).doesNotContain(kittyKeyboardPushDisambiguate)
+		}
+		assertThat(rendering.finish().toString()).doesNotContain(kittyKeyboardPop)
+	}
+
 	@Test fun noTrackingByDefault() = runTest {
 		val rendering = AnsiRendering(TestTerminal.Capabilities())
 		runMosaicTest(RenderingSnapshots(rendering)) {

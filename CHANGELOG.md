@@ -4,7 +4,8 @@
 [Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.22.0...HEAD
 
 Fixed:
-- Shift+Enter is told from Enter in iTerm2, which needs xterm's modifyOtherKeys at level 2 rather than 1. iTerm2 is also known by `TERM_PROGRAM` where it does not reply to XTVERSION.
+- Shift+Enter is told from Enter on the alternate screen. Its stack of Kitty keyboard flags is its own, so the flags pushed on the main screen did not hold there; they are now pushed after entering it and popped before leaving it.
+- Where a terminal lacks the Kitty keyboard protocol, xterm's modifyOtherKeys is set at level 2 rather than 1, which leaves Shift+Enter as Enter. iTerm2 is also known by `TERM_PROGRAM` where it does not reply to XTVERSION.
 
 
 ## [0.22.0] - 2026-10-25

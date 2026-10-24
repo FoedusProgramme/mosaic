@@ -22,6 +22,13 @@ internal const val cursorHide = "$CSI?25l"
 internal const val alternateScreenEnable = "$CSI?1049h"
 internal const val alternateScreenDisable = "$CSI?1049l"
 
+/**
+ * Push and pop the Kitty keyboard flag which disambiguates keys like Shift+Enter. The alternate screen has a stack of
+ * flags of its own, so the flags the terminal pushed on the main screen do not hold there.
+ */
+internal const val kittyKeyboardPushDisambiguate = "$CSI>1u"
+internal const val kittyKeyboardPop = "$CSI<u"
+
 /** Saves the window title on the terminal's stack, to be restored by [windowTitlePop]. */
 internal const val windowTitlePush = "${CSI}22;0t"
 internal const val windowTitlePop = "${CSI}23;0t"

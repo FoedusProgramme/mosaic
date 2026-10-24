@@ -53,7 +53,9 @@ class RowDiffRenderingTest {
 
 	@Test fun alternateScreen() = runTest {
 		val size = Terminal.Size(columns = 10, rows = 3)
-		val rendering = AlternateScreenRendering(TestTerminal.Capabilities(), terminalSize = { size })
+		// Without keyboard flags, which MouseRenderingTest covers, to see the rows alone.
+		val capabilities = TestTerminal.Capabilities(kittyKeyboard = false)
+		val rendering = AlternateScreenRendering(capabilities, terminalSize = { size })
 		var text by mutableStateOf("a")
 		runMosaicTest(RenderingSnapshots(rendering)) {
 			setContent {

@@ -470,6 +470,7 @@ internal class AlternateScreenRendering(
 			}
 			if (!started) {
 				append(alternateScreenEnable)
+				if (capabilities.kittyKeyboard) append(kittyKeyboardPushDisambiguate)
 				started = true
 			}
 			if (cursorShown) {
@@ -571,6 +572,7 @@ internal class AlternateScreenRendering(
 			append(cursorHide)
 		}
 		if (started) {
+			if (capabilities.kittyKeyboard) append(kittyKeyboardPop)
 			append(alternateScreenDisable)
 		}
 		commandWriter.appendFinishTo(this)
@@ -580,6 +582,7 @@ internal class AlternateScreenRendering(
 	override fun release(): CharSequence = buildString {
 		// Other programs get the regular screen.
 		if (started) {
+			if (capabilities.kittyKeyboard) append(kittyKeyboardPop)
 			append(alternateScreenDisable)
 		}
 		commandWriter.appendReleaseTo(this)
