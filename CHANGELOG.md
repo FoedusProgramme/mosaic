@@ -4,6 +4,7 @@
 [Unreleased]: https://github.com/FoedusProgramme/mosaic/compare/0.20.0...HEAD
 
 Fixed:
+- A program which fails leaves the terminal as one which completes does, with the cursor shown. The terminal was restored before the program's last output, which hid the cursor again.
 - The `runMosaic*` family of functions closes the TTY only once the terminal stopped reading it. Quitting could fail with `IOException: 9` (EBADF) from a read of the closed TTY.
 - On JDK 22 and newer, reads which reach the end of the input return -1, as they do on older JDKs, rather than throwing `IndexOutOfBoundsException`. This covers `Tty`, `TestTerminal`, and `StandardStreams`.
 

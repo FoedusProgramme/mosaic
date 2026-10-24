@@ -38,7 +38,9 @@ internal suspend fun withTerminal(
 	tty.use {
 		coroutineScope {
 			val terminal = tty?.asTerminalIn(this) ?: NonInteractiveTerminal
-			terminal.use { block(it) }
+			// A scope of its own, so that a failure of the program does not cancel the terminal's scope,
+			// which would restore the terminal before the program's last output, such as a hidden cursor.
+			terminal.use { coroutineScope { block(it) } }
 		}
 	}
 
